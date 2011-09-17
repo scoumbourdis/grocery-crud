@@ -1,0 +1,180 @@
+.datatables
+{
+	font-family: Verdana,Arial,sans-serif;	
+	font-size: 14px;
+}
+.form-title
+{
+	padding: 0.4em !important;
+	font-weight: bold !important;	
+}
+.ui-input-button
+{
+	font-size: 15px !important;	
+}
+.form-content
+{
+	
+}
+.floatL
+{
+	float: left;	
+}
+.floatR
+{
+	float: right;	
+}
+.clear
+{
+	clear: both;	
+}
+.form-title-left
+{
+	padding-top:4px;
+	padding-left:6px;
+}
+div.form-button-box {
+	float:left;
+	margin-top:11px;
+	margin-left:10px;
+}
+.form-field-box
+{
+	padding: 5px 10px 5px 15px;
+	margin: 5px 0px;	
+}
+.form-field-box.odd
+{
+	background: #fff;	
+}
+.form-field-box.even
+{
+	background: #ededed;
+}
+.form-display-as-box
+{
+	float:left;
+	width:200px;
+}
+.form-input-box
+{
+	float:left;
+}
+.line-1px
+{
+	margin-top:11px;
+	border-top: 1px solid #aaaaaa;
+	height: 1px;
+	margin-bottom: 9px;	
+}
+.report-div
+{
+	padding: 10px;
+	border-style: solid;
+	border-width: 1px;
+	margin:10px 10px 5px 10px;
+	display:none;
+	font-family: Arial,Helvetica,sans-serif;
+}
+.report-div.report-list
+{
+	padding: 10px;
+	border-style: solid;
+	border-width: 1px;
+	margin:10px 0px 15px 0px;
+}
+.report-div.success
+{
+	border-color: green;
+}
+.report-div.success p
+{
+	background: url(images/success.png) no-repeat left center;
+	margin: 0px !important;
+	padding: 10px 0px 10px 25px !important;
+}
+.report-div.error
+{
+	border-color: red;
+}
+.report-div.error p
+{
+	background: url(images/error.png) no-repeat left center;
+	margin: 0px !important;
+	padding: 10px 0px 10px 25px !important;
+}
+input.field_error
+{
+	border: 1px solid red !important;	
+}
+.buttons-box
+{
+	padding-bottom: 20px;	
+}
+.datatables div.form-div select
+{
+	font-size: 15px;
+	border: 1px solid #AAA;
+	padding: 5px 5px 5px 5px;
+	background: #fafafa;
+}
+.datatables div.form-div select option
+{
+	padding-right: 10px;	
+}
+.datatables div.form-div input[type=text]
+{
+	font-size: 15px;
+	width: 500px;	
+	height:20px;
+	border: 1px solid #AAA;
+	padding: 5px 5px 5px 5px;
+	background: #fafafa;
+}
+.datatables div.form-div textarea
+{
+	font-size: 15px;
+	border: 1px solid #AAA;
+	padding: 5px 5px 5px 5px;
+	background: #fafafa;
+}
+
+.datatables div.form-div textarea:hover, .datatables div.form-div textarea:focus,
+.datatables div.form-div input[type=text]:hover, .datatables div.form-div input[type=text]:focus,
+.datatables div.form-div select:hover, .datatables div.form-div select:focus
+{
+	border: 1px solid #444;
+	background: #fff;
+}
+div.form-div input.datepicker-input
+{
+	width: 100px !important;	
+}
+div.form-div input.datetime-input
+{
+	width:150px !important;	
+}
+.loading-box
+{
+	padding-top:7px;	
+}
+.small-loading
+{
+	background: url('images/small-loading.gif') no-repeat;
+	width:16px;
+	height:15px;
+	padding-left:25px;
+	padding-top:1px;
+	display: none;
+}
+a
+{
+	font-size: 15px;
+	color: #333;
+	text-decoration: underline;
+}
+a:hover
+{
+	text-decoration: none;	
+}
+ 

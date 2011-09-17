@@ -1,0 +1,17 @@
+v.1.1.1
+	Renaming the name "Tools" to "Actions".
+	Adding the hidden fields. Creation of new field type : "hidden". You can also add a value to the hidden field.
+	Update file uploader, javascript ajax uploader tested in IE7,8; Firefox 3,3.6,4; Safari4,5; Chrome; Opera10.60;
+v.1.1
+	Bug Fix - Datetime picker now works fine to an empty input. It also works fine to the add operation.
+	When the edit and the delete is unset then dissapear the column Tools.
+	The default library/model is not in a third party but has been moved in the main codeigniter foldering for better functionality and to use it in both CI 1.7.x and CI 2.0.x .
+	Delete the grocery Exceptions Library. Everyone can create his own exception library . It was just an example.
+	Add new jquery version 1.6.2 and renewing some plugins.
+	Remove php short tags.
+	No direct script access allowed on the views.
+	Renaming function set_relation_1_n to set_relation_n_n. The functionallity has not change.
+	Removing the libraries MY_Output.php and MY_Loader.php from the core folder.
+	Removing the folder template. The template was just an example and confused lot of people.
+	Fully compatible with Codeigniter versions 1.7.x , 2.0.0 - 2.0.3.
+	Creation of new field type : "invisible". Very useful if you use callbacks.

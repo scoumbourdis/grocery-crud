@@ -1,0 +1,188 @@
+$(function(){
+	$('#quickSearchButton').click(function(){
+		$('#quickSearchBox').slideToggle('normal');
+	});
+	$('.ptogtitle').click(function(){
+		if($(this).hasClass('vsble'))
+		{
+			$(this).removeClass('vsble');
+			$('#main-table-box').slideDown("slow");
+		}
+		else
+		{
+			$(this).addClass('vsble');
+			$('#main-table-box').slideUp("slow");
+		}
+	});
+	
+	$('#filtering_form').submit(function(){
+		var crud_page =  parseInt($('#crud_page').val());
+		var last_page = parseInt($('#last-page-number').html());
+		
+		if(crud_page > last_page)
+			$('#crud_page').val(last_page);
+		if(crud_page <= 0)
+			$('#crud_page').val('1');
+		
+		var this_form = $(this);
+		
+		$(this).ajaxSubmit({
+			 url: ajax_list_info_url,
+			 dataType: 'json',
+			 success:    function(data){
+				$('#total_items').html( data.total_results);
+				displaying_and_pages();
+				
+				this_form.ajaxSubmit({
+					 success:    function(data){
+						$('#ajax_list').html(data);
+					 }
+				}); 
+			 }
+		});
+		
+		createCookie('crud_page',crud_page,1);
+		createCookie('per_page',$('#per_page').val(),1);
+		createCookie('hidden_ordering',$('#hidden-ordering').val(),1);
+		createCookie('hidden_sorting',$('#hidden-sorting').val(),1);
+		
+		return false;
+	});
+	
+	$('#crud_search').click(function(){
+		$('#crud_page').val('1');
+		$('#filtering_form').trigger('submit');
+	});
+	
+	$('#search_clear').click(function(){
+		$('#crud_page').val('1');
+		$('#search_text').val('');
+		$('#filtering_form').trigger('submit');
+	});
+	
+	$('#per_page').change(function(){
+		$('#crud_page').val('1');
+		
+		$('#filtering_form').trigger('submit');
+	});
+	
+	$('#filtering_form').ajaxStart(function(){
+		$('#ajax_refresh_and_loading').addClass('loading');
+	});
+	
+	$('#filtering_form').ajaxStop(function(){
+		$('#ajax_refresh_and_loading').removeClass('loading');
+	});
+	
+	$('#ajax_refresh_and_loading').click(function(){
+		$('#filtering_form').trigger('submit');
+	});
+	
+	$('.first-button').click(function(){
+		$('#crud_page').val('1');
+		$('#filtering_form').trigger('submit');
+	});
+	
+	$('.prev-button').click(function(){
+		if( $('#crud_page').val() != "1")
+		{
+			$('#crud_page').val( parseInt($('#crud_page').val()) - 1 );
+			$('#crud_page').trigger('change');
+		}
+	});
+	
+	$('.last-button').click(function(){
+		$('#crud_page').val( $('#last-page-number').html());
+		$('#filtering_form').trigger('submit');
+	});
+	
+	$('.next-button').click(function(){
+		$('#crud_page').val( parseInt($('#crud_page').val()) + 1 );
+		$('#crud_page').trigger('change');
+	});
+	
+	$('#crud_page').change(function(){
+		$('#filtering_form').trigger('submit');
+	});
+	
+	$('.field-sorting').live('click', function(){
+		$('#hidden-sorting').val($(this).attr('rel'));
+		
+		if($(this).hasClass('asc'))
+			$('#hidden-ordering').val('desc');
+		else
+			$('#hidden-ordering').val('asc');
+		
+		$('#crud_page').val('1');
+		$('#filtering_form').trigger('submit');
+	});
+	
+	$('.delete-row').live('click', function(){
+		var delete_url = $(this).attr('href');
+		
+		if(confirm('Are you sure that you want to delete this '+subject+'?'))
+		{
+			$.ajax({
+				url: delete_url,
+				dataType: 'json',
+				success: function(data)
+				{					
+					if(data.success)
+					{
+						$('#ajax_refresh_and_loading').trigger('click');
+						$('#report-success').html( data.success_message ).slideUp('fast').slideDown('slow');						
+						$('#report-error').html('').slideUp('fast');
+					}
+					else
+					{
+						$('#report-error').html( data.error_message ).slideUp('fast').slideDown('slow');						
+						$('#report-success').html('').slideUp('fast');						
+						
+					}
+				}
+			});
+		}
+		
+		return false;
+	});
+	
+	$('#crud_page').numeric();
+	
+	var cookie_crud_page = readCookie('crud_page');
+	var cookie_per_page  = readCookie('per_page');
+	var hidden_ordering  = readCookie('hidden_ordering');
+	var hidden_sorting  = readCookie('hidden_sorting');
+	
+	if(cookie_crud_page != null && cookie_per_page != null)
+	{		
+		$('#crud_page').val(cookie_crud_page);
+		$('#per_page').val(cookie_per_page);		
+		$('#hidden-ordering').val(hidden_ordering);
+		$('#hidden-sorting').val(hidden_sorting);
+		
+		$('#filtering_form').trigger('submit');
+	}
+});
+
+function displaying_and_pages()
+{
+	var crud_page 		= parseInt( $('#crud_page').val()) ;
+	var per_page	 	= parseInt( $('#per_page').val() );
+	var total_items 	= parseInt( $('#total_items').html() );
+	
+	$('#last-page-number').html( Math.ceil( total_items / per_page) );
+	
+	if(total_items == 0)
+		$('#page-starts-from').html( '0');
+	else
+		$('#page-starts-from').html( (crud_page - 1)*per_page + 1 );
+	
+	if(crud_page*per_page > total_items)
+		$('#page-ends-to').html( total_items );
+	else
+		$('#page-ends-to').html( crud_page*per_page );
+	
+	if(crud_page == 0)
+		$('#crud_page').val('1');
+	
+}
