@@ -1,5 +1,5 @@
-Grocery CRUD - A Codeigniter Library that Create a CRUD automatically 
-with just few lines of code.Copyright (C) 2010 - 2011  John Skoumbourdis. 
+Grocery CRUD - A Codeigniter Library that Create a CRUD automatically with just few lines of code.
+Copyright (C) 2010 - 2011  John Skoumbourdis. 
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

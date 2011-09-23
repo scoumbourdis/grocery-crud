@@ -177,4 +177,14 @@ a:hover
 {
 	text-decoration: none;	
 }
- 
+th.actions
+{
+	white-space:nowrap;
+	text-align: right;
+	cursor: auto !important;
+}
+td.actions
+{
+	white-space:nowrap;
+	text-align: right;	
+}

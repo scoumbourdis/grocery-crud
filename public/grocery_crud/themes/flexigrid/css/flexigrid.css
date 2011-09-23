@@ -616,6 +616,7 @@ div.pGroup {
 	padding:0px !important;	
 	padding-bottom:0px !important;		
 	margin-left:5px;
+	display: block;
 }
 .flexigrid .delete-icon
 {
@@ -627,11 +628,12 @@ div.pGroup {
 	border: none !important;
 	padding:0px !important;	
 	padding-bottom:0px !important;			
-	margin-left:5px;	
+	margin-left:5px;
+	display: block;	
 }
 .flexigrid .tools
 {
-	width: 50px;
+	white-space: nowrap;
 	padding:0px;
 	padding:5px 5px 3px 5px;
 }
@@ -760,4 +762,11 @@ a:hover
 	padding-left:25px;
 	padding-top:1px;
 	display: none;
+}
+.crud-action
+{
+	float:right;
+	margin-left:5px;
+	padding:0px;
+	margin-right: 3px;	
 }

@@ -13,6 +13,21 @@
 	var base_url = '<?php echo base_url();?>';
 	var subject = '<?php echo $subject?>';
 </script>
+<?php 
+	if(!empty($actions)){
+?>
+	<style type="text/css">
+		<?php foreach($actions as $action_unique_id => $action){?>
+			<?php if(!empty($action->image_url)){ ?>
+				.<?php echo $action_unique_id; ?>{ 
+					background: url('<?php echo $action->image_url; ?>') !important;
+				}
+			<?php }?>
+		<?php }?>
+	</style>		
+<?php 
+	}
+?>
 <div id='report-error' class='report-div error report-list'></div>
 <div id='report-success' class='report-div success report-list'></div>	
 <?php if(!$unset_add){?>

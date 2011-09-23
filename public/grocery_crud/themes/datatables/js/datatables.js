@@ -5,12 +5,17 @@ $(document).ready(function() {
 		"bStateSave": true
 	});
 
-	$('a[role=button]').hover(function(){
-		$(this).addClass('ui-state-hover');
-    },
-	function(){
-    	$(this).removeClass('ui-state-hover');
-	});
+	$('a[role=button]').live("mouseover mouseout", function(event) {
+		  if ( event.type == "mouseover" ) {
+			  $(this).addClass('ui-state-hover');
+		  } else {
+			  $(this).removeClass('ui-state-hover');
+		  }
+	});	
+	
+	$('th.actions').unbind('click');
+	$('th.actions>div').html($('th.actions>div').text());
+	
 } ); 
 
 function delete_row(delete_url , row_id)

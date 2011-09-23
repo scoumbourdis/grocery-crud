@@ -1020,6 +1020,7 @@ class grocery_Layout extends grocery_Model_Driver
 		
 		$data->list = $this->get_list();
 		$data->list = $this->change_list($data->list , $data->types);
+		$data->list = $this->change_list_add_actions($data->list);
 		
 		$data->total_results = $this->get_total_results();
 		
@@ -1034,6 +1035,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$data->unset_add			= $this->unset_add;
 		$data->unset_edit			= $this->unset_edit;
 		$data->unset_delete			= $this->unset_delete;
+		$data->actions				= $this->actions;
 		
 		if($data->list === false)
 		{
@@ -1077,6 +1079,36 @@ class grocery_Layout extends grocery_Model_Driver
 		$total_results = (int)$this->get_total_results();
 		echo json_encode(array('total_results' => $total_results));
 		die();
+	}
+	
+	protected function change_list_add_actions($list)
+	{
+		if(empty($this->actions))
+			return $list;
+			
+		$primary_key = $this->get_primary_key();
+		
+		foreach($list as $num_row => $row)
+		{
+			$actions_urls = array();
+			foreach($this->actions as $unique_id => $action)
+			{
+				if(!empty($action->url_callback))
+				{
+					$actions_urls[$unique_id] = call_user_func($action->url_callback, $row->$primary_key, $row); 
+				}
+				else 
+				{
+					$actions_urls[$unique_id] = 
+						$action->url_has_http ? 
+							$action->link_url.$row->$primary_key : 
+							site_url($action->link_url.'/'.$row->$primary_key);
+				}
+			}
+			$row->action_urls = $actions_urls;
+		}
+		
+		return $list;
 	}
 	
 	protected function change_list($list,$types)
@@ -2075,6 +2107,7 @@ class grocery_CRUD extends grocery_States
 	protected $relation				= array();
 	protected $relation_1_n			= array();
 	protected $upload_fields		= array();
+	protected $actions				= array();
 	
 	protected $change_field_type	= null;
 	
@@ -2577,7 +2610,7 @@ class grocery_CRUD extends grocery_States
 			$this->set_default_Model();
 		
 		switch ($this->state_code) {			
-			case 1:
+			case 1://list
 				$this->set_basic_db_table($this->get_table());
 				
 				$this->setThemeBasics();
@@ -2590,7 +2623,7 @@ class grocery_CRUD extends grocery_States
 
 			break;
 			
-			case 2:
+			case 2://add
 				if($this->unset_add)
 				{
 					throw new Exception('This user is not allowed to do this operation', 14);
@@ -2608,7 +2641,7 @@ class grocery_CRUD extends grocery_States
 				
 			break;
 			
-			case 3:
+			case 3://edit
 				if($this->unset_edit)
 				{
 					throw new Exception('This user is not allowed to do this operation', 14);
@@ -2628,7 +2661,7 @@ class grocery_CRUD extends grocery_States
 				
 			break;
 
-			case 4:
+			case 4://delete
 				if($this->unset_delete)
 				{
 					throw new Exception('This user is not allowed to do this operation', 14);
@@ -2643,7 +2676,7 @@ class grocery_CRUD extends grocery_States
 				$this->delete_layout( $delete_result );
 			break;				
 			
-			case 5:
+			case 5://insert
 				if($this->unset_add)
 				{
 					throw new Exception('This user is not allowed to do this operation', 14);
@@ -2657,7 +2690,7 @@ class grocery_CRUD extends grocery_States
 				$this->insert_layout($insert_result);
 			break;
 
-			case 6:
+			case 6://update
 				if($this->unset_edit)
 				{
 					throw new Exception('This user is not allowed to do this operation', 14);
@@ -2672,7 +2705,7 @@ class grocery_CRUD extends grocery_States
 				$this->update_layout( $update_result );
 			break;	
 
-			case 7:
+			case 7://ajax_list
 				$this->set_basic_db_table($this->get_table());
 				
 				$this->setThemeBasics();
@@ -2688,7 +2721,7 @@ class grocery_CRUD extends grocery_States
 				
 			break;
 
-			case 8:
+			case 8://ajax_list_info
 				$this->set_basic_db_table($this->get_table());
 				
 				$this->setThemeBasics();
@@ -2703,7 +2736,7 @@ class grocery_CRUD extends grocery_States
 				$this->showListInfo();
 			break;
 			
-			case 9:
+			case 9://insert_validation
 				$this->set_basic_db_table($this->get_table());
 				
 				$validation_result = $this->db_insert_validation();
@@ -2711,7 +2744,7 @@ class grocery_CRUD extends grocery_States
 				$this->validation_layout($validation_result);
 			break;
 			
-			case 10:
+			case 10://update_validation
 				$this->set_basic_db_table($this->get_table());
 				
 				$validation_result = $this->db_update_validation();
@@ -2719,7 +2752,7 @@ class grocery_CRUD extends grocery_States
 				$this->validation_layout($validation_result);
 			break;
 
-			case 11:
+			case 11://upload_file
 				$this->set_basic_db_table($this->get_table());
 				$state_info = $this->getStateInfo();
 				
@@ -2728,7 +2761,7 @@ class grocery_CRUD extends grocery_States
 				$this->upload_layout($upload_result, $state_info->field_name);
 			break;
 
-			case 12:
+			case 12://delete_file
 				$this->set_basic_db_table($this->get_table());
 				$state_info = $this->getStateInfo();
 				
@@ -3024,6 +3057,29 @@ class grocery_CRUD extends grocery_States
 		$this->subject_plural 	= $subject_plural;
 			
 		return $this;
+	}
+
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param $title
+	 * @param $image_url
+	 * @param $url
+	 * @param $css_class
+	 * @param $url_callback
+	 */
+	public function add_action( $label, $image_url = '', $link_url = '', $css_class = '', $url_callback = null)
+	{
+		$unique_id = substr($label,0,1).substr(md5($label.$link_url),-8); //The unique id is used for class name so it must begin with a string
+		
+		$this->actions[$unique_id]  = (object)array(
+			'label' 		=> $label, 
+			'image_url' 	=> $image_url,
+			'link_url'		=> $link_url,
+			'css_class' 	=> $css_class,
+			'url_callback' 	=> $url_callback,
+			'url_has_http'	=> substr($link_url,0,7) == 'http://' ? true : false
+		);
 	}
 	
 	/**
