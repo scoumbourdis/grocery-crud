@@ -2,7 +2,7 @@ v.1.1.2
 	Renaming the label "Tools" to "Actions".
 	Creation of new field type : "hidden" to add hidden fields. You can also add a value to the hidden field.
 	Updating Javascripts: datatables, file_uploader.
-	Disable sorting of the row "Actions" on datatables theme and fix the actions hover on paging that didn't work well.
+	Disable sorting of the row "Actions" on datatables theme and fix the actions hover on paging that didn't work.
 	Adding new feature/function add_action. Adds icons and urls for custom "actions".
 	Adding .htaccess files to the views of themes for security reasons.
 v.1.1

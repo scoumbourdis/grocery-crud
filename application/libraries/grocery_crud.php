@@ -22,17 +22,22 @@
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.1.0  
+ * @license     http://www.gnu.org/licenses   GNU License 
+ * @version    	1.1.0   
  * @link		http://www.grocerycrud.com/crud/view/documentation
  */
 class grocery_Field_Types
 {	
+	/**	 
+	 * Gets the field types of the main table.
+	 * @return array
+	 */
 	public function get_field_types()
 	{
 		$types	= array();
 		foreach($this->basic_model->get_field_types_basic_table() as $field_info)
 		{
-			$field_info->required = !empty($this->required_fields) && in_array($field_info->name,$this->required_fields)? true : false;
+			$field_info->required = !empty($this->required_fields) && in_array($field_info->name,$this->required_fields) ? true : false;
 			 
 			$field_info->display_as = 
 				isset($this->display_as[$field_info->name]) ? 
@@ -2072,9 +2077,10 @@ class grocery_States extends grocery_Layout
  *
  * Creates a full functional CRUD
  *
- * @package    	grocery CRUD
+ * @package    	grocery CRUD 
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  * @version    	1.1.0  
+ * @license     http://www.gnu.org/licenses/   GNU License
  * @link		http://www.grocerycrud.com/crud/view/documentation
  */
 class grocery_CRUD extends grocery_States
@@ -2116,6 +2122,7 @@ class grocery_CRUD extends grocery_States
 	protected $unset_add		= false;
 	protected $unset_edit		= false;
 	protected $unset_delete		= false;
+	protected $unset_jquery		= false;
 	
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
@@ -2228,6 +2235,19 @@ class grocery_CRUD extends grocery_States
 		{
 			$this->unset_texteditor[] = $arg;	
 		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Unsets just the jquery library from the js. This function can be used if there is already a jquery included 
+	 * in the main template. This will avoid all jquery conflicts. 
+	 * 
+	 * @return	void
+	 */
+	public function unset_jquery()
+	{
+		$this->unset_jquery = true;
 		
 		return $this;
 	}
@@ -3080,6 +3100,8 @@ class grocery_CRUD extends grocery_States
 			'url_callback' 	=> $url_callback,
 			'url_has_http'	=> substr($link_url,0,7) == 'http://' ? true : false
 		);
+		
+		return $this;
 	}
 	
 	/**
