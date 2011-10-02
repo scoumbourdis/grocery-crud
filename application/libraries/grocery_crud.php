@@ -997,8 +997,9 @@ class grocery_Layout extends grocery_Model_Driver
 	private $echo_and_die				= false;
 	protected $theme 					= null;
 	protected $default_true_false_text 	= array('inactive' , 'active');
-	public $css_files					= array(); //This is public only to call it from the set_css, get_css
-	public $js_files					= array(); //This is public only to call it from the set_js, get_js
+	
+	protected static $css_files					= array();
+	protected static $js_files					= array();
 	
 	protected function set_basic_Layout()
 	{	
@@ -1015,8 +1016,6 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function showList($ajax = false)
 	{
-		$ci = &get_instance();
-		
 		$data = $this->get_common_data();
 		
 		$data->order_by 	= $this->order_by;
@@ -1078,7 +1077,6 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function showListInfo()
 	{
-		$ci = &get_instance();
 		$this->set_echo_and_die();
 		
 		$total_results = (int)$this->get_total_results();
@@ -1144,8 +1142,8 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function showAddForm()
 	{
-		$ci = &get_instance();
 		$this->set_js('public/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
+		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
 		
@@ -1162,8 +1160,8 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function showEditForm($state_info)
 	{
-		$ci = &get_instance();
 		$this->set_js('public/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
+		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
 		
@@ -1186,7 +1184,6 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function delete_layout($delete_result = true)
 	{
-		$ci = &get_instance();
 		if($delete_result === false)
 		{
 			$error_message = '<p>Your data was not deleted successfully from the database.</p>';
@@ -1204,7 +1201,6 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function insert_layout($insert_result = false)
 	{
-		$ci = &get_instance();
 		if($insert_result === false)
 		{
 			echo json_encode(array('success' => $insert_result));	
@@ -1226,7 +1222,6 @@ class grocery_Layout extends grocery_Model_Driver
 
 	protected function validation_layout($validation_result)
 	{
-		$ci = &get_instance();
 		echo "<textarea>".json_encode($validation_result)."</textarea>";
 		$this->set_echo_and_die();
 	}
@@ -1235,7 +1230,6 @@ class grocery_Layout extends grocery_Model_Driver
 	{
 		if($upload_result !== false)
 		{
-			$ci = &get_instance();
 			echo json_encode(
 				(object)array(
 					'success' => true, 
@@ -1247,7 +1241,6 @@ class grocery_Layout extends grocery_Model_Driver
 		}
 		else
 		{
-			$ci = &get_instance();
 			echo json_encode((object)array('success' => false));
 			$this->set_echo_and_die();	
 		}
@@ -1257,13 +1250,11 @@ class grocery_Layout extends grocery_Model_Driver
 	{
 		if($upload_result !== false)
 		{
-			$ci = &get_instance();
 			echo json_encode( (object)array( 'success' => true ) );
 			$this->set_echo_and_die();	
 		}
 		else
 		{
-			$ci = &get_instance();
 			echo json_encode((object)array('success' => false));
 			$this->set_echo_and_die();	
 		}
@@ -1271,32 +1262,26 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	public static function set_css($css_file)
 	{
-		$ci = &get_instance();
-		$ci->grocery_crud->css_files[sha1($css_file)] = base_url().$css_file;
+		grocery_CRUD::$css_files[sha1($css_file)] = base_url().$css_file;
 	}
 
 	public static function set_js($js_file)
 	{
-		$ci = &get_instance();
-		$ci->grocery_crud->js_files[sha1($js_file)] = base_url().$js_file;
+		grocery_CRUD::$js_files[sha1($js_file)] = base_url().$js_file;
 	}
 
 	public function get_css_files()
 	{
-		$ci = &get_instance();
-		return $ci->grocery_crud->css_files;
+		return grocery_CRUD::$css_files;
 	}
 
 	public function get_js_files()
 	{
-		$ci = &get_instance();
-		return $ci->grocery_crud->js_files;
+		return grocery_CRUD::$js_files;
 	}	
 	
 	protected function get_layout()
-	{
-		$ci = &get_instance();
-		
+	{		
 		$js_files = $this->get_js_files();
 		$css_files =  $this->get_css_files();
 		
@@ -1313,7 +1298,6 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function update_layout($update_result = false)
 	{
-		$ci = &get_instance();
 		if($update_result === false)
 		{
 			echo json_encode(array('success' => $update_result));	
@@ -1332,7 +1316,6 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function get_integer_input($field_info,$value)
 	{
-		$ci = &get_instance();
 		$this->set_js('public/grocery_crud/js/jquery_plugins/jquery.numeric.js');
 		$this->set_js('public/grocery_crud/js/jquery_plugins/config/jquery.numeric.config.js');
 		$extra_attributes = '';
@@ -1344,7 +1327,6 @@ class grocery_Layout extends grocery_Model_Driver
 
 	protected function get_true_false_input($field_info,$value)
 	{
-		$ci = &get_instance(); 
 		$input = "<input name='{$field_info->name}' type='text' value='$value' class='numeric' />";
 		
 		$checked = $value == 1 ? "checked = 'checked'" : "";
@@ -1359,8 +1341,6 @@ class grocery_Layout extends grocery_Model_Driver
 	{
 		$value = !is_string($value) ? '' : $value; 
 		
-		$ci = &get_instance();
-		
 		$extra_attributes = '';
 		if(!empty($field_info->db_max_length))
 			$extra_attributes .= "maxlength='{$field_info->db_max_length}'"; 
@@ -1372,7 +1352,6 @@ class grocery_Layout extends grocery_Model_Driver
 	{   
 		if($field_info->extras == 'text_editor')
 		{
-			$ci = &get_instance();
 			$this->set_js('public/grocery_crud/texteditor/jquery.tinymce.js');
 			$this->set_js('public/grocery_crud/js/jquery_plugins/config/jquery.tine_mce.config.js');
 			$input = "<textarea name='{$field_info->name}' class='texteditor' >$value</textarea>";
@@ -1386,7 +1365,6 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function get_datetime_input($field_info,$value)
 	{
-		$ci = &get_instance();
 		$this->set_css('public/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
 		$this->set_css('public/grocery_crud/css/jquery_plugins/jquery.ui.datetime.css');
 		$this->set_js('public/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
@@ -1408,7 +1386,6 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function get_date_input($field_info,$value)
 	{
-		$ci = &get_instance();
 		$this->set_css('public/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
 		$this->set_js('public/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
 		$this->set_js('public/grocery_crud/js/jquery_plugins/config/jquery.datepicker.config.js');
@@ -1449,7 +1426,6 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function get_relation_1_n_input($field_info_type, $selected_values)
 	{	
-		$ci = &get_instance();
 		$this->set_css('public/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');		
 		$this->set_css('public/grocery_crud/css/jquery_plugins/ui.multiselect.css');
 		$this->set_js('public/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');	
@@ -1488,7 +1464,6 @@ class grocery_Layout extends grocery_Model_Driver
 
 	protected function get_upload_file_input($field_info, $value)
 	{
-		$ci = &get_instance();
 		$this->set_css('public/grocery_crud/css/other/fileuploader/fileuploader.css');
 		$this->set_js('public/grocery_crud/js/other/fileuploader.js');
 		$this->set_js('public/grocery_crud/js/other/fileuploader.config.js');
