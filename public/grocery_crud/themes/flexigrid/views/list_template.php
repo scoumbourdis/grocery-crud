@@ -1,12 +1,12 @@
 <?php  
 	if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-	$this->grocery_crud->set_css('public/grocery_crud/themes/flexigrid/css/flexigrid.css');
-	$this->grocery_crud->set_js('public/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
-	$this->grocery_crud->set_js('public/grocery_crud/themes/flexigrid/js/cookies.js');
-	$this->grocery_crud->set_js('public/grocery_crud/themes/flexigrid/js/flexigrid.js');
-	$this->grocery_crud->set_js('public/grocery_crud/themes/flexigrid/js/jquery.form.js');
-	$this->grocery_crud->set_js('public/grocery_crud/themes/flexigrid/js/jquery.numeric.js');
+	grocery_CRUD::set_css('public/grocery_crud/themes/flexigrid/css/flexigrid.css');
+	grocery_CRUD::set_js('public/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
+	grocery_CRUD::set_js('public/grocery_crud/themes/flexigrid/js/cookies.js');
+	grocery_CRUD::set_js('public/grocery_crud/themes/flexigrid/js/flexigrid.js');
+	grocery_CRUD::set_js('public/grocery_crud/themes/flexigrid/js/jquery.form.js');
+	grocery_CRUD::set_js('public/grocery_crud/themes/flexigrid/js/jquery.numeric.js');
 	
 ?>
 <script type='text/javascript'>

@@ -1269,13 +1269,13 @@ class grocery_Layout extends grocery_Model_Driver
 		}
 	}	
 	
-	public function set_css($css_file)
+	public static function set_css($css_file)
 	{
 		$ci = &get_instance();
 		$ci->grocery_crud->css_files[sha1($css_file)] = base_url().$css_file;
 	}
 
-	public function set_js($js_file)
+	public static function set_js($js_file)
 	{
 		$ci = &get_instance();
 		$ci->grocery_crud->js_files[sha1($js_file)] = base_url().$js_file;
@@ -1624,42 +1624,43 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	private function _theme_view($view, $vars = array(), $return = FALSE)
 	{
-		$ci = &get_instance();
+		$vars = (is_object($vars)) ? get_object_vars($vars) : $vars;
 		
-		//If the _ci_view_path is not set we work with a codeigniter lower than the version 2.0.3		
-		$ci_lt_2_0_3 = isset($ci->load->_ci_view_path) ? true : false;
+		$file_exists = FALSE;
+
+		$ext = pathinfo($view, PATHINFO_EXTENSION);
+		$file = ($ext == '') ? $view.'.php' : $view;
+
+		$view_file = $this->theme_path.$this->theme.'/views/';
 		
-		if($ci_lt_2_0_3)
+		if (file_exists($view_file.$file))
 		{
-			$orig_view_path = $ci->load->_ci_view_path;
-			$ci->load->_ci_view_path = $this->theme_path.$this->theme.'/views/';
+			$path = $view_file.$file;
+			$file_exists = TRUE;
 		}
-		else
+
+		if ( ! $file_exists)
 		{
-			$ci->load->add_package_path($this->theme_path.$this->theme.'/', TRUE);
+			throw new Exception('Unable to load the requested file: '.$file, 16);
 		}
 		
-		if($return)
+		extract($vars);
+		
+		#region buffering...
+		ob_start();
+
+		include($path);
+
+		$buffer = ob_get_contents();
+		@ob_end_clean();		
+		#endregion
+		
+		if ($return === TRUE)
 		{
-			$return_view = $ci->load->view($view,$vars,true);
-			
-			if($ci_lt_2_0_3)
-				$ci->load->_ci_view_path = $orig_view_path;
-			else
-				$ci->load->remove_package_path( $this->theme_path.$this->theme.'/' );
-				
-			return $return_view; 
+			return $buffer;
 		}
-		else
-		{
-			$this->views_as_string = $ci->load->view($view,$vars,true);
-			
-			if($ci_lt_2_0_3)
-				$ci->load->_ci_view_path = $orig_view_path;
-			else
-				$ci->load->remove_package_path( $this->theme_path.$this->theme.'/' );
-			
-		}
+		
+		$this->views_as_string .= $buffer;
 	}
 	
 	protected function getWrapped_last_segment()
