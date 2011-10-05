@@ -1,3 +1,7 @@
+v.1.1.3
+	Changing the functionality of the private method _theme_view. Now it's not dependent with the Loader of codeigniter.
+		So every template controller, HMVC, e.t.c. can work well with grocery CRUD.
+	Changing the library core and make it more minimal and more powerful.  
 v.1.1.2
 	Renaming the label "Tools" to "Actions".
 	Creation of new field type : "hidden" to add hidden fields. You can also add a value to the hidden field.
@@ -13,7 +17,7 @@ v.1.1
 	Add new jquery version 1.6.2 and renewing some plugins.
 	Remove php short tags.
 	No direct script access allowed on the views.
-	Renaming function set_relation_1_n to set_relation_n_n. The functionallity has not change.
+	Renaming function set_relation_1_n to set_relation_n_n. The functionality has not change.
 	Removing the libraries MY_Output.php and MY_Loader.php from the core folder.
 	Removing the folder template. The template was just an example and confused lot of people.
 	Fully compatible with Codeigniter versions 1.7.x , 2.0.0 - 2.0.3.

@@ -12,8 +12,6 @@ $(function(){
 			}
 		});
 		
-		clearForm();
-		
 		$("#FormLoading").ajaxStart(function(){
 			   $(this).show();
 		});

@@ -8,8 +8,6 @@ class grocery_Model  extends CI_Model  {
 	function __construct()
     {
         parent::__construct();
-        
-        $this->db->query('set names utf8');
     }
 
     function db_table_exists($table_name = null)

@@ -10,9 +10,7 @@ $(function(){
 				$(this).addClass('vsble');
 				$('#main-table-box').slideUp("slow");
 			}
-		});
-		
-		clearForm();
+		});		
 		
 		$("#FormLoading").ajaxStart(function(){
 			   $(this).show();
