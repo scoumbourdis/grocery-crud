@@ -835,8 +835,6 @@ class grocery_Model_Driver extends grocery_Field_Types
 	
 	protected function get_list()
 	{	
-		$ci = &get_instance();
-		
 		if(!empty($this->order_by))
 			$this->basic_model->order_by($this->order_by[0],$this->order_by[1]);
 		
@@ -860,7 +858,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);
 				
-		if($ci->config->item('crud_paging') === true)
+		if($this->config['crud_paging'] === true)
 		{
 			if($this->limit == null)
 			{
@@ -1002,16 +1000,12 @@ class grocery_Layout extends grocery_Model_Driver
 	protected static $js_files					= array();
 	
 	protected function set_basic_Layout()
-	{	
-		$ci = &get_instance();
-		
+	{			
 		if(!file_exists($this->theme_path.$this->theme.'/views/list_template.php'))
 		{
 			throw new Exception('The template does not exist. Please check your files and try again.', 12);
 			die();
 		}
-		
-		$ci->config->load($this->theme);
 	}
 	
 	protected function showList($ajax = false)
@@ -1583,13 +1577,13 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function setThemeBasics()
 	{
-		$ci = &get_instance();
-		$ci->load->config('grocery_crud');		
-		
-		$this->theme_path = $ci->config->item('crud_theme_path');
+		$this->theme_path = $this->default_theme_path;
 		if(substr($this->theme_path,-1) != '/')
 			$this->theme_path = $this->theme_path.'/';
 			
+		include($this->theme_path.$this->theme.'/config.php');
+		
+		$this->config = $config;
 	}
 	
 	public function set_theme($theme = null)
@@ -2071,6 +2065,8 @@ class grocery_CRUD extends grocery_States
 	private $edit_fields_checked	= false;	
 	
 	protected $default_theme		= 'flexigrid';
+	protected $default_theme_path		= 'public/grocery_crud/themes';
+	
 	protected $add_fields			= null;
 	protected $edit_fields			= null;
 	protected $add_hidden_fields 	= array();
@@ -2610,9 +2606,9 @@ class grocery_CRUD extends grocery_States
 			case 1://list
 				$this->set_basic_db_table($this->get_table());
 				
-				$this->setThemeBasics();
 				if($this->theme === null)
-					$this->set_theme($this->default_theme);
+					$this->set_theme($this->default_theme);				
+				$this->setThemeBasics();
 					
 				$this->set_basic_Layout();
 					
@@ -2628,9 +2624,9 @@ class grocery_CRUD extends grocery_States
 				}
 				
 				$this->set_basic_db_table($this->get_table());
-				$this->setThemeBasics();
 				if($this->theme === null)
-					$this->set_theme($this->default_theme);
+					$this->set_theme($this->default_theme);				
+				$this->setThemeBasics();
 				
 				$this->set_basic_Layout();
 				
@@ -2646,9 +2642,9 @@ class grocery_CRUD extends grocery_States
 				}
 				
 				$this->set_basic_db_table($this->get_table());
-				$this->setThemeBasics();
 				if($this->theme === null)
-					$this->set_theme($this->default_theme);
+					$this->set_theme($this->default_theme);				
+				$this->setThemeBasics();
 				
 				$this->set_basic_Layout();
 				
@@ -2705,9 +2701,9 @@ class grocery_CRUD extends grocery_States
 			case 7://ajax_list
 				$this->set_basic_db_table($this->get_table());
 				
-				$this->setThemeBasics();
 				if($this->theme === null)
-					$this->set_theme($this->default_theme);
+					$this->set_theme($this->default_theme);				
+				$this->setThemeBasics();
 				
 				$this->set_basic_Layout();
 				
@@ -2721,9 +2717,9 @@ class grocery_CRUD extends grocery_States
 			case 8://ajax_list_info
 				$this->set_basic_db_table($this->get_table());
 				
-				$this->setThemeBasics();
 				if($this->theme === null)
-					$this->set_theme($this->default_theme);
+					$this->set_theme($this->default_theme);				
+				$this->setThemeBasics();
 				
 				$this->set_basic_Layout();
 				
