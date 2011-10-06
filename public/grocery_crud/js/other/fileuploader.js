@@ -1195,8 +1195,11 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
         // build query string
         params = params || {};
         params['qqfile'] = name;
-        var queryString = qq.obj2url(params, this._options.action);
+        
+        //var queryString = qq.obj2url(params, this._options.action);// Old 
 
+        var queryString = this._options.action+'/'+name; // New
+        
         xhr.open("POST", queryString, true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.setRequestHeader("X-File-Name", encodeURIComponent(name));

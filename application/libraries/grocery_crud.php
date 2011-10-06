@@ -1704,7 +1704,7 @@ class grocery_States extends grocery_Layout
 	
 	protected function getStateCode()
 	{
-		$segment_object = $this->get_segment_genious();
+		$segment_object = $this->get_segment_genius();
 		$real_segment = $segment_object->segment;
 		
 		#region scenarios
@@ -1773,7 +1773,7 @@ class grocery_States extends grocery_Layout
 	{
 		$ci = &get_instance();
 		
-		$segment_object = $this->get_segment_genious();
+		$segment_object = $this->get_segment_genius();
 		$method_name = $this->get_method_name();
 		$segment_position = $segment_object->segment_position;
 		
@@ -1797,7 +1797,7 @@ class grocery_States extends grocery_Layout
 		return site_url($state_url);
 	}
 	
-	private function get_segment_genious()
+	private function get_segment_genius()
 	{
 		$ci = &get_instance();
 		
@@ -1903,7 +1903,7 @@ class grocery_States extends grocery_Layout
 	{
 		$state_code = $this->getStateCode();
 		
-		$segment_object = $this->get_segment_genious();
+		$segment_object = $this->get_segment_genius();
 		$method_name = $this->get_method_name();
 		$real_segment = $segment_object->segment;
 		$segment_position = $segment_object->segment_position;		
@@ -1911,6 +1911,7 @@ class grocery_States extends grocery_Layout
 		$ci = &get_instance();
 		$segements = $ci->uri->segments;
 		$second_segment = !empty($segements[$segment_position+1]) || (!empty($segements[$segment_position+1]) && $segements[$segment_position+1] == 0) ? $segements[$segment_position+1] : null;
+		$third_segment = !empty($segements[$segment_position+2]) || (!empty($segements[$segment_position+2]) && $segements[$segment_position+2] == 0) ? $segements[$segment_position+2] : null;
 		
 		$state_info = (object)array();
 		
@@ -2018,12 +2019,12 @@ class grocery_States extends grocery_Layout
 
 			case 11:
 				$state_info->field_name = $second_segment;
-				$state_info->file_name = $_GET['qqfile'];
+				$state_info->file_name = $third_segment;
 			break;
 
 			case 12:
 				$state_info->field_name = $second_segment;
-				$state_info->file_name = $_GET['file_name'];
+				$state_info->file_name = $third_segment;
 			break;				
 		}
 		
