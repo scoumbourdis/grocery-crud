@@ -3,6 +3,14 @@
 	font-family: Verdana,Arial,sans-serif;	
 	font-size: 14px;
 }
+.datatables a
+{
+	text-decoration: underline;	
+}
+.datatables a:hover
+{
+	text-decoration: none;
+}
 .form-title
 {
 	padding: 0.4em !important;

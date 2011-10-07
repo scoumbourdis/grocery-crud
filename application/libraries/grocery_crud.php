@@ -1279,6 +1279,9 @@ class grocery_Layout extends grocery_Model_Driver
 		$js_files = $this->get_js_files();
 		$css_files =  $this->get_css_files();
 		
+		if($this->unset_jquery)
+			unset($js_files['763b4d272e158bdb8ed5a12a1824c94f494954bd']);
+		
 		if($this->echo_and_die === false)
 		{
 			return (object)array('output' => $this->views_as_string, 'js_files' => $js_files, 'css_files' => $css_files);
