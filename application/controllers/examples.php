@@ -64,7 +64,7 @@ class Examples extends CI_Controller {
 			
 			$crud->required_fields('lastName');
 			
-			$crud->set_field_upload('file_url','public/uploads/files');
+			$crud->set_field_upload('file_url','assets/uploads/files');
 			
 			$output = $crud->render();
 
