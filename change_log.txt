@@ -3,6 +3,7 @@ v.1.1.3
 		So every template controller, HMVC, e.t.c. can work well with grocery CRUD.
 	Changing the library core and make it more minimal and more powerful.
 	New method unset_jquery. Very useful, if you already have the jquery library at your basic template.This is good to avoid jquery conflicts.
+	BUG fix. No more conflicts between flexigrid tables. There was a cookie conflict between different lists.
 v.1.1.2
 	Renaming the label "Tools" to "Actions".
 	Creation of new field type : "hidden" to add hidden fields. You can also add a value to the hidden field.

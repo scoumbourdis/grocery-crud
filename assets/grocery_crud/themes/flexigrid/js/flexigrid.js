@@ -41,10 +41,10 @@ $(function(){
 			 }
 		});
 		
-		createCookie('crud_page',crud_page,1);
-		createCookie('per_page',$('#per_page').val(),1);
-		createCookie('hidden_ordering',$('#hidden-ordering').val(),1);
-		createCookie('hidden_sorting',$('#hidden-sorting').val(),1);
+		createCookie('crud_page_'+unique_hash,crud_page,1);
+		createCookie('per_page_'+unique_hash,$('#per_page').val(),1);
+		createCookie('hidden_ordering_'+unique_hash,$('#hidden-ordering').val(),1);
+		createCookie('hidden_sorting_'+unique_hash,$('#hidden-sorting').val(),1);
 		
 		return false;
 	});
@@ -148,10 +148,10 @@ $(function(){
 	
 	$('#crud_page').numeric();
 	
-	var cookie_crud_page = readCookie('crud_page');
-	var cookie_per_page  = readCookie('per_page');
-	var hidden_ordering  = readCookie('hidden_ordering');
-	var hidden_sorting  = readCookie('hidden_sorting');
+	var cookie_crud_page = readCookie('crud_page_'+unique_hash);
+	var cookie_per_page  = readCookie('per_page_'+unique_hash);
+	var hidden_ordering  = readCookie('hidden_ordering_'+unique_hash);
+	var hidden_sorting  = readCookie('hidden_sorting_'+unique_hash);
 	
 	if(cookie_crud_page != null && cookie_per_page != null)
 	{		

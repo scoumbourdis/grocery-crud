@@ -130,7 +130,7 @@ class grocery_Model  extends CI_Model  {
     	return $relation_array;
     }
     
-    function get_relation_1_n_selection_array($primary_key_value, $field_info)
+    function get_relation_n_n_selection_array($primary_key_value, $field_info)
     {
     	$selection_primary_key = $this->get_primary_key($field_info->selection_table);
     	
@@ -158,7 +158,7 @@ class grocery_Model  extends CI_Model  {
     	return $results_array;
     }
     
-    function get_relation_1_n_unselected_array($field_info, $selected_values)
+    function get_relation_n_n_unselected_array($field_info, $selected_values)
     {
         $selection_primary_key = $this->get_primary_key($field_info->selection_table);
        
@@ -175,7 +175,7 @@ class grocery_Model  extends CI_Model  {
         return $results_array;       
     }
     
-    function db_relation_1_n_update($field_info, $post_data ,$main_primary_key)
+    function db_relation_n_n_update($field_info, $post_data ,$main_primary_key)
     {
     	$this->db->where($field_info->primary_key_alias_to_this_table, $main_primary_key);
     	if(!empty($post_data))
@@ -212,7 +212,7 @@ class grocery_Model  extends CI_Model  {
     	}
     }
     
-    function db_relation_1_n_delete($field_info, $main_primary_key)
+    function db_relation_n_n_delete($field_info, $main_primary_key)
     {
     	$this->db->where($field_info->primary_key_alias_to_this_table, $main_primary_key);
     	$this->db->delete($field_info->relation_table);
@@ -236,13 +236,10 @@ class grocery_Model  extends CI_Model  {
     		}
     		$db_field_types[$db_field_type->Field]['db_max_length'] = $length;
     		$db_field_types[$db_field_type->Field]['db_type'] = $db_type;
-    		$db_field_types[$db_field_type->Field]['db_null'] = $db_field_type->Null;
-    		$db_field_types[$db_field_type->Field]['db_default'] = $db_field_type->Default;
     		$db_field_types[$db_field_type->Field]['db_extra'] = $db_field_type->Extra;
     	}
     	
     	$results = $this->db->field_data($this->table_name);
-    	
     	foreach($results as $num => $row)
     	{
     		$row = (array)$row;

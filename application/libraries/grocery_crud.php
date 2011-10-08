@@ -23,7 +23,7 @@
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  * @license     http://www.gnu.org/licenses   GNU License 
- * @version    	1.1.0   
+ * @version    	1.1.3   
  * @link		http://www.grocerycrud.com/crud/view/documentation
  */
 class grocery_Field_Types
@@ -96,13 +96,13 @@ class grocery_Field_Types
 			$types[$field_info->name] = $field_info;
 		}
 		
-		if(!empty($this->relation_1_n))
+		if(!empty($this->relation_n_n))
 		{
-			foreach($this->relation_1_n as $field_name => $field_extras)
+			foreach($this->relation_n_n as $field_name => $field_extras)
 			{
 				$field_info = (object)array();
 				$field_info->name		= $field_name;
-				$field_info->crud_type 	= 'relation_1_n';
+				$field_info->crud_type 	= 'relation_n_n';
 				$field_info->extras 	= $field_extras;
 				$field_info->required	= false;//Temporary false
 				$field_info->display_as = 
@@ -190,8 +190,8 @@ class grocery_Field_Types
 				case 'relation':
 					$field_info->input = $this->get_relation_input($field_info,$value);
 				break;
-				case 'relation_1_n':
-					$field_info->input = $this->get_relation_1_n_input($field_info,$value);
+				case 'relation_n_n':
+					$field_info->input = $this->get_relation_n_n_input($field_info,$value);
 				break;								
 				case 'upload_file':
 					$field_info->input = $this->get_upload_file_input($field_info,$value);
@@ -253,8 +253,8 @@ class grocery_Field_Types
 			case 'enum':
 				$value = $this->character_limiter($value,20," [...]");
 			break;	
-			case 'relation_1_n':
-				$value = implode(', ' ,$this->get_relation_1_n_selection_array( $value, $this->relation_1_n[$field_info->name] ));
+			case 'relation_n_n':
+				$value = implode(', ' ,$this->get_relation_n_n_selection_array( $value, $this->relation_n_n[$field_info->name] ));
 				$value = $this->character_limiter($value,30," [...]");
 			break;						
 			
@@ -328,13 +328,9 @@ class grocery_Field_Types
 				case '3':
 				case 'int':
 					if( $db_type->db_type == 'tinyint' && $db_type->db_max_length ==  1)
-					{
 						$type = 'true_false';
-					}
 					else
-					{
 						$type = 'integer';
-					}
 				break;
 				case '254':
 				case 'string':
@@ -385,7 +381,7 @@ class grocery_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.1.0  
+ * @version    	1.1.3  
  * @link		http://www.grocerycrud.com/crud/view/documentation
  */
 class grocery_Model_Driver extends grocery_Field_Types
@@ -639,7 +635,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 				$insert_data = array();
 				foreach($add_fields as $num_row => $field)
 				{
-					if(isset($post_data[$field->field_name]) && !isset($this->relation_1_n[$field->field_name]))
+					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
 						$insert_data[$field->field_name] = $post_data[$field->field_name];
 				}
 				
@@ -654,12 +650,12 @@ class grocery_Model_Driver extends grocery_Field_Types
 					return false;
 				}
 				
-				if(!empty($this->relation_1_n))
+				if(!empty($this->relation_n_n))
 				{
-					foreach($this->relation_1_n as $field_name => $field_info)
+					foreach($this->relation_n_n as $field_name => $field_info)
 					{
 						$relation_data = isset( $post_data[$field_name] ) ? $post_data[$field_name] : array() ; 
-						$this->db_relation_1_n_update($field_info, $relation_data  ,$insert_primary_key);
+						$this->db_relation_n_n_update($field_info, $relation_data  ,$insert_primary_key);
 					}
 				}
 				
@@ -724,17 +720,17 @@ class grocery_Model_Driver extends grocery_Field_Types
 				$update_data = array();
 				foreach($edit_fields as $num_row => $field)
 				{
-					if(isset($post_data[$field->field_name]) && !isset($this->relation_1_n[$field->field_name]))
+					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
 						$update_data[$field->field_name] = $post_data[$field->field_name];
 				}				
 				$this->basic_model->db_update($update_data, $primary_key);
 				
-				if(!empty($this->relation_1_n))
+				if(!empty($this->relation_n_n))
 				{
-					foreach($this->relation_1_n as $field_name => $field_info)
+					foreach($this->relation_n_n as $field_name => $field_info)
 					{
 						$relation_data = isset( $post_data[$field_name] ) ? $post_data[$field_name] : array() ; 
-						$this->db_relation_1_n_update($field_info, $relation_data ,$primary_key);
+						$this->db_relation_n_n_update($field_info, $relation_data ,$primary_key);
 					}
 				}				
 				
@@ -784,11 +780,11 @@ class grocery_Model_Driver extends grocery_Field_Types
 				
 			}
 			
-			if(!empty($this->relation_1_n))
+			if(!empty($this->relation_n_n))
 			{
-				foreach($this->relation_1_n as $field_name => $field_info)
+				foreach($this->relation_n_n as $field_name => $field_info)
 				{
-					$this->db_relation_1_n_delete( $field_info, $primary_key );
+					$this->db_relation_n_n_delete( $field_info, $primary_key );
 				}
 			}					
 			
@@ -823,14 +819,14 @@ class grocery_Model_Driver extends grocery_Field_Types
 		return true;
 	}	
 	
-	protected function db_relation_1_n_update($field_info, $post_data , $primary_key_value)
+	protected function db_relation_n_n_update($field_info, $post_data , $primary_key_value)
 	{
-		$this->basic_model->db_relation_1_n_update($field_info, $post_data , $primary_key_value);
+		$this->basic_model->db_relation_n_n_update($field_info, $post_data , $primary_key_value);
 	}
 
-	protected function db_relation_1_n_delete($field_info, $primary_key_value)
+	protected function db_relation_n_n_delete($field_info, $primary_key_value)
 	{
-		$this->basic_model->db_relation_1_n_delete($field_info, $primary_key_value);
+		$this->basic_model->db_relation_n_n_delete($field_info, $primary_key_value);
 	}		
 	
 	protected function get_list()
@@ -879,25 +875,25 @@ class grocery_Model_Driver extends grocery_Field_Types
 	{
 		$values = $this->basic_model->get_edit_values($primary_key_value);
 		
-		if(!empty($this->relation_1_n))
+		if(!empty($this->relation_n_n))
 		{			
-			foreach($this->relation_1_n as $field_name => $field_info)
+			foreach($this->relation_n_n as $field_name => $field_info)
 			{
-				$values->$field_name = $this->get_relation_1_n_selection_array($primary_key_value, $field_info);
+				$values->$field_name = $this->get_relation_n_n_selection_array($primary_key_value, $field_info);
 			}
 		}
 		
 		return $values;
 	}
 	
-	protected function get_relation_1_n_selection_array($primary_key_value, $field_info)
+	protected function get_relation_n_n_selection_array($primary_key_value, $field_info)
 	{
-		return $this->basic_model->get_relation_1_n_selection_array($primary_key_value, $field_info);
+		return $this->basic_model->get_relation_n_n_selection_array($primary_key_value, $field_info);
 	}
 	
-	protected function get_relation_1_n_unselected_array($field_info, $selected_values)
+	protected function get_relation_n_n_unselected_array($field_info, $selected_values)
 	{
-		return $this->basic_model->get_relation_1_n_unselected_array($field_info, $selected_values);
+		return $this->basic_model->get_relation_n_n_unselected_array($field_info, $selected_values);
 	}	
 	
 	protected function set_basic_db_table($table_name = null)
@@ -986,7 +982,7 @@ class grocery_Model_Driver extends grocery_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.1.0
+ * @version    	1.1.3
  */
 class grocery_Layout extends grocery_Model_Driver
 {
@@ -1029,11 +1025,12 @@ class grocery_Layout extends grocery_Model_Driver
 		$data->delete_url			= $this->getDeleteUrl();
 		$data->ajax_list_url		= $this->getAjaxListUrl();
 		$data->ajax_list_info_url	= $this->getAjaxListInfoUrl();
+		$data->actions				= $this->actions;
+		$data->unique_hash			= $this->get_method_hash();
 		
 		$data->unset_add			= $this->unset_add;
 		$data->unset_edit			= $this->unset_edit;
 		$data->unset_delete			= $this->unset_delete;
-		$data->actions				= $this->actions;
 		
 		if($data->list === false)
 		{
@@ -1121,9 +1118,9 @@ class grocery_Layout extends grocery_Model_Driver
 				$field_value 	= isset( $row->{$column->field_name} ) ? $row->{$column->field_name} : null;
 				if( $has_callbacks && isset($this->callback_column[$field_name]) )
 					$list[$num_row]->$field_name = call_user_func($this->callback_column[$field_name], $field_value, $row);
-				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type != 'relation_1_n')
+				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type != 'relation_n_n')
 					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $field_value);
-				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type == 'relation_1_n')
+				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type == 'relation_n_n')
 				
 					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $row->$primary_key);				
 				else
@@ -1421,7 +1418,7 @@ class grocery_Layout extends grocery_Model_Driver
 		return $input;
 	}
 	
-	protected function get_relation_1_n_input($field_info_type, $selected_values)
+	protected function get_relation_n_n_input($field_info_type, $selected_values)
 	{	
 		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');		
 		$this->set_css('assets/grocery_crud/css/jquery_plugins/ui.multiselect.css');
@@ -1429,8 +1426,8 @@ class grocery_Layout extends grocery_Model_Driver
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/ui.multiselect.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.multiselect.js');
 		
-		$field_info 		= $this->relation_1_n[$field_info_type->name]; //As its inside here the relation_1_n exists
-		$unselected_values 	= $this->get_relation_1_n_unselected_array($field_info, $selected_values);
+		$field_info 		= $this->relation_n_n[$field_info_type->name]; //As its inside here the relation_n_n exists
+		$unselected_values 	= $this->get_relation_n_n_unselected_array($field_info, $selected_values);
 		
 		if(empty($unselected_values) && empty($selected_values))
 		{
@@ -1679,7 +1676,7 @@ class grocery_Layout extends grocery_Model_Driver
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.1.0
+ * @version    	1.1.3
  */
 class grocery_States extends grocery_Layout
 {
@@ -1817,6 +1814,11 @@ class grocery_States extends grocery_Layout
 		}
 		
 		return (object)array('segment_position' => $segment_position, 'segment' => $segment);
+	}
+	
+	protected function get_method_hash()
+	{
+		return md5($this->get_method_name());
 	}
 	
 	private function get_method_name()
@@ -2053,7 +2055,7 @@ class grocery_States extends grocery_Layout
  *
  * @package    	grocery CRUD 
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.1.0  
+ * @version    	1.1.3  
  * @license     http://www.gnu.org/licenses/   GNU License
  * @link		http://www.grocerycrud.com/crud/view/documentation
  */
@@ -2087,7 +2089,7 @@ class grocery_CRUD extends grocery_States
 	protected $unset_columns		= null;
 	protected $validation_rules		= array();
 	protected $relation				= array();
-	protected $relation_1_n			= array();
+	protected $relation_n_n			= array();
 	protected $upload_fields		= array();
 	protected $actions				= array();
 	
@@ -3092,16 +3094,6 @@ class grocery_CRUD extends grocery_States
 		$this->relation[$field_name] = array($field_name, $related_table,$related_title_field);
 		return $this;
 	}
-
-	/**
-	 * 
-	 * This function is deprecated
-	 * @throws Exception
-	 */
-	public function set_relation_1_n()
-	{
-		throw new Exception('The set_relation_1_n is deprecated and is renamed with the function set_relation_n_n.', 15);
-	}
 	
 	/**
 	 * 
@@ -3116,7 +3108,7 @@ class grocery_CRUD extends grocery_States
 	 */
 	public function set_relation_n_n($field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table, $primary_key_alias_to_selection_table , $title_field_selection_table , $priority_field_relation_table = null)
 	{
-		$this->relation_1_n[$field_name] = 
+		$this->relation_n_n[$field_name] = 
 			(object)array( 
 				'field_name' => $field_name, 
 				'relation_table' => $relation_table, 
@@ -3141,4 +3133,9 @@ class grocery_CRUD extends grocery_States
 		$upload_path = substr($upload_path,-1,1) == '/' ? substr($upload_path,0,-1) : $upload_path;
 		$this->upload_fields[$field_name] = (object)array( 'field_name' => $field_name , 'upload_path' => $upload_path);		
 	}
+}
+
+interface grocery_CRUD_Framework_Driver
+{
+
 }
