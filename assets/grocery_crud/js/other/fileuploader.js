@@ -1153,7 +1153,8 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
     getName: function(id){        
         var file = this._files[id];
         // fix missing name in Safari 4
-        return file.fileName != null ? file.fileName : file.name;       
+        var file_name = file.fileName != null ? file.fileName : file.name;
+        return file_name.replace(/[^\w\.]+/ig,"-");       
     },
     getSize: function(id){
         var file = this._files[id];

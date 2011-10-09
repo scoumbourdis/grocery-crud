@@ -2013,7 +2013,7 @@ class grocery_States extends grocery_Layout
 
 			case 11:
 				$state_info->field_name = $second_segment;
-				$state_info->file_name = $third_segment;
+				$state_info->file_name = substr(uniqid(),-5).'-'.preg_replace('/[^A-Za-z0-9_\.]+/', '-', trim(urldecode($third_segment)));
 			break;
 
 			case 12:

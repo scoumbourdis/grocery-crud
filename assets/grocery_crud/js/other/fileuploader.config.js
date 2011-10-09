@@ -32,7 +32,7 @@ $(function(){
 			{
 				var file_name = $('#delete_url_'+unique_id).attr('rel');
 				$.ajax({
-					url: delete_url+"?file_name="+file_name,
+					url: delete_url+"/"+file_name,
 					success:function(){
 						$('#'+uploader_id+' .qq-upload-list:first').html('');
 						$('#hidden_'+unique_id).val('');
