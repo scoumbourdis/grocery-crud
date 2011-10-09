@@ -394,9 +394,9 @@ class grocery_Model_Driver extends grocery_Field_Types
 	protected function set_default_Model()
 	{
 		$ci = &get_instance();
-		$ci->load->model('grocery_model');
+		$ci->load->model('grocery_Model');
 		
-		$this->basic_model = $ci->grocery_model;
+		$this->basic_model = $ci->grocery_Model;
 	}
 	
 	protected function get_total_results()
@@ -516,9 +516,8 @@ class grocery_Model_Driver extends grocery_Field_Types
 		}
 		
 		if(!empty($this->validation_rules))
-		{
-			$ci = &get_instance();
-			$ci->load->library('form_validation');
+		{		
+			$form_validation = $this->form_validation();
 			
 			$add_fields = $this->get_add_fields();
 			
@@ -528,18 +527,18 @@ class grocery_Model_Driver extends grocery_Field_Types
 				if(isset($this->validation_rules[$field_name])) 
 				{
 					$rule = $this->validation_rules[$field_name];
-					$ci->form_validation->set_rules($rule['field'],$rule['label'],$rule['rules']);
+					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules']);
 				}	
 			}	
 			
-			if($ci->form_validation->run())
+			if($form_validation->run())
 			{
 				$validation_result->success = true;
 			}
 			else
 			{
 				$validation_result->error_message = validation_errors();
-				$validation_result->error_fields = $ci->form_validation->_error_array;
+				$validation_result->error_fields = $form_validation->_error_array;
 			}
 		}
 		else
@@ -550,6 +549,14 @@ class grocery_Model_Driver extends grocery_Field_Types
 		return $validation_result;
 	}
 
+	protected function form_validation()
+	{
+			$ci = &get_instance();
+			$ci->load->library('form_validation');
+
+			return $ci->form_validation;
+	}
+	
 	protected function db_update_validation()
 	{
 		$validation_result = (object)array('success'=>false);
@@ -572,8 +579,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 		
 		if(!empty($this->validation_rules))
 		{
-			$ci = &get_instance();
-			$ci->load->library('form_validation');
+			$form_validation = $this->form_validation();
 			
 			$edit_fields = $this->get_edit_fields();
 			
@@ -583,18 +589,18 @@ class grocery_Model_Driver extends grocery_Field_Types
 				if(isset($this->validation_rules[$field_name])) 
 				{
 					$rule = $this->validation_rules[$field_name];
-					$ci->form_validation->set_rules($rule['field'],$rule['label'],$rule['rules']);
+					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules']);
 				}	
 			}	
 			
-			if($ci->form_validation->run())
+			if($form_validation->run())
 			{
 				$validation_result->success = true;
 			}
 			else
 			{
 				$validation_result->error_message = validation_errors();
-				$validation_result->error_fields = $ci->form_validation->_error_array;
+				$validation_result->error_fields = $form_validation->_error_array;
 			}
 		}
 		else
@@ -1632,17 +1638,6 @@ class grocery_Layout extends grocery_Model_Driver
 		$this->views_as_string .= $buffer;
 	}
 	
-	protected function getWrapped_last_segment()
-	{
-		$ci = &get_instance();
-		$rsegements = $ci->uri->rsegment_array();
-		
-		if(isset($rsegements[2]))
-			return $rsegements[2];
-			
-		return false;
-	}
-	
 	protected function get_views_as_string()
 	{
 		if(!empty($this->views_as_string))
@@ -1698,8 +1693,7 @@ class grocery_States extends grocery_Layout
 	
 	protected function getStateCode()
 	{
-		$segment_object = $this->get_segment_genius();
-		$real_segment = $segment_object->segment;
+		$real_segment = $this->get_segment_genius()->segment;
 		
 		#region scenarios
 
@@ -1779,7 +1773,7 @@ class grocery_States extends grocery_Layout
 				break;
 		}
 		
-		#region there is a scenarion that you forgot the index
+		#region there is a scenario that you forgot the index
 			if($method_name == 'index' && !in_array('index',$state_url_array)) //This means that you just forgot to add the index to your url
 			{
 				$state_url_array[$num+1] = 'index';
@@ -1797,23 +1791,27 @@ class grocery_States extends grocery_Layout
 		
 		$segment_position = count($ci->uri->segments) + 1;
 		$segment = 'list';
-		foreach($ci->uri->segments as $num => $value)
+		
+		$segements = $ci->uri->segments;
+		foreach($segements as $num => $value)
 		{
 			if(in_array($value,array('ajax_list','ajax_list_info','add','edit','delete','insert_validation','update_validation','upload_file','delete_file')))
 			{
 				$segment_position = (int)$num;
 				$segment = $value;
+				//I don't have a "break" here because I want to ensure that is the LAST segment with name that is in the array.
 			}
 		}
 		
 		$function_name = $this->get_method_name();
 		
 		if($function_name == 'index' && !in_array('index',$ci->uri->segments))
-		{
 			$segment_position++;
-		}
 		
-		return (object)array('segment_position' => $segment_position, 'segment' => $segment);
+		$second_segment = !empty($segements[$segment_position+1]) || (!empty($segements[$segment_position+1]) && $segements[$segment_position+1] == 0) ? $segements[$segment_position+1] : false;
+		$third_segment = !empty($segements[$segment_position+2]) || (!empty($segements[$segment_position+2]) && $segements[$segment_position+2] == 0) ? $segements[$segment_position+2] : false;		
+		
+		return (object)array('segment_position' => $segment_position, 'segment' => $segment, 'second_segment' => $second_segment, 'third_segment' => $third_segment);
 	}
 	
 	protected function get_method_hash()
@@ -1821,7 +1819,7 @@ class grocery_States extends grocery_Layout
 		return md5($this->get_method_name());
 	}
 	
-	private function get_method_name()
+	protected function get_method_name()
 	{
 		$ci = &get_instance();		
 		return $ci->router->method;
@@ -1903,14 +1901,11 @@ class grocery_States extends grocery_Layout
 		$state_code = $this->getStateCode();
 		
 		$segment_object = $this->get_segment_genius();
+		
 		$method_name = $this->get_method_name();
 		$real_segment = $segment_object->segment;
-		$segment_position = $segment_object->segment_position;		
-		
-		$ci = &get_instance();
-		$segements = $ci->uri->segments;
-		$second_segment = !empty($segements[$segment_position+1]) || (!empty($segements[$segment_position+1]) && $segements[$segment_position+1] == 0) ? $segements[$segment_position+1] : null;
-		$third_segment = !empty($segements[$segment_position+2]) || (!empty($segements[$segment_position+2]) && $segements[$segment_position+2] == 0) ? $segements[$segment_position+2] : null;
+		$second_segment = $segment_object->second_segment;
+		$third_segment = $segment_object->third_segment;
 		
 		$state_info = (object)array();
 		
@@ -2942,7 +2937,7 @@ class grocery_CRUD extends grocery_States
 		else 
 		{
 			//Last try , try to find the table from your view / function name!!! Not suggested but it works .
-			$last_chance_table_name = $this->getWrapped_last_segment();
+			$last_chance_table_name = $this->get_method_name();
 			if($this->table_exists($last_chance_table_name))
 			{
 				$this->set_table($last_chance_table_name);
@@ -3133,9 +3128,4 @@ class grocery_CRUD extends grocery_States
 		$upload_path = substr($upload_path,-1,1) == '/' ? substr($upload_path,0,-1) : $upload_path;
 		$this->upload_fields[$field_name] = (object)array( 'field_name' => $field_name , 'upload_path' => $upload_path);		
 	}
-}
-
-interface grocery_CRUD_Framework_Driver
-{
-
 }
