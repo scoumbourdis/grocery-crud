@@ -26,7 +26,8 @@ class grocery_Model  extends CI_Model  {
     		foreach($this->relation as $relation)
     		{
     			list($field_name , $related_table , $related_field_title) = $relation;
-    			$select .= ", $related_table.$related_field_title as '$related_table.$related_field_title'";
+    			$unique_join_name = $this->_unique_join_name($field_name);
+    			$select .= ", $unique_join_name.$related_field_title as '$unique_join_name.$related_field_title'";
     			
     			if($this->field_exists($related_field_title))
     			{
@@ -103,7 +104,8 @@ class grocery_Model  extends CI_Model  {
 			
 			if($related_primary_key !== false)
 			{
-				$this->db->join($related_table, "$related_table.$related_primary_key = {$this->table_name}.$field_name",'left');
+				$unique_name = $this->_unique_join_name($field_name);
+				$this->db->join( $related_table.' as '.$unique_name , "$unique_name.$related_primary_key = {$this->table_name}.$field_name",'left');
 
 				$this->relation[$field_name] = array($field_name , $related_table , $related_field_title);
 				
@@ -112,7 +114,12 @@ class grocery_Model  extends CI_Model  {
     	}
     	
     	return false;
-    }    
+    }
+    
+    protected function _unique_join_name($field_name)
+    {
+    	return 'j'.substr(md5($field_name),0,6); //This j is because is better for a string to begin with a letter and not a number
+    }
     
     function get_relation_array($field_name , $related_table , $related_field_title)
     {

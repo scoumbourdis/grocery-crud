@@ -4,6 +4,7 @@ v.1.1.3
 	Changing the library core and make it more minimal and more powerful.
 	New method unset_jquery. Very useful, if you already have the jquery library at your basic template.This is good to avoid jquery conflicts.
 	BUG fix. No more conflicts between flexigrid tables. There was a cookie conflict between different lists.
+	BUG fix. The set relation now works if you add the same table name twice.
 	Renaming the folder public to assets.
 	Grocery CRUD is now ready to be a spark.
 	Changing the functionality and the javascript of the uploader. There is no need to have $config['enable_query_strings'] set to true anymore.
