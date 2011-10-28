@@ -16,7 +16,7 @@
 					</div>
 				</th>
 				<?php }?>
-				<?php if(!$unset_delete || !$unset_edit){?>
+				<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
 				<th align="left" abbr="tools" axis="col1" class="" width='20%'>
 					<div class="text-right">
 						Actions

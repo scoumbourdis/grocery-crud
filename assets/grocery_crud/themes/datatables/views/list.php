@@ -6,7 +6,7 @@
 			<?php foreach($columns as $column){?>
 				<th><?php echo $column->display_as; ?></th>
 			<?php }?>
-			<?php if(!$unset_delete || !$unset_edit){?>
+			<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
 			<th class='actions'>Actions</th>
 			<?php }?>
 		</tr>
