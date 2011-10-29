@@ -130,7 +130,7 @@ input.field_error
 {
 	padding-right: 10px;	
 }
-.datatables div.form-div input[type=text]
+.datatables div.form-div input[type=text], .datatables div.form-div input[type=password]
 {
 	font-size: 15px;
 	width: 500px;	

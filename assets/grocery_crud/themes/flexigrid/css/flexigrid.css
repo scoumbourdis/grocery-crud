@@ -283,7 +283,7 @@ table th
 {
 	padding-right: 10px;	
 }
-.flexigrid div.form-div input[type=text]
+.flexigrid div.form-div input[type=text], .flexigrid div.form-div input[type=password]
 {
 	font-size: 15px;
 	width: 500px;	

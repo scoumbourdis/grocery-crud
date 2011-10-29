@@ -198,7 +198,10 @@ class grocery_Field_Types
 				break;
 				case 'hidden':
 					$field_info->input = $this->get_hidden_input($field_info,$value);
-				break;											
+				break;
+				case 'password':
+					$field_info->input = $this->get_password_input($field_info,$value);
+				break;															
 				
 				default:
 					$field_info->input = $this->get_string_input($field_info,$value);
@@ -257,6 +260,10 @@ class grocery_Field_Types
 				$value = implode(', ' ,$this->get_relation_n_n_selection_array( $value, $this->relation_n_n[$field_info->name] ));
 				$value = $this->character_limiter($value,30," [...]");
 			break;						
+			
+			case 'password':
+				$value = '******';
+			break;
 			
 			case 'upload_file':
 				$value = !empty($value) ? 
@@ -1387,6 +1394,17 @@ class grocery_Layout extends grocery_Model_Driver
 			$value = $field_info->extras;
 		$input = "<input type='hidden' name='{$field_info->name}' value='$value' />";
 		return $input;		
+	}
+	
+	protected function get_password_input($field_info,$value)
+	{
+		$value = !is_string($value) ? '' : $value; 
+		
+		$extra_attributes = '';
+		if(!empty($field_info->db_max_length))
+			$extra_attributes .= "maxlength='{$field_info->db_max_length}'"; 
+		$input = "<input name='{$field_info->name}' type='password' value='$value' $extra_attributes />";
+		return $input;
 	}
 	
 	protected function get_date_input($field_info,$value)
