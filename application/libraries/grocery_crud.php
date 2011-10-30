@@ -1716,66 +1716,12 @@ class grocery_States extends grocery_Layout
 	
 	protected function getStateCode()
 	{
-		$real_segment = $this->get_segment_genius()->segment;
+		$state_string = $this->get_segment_genius()->segment;
 		
-		#region scenarios
-
-		if($real_segment == 'list')
-		{
-			$state_code = 1;
-			
-		}elseif($real_segment == 'ajax_list')
-		{
-			$state_code = 7;
-		}elseif($real_segment == 'ajax_list_info')
-		{
-			$state_code = 8;
-		}elseif($real_segment == 'edit')
-		{
-			if(empty($_POST))
-			{
-				$state_code = 3;	
-			}
-			else
-			{
-				$state_code = 6;		
-			}
-		}elseif($real_segment == 'add')
-		{
-			if(empty($_POST))
-			{
-				$state_code = 2;	
-			}
-			else
-			{
-				$state_code = 5;		
-			}
-		}elseif($real_segment == 'delete')
-		{
-			$state_code = 4;
-		}
-		elseif($real_segment == 'insert_validation')
-		{
-			$state_code = 9;
-		}
-		elseif($real_segment == 'update_validation')
-		{
-			$state_code = 10;
-		}
-		elseif($real_segment == 'upload_file')
-		{
-			$state_code = 11;
-		}
-		elseif($real_segment == 'delete_file')
-		{
-			$state_code = 12;
-		}							
-		else 
-		{
+		if( $state_string != 'unknown' && in_array( $state_string, $this->states ) )
+			$state_code =  array_search($state_string, $this->states);
+		else
 			$state_code = 0;
-		}
-		
-		#endregion
 		
 		return $state_code;
 	}
@@ -1795,13 +1741,9 @@ class grocery_States extends grocery_Layout
 			if($num == ($segment_position - 1))
 				break;
 		}
-		
-		#region there is a scenario that you forgot the index
-			if($method_name == 'index' && !in_array('index',$state_url_array)) //This means that you just forgot to add the index to your url
-			{
-				$state_url_array[$num+1] = 'index';
-			}
-		#endregion
+				
+		if( $method_name == 'index' && !in_array( 'index', $state_url_array ) ) //there is a scenario that you don't have the index to your url
+			$state_url_array[$num+1] = 'index';
 		
 		$state_url = implode('/',$state_url_array).'/'.$url;
 		
@@ -1818,7 +1760,7 @@ class grocery_States extends grocery_Layout
 		$segements = $ci->uri->segments;
 		foreach($segements as $num => $value)
 		{
-			if(in_array($value,array('ajax_list','ajax_list_info','add','edit','delete','insert_validation','update_validation','upload_file','delete_file')))
+			if($value != 'unknown' && in_array($value, $this->states))
 			{
 				$segment_position = (int)$num;
 				$segment = $value;
@@ -1875,7 +1817,7 @@ class grocery_States extends grocery_Layout
 	
 	protected function getInsertUrl()
 	{
-		return $this->state_url('add');
+		return $this->state_url('insert');
 	}
 	
 	protected function getValidationInsertUrl()
@@ -1898,7 +1840,7 @@ class grocery_States extends grocery_Layout
 	
 	protected function getUpdateUrl($state_info)
 	{		
-		return $this->state_url('edit/'.$state_info->primary_key);
+		return $this->state_url('update/'.$state_info->primary_key);
 	}	
 	
 	protected function getDeleteUrl($state_info = null)
