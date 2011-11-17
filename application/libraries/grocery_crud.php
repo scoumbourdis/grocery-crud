@@ -348,6 +348,7 @@ class grocery_Field_Types
 				break;
 				case '252':
 				case 'blob':
+				case 'text':
 					$type = 'text';
 				break;
 				case '10':
