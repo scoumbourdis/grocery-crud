@@ -357,6 +357,7 @@ class grocery_Field_Types
 				break;
 				case '12':
 				case 'datetime':
+				case 'timestamp':
 					$type = 'datetime';
 				break;
 			}
@@ -1356,7 +1357,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$extra_attributes = '';
 		if(!empty($field_info->db_max_length))
 			$extra_attributes .= "maxlength='{$field_info->db_max_length}'"; 
-		$input = "<input name='{$field_info->name}' type='text' value='$value' $extra_attributes />";
+		$input = "<input name='{$field_info->name}' type='text' value=\"$value\" $extra_attributes />";
 		return $input;
 	}
 

@@ -1,3 +1,5 @@
+v.1.1.5
+	Adding Timestamp as an automatic date and time field.
 v.1.1.4
 	Bug Fix - When you have unset edit and unset delete in your actions and also you have insert one or more add_action, the column Actions disapeared.
 	Adding a new field type named "password". This is a simple transformation of the field input from text to password and it hides the password from the list grid.
