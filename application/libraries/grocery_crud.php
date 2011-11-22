@@ -478,6 +478,14 @@ class grocery_Model_Driver extends grocery_Field_Types
 			else 
 			{
 				$columns = $this->get_columns();
+				
+				#region work around for the search with relation_n_n
+				if(!empty($this->relation_n_n))
+					foreach($columns as $num_row => $column)
+						if(isset($this->relation_n_n[$column->field_name]))
+							unset($columns[$num_row]);
+				#endregion
+				
 				$search_text = $state_info->search->text;
 				
 				foreach($columns as $column)
