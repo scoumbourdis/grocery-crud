@@ -1,13 +1,13 @@
 <?php  
 	if (!defined('BASEPATH')) exit('No direct script access allowed');
 	
-	grocery_CRUD::set_css('assets/grocery_crud/themes/datatables/css/demo_table_jui.css');
-	grocery_CRUD::set_css('assets/grocery_crud/themes/datatables/css/ui/simple/jquery-ui-1.8.10.custom.css');
-	grocery_CRUD::set_css('assets/grocery_crud/themes/datatables/css/datatables.css');	
-	grocery_CRUD::set_js('assets/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
-	grocery_CRUD::set_js('assets/grocery_crud/themes/datatables/js/jquery-ui-1.8.10.custom.min.js');
-	grocery_CRUD::set_js('assets/grocery_crud/themes/datatables/js/jquery.dataTables.min.js');
-	grocery_CRUD::set_js('assets/grocery_crud/themes/datatables/js/datatables.js');
+	$this->set_css('assets/grocery_crud/themes/datatables/css/demo_table_jui.css');
+	$this->set_css('assets/grocery_crud/themes/datatables/css/ui/simple/jquery-ui-1.8.10.custom.css');
+	$this->set_css('assets/grocery_crud/themes/datatables/css/datatables.css');	
+	$this->set_js('assets/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
+	$this->set_js('assets/grocery_crud/themes/datatables/js/jquery-ui-1.8.10.custom.min.js');
+	$this->set_js('assets/grocery_crud/themes/datatables/js/jquery.dataTables.min.js');
+	$this->set_js('assets/grocery_crud/themes/datatables/js/datatables.js');
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';

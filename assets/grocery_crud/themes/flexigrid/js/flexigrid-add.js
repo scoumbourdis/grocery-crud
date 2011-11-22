@@ -44,7 +44,7 @@ $(function(){
 								}
 								else
 								{
-									alert('An error occured on Saving');
+									alert('An error has been occured at the insert.');
 								}
 							}
 						});

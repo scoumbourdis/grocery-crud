@@ -386,7 +386,7 @@ class grocery_Field_Types
 /**
  * Grocery Model Driver
  *
- * Drives the model - Like car drive :-)
+ * Drives the model - I'ts so easy like you drive a bicycle :-)
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
@@ -636,14 +636,9 @@ class grocery_Model_Driver extends grocery_Field_Types
 					$callback_return = call_user_func($this->callback_before_insert, $post_data);
 					
 					if(!empty($callback_return) && is_array($callback_return))
-					{
 						$post_data = $callback_return;
-					}
 					elseif($callback_return === false) 
-					{
 						return false;
-					}
-					
 				}
 				
 				$insert_data = array();
@@ -1011,8 +1006,8 @@ class grocery_Layout extends grocery_Model_Driver
 	protected $theme 					= null;
 	protected $default_true_false_text 	= array('inactive' , 'active');
 	
-	protected static $css_files					= array();
-	protected static $js_files					= array();
+	protected $css_files				= array();
+	protected $js_files					= array();
 	
 	protected function set_basic_Layout()
 	{			
@@ -1213,7 +1208,7 @@ class grocery_Layout extends grocery_Model_Driver
 	{
 		if($insert_result === false)
 		{
-			echo json_encode(array('success' => $insert_result));	
+			echo json_encode(array('success' => false));	
 		}
 		else 
 		{
@@ -1270,24 +1265,24 @@ class grocery_Layout extends grocery_Model_Driver
 		}
 	}	
 	
-	public static function set_css($css_file)
+	public function set_css($css_file)
 	{
-		grocery_CRUD::$css_files[sha1($css_file)] = base_url().$css_file;
+		$this->css_files[sha1($css_file)] = base_url().$css_file;
 	}
 
-	public static function set_js($js_file)
+	public function set_js($js_file)
 	{
-		grocery_CRUD::$js_files[sha1($js_file)] = base_url().$js_file;
+		$this->js_files[sha1($js_file)] = base_url().$js_file;
 	}
 
 	public function get_css_files()
 	{
-		return grocery_CRUD::$css_files;
+		return $this->css_files;
 	}
 
 	public function get_js_files()
 	{
-		return grocery_CRUD::$js_files;
+		return $this->js_files;
 	}	
 	
 	protected function get_layout()
