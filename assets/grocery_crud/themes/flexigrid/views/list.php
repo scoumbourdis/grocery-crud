@@ -5,7 +5,7 @@
 	
 	if(!empty($list)){
 ?><div class="bDiv" >
-		<table cellspacing="0" cellpadding="0" border="0" style="" id="flex1" width='960'>
+		<table cellspacing="0" cellpadding="0" border="0" id="flex1">
 		<thead>
 			<tr class='hDiv'>
 				<?php foreach($columns as $column){?>
