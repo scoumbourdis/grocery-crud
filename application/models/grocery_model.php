@@ -27,12 +27,15 @@ class grocery_Model  extends CI_Model  {
     		{
     			list($field_name , $related_table , $related_field_title) = $relation;
     			$unique_join_name = $this->_unique_join_name($field_name);
-    			$select .= ", $unique_join_name.$related_field_title as '$unique_join_name.$related_field_title'";
+    			$unique_field_name = $this->_unique_field_name($field_name);
+    			
+				if(strstr($related_field_title,'{'))
+    				$select .= ", CONCAT('".str_replace(array('{','}'),array("',",",'"),mysql_escape_string($related_field_title))."') as $unique_field_name";
+    			else    			
+    				$select .= ", $unique_join_name.$related_field_title as $unique_field_name";
     			
     			if($this->field_exists($related_field_title))
-    			{
-    				$select .= ", {$this->table_name}.$related_field_title as '{$this->table_name}.$related_field_title'";	
-    			}
+    				$select .= ", {$this->table_name}.$related_field_title as '{$this->table_name}.$related_field_title'";
     		}
     		
     	$this->db->select($select, false);
@@ -118,20 +121,35 @@ class grocery_Model  extends CI_Model  {
     
     protected function _unique_join_name($field_name)
     {
-    	return 'j'.substr(md5($field_name),0,6); //This j is because is better for a string to begin with a letter and not a number
+    	return 'j'.substr(md5($field_name),0,8); //This j is because is better for a string to begin with a letter and not a number
     }
+
+    protected function _unique_field_name($field_name)
+    {
+    	return 's'.substr(md5($field_name),0,8); //This s is because is better for a string to begin with a letter and not a number
+    }    
     
     function get_relation_array($field_name , $related_table , $related_field_title)
     {
     	$relation_array = array();
+    	$field_name_hash = $this->_unique_field_name($field_name); //Just to make sure that the string begins with a character and not with a number
     	
     	$related_primary_key = $this->get_primary_key($related_table);
-    	$this->db->order_by($related_field_title);
+    	
+    	$select = "$related_table.$related_primary_key, ";
+    	
+    	if(strstr($related_field_title,'{'))
+    		$select .= "CONCAT('".str_replace(array('{','}'),array("',",",'"),mysql_escape_string($related_field_title))."') as $field_name_hash";
+    	else
+	    	$select .= "$related_table.$related_field_title as $field_name_hash";
+    	
+    	$this->db->select($select,false);
+    	$this->db->order_by($field_name_hash);
     	$results = $this->db->get($related_table)->result();
     	
     	foreach($results as $row)
     	{
-    		$relation_array[$row->$related_primary_key] = $row->$related_field_title;	
+    		$relation_array[$row->$related_primary_key] = $row->$field_name_hash;	
     	}
     	
     	return $relation_array;

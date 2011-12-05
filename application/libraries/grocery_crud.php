@@ -782,9 +782,14 @@ class grocery_Model_Driver extends grocery_Field_Types
 	
     protected function _unique_join_name($field_name)
     {
-    	return 'j'.substr(md5($field_name),0,6); //This j is because is better for a string to begin with a letter and not a number
+    	return 'j'.substr(md5($field_name),0,8); //This j is because is better for a string to begin with a letter and not a number
     }	
-	
+
+    protected function _unique_field_name($field_name)
+    {
+    	return 's'.substr(md5($field_name),0,8); //This s is because is better for a string to begin with a letter and not a number
+    }    
+    
 	protected function db_delete($state_info)
 	{
 		$primary_key 	= $state_info->primary_key;
@@ -2360,7 +2365,7 @@ class grocery_CRUD extends grocery_States
 			{				
 				if(isset($this->relation[$column]))
 				{
-					$new_column = $this->_unique_join_name($this->relation[$column][0]).'.'.$this->relation[$column][2];
+					$new_column = $this->_unique_field_name($this->relation[$column][0]);
 					$this->columns[$col_num] = $new_column;
 					
 					if(isset($this->display_as[$column]))

@@ -1,7 +1,9 @@
 v.1.1.5
+	Method set_relation - feature to add more than one field to the title of the related table.
 	Adding Timestamp as an automatic date and time field.
 	Change the business logic of adding js and css files. This is really useful for a future feature with multiple tables in the same view.
 	A temporary solution for the search for All that have a relation_n_n.
+	Fixing issue #1 - flexigrid width is always 900px. Now it's always 100% width.
 v.1.1.4
 	Bug Fix - When you have unset edit and unset delete in your actions and also you have insert one or more add_action, the column Actions disapeared.
 	Adding a new field type named "password". This is a simple transformation of the field input from text to password and it hides the password from the list grid.
