@@ -479,19 +479,29 @@ class grocery_Model_Driver extends grocery_Field_Types
 			{
 				$columns = $this->get_columns();
 				
-				#region work around for the search with relation_n_n
+				#region temporary solution for the search with relation_n_n
 				if(!empty($this->relation_n_n))
 					foreach($columns as $num_row => $column)
 						if(isset($this->relation_n_n[$column->field_name]))
 							unset($columns[$num_row]);
 				#endregion
 				
+				if(!empty($this->relation))
+				{
+					$temp_relation = array();
+					foreach($this->relation as $relation_name => $relation_values)
+						$temp_relation[$this->_unique_field_name($relation_name)] = $this->_unique_field_name($relation_values[2]);
+				}
+				
 				$search_text = $state_info->search->text;
 				
 				foreach($columns as $column)
 				{
-					$this->or_like($column->field_name, $search_text);
-				}				
+					if(isset($temp_relation[$column->field_name]))
+						$this->or_like($temp_relation[$column->field_name], $search_text);					
+					else
+						$this->or_like($column->field_name, $search_text);
+				}
 			}
 		}
 	}
@@ -1046,6 +1056,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$data->total_results = $this->get_total_results();
 		
 		$data->columns 				= $this->get_columns();
+		
 		$data->primary_key 			= $this->get_primary_key();
 		$data->add_url				= $this->getAddUrl();
 		$data->edit_url				= $this->getEditUrl();
@@ -2363,8 +2374,10 @@ class grocery_CRUD extends grocery_States
 			
 			foreach($this->columns as $col_num => $column)
 			{				
+			
 				if(isset($this->relation[$column]))
 				{
+					
 					$new_column = $this->_unique_field_name($this->relation[$column][0]);
 					$this->columns[$col_num] = $new_column;
 					
@@ -2380,7 +2393,7 @@ class grocery_CRUD extends grocery_States
 					}
 					
 					$column = $new_column;
-					
+					$this->columns[$col_num] = $new_column;
 				}
 				else
 				{	
@@ -2426,7 +2439,9 @@ class grocery_CRUD extends grocery_States
 			}			
 			
 			$this->columns_checked = true;
+			
 		}
+		
 		return $this->columns;
 	}
 	
