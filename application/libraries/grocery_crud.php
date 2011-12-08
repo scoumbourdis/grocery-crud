@@ -471,9 +471,20 @@ class grocery_Model_Driver extends grocery_Field_Types
 		
 		if(!empty($state_info->search))
 		{
+			if(!empty($this->relation))
+				foreach($this->relation as $relation_name => $relation_values)
+					$temp_relation[$this->_unique_field_name($relation_name)] = $this->_get_field_names_to_search($relation_values);
+			
 			if($state_info->search->field != null)
 			{
-				$this->like($state_info->search->field , $state_info->search->text);
+				if(isset($temp_relation[$state_info->search->field]))
+					if(is_array($temp_relation[$state_info->search->field]))
+						foreach($temp_relation[$state_info->search->field] as $search_field)
+							$this->or_like($search_field , $state_info->search->text);
+					else
+						$this->like($temp_relation[$state_info->search->field] , $state_info->search->text);
+				else
+					$this->like($state_info->search->field , $state_info->search->text);
 			}
 			else 
 			{
@@ -486,22 +497,17 @@ class grocery_Model_Driver extends grocery_Field_Types
 							unset($columns[$num_row]);
 				#endregion
 				
-				if(!empty($this->relation))
-				{
-					$temp_relation = array();
-					foreach($this->relation as $relation_name => $relation_values)
-						$temp_relation[$this->_unique_field_name($relation_name)] = $this->_unique_field_name($relation_values[2]);
-				}
-				
 				$search_text = $state_info->search->text;
 				
 				foreach($columns as $column)
-				{
 					if(isset($temp_relation[$column->field_name]))
-						$this->or_like($temp_relation[$column->field_name], $search_text);					
+						if(is_array($temp_relation[$column->field_name]))
+							foreach($temp_relation[$column->field_name] as $search_field)
+								$this->or_like($search_field, $search_text);				
+						else	
+							$this->or_like($temp_relation[$column->field_name], $search_text);					
 					else
 						$this->or_like($column->field_name, $search_text);
-				}
 			}
 		}
 	}
@@ -789,6 +795,24 @@ class grocery_Model_Driver extends grocery_Field_Types
 			return false;	
 		}		
 	}	
+	
+	protected function _get_field_names_to_search(array $relation_values)
+	{		
+		if(!strstr($relation_values[2],'{'))
+			return $this->_unique_join_name($relation_values[0]).'.'.$relation_values[2];
+		else
+		{
+			$relation_values[2] = ' '.$relation_values[2].' ';
+			$temp1 = explode('{',$relation_values[2]);
+			unset($temp1[0]);
+			
+			$field_names_array = array();
+			foreach($temp1 as $field)
+				list($field_names_array[]) = explode('}',$field);
+			
+			return $field_names_array;
+		}
+	}
 	
     protected function _unique_join_name($field_name)
     {
