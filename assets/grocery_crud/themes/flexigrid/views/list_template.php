@@ -51,7 +51,7 @@
 	<div class="sDiv" id='quickSearchBox'>
 		<div class="sDiv2">
 			Search <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id='search_text'>
-			<select name="search_field">
+			<select name="search_field" id="search_field">
 				<option value="">All</option>
 				<?php foreach($columns as $column){?>
 				<option value="<?php echo $column->field_name?>"><?php echo $column->display_as?>&nbsp;&nbsp;</option>
