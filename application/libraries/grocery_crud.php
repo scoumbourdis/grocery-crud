@@ -2064,7 +2064,10 @@ class grocery_CRUD extends grocery_States
 	private $edit_fields_checked	= false;	
 	
 	protected $default_theme		= 'flexigrid';
-	protected $default_theme_path		= 'assets/grocery_crud/themes';
+	protected $default_theme_path	= 'assets/grocery_crud/themes';
+	protected $default_language_path	= 'assets/grocery_crud/languages';
+	protected $language				= 'english';
+	protected $lang_strings			= array();
 	
 	protected $add_fields			= null;
 	protected $edit_fields			= null;
@@ -2379,6 +2382,44 @@ class grocery_CRUD extends grocery_States
 	
 	/**
 	 * 
+	 * Load the language strings array from the language file
+	 */
+	private function _load_language()
+	{
+		include($this->default_language_path.'/'.$this->language.'.php');
+		
+		foreach($lang as $handle => $lang_string)
+			if(!isset($this->lang_strings[$handle]))
+				$this->lang_strings[$handle] = $lang_string;
+	}
+	
+	/**
+	 * 
+	 * Set a language string directly
+	 * @param string $handle
+	 * @param string $string
+	 */
+	public function set_lang_string($handle, $lang_string){
+		$this->lang_strings[$handle] = $lang_string;
+		
+		return $this;
+	}
+	
+	/**
+	 * 
+	 * Simply set the language
+	 * @example english
+	 * @param string $language
+	 */
+	public function set_language($language)
+	{
+		$this->language = $language;
+		
+		return $this;
+	}
+	
+	/**
+	 * 
 	 * Enter description here ...
 	 */
 	protected function get_columns()
@@ -2591,6 +2632,7 @@ class grocery_CRUD extends grocery_States
 	 */
 	public function render()
 	{
+		$this->_load_language();
 		$this->state_code = $this->getStateCode();
 		
 		if( $this->state_code != 0 )
