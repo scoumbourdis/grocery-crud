@@ -31,10 +31,10 @@
 	<?php if(!$unset_add){?>
 	<div class="tDiv">
 		<div class="tDiv2">
-        	<a href='<?php echo $add_url?>' title='Add <?php echo $subject?>' class='add-anchor'>
+        	<a href='<?php echo $add_url?>' title='<?php echo $this->l('list_add'); ?> <?php echo $subject?>' class='add-anchor'>
 			<div class="fbutton">
 				<div>
-					<span class="add">Add</span>
+					<span class="add"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
 				</div>
 			</div>
             </a>
@@ -50,23 +50,23 @@
 	<form action='<?php echo $ajax_list_url?>' method='post' id='filtering_form' autocomplete = "off" >
 	<div class="sDiv" id='quickSearchBox'>
 		<div class="sDiv2">
-			Search <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id='search_text'>
+			<?php echo $this->l('list_search');?> <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id='search_text'>
 			<select name="search_field" id="search_field">
-				<option value="">All</option>
+				<option value=""><?php echo $this->l('list_search_all');?></option>
 				<?php foreach($columns as $column){?>
 				<option value="<?php echo $column->field_name?>"><?php echo $column->display_as?>&nbsp;&nbsp;</option>
 				<?php }?>
 			</select>
-            <input type="button" value="Search" id='crud_search'> 
+            <input type="button" value="<?php echo $this->l('list_search');?>" id='crud_search'> 
 		</div>
         <div class='search-div-clear-button'>
-        	<input type="button" value="Clear" id='search_clear'>
+        	<input type="button" value="<?php echo $this->l('list_clear_filtering');?>" id='search_clear'>
         </div>
 	</div>
 	<div class="pDiv">
 		<div class="pDiv2">
 			<div class="pGroup">
-				<div class="pSearch pButton" id='quickSearchButton'>
+				<div class="pSearch pButton" id='quickSearchButton' title="<?php echo $this->l('list_search');?>">
 					<span></span>
 				</div>
 			</div>
@@ -96,7 +96,9 @@
 			<div class="btnseparator">
 			</div>
 			<div class="pGroup">
-				<span class="pcontrol">Page <input name='page' type="text" value="1" size="4" id='crud_page'> of <span id='last-page-number'><?php echo ceil($total_results / 25)?></span></span>
+				<span class="pcontrol"><?php echo $this->l('list_page'); ?> <input name='page' type="text" value="1" size="4" id='crud_page'> 
+				<?php echo $this->l('list_of'); ?> 
+				<span id='last-page-number'><?php echo ceil($total_results / 25)?></span></span>
 			</div>
 			<div class="btnseparator">
 			</div>
@@ -118,9 +120,9 @@
 			<div class="btnseparator">
 			</div>
 			<div class="pGroup">
-				<span class="pPageStat">Displaying <span id='page-starts-from'>1</span> to 
-				<span id='page-ends-to'><?php echo $total_results < 25 ? $total_results : 25?></span> of 
-				<span id='total_items'><?php echo $total_results?></span> items</span>
+				<span class="pPageStat"><?php echo $this->l('list_displaying'); ?>  <span id='page-starts-from'>1</span> <?php echo $this->l('list_to'); ?> 
+				<span id='page-ends-to'><?php echo $total_results < 25 ? $total_results : 25?></span> <?php echo $this->l('list_of'); ?> 
+				<span id='total_items'><?php echo $total_results?></span> <?php echo $this->l('list_items'); ?></span>
 			</div>
 		</div>
 		<div style="clear: both;">
