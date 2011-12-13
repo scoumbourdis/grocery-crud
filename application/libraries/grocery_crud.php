@@ -334,6 +334,7 @@ class grocery_Field_Types
 				case '1':
 				case '3':
 				case 'int':
+				case 'tinyint':
 					if( $db_type->db_type == 'tinyint' && $db_type->db_max_length ==  1)
 						$type = 'true_false';
 					else
@@ -1245,7 +1246,7 @@ class grocery_Layout extends grocery_Model_Driver
 		}
 		else 
 		{
-			$success_message = '<p>Your data has been successfully deleted from the database.</p>';
+			$success_message = '<p>'.$this->l('delete_success_message').'</p>';
 			
 			echo json_encode(array('success' => true , 'success_message' => $success_message));
 		}
@@ -1260,12 +1261,12 @@ class grocery_Layout extends grocery_Model_Driver
 		}
 		else 
 		{
-			$success_message = '<p>Your data has been successfully stored into the database.';
+			$success_message = '<p>'.$this->l('insert_success_message');
 			if($insert_result !== true)
 			{
-				$success_message .= " <a href='".$this->getEditUrl($insert_result)."'>Edit {$this->subject}</a> or";
+				$success_message .= " <a href='".$this->getEditUrl($insert_result)."'>".$this->l('form_edit')." {$this->subject}</a> ".$this->l('form_or');
 			}
-			$success_message .= " <a href='".$this->getListUrl()."'>Go back to list</a>";
+			$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
 			$success_message .= '</p>';
 			
 			echo "<textarea>".json_encode(array('success' => true , 'insert_primary_key' => $insert_result, 'success_message' => $success_message))."</textarea>";
@@ -1360,8 +1361,8 @@ class grocery_Layout extends grocery_Model_Driver
 		}
 		else 
 		{
-			$success_message = '<p>Your data has been successfully updated';
-			$success_message .= ". <a href='".$this->getListUrl()."'>Go back to list</a>";
+			$success_message = '<p>'.$this->l('update_success_message');
+			$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
 			$success_message .= '</p>';
 			
 			/* The textarea is only because of a BUG of the jquery plugin jquery form */
@@ -2066,7 +2067,7 @@ class grocery_CRUD extends grocery_States
 	protected $default_theme		= 'flexigrid';
 	protected $default_theme_path	= 'assets/grocery_crud/themes';
 	protected $default_language_path	= 'assets/grocery_crud/languages';
-	protected $language				= 'greek';
+	protected $language				= 'english';
 	protected $lang_strings			= array();
 	
 	protected $add_fields			= null;

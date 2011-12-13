@@ -12,10 +12,10 @@
 	<div class="mDiv">
 		<div class="ftitle">
 			<div class='ftitle-left'>
-				Add <?php echo $subject?>
+				<?php echo $this->l('form_add'); ?> <?php echo $subject?>
 			</div>
 			<div class='ftitle-right'>
-				<a href='<?php echo $list_url?>' onclick='javascript: return goToList()' >Back to list</a>
+				<a href='<?php echo $list_url?>' onclick='javascript: return goToList()' ><?php echo $this->l('form_back_to_list'); ?></a>
 			</div>
 			<div class='clear'></div>
 		</div>
@@ -57,10 +57,10 @@
 		</div>	
 		<div class="pDiv">
 			<div class='form-button-box'>
-				<input type='submit' value='Save'/>
+				<input type='submit' value='<?php echo $this->l('form_save'); ?>'/>
 			</div>			
 			<div class='form-button-box'>
-				<input type='button' value='Cancel' onclick="javascript: goToList()" />
+				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick="javascript: goToList()" />
 			</div>
 			<div class='form-button-box'>
 				<div class='small-loading' id='FormLoading'>Loading...</div>
@@ -73,4 +73,6 @@
 <script>
 	var validation_url = '<?php echo $validation_url?>';
 	var list_url = '<?php echo $list_url?>';
+
+	var message_alert_add_form = "<?php echo $this->l('alert_add_form')?>";
 </script>

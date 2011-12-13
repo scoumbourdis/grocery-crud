@@ -12,10 +12,10 @@
 	<div class="mDiv">
 		<div class="ftitle">
 			<div class='ftitle-left'>
-				Edit <?php echo $subject?>
+				<?php echo $this->l('form_edit'); ?> <?php echo $subject?>
 			</div>
 			<div class='ftitle-right'>
-				<a href='<?php echo $list_url?>' onclick='javascript: return goToList()'>Back to list</a>
+				<a href='<?php echo $list_url?>' onclick='javascript: return goToList()'><?php echo $this->l('form_back_to_list'); ?></a>
 			</div>
 			<div class='clear'></div>				
 		</div>
@@ -57,13 +57,13 @@
 	</div>
 	<div class="pDiv">
 		<div class='form-button-box'>
-			<input type='submit' value='Update Changes' />
+			<input type='submit' value='<?php echo $this->l('form_update_changes'); ?>' />
 		</div>		
 		<div class='form-button-box'>
-			<input type='button' value='Cancel' onclick='javascript: return goToList()' />
+			<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick='javascript: return goToList()' />
 		</div>
 		<div class='form-button-box'>
-			<div class='small-loading' id='FormLoading'>Loading...</div>
+			<div class='small-loading' id='FormLoading'><?php echo $this->l('form_update_loading'); ?></div>
 		</div>		
 		<div class='clear'></div>	
 	</div>
@@ -73,4 +73,6 @@
 <script>
 	var validation_url = '<?php echo $validation_url?>';
 	var list_url = '<?php echo $list_url?>';
+
+	var message_alert_edit_form = "<?php echo $this->l('alert_edit_form')?>";
 </script>
