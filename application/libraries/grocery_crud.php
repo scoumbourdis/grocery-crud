@@ -1240,7 +1240,7 @@ class grocery_Layout extends grocery_Model_Driver
 	{
 		if($delete_result === false)
 		{
-			$error_message = '<p>Your data was not deleted successfully from the database.</p>';
+			$error_message = '<p>'.$this->l('delete_error_message').'</p>';
 			
 			echo json_encode(array('success' => $delete_result ,'error_message' => $error_message));	
 		}
@@ -2066,7 +2066,7 @@ class grocery_CRUD extends grocery_States
 	
 	protected $default_theme		= 'flexigrid';
 	protected $default_theme_path	= 'assets/grocery_crud/themes';
-	protected $default_language_path	= 'assets/grocery_crud/languages';
+	protected $default_language_path= 'assets/grocery_crud/languages';
 	protected $language				= 'english';
 	protected $lang_strings			= array();
 	
@@ -2091,8 +2091,8 @@ class grocery_CRUD extends grocery_States
 	protected $upload_fields		= array();
 	protected $actions				= array();
 	
-	protected $form_validation	= null;
-	protected $change_field_type		= null;
+	protected $form_validation		= null;
+	protected $change_field_type	= null;
 	
 	/* The unsetters */
 	protected $unset_texteditor	= array();

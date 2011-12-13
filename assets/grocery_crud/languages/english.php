@@ -26,6 +26,12 @@
 	$lang['form_save'] 				= 'Save';
 	
 	$lang['delete_success_message'] = 'Your data has been successfully deleted from the database.';
+	$lang['delete_error_message'] 	= 'Your data was not deleted from the database.';
 	
+	/* Javascript messages */
 	$lang['alert_add_form']			= 'The data you had insert may not be saved.\\nAre you sure you want to go back to list?';
 	$lang['alert_edit_form']		= 'The data you had change may not be saved.\\nAre you sure you want to go back to list?';
+	$lang['alert_delete']			= 'Are you sure that you want to delete this record?';
+	
+	$lang['insert_error']			= 'An error has been occured at the insert.';
+	$lang['update_error']			= 'An error has been occured on Saving.';

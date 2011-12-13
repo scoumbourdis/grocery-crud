@@ -31,11 +31,11 @@ $(function(){
 							}
 							else
 							{
-								alert('An error occured on Saving');
+								alert( message_update_error );
 							}
 						},
 						error: function(){
-							alert('An error occured on Saving');
+							alert( message_update_error );
 						}
 					});
 				}

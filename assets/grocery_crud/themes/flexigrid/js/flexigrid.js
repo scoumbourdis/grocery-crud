@@ -122,7 +122,7 @@ $(function(){
 	$('.delete-row').live('click', function(){
 		var delete_url = $(this).attr('href');
 		
-		if(confirm('Are you sure that you want to delete this '+subject+'?'))
+		if( confirm( message_alert_delete ) )
 		{
 			$.ajax({
 				url: delete_url,

@@ -15,6 +15,8 @@
 	var subject = '<?php echo $subject?>';
 	var ajax_list_info_url = '<?php echo $ajax_list_info_url?>';
 	var unique_hash = '<?php echo $unique_hash; ?>';
+
+	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
 </script>
 <div id='report-error' class='report-div error'></div>
 <div id='report-success' class='report-div success'></div>	

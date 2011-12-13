@@ -44,11 +44,11 @@ $(function(){
 								}
 								else
 								{
-									alert('An error has been occured at the insert.');
+									alert( message_insert_error );
 								}
 							},
 							error: function(){
-								alert('An error has been occured at the insert.');
+								alert( message_insert_error );
 							}
 						});
 					}
