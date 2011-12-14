@@ -13,11 +13,11 @@
 <div class='ui-widget-content ui-corner-all datatables'>
 	<h3 class="ui-accordion-header ui-helper-reset ui-state-default form-title">
 		<div class='floatL form-title-left'>
-			<a href="#">Add <?php echo $subject?></a>
+			<a href="#"><?php echo $this->l('form_add'); ?> <?php echo $subject?></a>
 		</div> 
 		<div class='floatR'>
 			<a href='<?php echo $list_url?>' onclick='javascript: return goToList()' class='gotoListButton' >
-				Back to list
+				<?php echo $this->l('form_back_to_list'); ?>
 			</a>
 		</div>
 		<div class='clear'></div>
@@ -55,13 +55,13 @@
 		</div>	
 		<div class='buttons-box'>
 			<div class='form-button-box'>
-				<input type='submit' value='Save' class='ui-input-button'/>
+				<input type='submit' value='<?php echo $this->l('form_save'); ?>' class='ui-input-button'/>
 			</div>			
 			<div class='form-button-box'>
-				<input type='button' value='Cancel' onclick="javascript: goToList()" class='ui-input-button' />
+				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick="javascript: goToList()" class='ui-input-button' />
 			</div>
 			<div class='form-button-box loading-box'>
-				<div class='small-loading' id='FormLoading'>Loading...</div>
+				<div class='small-loading' id='FormLoading'><?php echo $this->l('form_insert_loading'); ?></div>
 			</div>
 			<div class='clear'></div>	
 		</div>
@@ -71,4 +71,7 @@
 <script>
 	var validation_url = '<?php echo $validation_url?>';
 	var list_url = '<?php echo $list_url?>';
+
+	var message_alert_add_form = "<?php echo $this->l('alert_add_form')?>";
+	var message_insert_error = "<?php echo $this->l('insert_error')?>";	
 </script>

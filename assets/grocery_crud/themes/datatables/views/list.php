@@ -7,7 +7,7 @@
 				<th><?php echo $column->display_as; ?></th>
 			<?php }?>
 			<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
-			<th class='actions'>Actions</th>
+			<th class='actions'><?php echo $this->l('list_actions'); ?></th>
 			<?php }?>
 		</tr>
 	</thead>
@@ -32,14 +32,15 @@
 				?>			
 				<?php if(!$unset_edit){?>
 					<a href="<?php echo $row->edit_url?>" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
-						<span class="ui-button-icon-primary ui-icon ui-icon-pencil"></span><span class="ui-button-text">&nbsp;Edit</span>
+						<span class="ui-button-icon-primary ui-icon ui-icon-pencil"></span>
+						<span class="ui-button-text">&nbsp;<?php echo $this->l('list_edit'); ?></span>
 					</a>
 				<?php }?>
 				<?php if(!$unset_delete){?>
 					<a onclick = "javascript: return delete_row('<?php echo $row->delete_url?>', '<?php echo $num_row?>')" 
 						href="javascript:void(0)" class="delete_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
 						<span class="ui-button-icon-primary ui-icon ui-icon-circle-minus"></span>
-						<span class="ui-button-text">&nbsp;Delete</span>
+						<span class="ui-button-text">&nbsp;<?php echo $this->l('list_delete'); ?></span>
 					</a>
 				<?php }?>
 			</td>

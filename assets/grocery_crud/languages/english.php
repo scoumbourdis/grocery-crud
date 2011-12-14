@@ -16,7 +16,7 @@
 	$lang['form_back_to_list'] 		= 'Back to list';
 	$lang['form_update_changes'] 	= 'Update changes';
 	$lang['form_cancel'] 			= 'Cancel';	
-	$lang['form_update_loading'] 	= 'Loading, updating changes...';	
+	$lang['form_update_loading'] 	= 'Loading, updating changes...';
 	$lang['update_success_message'] = 'Your data has been successfully updated.';	
 	$lang['form_go_back_to_list'] 	= 'Go back to list';
 	
@@ -24,6 +24,7 @@
 	$lang['insert_success_message'] = 'Your data has been successfully stored into the database.';
 	$lang['form_or']				= 'or';
 	$lang['form_save'] 				= 'Save';
+	$lang['form_insert_loading'] 	= 'Loading, saving data...';
 	
 	$lang['delete_success_message'] = 'Your data has been successfully deleted from the database.';
 	$lang['delete_error_message'] 	= 'Your data was not deleted from the database.';

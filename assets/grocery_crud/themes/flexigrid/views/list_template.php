@@ -76,8 +76,8 @@
 			</div>
 			<div class="pGroup">
 				<select name="per_page" id='per_page'>
-					<option value="10">10&nbsp;&nbsp;</option>
-					<option selected="selected" value="25">25&nbsp;&nbsp;</option>
+					<option selected="selected" value="10">10&nbsp;&nbsp;</option>
+					<option value="25">25&nbsp;&nbsp;</option>
 					<option value="50">50&nbsp;&nbsp;</option>
 					<option value="75">75&nbsp;&nbsp;</option>
 					<option value="100">100&nbsp;&nbsp;</option>

@@ -16,7 +16,7 @@
 	$lang['form_back_to_list'] 		= 'Επιστροφή στην λίστα';
 	$lang['form_update_changes'] 	= 'Αποθήκευση αλλαγών';
 	$lang['form_cancel'] 			= 'Ακύρωση';
-	$lang['form_update_loading'] 	= 'Αναμονή, αποθήκευση αλλαγών...';
+	$lang['form_update_loading'] 	= 'Επεξεργασία...';
 	$lang['update_success_message'] = 'Η επεξεργασία ολοκληρώθηκε με επιτυχία.';
 	$lang['form_go_back_to_list'] 	= 'Επιστροφή στην λίστα';
 
@@ -24,6 +24,7 @@
 	$lang['insert_success_message'] = 'Τα δεδομένα σας καταχωρήθηκαν στην βάση δεδομένων με επιτυχία.';
 	$lang['form_or']				= 'ή';
 	$lang['form_save'] 				= 'Αποθήκευση';
+	$lang['form_insert_loading'] 	= 'Αναμονή...';	
 	
 	$lang['delete_success_message'] = 'Τα δεδομένα σας διαγράφτηκαν με επιτυχία απο την βάση δεδομένων.';	
 	$lang['delete_error_message'] 	= 'Τα δεδομένα σας δεν διαγράφτηκαν απο το σύστημα.';	

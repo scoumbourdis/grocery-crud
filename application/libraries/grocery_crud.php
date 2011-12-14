@@ -920,7 +920,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 		{
 			if($this->limit == null)
 			{
-				$this->basic_model->limit(25);	
+				$this->basic_model->limit(10);	
 			}
 			else
 			{

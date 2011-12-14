@@ -63,7 +63,7 @@
 				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick="javascript: goToList()" />
 			</div>
 			<div class='form-button-box'>
-				<div class='small-loading' id='FormLoading'>Loading...</div>
+				<div class='small-loading' id='FormLoading'><?php echo $this->l('form_insert_loading'); ?></div>
 			</div>
 			<div class='clear'></div>	
 		</div>

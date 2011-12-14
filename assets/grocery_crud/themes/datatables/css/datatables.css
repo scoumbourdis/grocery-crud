@@ -169,7 +169,6 @@ div.form-div input.datetime-input
 .small-loading
 {
 	background: url('images/small-loading.gif') no-repeat;
-	width:16px;
 	height:15px;
 	padding-left:25px;
 	padding-top:1px;
