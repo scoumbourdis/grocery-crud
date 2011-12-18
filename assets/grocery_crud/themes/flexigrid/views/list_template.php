@@ -99,7 +99,7 @@
 			</div>
 			<div class="pGroup">
 				<span class="pcontrol"><?php echo $this->l('list_page'); ?> <input name='page' type="text" value="1" size="4" id='crud_page'> 
-				<?php echo $this->l('list_of'); ?> 
+				<?php echo $this->l('list_paging_of'); ?> 
 				<span id='last-page-number'><?php echo ceil($total_results / 25)?></span></span>
 			</div>
 			<div class="btnseparator">
@@ -122,9 +122,15 @@
 			<div class="btnseparator">
 			</div>
 			<div class="pGroup">
-				<span class="pPageStat"><?php echo $this->l('list_displaying'); ?>  <span id='page-starts-from'>1</span> <?php echo $this->l('list_to'); ?> 
-				<span id='page-ends-to'><?php echo $total_results < 25 ? $total_results : 25?></span> <?php echo $this->l('list_of'); ?> 
-				<span id='total_items'><?php echo $total_results?></span> <?php echo $this->l('list_items'); ?></span>
+				<span class="pPageStat">
+					<?php $paging_starts_from = "<span id='page-starts-from'>1</span>"; ?>
+					<?php $paging_ends_to = "<span id='page-ends-to'>". ($total_results < 10 ? $total_results : 10) ."</span>"; ?>
+					<?php $paging_total_results = "<span id='total_items'>$total_results</span>"?>
+					<?php echo str_replace( array('{start}','{end}','{results}'),
+											array($paging_starts_from, $paging_ends_to, $paging_total_results),
+											$this->l('list_displaying')
+										   ); ?>   					
+				</span>
 			</div>
 		</div>
 		<div style="clear: both;">

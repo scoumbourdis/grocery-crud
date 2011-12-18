@@ -1,4 +1,4 @@
-v.1.1.5
+v.1.1.6
 	New feature: Multilingual functionallity.
 	Remember the search text and the field name at the list that user had insert.
 	Method set_relation - New feature to add more than one fields to the title of the related table.
