@@ -3,21 +3,22 @@ $(document).ready(function() {
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
 		"bStateSave": true,
-/* multilingual functionality */
-	    "sProcessing":   "Processing...",
-	    "sLengthMenu":   "Show _MENU_ entries",
-	    "sZeroRecords":  "No matching records found",
-	    "sInfo":         "Showing _START_ to _END_ of _TOTAL_ entries",
-	    "sInfoEmpty":    "Showing 0 to 0 of 0 entries",
-	    "sInfoFiltered": "(filtered from _MAX_ total entries)",
-	    "sSearch":       "Search:",
-	    "oPaginate": {
-	        "sFirst":    "First",
-	        "sPrevious": "Previous",
-	        "sNext":     "Next",
-	        "sLast":     "Last"
-	    }
-/* -------------------------- */
+		"oLanguage":{
+		    "sProcessing":   "Processing...",
+		    "sLengthMenu":   show_entries_string,
+		    "sZeroRecords":  "No matching records found",
+		    "sInfo":         displaying_paging_string,
+		    "sInfoEmpty":    "Showing 0 to 0 of 0 entries",
+		    "sInfoFiltered": filtered_from_string,
+		    "sSearch":       search_string,
+		    "oPaginate": {
+		        "sFirst":    paging_first,
+		        "sPrevious": paging_previous,
+		        "sNext":     paging_next,
+		        "sLast":     paging_last
+		    }		
+		}
+
 	});
 
 	$('a[role=button]').live("mouseover mouseout", function(event) {

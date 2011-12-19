@@ -12,6 +12,20 @@
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
 	var subject = '<?php echo $subject?>';
+
+	var displaying_paging_string = "<?php echo str_replace( array('{start}','{end}','{results}'),
+		array('_START_', '_END_', '_TOTAL_'),
+		$this->l('list_displaying')
+	   ); ?>";
+	var filtered_from_string 	= "<?php echo str_replace('{total_results}','_MAX_',$this->l('list_filtered_from') ); ?>";
+	var show_entries_string 	= "<?php echo str_replace('{paging}','_MENU_',$this->l('list_show_entries') ); ?>";
+	var search_string 			= "<?php echo $this->l('list_search'); ?>";
+
+	var paging_first 	= "<?php echo $this->l('list_paging_first'); ?>";
+	var paging_previous = "<?php echo $this->l('list_paging_previous'); ?>";
+	var paging_next 	= "<?php echo $this->l('list_paging_next'); ?>";
+	var paging_last 	= "<?php echo $this->l('list_paging_last'); ?>";
+	
 </script>
 <?php 
 	if(!empty($actions)){

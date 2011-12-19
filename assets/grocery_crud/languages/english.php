@@ -4,11 +4,17 @@
 	$lang['list_page'] 				= 'Page';	
 	$lang['list_paging_of'] 		= 'of';
 	$lang['list_displaying']		= 'Displaying {start} to {end} of {results} items';
-	$lang['list_search'] 			= 'Search';	
+	$lang['list_filtered_from']		= '(filtered from {total_results} total entries)';
+	$lang['list_show_entries']		= 'Show {paging} entries';
+	$lang['list_search'] 			= 'Search:';	
 	$lang['list_search_all'] 		= 'Search all';
 	$lang['list_clear_filtering'] 	= 'Clear filtering';
 	$lang['list_delete'] 			= 'Delete';
 	$lang['list_edit'] 				= 'Edit';	
+	$lang['list_paging_first'] 		= 'First';
+	$lang['list_paging_previous'] 	= 'Previous';
+	$lang['list_paging_next'] 		= 'Next';
+	$lang['list_paging_last'] 		= 'Last';
 
 	$lang['form_edit'] 				= 'Edit';
 	$lang['form_back_to_list'] 		= 'Back to list';
@@ -23,6 +29,9 @@
 	$lang['form_or']				= 'or';
 	$lang['form_save'] 				= 'Save';
 	$lang['form_insert_loading'] 	= 'Loading, saving data...';
+	
+	$lang['form_upload_a_file'] 	= 'Upload a file';
+	$lang['form_button_clear'] 		= 'Clear';	
 	
 	$lang['delete_success_message'] = 'Your data has been successfully deleted from the database.';
 	$lang['delete_error_message'] 	= 'Your data was not deleted from the database.';

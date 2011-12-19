@@ -3,12 +3,18 @@
 	$lang['list_actions'] 			= 'Εργαλεία';
 	$lang['list_page'] 				= 'Σελίδα';
 	$lang['list_paging_of'] 		= 'από';
-	$lang['list_displaying']		= 'Εμφάνιση {start} μέχρι {end} από {results} αποτελέσματα';
-	$lang['list_search'] 			= 'Αναζήτηση';
+	$lang['list_displaying']		= 'Εμφάνιση {start} έως {end} από {results} εγγραφές';
+	$lang['list_filtered_from']		= '(φιλτραρισμένες από {total_results} συνολικά εγγραφές)';
+	$lang['list_show_entries']		= 'Εμφάνιση {paging} εγγραφών';
+	$lang['list_search'] 			= 'Αναζήτηση:';
 	$lang['list_search_all'] 		= 'Αναζήτηση όλων';
 	$lang['list_clear_filtering'] 	= 'Καθαρισμός φίλτρων';
 	$lang['list_delete'] 			= 'Διαγραφή';
 	$lang['list_edit'] 				= 'Επεξεργασία';
+	$lang['list_paging_first'] 		= 'Πρώτη';
+	$lang['list_paging_previous'] 	= 'Προηγούμενη';
+	$lang['list_paging_next'] 		= 'Επόμενη';
+	$lang['list_paging_last'] 		= 'Τελευταία';	
 
 	$lang['form_edit'] 				= 'Επεξεργασία';
 	$lang['form_back_to_list'] 		= 'Επιστροφή στην λίστα';
@@ -23,6 +29,9 @@
 	$lang['form_or']				= 'ή';
 	$lang['form_save'] 				= 'Αποθήκευση';
 	$lang['form_insert_loading'] 	= 'Αναμονή...';	
+	
+	$lang['form_upload_a_file'] 	= 'Εισαγωγή αρχείου';	
+	$lang['form_button_clear'] 		= 'Καθαρισμός';	
 	
 	$lang['delete_success_message'] = 'Τα δεδομένα σας διαγράφτηκαν με επιτυχία απο την βάση δεδομένων.';	
 	$lang['delete_error_message'] 	= 'Τα δεδομένα σας δεν διαγράφτηκαν απο το σύστημα.';	

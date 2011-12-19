@@ -9,6 +9,8 @@
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
+	
+	var upload_a_file_string = '<?php echo $this->l('form_upload_a_file');?>';
 </script>
 <div class='ui-widget-content ui-corner-all datatables'>
 	<h3 class="ui-accordion-header ui-helper-reset ui-state-default form-title">

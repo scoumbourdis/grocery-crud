@@ -1428,7 +1428,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.ui.datetime.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.datetime.config.js');
 		$input = "<input name='{$field_info->name}' type='text' value='$value' maxlength='19' class='datetime-input' /> 
-		<button class='datetime-input-clear'>Clear</button>
+		<button class='datetime-input-clear'>".$this->l('form_button_clear')."</button>
 		(yyyy-mm-dd) hh:mm:ss";
 		return $input;
 	}
@@ -1458,7 +1458,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.datepicker.config.js');
 		$input = "<input name='{$field_info->name}' type='text' value='$value' maxlength='10' class='datepicker-input' /> 
-		<button class='datepicker-input-clear'>Clear</button> (yyyy-mm-dd)";
+		<button class='datepicker-input-clear'>".$this->l('form_button_clear')."</button> (yyyy-mm-dd)";
 		return $input;
 	}	
 
