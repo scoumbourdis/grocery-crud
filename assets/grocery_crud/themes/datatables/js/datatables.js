@@ -4,13 +4,13 @@ $(document).ready(function() {
 		"sPaginationType": "full_numbers",
 		"bStateSave": true,
 		"oLanguage":{
-		    "sProcessing":   "Processing...",
+		    "sProcessing":   list_loading,
 		    "sLengthMenu":   show_entries_string,
-		    "sZeroRecords":  "No matching records found",
+		    "sZeroRecords":  list_no_items,
 		    "sInfo":         displaying_paging_string,
-		    "sInfoEmpty":    "Showing 0 to 0 of 0 entries",
+		    "sInfoEmpty":   list_zero_entries,
 		    "sInfoFiltered": filtered_from_string,
-		    "sSearch":       search_string,
+		    "sSearch":       search_string+":",
 		    "oPaginate": {
 		        "sFirst":    paging_first,
 		        "sPrevious": paging_previous,

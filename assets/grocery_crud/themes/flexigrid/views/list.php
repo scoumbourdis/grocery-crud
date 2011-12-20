@@ -71,7 +71,7 @@
 	</div>
 <?php }else{?>
 	<br/>
-	&nbsp;&nbsp;&nbsp;&nbsp; No items to display
+	&nbsp;&nbsp;&nbsp;&nbsp; <?php echo $this->l('list_no_items'); ?>
 	<br/>
 	<br/>
 <?php }?>	

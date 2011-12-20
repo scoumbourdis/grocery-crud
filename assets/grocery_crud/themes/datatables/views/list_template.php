@@ -20,6 +20,10 @@
 	var filtered_from_string 	= "<?php echo str_replace('{total_results}','_MAX_',$this->l('list_filtered_from') ); ?>";
 	var show_entries_string 	= "<?php echo str_replace('{paging}','_MENU_',$this->l('list_show_entries') ); ?>";
 	var search_string 			= "<?php echo $this->l('list_search'); ?>";
+	var list_no_items 			= "<?php echo $this->l('list_no_items'); ?>";
+	var list_zero_entries 			= "<?php echo $this->l('list_zero_entries'); ?>";
+
+	var list_loading 			= "<?php echo $this->l('list_loading'); ?>";
 
 	var paging_first 	= "<?php echo $this->l('list_paging_first'); ?>";
 	var paging_previous = "<?php echo $this->l('list_paging_previous'); ?>";

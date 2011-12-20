@@ -175,6 +175,9 @@ $(function(){
 
 function displaying_and_pages()
 {
+	if($('#crud_page').val() == 0)
+		$('#crud_page').val('1');	
+	
 	var crud_page 		= parseInt( $('#crud_page').val()) ;
 	var per_page	 	= parseInt( $('#per_page').val() );
 	var total_items 	= parseInt( $('#total_items').html() );
@@ -190,8 +193,4 @@ function displaying_and_pages()
 		$('#page-ends-to').html( total_items );
 	else
 		$('#page-ends-to').html( crud_page*per_page );
-	
-	if(crud_page == 0)
-		$('#crud_page').val('1');
-	
 }

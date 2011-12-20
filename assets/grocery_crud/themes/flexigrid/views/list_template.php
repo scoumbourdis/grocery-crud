@@ -52,7 +52,7 @@
 	<form action='<?php echo $ajax_list_url?>' method='post' id='filtering_form' autocomplete = "off" >
 	<div class="sDiv" id='quickSearchBox'>
 		<div class="sDiv2">
-			<?php echo $this->l('list_search');?> <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id='search_text'>
+			<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id='search_text'>
 			<select name="search_field" id="search_field">
 				<option value=""><?php echo $this->l('list_search_all');?></option>
 				<?php foreach($columns as $column){?>

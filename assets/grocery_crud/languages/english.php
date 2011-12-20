@@ -6,7 +6,9 @@
 	$lang['list_displaying']		= 'Displaying {start} to {end} of {results} items';
 	$lang['list_filtered_from']		= '(filtered from {total_results} total entries)';
 	$lang['list_show_entries']		= 'Show {paging} entries';
-	$lang['list_search'] 			= 'Search:';	
+	$lang['list_no_items']			= 'No items to display';
+	$lang['list_zero_entries']		= 'Displaying 0 to 0 of 0 items';
+	$lang['list_search'] 			= 'Search';	
 	$lang['list_search_all'] 		= 'Search all';
 	$lang['list_clear_filtering'] 	= 'Clear filtering';
 	$lang['list_delete'] 			= 'Delete';
@@ -15,6 +17,7 @@
 	$lang['list_paging_previous'] 	= 'Previous';
 	$lang['list_paging_next'] 		= 'Next';
 	$lang['list_paging_last'] 		= 'Last';
+	$lang['list_loading'] 			= 'Loading...';	
 
 	$lang['form_edit'] 				= 'Edit';
 	$lang['form_back_to_list'] 		= 'Back to list';

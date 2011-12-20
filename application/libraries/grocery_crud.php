@@ -2067,7 +2067,7 @@ class grocery_CRUD extends grocery_States
 	protected $default_theme		= 'flexigrid';
 	protected $default_theme_path	= 'assets/grocery_crud/themes';
 	protected $default_language_path= 'assets/grocery_crud/languages';
-	protected $language				= 'english';
+	protected $language				= 'greek';
 	protected $lang_strings			= array();
 	
 	protected $add_fields			= null;

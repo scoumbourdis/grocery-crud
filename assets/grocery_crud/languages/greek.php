@@ -6,7 +6,9 @@
 	$lang['list_displaying']		= 'Εμφάνιση {start} έως {end} από {results} εγγραφές';
 	$lang['list_filtered_from']		= '(φιλτραρισμένες από {total_results} συνολικά εγγραφές)';
 	$lang['list_show_entries']		= 'Εμφάνιση {paging} εγγραφών';
-	$lang['list_search'] 			= 'Αναζήτηση:';
+	$lang['list_no_items']			= 'Δεν βρέθηκαν εγγραφές';
+	$lang['list_zero_entries']		= 'Εμφάνιση 0 έως 0 από 0 εγγραφές';		
+	$lang['list_search'] 			= 'Αναζήτηση';
 	$lang['list_search_all'] 		= 'Αναζήτηση όλων';
 	$lang['list_clear_filtering'] 	= 'Καθαρισμός φίλτρων';
 	$lang['list_delete'] 			= 'Διαγραφή';
@@ -14,7 +16,8 @@
 	$lang['list_paging_first'] 		= 'Πρώτη';
 	$lang['list_paging_previous'] 	= 'Προηγούμενη';
 	$lang['list_paging_next'] 		= 'Επόμενη';
-	$lang['list_paging_last'] 		= 'Τελευταία';	
+	$lang['list_paging_last'] 		= 'Τελευταία';
+	$lang['list_loading'] 			= 'Αναμονή...';
 
 	$lang['form_edit'] 				= 'Επεξεργασία';
 	$lang['form_back_to_list'] 		= 'Επιστροφή στην λίστα';
