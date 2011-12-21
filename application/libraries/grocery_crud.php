@@ -1544,7 +1544,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$input 	= "<div id='uploader_$unique' rel='$unique' class='grocery-crud-uploader' style='$uploader_display_none'></div>";
 		$input .= "<div id='success_$unique' style='$file_display_none'>";
 		$input .= "<a href='".base_url().$field_info->extras->upload_path.'/'.$value."' class='open-file' target='_blank' id='file_$unique'>$value</a> ";
-		$input .= "<a href='javascript:void(0)' id='delete_$unique' class='delete-anchor'>delete</a> ";
+		$input .= "<a href='javascript:void(0)' id='delete_$unique' class='delete-anchor'>".$this->l('form_upload_delete')."</a> ";
 		$input .= "<input type='hidden' name='{$field_info->name}' value='$value' id='hidden_$unique'/>";
 		$input .= "</div><div style='clear:both'></div>";
 		$input .= "<div style='display:none'><a href='".$this->getUploadUrl($field_info->name)."' id='url_$unique'></a></div>";

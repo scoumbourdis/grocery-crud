@@ -34,6 +34,7 @@
 	$lang['form_insert_loading'] 	= 'Loading, saving data...';
 	
 	$lang['form_upload_a_file'] 	= 'Upload a file';
+	$lang['form_upload_delete'] 	= 'delete';
 	$lang['form_button_clear'] 		= 'Clear';	
 	
 	$lang['delete_success_message'] = 'Your data has been successfully deleted from the database.';

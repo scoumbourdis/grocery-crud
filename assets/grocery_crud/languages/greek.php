@@ -33,7 +33,8 @@
 	$lang['form_save'] 				= 'Αποθήκευση';
 	$lang['form_insert_loading'] 	= 'Αναμονή...';	
 	
-	$lang['form_upload_a_file'] 	= 'Εισαγωγή αρχείου';	
+	$lang['form_upload_a_file'] 	= 'Εισαγωγή αρχείου';
+	$lang['form_upload_delete'] 	= 'Διαγραφή';	
 	$lang['form_button_clear'] 		= 'Καθαρισμός';	
 	
 	$lang['delete_success_message'] = 'Τα δεδομένα σας διαγράφτηκαν με επιτυχία απο την βάση δεδομένων.';	
