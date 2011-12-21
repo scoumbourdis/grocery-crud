@@ -2067,7 +2067,7 @@ class grocery_CRUD extends grocery_States
 	protected $default_theme		= 'flexigrid';
 	protected $default_theme_path	= 'assets/grocery_crud/themes';
 	protected $default_language_path= 'assets/grocery_crud/languages';
-	protected $language				= 'greek';
+	protected $language				= null;
 	protected $lang_strings			= array();
 	
 	protected $add_fields			= null;
@@ -2387,6 +2387,12 @@ class grocery_CRUD extends grocery_States
 	 */
 	private function _load_language()
 	{
+		if($this->language === null)
+		{
+			$ci = &get_instance();
+			$ci->config->load('grocery_crud');
+			$this->language = $ci->config->item('grocery_crud_default_language');
+		}
 		include($this->default_language_path.'/'.$this->language.'.php');
 		
 		foreach($lang as $handle => $lang_string)

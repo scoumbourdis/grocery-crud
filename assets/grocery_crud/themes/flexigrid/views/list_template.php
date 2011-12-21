@@ -23,7 +23,7 @@
 <div class="flexigrid" style='width: 100%;'>
 	<div class="mDiv">
 		<div class="ftitle">
-			<?php echo $subject_plural?>
+			&nbsp;
 		</div>
 		<div title="Minimize/Maximize Table" class="ptogtitle">
 			<span></span>
