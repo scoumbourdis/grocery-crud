@@ -1,5 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/* Translated by fantas */
+/* Translated by Hector Cyc */
 	$lang['list_add']				= 'Agregar';
 	$lang['list_actions']			= 'Acciones';
 	$lang['list_page']				= 'Pagina';  
