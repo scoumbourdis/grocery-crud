@@ -1,4 +1,4 @@
-<?php
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	$lang['list_add'] 				= 'Add';
 	$lang['list_actions'] 			= 'Actions';
 	$lang['list_page'] 				= 'Page';	

@@ -1,4 +1,4 @@
-<?php 
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	$lang['list_add'] 				= 'Προσθήκη';
 	$lang['list_actions'] 			= 'Εργαλεία';
 	$lang['list_page'] 				= 'Σελίδα';
