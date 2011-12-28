@@ -1,6 +1,5 @@
 v.1.1.7
-	Bulgarian language at multilingual functionality
-	Spanish language at multilingual functionality
+	Multilingual functionality, adding languages: Bulgarian, Spanish, Portuguese.
 v.1.1.6
 	New feature: Multilingual functionality.
 	Remember the search text and the field name at the list that user had insert.
