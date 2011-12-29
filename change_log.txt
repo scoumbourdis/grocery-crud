@@ -1,5 +1,6 @@
 v.1.1.7
 	Multilingual functionality, adding languages: Bulgarian, Spanish, Portuguese, Thai.
+	Fixing issue #3, replace mysql_escape_string() with str_replace. This function has been DEPRECATED as of PHP 5.3.0
 v.1.1.6
 	New feature: Multilingual functionality.
 	Remember the search text and the field name at the list that user had insert.
