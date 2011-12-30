@@ -30,7 +30,7 @@ class grocery_Model  extends CI_Model  {
     			$unique_field_name = $this->_unique_field_name($field_name);
     			
 				if(strstr($related_field_title,'{'))
-    				$select .= ", CONCAT('".str_replace(array('{','}'),array("',",",'"),str_replace("'","\\'",$related_field_title))."') as $unique_field_name";
+    				$select .= ", CONCAT('".str_replace(array('{','}'),array("',COALESCE(",", ''),'"),str_replace("'","\\'",$related_field_title))."') as $unique_field_name";
     			else    			
     				$select .= ", $unique_join_name.$related_field_title as $unique_field_name";
     			
@@ -139,7 +139,7 @@ class grocery_Model  extends CI_Model  {
     	$select = "$related_table.$related_primary_key, ";
     	
     	if(strstr($related_field_title,'{'))
-    		$select .= "CONCAT('".str_replace(array('{','}'),array("',",",'"),str_replace("'","\\'",$related_field_title))."') as $field_name_hash";
+    		$select .= "CONCAT('".str_replace(array('{','}'),array("',COALESCE(",", ''),'"),str_replace("'","\\'",$related_field_title))."') as $field_name_hash";
     	else
 	    	$select .= "$related_table.$related_field_title as $field_name_hash";
     	
