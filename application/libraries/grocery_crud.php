@@ -1825,7 +1825,7 @@ class grocery_States extends grocery_Layout
 	
 	protected function get_method_hash()
 	{
-		return md5($this->get_method_name());
+		return md5($this->get_controller_name().$this->get_method_name());
 	}
 	
 	protected function get_method_name()
@@ -1833,6 +1833,12 @@ class grocery_States extends grocery_Layout
 		$ci = &get_instance();		
 		return $ci->router->method;
 	}
+	
+	protected function get_controller_name()
+	{
+		$ci = &get_instance();		
+		return $ci->router->class;
+	}	
 	
 	public function getState()
 	{
