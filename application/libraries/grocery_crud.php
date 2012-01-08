@@ -342,6 +342,7 @@ class grocery_Field_Types
 				break;
 				case '254':
 				case 'string':
+				case 'enum':					
 					if($db_type->db_type != 'enum')
 						$type = 'string';
 					else
