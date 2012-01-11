@@ -590,6 +590,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 		{
 			$this->form_validation = new grocery_Form_validation();
 			$ci = &get_instance();
+			$ci->load->library('form_validation');
 			$ci->form_validation = $this->form_validation;
 		}
 		return $this->form_validation;
