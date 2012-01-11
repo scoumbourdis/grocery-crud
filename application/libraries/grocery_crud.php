@@ -1237,7 +1237,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$data->fields 		= $this->get_edit_fields();
 		$data->hidden_fields	= $this->get_edit_hidden_fields();
 		
-		$data->validation_url	= $this->getValidationUpdateUrl(); 
+		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key); 
 		
 		$this->_theme_view('edit.php',$data);
 	}
@@ -1881,9 +1881,12 @@ class grocery_States extends grocery_Layout
 		return $this->state_url('insert_validation');
 	}
 	
-	protected function getValidationUpdateUrl()
+	protected function getValidationUpdateUrl($primary_key = null)
 	{
-		return $this->state_url('update_validation');
+		if($primary_key === null)
+			return $this->state_url('update_validation');
+		else
+			return $this->state_url('update_validation/'.$primary_key);
 	}	
 
 	protected function getEditUrl($primary_key = null)
