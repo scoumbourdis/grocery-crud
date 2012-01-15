@@ -121,18 +121,18 @@ class grocery_Model  extends CI_Model  {
     
     protected function _unique_join_name($field_name)
     {
-    	return 'j'.substr(md5($field_name),0,8); //This j is because is better for a string to begin with a letter and not a number
+    	return 'j'.substr(md5($field_name),0,8); //This j is because is better for a string to begin with a letter and not with a number
     }
 
     protected function _unique_field_name($field_name)
     {
-    	return 's'.substr(md5($field_name),0,8); //This s is because is better for a string to begin with a letter and not a number
+    	return 's'.substr(md5($field_name),0,8); //This s is because is better for a string to begin with a letter and not with a number
     }    
     
     function get_relation_array($field_name , $related_table , $related_field_title)
     {
     	$relation_array = array();
-    	$field_name_hash = $this->_unique_field_name($field_name); //Just to make sure that the string begins with a character and not with a number
+    	$field_name_hash = $this->_unique_field_name($field_name);
     	
     	$related_primary_key = $this->get_primary_key($related_table);
     	
