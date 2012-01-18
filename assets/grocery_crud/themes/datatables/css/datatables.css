@@ -145,6 +145,8 @@ input.field_error
 	border: 1px solid #AAA;
 	padding: 5px 5px 5px 5px;
 	background: #fafafa;
+	width: 500px;
+	height: 100px;	
 }
 
 .datatables div.form-div textarea:hover, .datatables div.form-div textarea:focus,
