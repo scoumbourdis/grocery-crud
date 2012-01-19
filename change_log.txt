@@ -1,6 +1,7 @@
 v.1.1.8
 	Add new jquery version 1.7.1
 	Changing the drop-down list of the set_relation. Now the drop-down list has unique design for all the browsers, is searchable and also can be empty.
+	Changing the layout or relation n-n (only without the ordering field). The new one, is much more user friendly and easier to handle lot of data. 
 	Adding languages: Italian.
 	Small BUG fixes: Auto-recognize enum fields for CI 2.1 || don't print "&nbsp;" if a value is empty, is useless || CSS Fixes.
 v.1.1.7

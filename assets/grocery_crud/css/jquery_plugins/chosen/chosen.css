@@ -369,3 +369,14 @@
   padding: 4px 5px 4px 20px;
 }
 /* @end */
+
+/* for grocery CRUD */
+.chosen-multiple-select
+{
+	width: 510px;	
+}
+.chosen-select
+{
+	min-width:250px;	
+}
+/* ---------------- */

@@ -1480,7 +1480,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
 		
-		$input = "<select name='{$field_info->name}' class='chosen-select' data-placeholder='Select one'>";
+		$input = "<select name='{$field_info->name}' class='chosen-select' data-placeholder='Select {$field_info->display_as}'>";
 		$input .= "<option value=''></option>";
 		$options_array = $this->get_relation_array($field_info->extras);
 		foreach($options_array as $option_value => $option)
@@ -1495,13 +1495,23 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function get_relation_n_n_input($field_info_type, $selected_values)
 	{	
-		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');		
-		$this->set_css('assets/grocery_crud/css/jquery_plugins/ui.multiselect.css');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');	
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/ui.multiselect.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.multiselect.js');
+		$has_priority_field = !empty($field_info_type->extras->priority_field_relation_table) ? true : false;
 		
-		$field_info 		= $this->relation_n_n[$field_info_type->name]; //As its inside here the relation_n_n exists
+		if($has_priority_field)
+		{
+			$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');	
+			$this->set_css('assets/grocery_crud/css/jquery_plugins/ui.multiselect.css');
+			$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');	
+			$this->set_js('assets/grocery_crud/js/jquery_plugins/ui.multiselect.js');
+			$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.multiselect.js');
+		}
+		else 
+		{
+			$this->set_css('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css');
+			$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js');
+			$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
+		}
+		$field_info 		= $this->relation_n_n[$field_info_type->name]; //As we use this function the relation_n_n exists, so don't need to check
 		$unselected_values 	= $this->get_relation_n_n_unselected_array($field_info, $selected_values);
 		
 		if(empty($unselected_values) && empty($selected_values))
@@ -1510,8 +1520,8 @@ class grocery_Layout extends grocery_Model_Driver
 		}
 		else
 		{
-		
-			$input = "<select name='{$field_info_type->name}[]' multiple='multiple' size='8' class='multiselect'>";
+			$css_class = $has_priority_field ? 'multiselect': 'chosen-multiple-select';
+			$input = "<select name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='Select {$field_info_type->display_as}'>";
 			
 			if(!empty($unselected_values))
 				foreach($unselected_values as $id => $name)
