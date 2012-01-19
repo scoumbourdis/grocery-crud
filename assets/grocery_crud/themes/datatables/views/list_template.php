@@ -4,7 +4,7 @@
 	$this->set_css('assets/grocery_crud/themes/datatables/css/demo_table_jui.css');
 	$this->set_css('assets/grocery_crud/themes/datatables/css/ui/simple/jquery-ui-1.8.10.custom.css');
 	$this->set_css('assets/grocery_crud/themes/datatables/css/datatables.css');	
-	$this->set_js('assets/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
+	$this->set_js('assets/grocery_crud/js/jquery-1.7.1.min.js');
 	$this->set_js('assets/grocery_crud/themes/datatables/js/jquery-ui-1.8.10.custom.min.js');
 	$this->set_js('assets/grocery_crud/themes/datatables/js/jquery.dataTables.min.js');
 	$this->set_js('assets/grocery_crud/themes/datatables/js/datatables.js');

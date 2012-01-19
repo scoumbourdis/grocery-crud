@@ -1193,7 +1193,7 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function showAddForm()
 	{
-		$this->set_js('assets/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
+		$this->set_js('assets/grocery_crud/js/jquery-1.7.1.min.js');
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1211,7 +1211,7 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function showEditForm($state_info)
 	{
-		$this->set_js('assets/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
+		$this->set_js('assets/grocery_crud/js/jquery-1.7.1.min.js');
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1462,7 +1462,7 @@ class grocery_Layout extends grocery_Model_Driver
 	protected function get_enum_input($field_info,$value)
 	{		
 		$input = "<select name='{$field_info->name}'>";
-		
+			
 		$options_array = explode("','",substr($field_info->db_max_length,1,-1));
 		foreach($options_array as $option)
 		{
@@ -1476,8 +1476,12 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function get_relation_input($field_info,$value)
 	{
-		$input = "<select name='{$field_info->name}'>";
+		$this->set_css('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css');
+		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js');
+		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
 		
+		$input = "<select name='{$field_info->name}' class='chosen-select' data-placeholder='Select one'>";
+		$input .= "<option value=''></option>";
 		$options_array = $this->get_relation_array($field_info->extras);
 		foreach($options_array as $option_value => $option)
 		{

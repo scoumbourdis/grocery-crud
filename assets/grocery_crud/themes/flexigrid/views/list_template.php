@@ -2,7 +2,7 @@
 	if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 	$this->set_css('assets/grocery_crud/themes/flexigrid/css/flexigrid.css');
-	$this->set_js('assets/grocery_crud/themes/datatables/js/jquery-1.6.2.min.js');
+	$this->set_js('assets/grocery_crud/js/jquery-1.7.1.min.js');
 	$this->set_js('assets/grocery_crud/themes/flexigrid/js/cookies.js');
 	$this->set_js('assets/grocery_crud/themes/flexigrid/js/flexigrid.js');
 	$this->set_js('assets/grocery_crud/themes/flexigrid/js/jquery.form.js');

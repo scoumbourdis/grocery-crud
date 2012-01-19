@@ -14,6 +14,10 @@ table th
 	overflow:hidden;
 	color:#000;
 }
+.flexigrid.crud-form
+{
+	overflow:visible;
+}
 .flexigrid .field-sorting
 {
 	cursor: pointer;	
@@ -268,7 +272,6 @@ table th
 	border:1px solid #ccc;
 	border-top:0px;
 	background:#fff;
-	overflow:auto;
 	position:relative;
 	font-size:15px;
 	padding:0px 0px 10px 0px;
@@ -682,9 +685,9 @@ a img
 {
 	border: none;	
 }
-textarea
+.flexigrid textarea
 {
-	width:510px;
+	width:500px;
 	height: 80px;	
 }
 /* ie adjustments */

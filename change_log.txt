@@ -1,6 +1,8 @@
 v.1.1.8
+	Add new jquery version 1.7.1
+	Changing the drop-down list of the set_relation. Now the drop-down list has unique design for all the browsers, is searchable and also can be empty.
 	Adding languages: Italian.
-	Small BUG fixes: Auto-recognize enum fields for CI 2.1, don't print "&nbsp;" if a value is empty, is useless.
+	Small BUG fixes: Auto-recognize enum fields for CI 2.1 || don't print "&nbsp;" if a value is empty, is useless || CSS Fixes.
 v.1.1.7
 	Multilingual functionality, adding languages: Bulgarian, French, Portuguese, Spanish,  Thai.
 	Fixing issue #3, replace mysql_escape_string() with str_replace. This function has been DEPRECATED as of PHP 5.3.0.

@@ -10,7 +10,7 @@
 	
 	var upload_a_file_string = '<?php echo $this->l('form_upload_a_file');?>';
 </script>
-<div class="flexigrid" style='width: 100%;'>
+<div class="flexigrid crud-form" style='width: 100%;'>
 	<div class="mDiv">
 		<div class="ftitle">
 			<div class='ftitle-left'>
