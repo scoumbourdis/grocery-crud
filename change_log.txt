@@ -3,7 +3,11 @@ v.1.1.8
 	Changing the drop-down list of the set_relation. Now the drop-down list has unique design for all the browsers, is searchable and also can be empty.
 	Changing the layout or relation n-n (only without the ordering field). The new one, is much more user friendly and easier to handle lot of data. 
 	Adding languages: Italian.
-	Small BUG fixes: Auto-recognize enum fields for CI 2.1 || don't print "&nbsp;" if a value is empty, is useless || CSS Fixes.
+	Small BUG fixes: 
+		- Auto-recognize enum fields for CI 2.1
+		- Don't print "&nbsp;" if a value is empty, is useless
+		- Smal but important CSS Fixes.
+		- #7 set_relation BUG conflict when a field name appears twice.
 v.1.1.7
 	Multilingual functionality, adding languages: Bulgarian, French, Portuguese, Spanish,  Thai.
 	Fixing issue #3, replace mysql_escape_string() with str_replace. This function has been DEPRECATED as of PHP 5.3.0.
