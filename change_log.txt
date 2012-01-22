@@ -8,6 +8,7 @@ v.1.1.8
 		- Don't print "&nbsp;" if a value is empty, is useless
 		- Smal but important CSS Fixes.
 		- #7 set_relation BUG conflict when a field name appears twice.
+	Manipulating NULL data. Automatically add NULL to a NULL-able field when it's empty.
 v.1.1.7
 	Multilingual functionality, adding languages: Bulgarian, French, Portuguese, Spanish,  Thai.
 	Fixing issue #3, replace mysql_escape_string() with str_replace. This function has been DEPRECATED as of PHP 5.3.0.

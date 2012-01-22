@@ -40,6 +40,9 @@ class grocery_Field_Types
 	 */
 	public function get_field_types()
 	{
+		if($this->field_types !== null)
+			return $this->field_types;
+		
 		$types	= array();
 		foreach($this->basic_model->get_field_types_basic_table() as $field_info)
 		{
@@ -160,7 +163,9 @@ class grocery_Field_Types
 				}
 			}		
 		
-		return $types;
+		$this->field_types = $types;
+			
+		return $this->field_types;
 	}
 	
 	public function get_primary_key()
@@ -664,14 +669,24 @@ class grocery_Model_Driver extends grocery_Field_Types
 				}
 				
 				$insert_data = array();
+				$types = $this->get_field_types();
 				foreach($add_fields as $num_row => $field)
 				{
 					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
-						$insert_data[$field->field_name] = $post_data[$field->field_name];
+					{
+						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && $post_data[$field->field_name] === '')
+						{
+							$insert_data[$field->field_name] = null;
+						}
+						else
+						{
+							$insert_data[$field->field_name] = $post_data[$field->field_name];	
+						}						
+					}
 				}
-				
+	
 				$insert_result =  $this->basic_model->db_insert($insert_data);
-				
+					
 				if($insert_result !== false)
 				{
 					$insert_primary_key = $insert_result;
@@ -749,10 +764,20 @@ class grocery_Model_Driver extends grocery_Field_Types
 				}
 				
 				$update_data = array();
+				$types = $this->get_field_types();
 				foreach($edit_fields as $num_row => $field)
 				{
 					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
-						$update_data[$field->field_name] = $post_data[$field->field_name];
+					{
+						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && $post_data[$field->field_name] === '')
+						{
+							$update_data[$field->field_name] = null;
+						}
+						else
+						{
+							$update_data[$field->field_name] = $post_data[$field->field_name];
+						}
+					}
 				}				
 				$this->basic_model->db_update($update_data, $primary_key);
 				
@@ -1479,7 +1504,8 @@ class grocery_Layout extends grocery_Model_Driver
 		$this->set_css('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
-		
+
+//@todo have to do the Select {display_as} as a lang string		
 		$input = "<select name='{$field_info->name}' class='chosen-select' data-placeholder='Select {$field_info->display_as}'>";
 		$input .= "<option value=''></option>";
 		$options_array = $this->get_relation_array($field_info->extras);
@@ -1521,6 +1547,7 @@ class grocery_Layout extends grocery_Model_Driver
 		else
 		{
 			$css_class = $has_priority_field ? 'multiselect': 'chosen-multiple-select';
+//@todo have to do the Select {display_as} as a lang string			
 			$input = "<select name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='Select {$field_info_type->display_as}'>";
 			
 			if(!empty($unselected_values))
@@ -2093,6 +2120,7 @@ class grocery_CRUD extends grocery_States
 	protected $edit_fields			= null;
 	protected $add_hidden_fields 	= array();
 	protected $edit_hidden_fields 	= array();
+	protected $field_types 			= null;	
 	protected $basic_db_table 		= null;
 	protected $config 				= array();
 	protected $subject 				= 'Record';
