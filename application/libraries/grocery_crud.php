@@ -1265,6 +1265,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$data->hidden_fields	= $this->get_add_hidden_fields();
 		
 		$this->_theme_view('add.php',$data);
+		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
 	}
 	
 	protected function showEditForm($state_info)
@@ -1289,6 +1290,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key); 
 		
 		$this->_theme_view('edit.php',$data);
+		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
 	}
 	
 	protected function delete_layout($delete_result = true)
@@ -1786,6 +1788,13 @@ class grocery_Layout extends grocery_Model_Driver
 		}
 		
 		$this->views_as_string .= $buffer;
+	}
+	
+	private function _inline_js($inline_js = '')
+	{
+		$this->views_as_string .= '<script type="text/javascript">
+			'.$inline_js.'
+		</script>';
 	}
 	
 	protected function get_views_as_string()

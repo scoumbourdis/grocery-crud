@@ -1,6 +1,6 @@
 $(function(){
 	$('.datepicker-input').datepicker({
-			dateFormat: 'yy-mm-dd',
+			dateFormat: js_date_format,
 			showButtonPanel: true,
 			changeMonth: true,
 			changeYear: true
