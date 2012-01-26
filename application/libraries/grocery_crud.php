@@ -242,7 +242,7 @@ class grocery_Field_Types
 				$value = $this->character_limiter(strip_tags($value),30," [...]");
 			break;
 			case 'date':
-				if(!empty($value) && $value != '0000-00-00')
+				if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
 				{
 					list($year,$month,$day) = explode("-",$value);
 					$value = date ("d M Y",mktime (0,0,0,(int)$month , (int)$day , (int)$year));
@@ -678,6 +678,10 @@ class grocery_Model_Driver extends grocery_Field_Types
 						{
 							$insert_data[$field->field_name] = null;
 						}
+						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'date')
+						{
+							$insert_data[$field->field_name] = $this->_convert_date_to_sql_date($post_data[$field->field_name]);
+						}						
 						else
 						{
 							$insert_data[$field->field_name] = $post_data[$field->field_name];	
@@ -773,6 +777,10 @@ class grocery_Model_Driver extends grocery_Field_Types
 						{
 							$update_data[$field->field_name] = null;
 						}
+						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'date')
+						{
+							$update_data[$field->field_name] = $this->_convert_date_to_sql_date($post_data[$field->field_name]);
+						}
 						else
 						{
 							$update_data[$field->field_name] = $post_data[$field->field_name];
@@ -818,6 +826,32 @@ class grocery_Model_Driver extends grocery_Field_Types
 			return false;	
 		}		
 	}	
+	
+	protected function _convert_date_to_sql_date($date)
+	{
+		$date = substr($date,0,10);
+		if(preg_match('/\d{4}-\d{2}-\d{2}/',$date))
+		{
+			//If it's already a sql-date don't convert it!
+			return $date;
+		}
+		
+		$date_array = preg_split( '/[-\.\/ ]/', $date);
+		if($this->php_date_format == 'd/m/Y')
+		{
+			$sql_date = date('Y-m-d',mktime(0,0,0,$date_array[1],$date_array[0],$date_array[2]));
+		}
+		elseif($this->php_date_format == 'm/d/Y')
+		{
+			$sql_date = date('Y-m-d',mktime(0,0,0,$date_array[0],$date_array[1],$date_array[2]));
+		}
+		else
+		{
+			$sql_date = $date;
+		}
+		
+		return $sql_date;
+	}
 	
 	protected function _get_field_names_to_search(array $relation_values)
 	{		
@@ -1206,7 +1240,6 @@ class grocery_Layout extends grocery_Model_Driver
 				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type != 'relation_n_n')
 					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $field_value);
 				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type == 'relation_n_n')
-				
 					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $row->$primary_key);				
 				else
 					$list[$num_row]->$field_name = $field_value;
@@ -1360,9 +1393,9 @@ class grocery_Layout extends grocery_Model_Driver
 	{		
 		$js_files = $this->get_js_files();
 		$css_files =  $this->get_css_files();
-		
+
 		if($this->unset_jquery)
-			unset($js_files['763b4d272e158bdb8ed5a12a1824c94f494954bd']);
+			unset($js_files[sha1('assets/grocery_crud/js/jquery-1.7.1.min.js')]);
 		
 		if($this->echo_and_die === false)
 		{
@@ -1475,12 +1508,23 @@ class grocery_Layout extends grocery_Model_Driver
 	}
 	
 	protected function get_date_input($field_info,$value)
-	{
+	{	
 		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.datepicker.config.js');
-		$input = "<input name='{$field_info->name}' type='text' value='$value' maxlength='10' class='datepicker-input' /> 
-		<button class='datepicker-input-clear'>".$this->l('form_button_clear')."</button> (yyyy-mm-dd)";
+		
+		if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
+		{
+			list($year,$month,$day) = explode('-',substr($value,0,10));
+			$date = date($this->php_date_format, mktime(0,0,0,$month,$day,$year));
+		}
+		else
+		{
+			$date = '';
+		}
+		
+		$input = "<input name='{$field_info->name}' type='text' value='$date' maxlength='10' class='datepicker-input' /> 
+		<button class='datepicker-input-clear'>".$this->l('form_button_clear')."</button> (".$this->ui_date_format.")";
 		return $input;
 	}	
 
@@ -2115,6 +2159,9 @@ class grocery_CRUD extends grocery_States
 	protected $default_language_path= 'assets/grocery_crud/languages';
 	protected $language				= null;
 	protected $lang_strings			= array();
+	protected $php_date_format		= null;
+	protected $js_date_format		= null;
+	protected $ui_date_format		= null;
 	
 	protected $add_fields			= null;
 	protected $edit_fields			= null;
@@ -2434,10 +2481,10 @@ class grocery_CRUD extends grocery_States
 	 */
 	private function _load_language()
 	{
+		$ci = &get_instance();
+		$ci->config->load('grocery_crud');
 		if($this->language === null)
 		{
-			$ci = &get_instance();
-			$ci->config->load('grocery_crud');
 			$this->language = $ci->config->item('grocery_crud_default_language');
 		}
 		include($this->default_language_path.'/'.$this->language.'.php');
@@ -2445,6 +2492,38 @@ class grocery_CRUD extends grocery_States
 		foreach($lang as $handle => $lang_string)
 			if(!isset($this->lang_strings[$handle]))
 				$this->lang_strings[$handle] = $lang_string;
+	}
+
+	private function _load_date_format()
+	{
+		$ci = &get_instance();
+		
+		list($php_day, $php_month, $php_year) = array('d','m','Y');
+		list($js_day, $js_month, $js_year) = array('dd','mm','yy');
+		list($ui_day, $ui_month, $ui_year) = array('dd','mm','yyyy');
+//@todo ui_day, ui_month, ui_year has to be lang strings
+		
+		$date_format = $ci->config->item('grocery_crud_date_format');
+		switch ($date_format) {
+			case 'uk-date':
+				$this->php_date_format 		= "$php_day/$php_month/$php_year";
+				$this->js_date_format		= "$js_day/$js_month/$js_year";
+				$this->ui_date_format		= "$ui_day/$ui_month/$ui_year";
+			break;
+			
+			case 'us-date':
+				$this->php_date_format 		= "$php_month/$php_day/$php_year";
+				$this->js_date_format		= "$js_month/$js_day/$js_year";
+				$this->ui_date_format		= "$ui_month/$ui_day/$ui_year";
+			break;
+			
+			case 'sql-date':
+			default:
+				$this->php_date_format 		= "$php_year-$php_month-$php_day";
+				$this->js_date_format		= "$js_year-$js_month-$js_day";
+				$this->ui_date_format		= "$ui_year-$ui_month-$ui_day";
+			break;
+		}
 	}
 	
 	/**
@@ -2743,6 +2822,8 @@ class grocery_CRUD extends grocery_States
 					die();
 				}
 				
+				$this->_load_date_format();
+				
 				$this->set_basic_db_table($this->get_table());
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
@@ -2760,6 +2841,8 @@ class grocery_CRUD extends grocery_States
 					throw new Exception('This user is not allowed to do this operation', 14);
 					die();
 				}
+				
+				$this->_load_date_format();
 				
 				$this->set_basic_db_table($this->get_table());
 				if($this->theme === null)
@@ -2795,6 +2878,8 @@ class grocery_CRUD extends grocery_States
 					throw new Exception('This user is not allowed to do this operation', 14);
 					die();
 				}
+				$this->_load_date_format();
+				
 				$this->set_basic_db_table($this->get_table());
 				
 				$state_info = $this->getStateInfo();
@@ -2809,6 +2894,8 @@ class grocery_CRUD extends grocery_States
 					throw new Exception('This user is not allowed to do this operation', 14);
 					die();
 				}
+				
+				$this->_load_date_format();
 				
 				$this->set_basic_db_table($this->get_table());
 				

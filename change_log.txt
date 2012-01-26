@@ -1,3 +1,6 @@
+v.1.1.9
+	BUG fix - unset_jquery function now works properly.
+	Adding date format to the auto date fields. The format can be dd/mm/yyyy or mm/dd/yyyy or the old-one yyyy-mm-dd. 
 v.1.1.8
 	Add new jquery version 1.7.1
 	Changing the drop-down list of the set_relation. Now the drop-down list has unique design for all the browsers, is searchable and also can be empty.
