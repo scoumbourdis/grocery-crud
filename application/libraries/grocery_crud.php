@@ -1024,7 +1024,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 		if(isset($state_info->field_name) && isset($this->upload_fields[$state_info->field_name]))
 		{
 			$upload_info = $this->upload_fields[$state_info->field_name];
-			/*
+			
 			header('Pragma: no-cache');
 			header('Cache-Control: private, no-cache');
 			header('Content-Disposition: inline; filename="files.json"');
@@ -1040,8 +1040,8 @@ class grocery_Model_Driver extends grocery_Field_Types
 			$upload_handler = new UploadHandler($options);
 			$upload_handler->post();
 			die();
-			*/
 			
+			/*
 			$upload_info = $this->upload_fields[$state_info->field_name];
 			
 			$input = fopen("php://input", "r");
@@ -1055,6 +1055,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 	        fclose($target);
 	        
 	        return (object)array('file_name' => $state_info->file_name);
+	        */
 		}
 		else
 		{
@@ -1635,8 +1636,9 @@ class grocery_Layout extends grocery_Model_Driver
 
 	protected function get_upload_file_input($field_info, $value)
 	{
-		/*
 		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
+		$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/file-uploader.css');
+		//$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/bootstrap.min.css');
 		$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/jquery.fileupload-ui.css');
 
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
@@ -1648,9 +1650,11 @@ class grocery_Layout extends grocery_Model_Driver
 		//$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.fileupload-ui.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.fileupload.config.js');
 		
-		$input = '<input type="file" name="'.$field_info->name.'" class="file-upload" rel="'.$this->getUploadUrl($field_info->name).'">';
-		*/		
-		
+		$input = '<span class="fileinput-button qq-upload-button">
+			<span>'.$this->l('form_upload_a_file').'</span>
+			<input type="file" name="'.$field_info->name.'" class="file-upload" rel="'.$this->getUploadUrl($field_info->name).'">
+		</span>';
+		/*
 		$this->set_css('assets/grocery_crud/css/other/fileuploader/fileuploader.css');
 		$this->set_js('assets/grocery_crud/js/other/fileuploader.js');
 		$this->set_js('assets/grocery_crud/js/other/fileuploader.config.js');
@@ -1668,6 +1672,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$input .= "</div><div style='clear:both'></div>";
 		$input .= "<div style='display:none'><a href='".$this->getUploadUrl($field_info->name)."' id='url_$unique'></a></div>";
 		$input .= "<div style='display:none'><a href='".$this->getFileDeleteUrl($field_info->name)."' id='delete_url_$unique' rel='$value' ></a></div>";
+		*/
 		
 		return $input;
 	}

@@ -5,11 +5,9 @@ $(function(){
 	        dataType: 'json',
 	        url: uploader_url,
 	        done: function (e, data) {
-	    	/*
 	            $.each(data.result, function (index, file) {
-	                $('<p/>').text(file.name).appendTo(document.body);
+	               alert("SUCESS UPLOAD || file name: "+file.name);
 	            });
-	        */
 	        }
 	    });
 	});
