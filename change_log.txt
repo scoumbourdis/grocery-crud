@@ -1,4 +1,5 @@
-v.1.1.9
+v.1.2
+	Adding languages: European Portuguese, Indonesian.
 	BUG fix - unset_jquery function now works properly.
 	Adding date format to the auto date fields. The format can be dd/mm/yyyy or mm/dd/yyyy or the old-one yyyy-mm-dd.
 	Adding a brand new uploader. Works with the most common browsers. Internet Explorer 8+, Mozilla Firefox, Google Chrome, Opera, Safari.
