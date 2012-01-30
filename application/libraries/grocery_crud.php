@@ -525,7 +525,16 @@ class grocery_Model_Driver extends grocery_Field_Types
 		
 		return $relation_array;
 	}
-	
+
+	protected function get_autocomplete_array($relation_info)
+	{
+		list($field_name , $related_table , $related_field_title, $url_ajax)  = $relation_info;
+		
+		$relation_array = $this->basic_model->get_relation_array($field_name , $related_table , $related_field_title);
+		
+		return $relation_array;
+	}
+
 	protected function db_insert_validation()
 	{
 		$validation_result = (object)array('success'=>false);
@@ -1569,11 +1578,27 @@ class grocery_Layout extends grocery_Model_Driver
 	
 	protected function get_relation_input($field_info,$value)
 	{
+		if (count($field_info->extras) == 3){
+			return $this->prepare_relation_input($field_info, $value);
+		}
+		else{
+			list($field_name , $related_table , $related_field_title, $ajax_url)  = $field_info->extras;
+			$count = $this->basic_model->count_records($related_table);
+			$ci = &get_instance();
+			$ci->config->load('grocery_crud');
+			if ($count <= $ci->config->item('grocery_crud_autocomplete_limit'))
+				return $this->prepare_relation_input($field_info, $value);
+			else {
+				return $this->prepare_autocomplete_input($field_info, $value);
+			}
+		}
+	}
+	
+	private function prepare_relation_input($field_info, $value){
 		$this->set_css('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
-
-//@todo have to do the Select {display_as} as a lang string		
+		
 		$input = "<select name='{$field_info->name}' class='chosen-select' data-placeholder='Select {$field_info->display_as}'>";
 		$input .= "<option value=''></option>";
 		$options_array = $this->get_relation_array($field_info->extras);
@@ -1587,6 +1612,46 @@ class grocery_Layout extends grocery_Model_Driver
 		return $input;
 	}
 	
+	
+	private function prepare_autocomplete_input($field_info, $value){
+		$url_ajax = $field_info->extras[3];
+		
+		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
+		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
+		
+		if (isset($value)){
+			$options_array = $this->get_autocomplete_array($field_info->extras);
+			$descri = $options_array[$value]; 
+			$html  = "<input type='text' id='$field_info->name' value='$descri' autocomplete='off'></input>";
+			$html .= "<input type='hidden' value='$value' id='hi_$field_info->name' name='$field_info->name'></input>";
+		}
+		else{
+			$html  = "<input type='text' id='$field_info->name' value='' autocomplete='off'></input>";
+			$html .= "<input type='hidden' value='' id='hi_$field_info->name' name='$field_info->name'></input>";
+		}
+		$html .= "<script type='text/javascript'>";
+		$html .= "\$( '#$field_info->name' ).autocomplete({
+					source: '$url_ajax',
+					minLength: 2,
+					select: function( event, ui ) {
+						ui.item ? \$('#hi_$field_info->name').val(ui.item.id) : \$('#hi_$field_info->name').val(''); 
+					},
+					change: function(event, ui) {
+						if (\$('#$field_info->name').val()=='')
+					 		\$('#hi_$field_info->name').val('');
+					 },
+					search: function() {
+						\$('#hi_$field_info->name').val('');
+					 }
+					
+				});
+				";
+		
+		
+		$html .= "</script>";
+		return $html;
+	}
+		
 	protected function get_relation_n_n_input($field_info_type, $selected_values)
 	{	
 		$has_priority_field = !empty($field_info_type->extras->priority_field_relation_table) ? true : false;
@@ -3300,12 +3365,19 @@ class grocery_CRUD extends grocery_States
 	 * @param string $field_name
 	 * @param string $related_table
 	 * @param string $related_title_field
+          * @param string $ajax_url 
 	 */
-	public function set_relation($field_name , $related_table, $related_title_field)
+	public function set_relation($field_name , $related_table, $related_title_field,$ajax_url = null)
 	{
-		$this->relation[$field_name] = array($field_name, $related_table,$related_title_field);
+		if ($ajax_url == null){
+			$this->relation[$field_name] = array($field_name, $related_table,$related_title_field);
+		}
+		else{
+			$this->relation[$field_name] = array($field_name, $related_table,$related_title_field, $ajax_url);
+		}
 		return $this;
 	}
+	
 	
 	/**
 	 * 
