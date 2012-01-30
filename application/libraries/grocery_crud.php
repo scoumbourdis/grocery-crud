@@ -16,7 +16,7 @@
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.1.8
+ * @version    	1.2
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -388,7 +388,7 @@ class grocery_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.1.8  
+ * @version    	1.2  
  * @link		http://www.grocerycrud.com/crud/view/documentation
  */
 class grocery_Model_Driver extends grocery_Field_Types
@@ -1122,7 +1122,7 @@ class grocery_Model_Driver extends grocery_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.1.8
+ * @version    	1.2
  */
 class grocery_Layout extends grocery_Model_Driver
 {
@@ -1654,21 +1654,19 @@ class grocery_Layout extends grocery_Model_Driver
 		
 		$unique = uniqid();		
 		
-		$input = '<span class="fileinput-button qq-upload-button">
+		$uploader_display_none 	= empty($value) ? "" : "display:none;";
+		$file_display_none  	= empty($value) ?  "display:none;" : "";
+		
+		$input = '<span class="fileinput-button qq-upload-button" id="upload-button-'.$unique.'" style="'.$uploader_display_none.'">
 			<span>'.$this->l('form_upload_a_file').'</span>
 			<input type="file" name="'.$this->_unique_field_name($field_info->name).'" class="gc-file-upload" rel="'.$this->getUploadUrl($field_info->name).'" id="'.$unique.'">
 			<input type="hidden" name="'.$field_info->name.'" value="'.$value.'" rel="'.$this->_unique_field_name($field_info->name).'" />
 		</span>';
 		
-		$this->set_js('assets/grocery_crud/js/other/fileuploader.config.js');
-		
 		$this->set_css('assets/grocery_crud/css/other/fileuploader/fileuploader.css');
 //		$this->set_js('assets/grocery_crud/js/other/fileuploader.js');
 //		$this->set_js('assets/grocery_crud/js/other/fileuploader.config.js');
 		
-		$uploader_display_none 	= empty($value) ? "" : "display:none;";
-		$file_display_none  	= empty($value) ?  "display:none;" : "";
-
 		$input .= "<div id='uploader_$unique' rel='$unique' class='grocery-crud-uploader' style='$uploader_display_none'></div>";
 		$input .= "<div id='success_$unique' style='$file_display_none'>";
 		$input .= "<a href='".base_url().$field_info->extras->upload_path.'/'.$value."' class='open-file' target='_blank' id='file_$unique'>$value</a> ";
@@ -1874,7 +1872,7 @@ class grocery_Layout extends grocery_Model_Driver
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.1.8
+ * @version    	1.2
  */
 class grocery_States extends grocery_Layout
 {
