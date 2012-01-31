@@ -328,6 +328,7 @@ div.form-div input.datetime-input
 {
 	padding: 5px 10px;
 	margin: 0px 0px 5px 0px;	
+	min-height: 30px;
 }
 .form-field-box.odd
 {

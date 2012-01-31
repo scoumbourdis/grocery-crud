@@ -49,7 +49,8 @@ div.form-button-box {
 .form-field-box
 {
 	padding: 5px 10px 5px 15px;
-	margin: 5px 0px;	
+	margin: 5px 0px;
+	min-height: 30px;	
 }
 .form-field-box.odd
 {
@@ -63,6 +64,7 @@ div.form-button-box {
 {
 	float:left;
 	width:200px;
+	padding-top: 7px;
 }
 .form-input-box
 {
