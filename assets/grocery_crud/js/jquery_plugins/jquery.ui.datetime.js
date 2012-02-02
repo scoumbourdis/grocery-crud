@@ -29,7 +29,7 @@ jQuery.fn.datetime = function() {
 				var datepicker_def 	= {
 							changeMonth: true,
 							changeYear: true,
-							dateFormat: 'yy-mm-dd',
+							dateFormat: js_date_format,
 							showButtonPanel: true, 
 							onSelect: writeDate						
 				};			

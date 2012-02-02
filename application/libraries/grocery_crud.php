@@ -681,7 +681,11 @@ class grocery_Model_Driver extends grocery_Field_Types
 						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'date')
 						{
 							$insert_data[$field->field_name] = $this->_convert_date_to_sql_date($post_data[$field->field_name]);
-						}						
+						}
+						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'datetime'){
+							$insert_data[$field->field_name] = $this->_convert_date_to_sql_date(substr($post_data[$field->field_name],0,10)).
+																		substr($post_data[$field->field_name],10);
+						}
 						else
 						{
 							$insert_data[$field->field_name] = $post_data[$field->field_name];	
@@ -781,6 +785,10 @@ class grocery_Model_Driver extends grocery_Field_Types
 						{
 							$update_data[$field->field_name] = $this->_convert_date_to_sql_date($post_data[$field->field_name]);
 						}
+						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'datetime'){
+							$update_data[$field->field_name] = $this->_convert_date_to_sql_date(substr($post_data[$field->field_name],0,10)).
+																		substr($post_data[$field->field_name],10);
+						}						
 						else
 						{
 							$update_data[$field->field_name] = $post_data[$field->field_name];
@@ -834,6 +842,9 @@ class grocery_Model_Driver extends grocery_Field_Types
 		{
 			//If it's already a sql-date don't convert it!
 			return $date;
+		}elseif(empty($date))
+		{
+			return '';
 		}
 		
 		$date_array = preg_split( '/[-\.\/ ]/', $date);
@@ -1506,9 +1517,19 @@ class grocery_Layout extends grocery_Model_Driver
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.ui.datetime.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.datetime.config.js');
-		$input = "<input name='{$field_info->name}' type='text' value='$value' maxlength='19' class='datetime-input' /> 
+		
+		if(!empty($value) && $value != '0000-00-00 00:00:00' && $value != '1970-01-01 00:00:00'){
+			list($year,$month,$day) = explode('-',substr($value,0,10));
+			$date = date($this->php_date_format, mktime(0,0,0,$month,$day,$year));
+			$datetime = $date.substr($value,10);	
+		}
+		else 
+		{
+			$datetime = '';
+		}
+		$input = "<input name='{$field_info->name}' type='text' value='$datetime' maxlength='19' class='datetime-input' /> 
 		<button class='datetime-input-clear'>".$this->l('form_button_clear')."</button>
-		(yyyy-mm-dd) hh:mm:ss";
+		({$this->ui_date_format}) hh:mm:ss";
 		return $input;
 	}
 	
