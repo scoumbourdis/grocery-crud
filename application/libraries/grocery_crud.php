@@ -2558,7 +2558,7 @@ class grocery_CRUD extends grocery_States
 		$ci->config->load('grocery_crud');
 		if($this->language === null)
 		{
-			$this->language = $ci->config->item('grocery_crud_default_language');
+			$this->language = strtolower($ci->config->item('grocery_crud_default_language'));
 		}
 		include($this->default_language_path.'/'.$this->language.'.php');
 		

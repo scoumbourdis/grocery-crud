@@ -1,5 +1,5 @@
 v.1.2
-	Adding languages: Chinese, European Portuguese, Indonesian.
+	Adding languages: Chinese, European Portuguese, Indonesian, Ukrainian.
 	BUG fix - unset_jquery function now works properly.
 	Adding date format to the auto date fields. The format can be dd/mm/yyyy or mm/dd/yyyy or the old-one yyyy-mm-dd.
 	Adding date-time format to the auto date fields. The format is chosen by the default date format (uk-date , us-date or sql-date).
