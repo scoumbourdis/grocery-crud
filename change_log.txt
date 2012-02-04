@@ -1,8 +1,8 @@
 v.1.2
-	Adding languages: Chinese, European Portuguese, Indonesian, Ukrainian.
+	Adding languages: Arabic, Chinese, European Portuguese, Indonesian, Ukrainian.
 	BUG fix - unset_jquery function now works properly.
 	Adding date format to the auto date fields. The format can be dd/mm/yyyy or mm/dd/yyyy or the old-one yyyy-mm-dd.
-	Adding date-time format to the auto date fields. The format is chosen by the default date format (uk-date , us-date or sql-date).
+	Adding date-time format to the auto date-time fields. The format is chosen by the default date format (uk-date , us-date or sql-date).
 	Adding a new uploader. Works with the most common browsers. Internet Explorer 8+, Mozilla Firefox, Google Chrome, Opera, Safari.
 v.1.1.8
 	Add new jquery version 1.7.1
