@@ -1684,7 +1684,7 @@ class grocery_Layout extends grocery_Model_Driver
 			<input type="hidden" name="'.$field_info->name.'" value="'.$value.'" rel="'.$this->_unique_field_name($field_info->name).'" />
 		</span>';
 		
-		$this->set_css('assets/grocery_crud/css/other/fileuploader/fileuploader.css');
+		$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/fileuploader.css');
 //		$this->set_js('assets/grocery_crud/js/other/fileuploader.js');
 //		$this->set_js('assets/grocery_crud/js/other/fileuploader.config.js');
 		
@@ -1694,7 +1694,7 @@ class grocery_Layout extends grocery_Model_Driver
 		$input .= "<a href='javascript:void(0)' id='delete_$unique' class='delete-anchor'>".$this->l('form_upload_delete')."</a> ";
 		//$input .= "<input type='hidden' name='{$field_info->name}' value='$value' id='hidden_$unique'/>";
 		$input .= "</div><div style='clear:both'></div>";
-		$input .= "<div id='loading-$unique' style='display:none'>Loading...</div>";
+		$input .= "<div id='loading-$unique' style='display:none'><span id='upload-state-message-$unique'></span> loading... <span class='qq-upload-spinner'></span></div><div id='progress-$unique'></div>";
 		$input .= "<div style='display:none'><a href='".$this->getUploadUrl($field_info->name)."' id='url_$unique'></a></div>";
 		$input .= "<div style='display:none'><a href='".$this->getFileDeleteUrl($field_info->name)."' id='delete_url_$unique' rel='$value' ></a></div>";
 		
