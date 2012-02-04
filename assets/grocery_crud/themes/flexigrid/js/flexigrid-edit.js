@@ -58,6 +58,8 @@ $(function(){
 			},
 			error: function(){
 				alert( message_update_error );
+				$("#FormLoading").hide();
+				
 			}			
 		});
 		return false;

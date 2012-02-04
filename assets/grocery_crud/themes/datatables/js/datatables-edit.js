@@ -1,22 +1,24 @@
 $(function(){
-	$("#FormLoading").ajaxStart(function(){
-		   $(this).show();
-	});
-	$("#FormLoading").ajaxStop(function(){
-		   $(this).fadeOut('slow');
-	});	
-	
 	$('#crudForm').submit(function(){		
 		$(this).ajaxSubmit({
 			url: validation_url,
 			dataType: 'json',
-			success: function(data){				
+			beforeSend: function(){
+				$("#FormLoading").show();
+			},
+			cache: false,
+			success: function(data){
+				$("#FormLoading").hide();
 				if(data.success)
 				{					
 					$('#crudForm').ajaxSubmit({
 						dataType: 'text',
-						cache: 'false',
+						cache: false,
+						beforeSend: function(){
+							$("#FormLoading").show();
+						},							
 						success: function(result){
+							$("#FormLoading").fadeOut("slow");
 							data = $.parseJSON( result );
 							if(data.success)
 							{	
