@@ -1053,22 +1053,6 @@ class grocery_Model_Driver extends grocery_Field_Types
 			$upload_handler = new UploadHandler($options);
 			$upload_handler->post();
 			die();
-			
-			/*
-			$upload_info = $this->upload_fields[$state_info->field_name];
-			
-			$input = fopen("php://input", "r");
-	        $temp = tmpfile();
-	        $realSize = stream_copy_to_stream($input, $temp);
-	        fclose($input);
-	        
-	        $target = fopen("{$upload_info->upload_path}/{$state_info->file_name}", "w");
-	        fseek($temp, 0, SEEK_SET);
-	        stream_copy_to_stream($temp, $target);
-	        fclose($target);
-	        
-	        return (object)array('file_name' => $state_info->file_name);
-	        */
 		}
 		else
 		{
@@ -1661,7 +1645,6 @@ class grocery_Layout extends grocery_Model_Driver
 	{
 		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
 		$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/file-uploader.css');
-		//$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/bootstrap.min.css');
 		$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/jquery.fileupload-ui.css');
 
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
@@ -1670,7 +1653,6 @@ class grocery_Layout extends grocery_Model_Driver
 
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.iframe-transport.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.fileupload.js');
-		//$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.fileupload-ui.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.fileupload.config.js');
 		
 		$unique = uniqid();		
@@ -1685,16 +1667,13 @@ class grocery_Layout extends grocery_Model_Driver
 		</span>';
 		
 		$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/fileuploader.css');
-//		$this->set_js('assets/grocery_crud/js/other/fileuploader.js');
-//		$this->set_js('assets/grocery_crud/js/other/fileuploader.config.js');
 		
 		$input .= "<div id='uploader_$unique' rel='$unique' class='grocery-crud-uploader' style='$uploader_display_none'></div>";
 		$input .= "<div id='success_$unique' style='$file_display_none padding-top:7px;'>";
 		$input .= "<a href='".base_url().$field_info->extras->upload_path.'/'.$value."' class='open-file' target='_blank' id='file_$unique'>$value</a> ";
 		$input .= "<a href='javascript:void(0)' id='delete_$unique' class='delete-anchor'>".$this->l('form_upload_delete')."</a> ";
-		//$input .= "<input type='hidden' name='{$field_info->name}' value='$value' id='hidden_$unique'/>";
 		$input .= "</div><div style='clear:both'></div>";
-		$input .= "<div id='loading-$unique' style='display:none'><span id='upload-state-message-$unique'></span> loading... <span class='qq-upload-spinner'></span></div><div id='progress-$unique'></div>";
+		$input .= "<div id='loading-$unique' style='display:none'><span id='upload-state-message-$unique'></span> <span class='qq-upload-spinner'></span> <span id='progress-$unique'></span></div>";
 		$input .= "<div style='display:none'><a href='".$this->getUploadUrl($field_info->name)."' id='url_$unique'></a></div>";
 		$input .= "<div style='display:none'><a href='".$this->getFileDeleteUrl($field_info->name)."' id='delete_url_$unique' rel='$value' ></a></div>";
 		

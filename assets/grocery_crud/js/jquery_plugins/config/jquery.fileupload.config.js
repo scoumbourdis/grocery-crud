@@ -1,5 +1,5 @@
-var string_upload_file = 'Uploading file,';
-var string_delete_file = 'Deleting file,';
+var string_upload_file = 'Uploading file';
+var string_delete_file = 'Deleting file';
 var string_progress = 'Progress: ';
 $(function(){
 	$('.gc-file-upload').each(function(){
