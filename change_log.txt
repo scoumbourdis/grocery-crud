@@ -6,7 +6,7 @@ v.1.2
 	Adding a new uploader. Works with the most common browsers. Internet Explorer 8+, Mozilla Firefox, Google Chrome, Opera, Safari.
 	Changing the interface of the form inputs - just CSS changes.
 	Not supporting Codeigniter 1.7.x anymore.
-	BUG fix #9 - The form's clear functionallity don't work properly after the insert. 
+	BUG fix #9 - The form's clear functionallity don't work properly after the insert.
 v.1.1.8
 	Add new jquery version 1.7.1
 	Changing the drop-down list of the set_relation. Now the drop-down list has unique design for all the browsers, is searchable and also can be empty.
