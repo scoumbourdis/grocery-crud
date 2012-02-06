@@ -107,4 +107,12 @@ $(function(){
 		$('.remove-all').each(function(){
 			$(this).trigger('click');
 		});
+		
+		$('.chosen-multiple-select').each(function(){
+			$(this).trigger("liszt:updated");
+		});
+		
+		$('.chosen-select').each(function(){
+			$(this).trigger("liszt:updated");
+		});		
 	}
