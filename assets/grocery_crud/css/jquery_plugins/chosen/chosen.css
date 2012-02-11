@@ -375,6 +375,10 @@
 {
 	width: 510px;	
 }
+.chzn-container input
+{
+	box-shadow: none !important;	
+}
 .chosen-select
 {
 	min-width:250px;	
