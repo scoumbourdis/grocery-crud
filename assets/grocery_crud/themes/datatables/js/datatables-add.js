@@ -104,6 +104,15 @@ $(function(){
 	        }
 	    });
 		
+		/* Clear upload inputs  */
+		$('.open-file,.gc-file-upload,.hidden-upload-input').each(function(){
+			$(this).val('');
+		});
+		
+		$('.upload-success-url').hide();
+		$('.fileinput-button').fadeIn("normal");
+		/* -------------------- */
+		
 		$('.remove-all').each(function(){
 			$(this).trigger('click');
 		});
