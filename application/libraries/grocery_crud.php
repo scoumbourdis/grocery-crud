@@ -519,9 +519,9 @@ class grocery_Model_Driver extends grocery_Field_Types
 	
 	protected function get_relation_array($relation_info)
 	{
-		list($field_name , $related_table , $related_field_title)  = $relation_info;
+		list($field_name , $related_table , $related_field_title, $where_clause)  = $relation_info;
 
-		$relation_array = $this->basic_model->get_relation_array($field_name , $related_table , $related_field_title);
+		$relation_array = $this->basic_model->get_relation_array($field_name , $related_table , $related_field_title, $where_clause);
 		
 		return $relation_array;
 	}
@@ -3300,9 +3300,9 @@ class grocery_CRUD extends grocery_States
 	 * @param string $related_table
 	 * @param string $related_title_field
 	 */
-	public function set_relation($field_name , $related_table, $related_title_field)
+	public function set_relation($field_name , $related_table, $related_title_field, $where_clause = null)
 	{
-		$this->relation[$field_name] = array($field_name, $related_table,$related_title_field);
+		$this->relation[$field_name] = array($field_name, $related_table,$related_title_field, $where_clause);
 		return $this;
 	}
 	

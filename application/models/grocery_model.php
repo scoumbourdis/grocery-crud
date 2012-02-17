@@ -129,7 +129,7 @@ class grocery_Model  extends CI_Model  {
     	return 's'.substr(md5($field_name),0,8); //This s is because is better for a string to begin with a letter and not with a number
     }    
     
-    function get_relation_array($field_name , $related_table , $related_field_title)
+    function get_relation_array($field_name , $related_table , $related_field_title, $where_clause)
     {
     	$relation_array = array();
     	$field_name_hash = $this->_unique_field_name($field_name);
@@ -144,6 +144,8 @@ class grocery_Model  extends CI_Model  {
 	    	$select .= "$related_table.$related_field_title as $field_name_hash";
     	
     	$this->db->select($select,false);
+    	if($where_clause !== null)
+    		$this->db->where($where_clause);
     	$this->db->order_by($field_name_hash);
     	$results = $this->db->get($related_table)->result();
     	
