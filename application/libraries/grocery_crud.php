@@ -656,7 +656,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 			
 			$add_fields = $this->get_add_fields();
 
-			if($this->callback_escape_insert == null)
+			if($this->callback_insert == null)
 			{
 				if($this->callback_before_insert != null)
 				{
@@ -725,7 +725,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 				}
 			}else
 			{
-					$callback_return = call_user_func($this->callback_escape_insert, $post_data);
+					$callback_return = call_user_func($this->callback_insert, $post_data);
 					
 					if($callback_return === false) 
 					{
@@ -754,7 +754,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 			$post_data 		= $state_info->unwrapped_data;
 			$primary_key 	= $state_info->primary_key;
 			
-			if($this->callback_escape_update == null)
+			if($this->callback_update == null)
 			{
 				if($this->callback_before_update != null)
 				{
@@ -819,7 +819,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 			}
 			else
 			{
-				$callback_return = call_user_func($this->callback_escape_update, $post_data, $primary_key);
+				$callback_return = call_user_func($this->callback_update, $post_data, $primary_key);
 					
 				if($callback_return === false) 
 				{
@@ -2250,10 +2250,10 @@ class grocery_CRUD extends grocery_States
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
 	protected $callback_after_insert 	= null;
-	protected $callback_escape_insert 	= null;
+	protected $callback_insert 	= null;
 	protected $callback_before_update 	= null;
 	protected $callback_after_update 	= null;
-	protected $callback_escape_update 	= null;	
+	protected $callback_update 	= null;	
 	protected $callback_before_delete 	= null;
 	protected $callback_after_delete 	= null;
 	protected $callback_escape_delete 	= null;		
@@ -3059,9 +3059,9 @@ class grocery_CRUD extends grocery_States
 	 * 
 	 * Enter description here ...
 	 */
-	public function callback_escape_insert($callback = null)
+	public function callback_insert($callback = null)
 	{
-		$this->callback_escape_insert = $callback;
+		$this->callback_insert = $callback;
 	}
 
 	
@@ -3083,13 +3083,15 @@ class grocery_CRUD extends grocery_States
 		$this->callback_after_update = $callback;
 	}
 
+
 	/**
 	 * 
 	 * Enter description here ...
+	 * @param mixed $callback
 	 */
-	public function callback_escape_update($callback = null)
+	public function callback_update($callback = null)
 	{
-		$this->callback_escape_update = $callback;
+		$this->callback_update = $callback;
 	}	
 	
 	/**
