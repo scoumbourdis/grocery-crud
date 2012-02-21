@@ -1034,25 +1034,32 @@ class grocery_Model_Driver extends grocery_Field_Types
 	{
 		if(isset($this->upload_fields[$state_info->field_name]) )
 		{
-			
-			$upload_info = $this->upload_fields[$state_info->field_name];
-			
-			header('Pragma: no-cache');
-			header('Cache-Control: private, no-cache');
-			header('Content-Disposition: inline; filename="files.json"');
-			header('X-Content-Type-Options: nosniff');
-			header('Access-Control-Allow-Origin: *');
-			header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
-			header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
-			
-			$options = array(
-				'upload_dir' 	=> $upload_info->upload_path.'/',
-				'param_name'	=> $this->_unique_field_name($state_info->field_name),
-				'upload_url'	=> base_url().$upload_info->upload_path.'/'
-			);
-			$upload_handler = new UploadHandler($options);
-			$upload_handler->post();
-			die();
+			if($this->callback_upload === null)
+			{
+				$upload_info = $this->upload_fields[$state_info->field_name];
+				
+				header('Pragma: no-cache');
+				header('Cache-Control: private, no-cache');
+				header('Content-Disposition: inline; filename="files.json"');
+				header('X-Content-Type-Options: nosniff');
+				header('Access-Control-Allow-Origin: *');
+				header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
+				header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
+				
+				$options = array(
+					'upload_dir' 	=> $upload_info->upload_path.'/',
+					'param_name'	=> $this->_unique_field_name($state_info->field_name),
+					'upload_url'	=> base_url().$upload_info->upload_path.'/'
+				);
+				$upload_handler = new UploadHandler($options);
+				$upload_handler->post();
+				die();
+			}
+			else 
+			{
+				$state_info->encoded_field_name = $this->_unique_field_name($state_info->field_name);
+				$upload_response = call_user_func($this->callback_upload,$_FILES,$state_info );
+			}
 		}
 		else
 		{
@@ -2260,6 +2267,9 @@ class grocery_CRUD extends grocery_States
 	protected $callback_column			= array();
 	protected $callback_add_field		= array();
 	protected $callback_edit_field		= array();
+	protected $callback_upload			= null;
+	protected $callback_before_upload	= null;
+	protected $callback_after_upload	= null;
 	
 	/**
 	 * 
@@ -3172,6 +3182,47 @@ class grocery_CRUD extends grocery_States
 		$this->callback_edit_field[$field] = $callback;
 		
 		return $this;
+	}
+		
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param mixed $callback
+	 * @return grocery_CRUD
+	 */
+	public function callback_upload($callback = null)
+	{
+		$this->callback_upload = $callback;
+		
+		return $this;
+	}
+
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param mixed $callback
+	 * @return grocery_CRUD
+	 */
+	public function callback_before_upload($callback = null)
+	{
+		$this->callback_before_upload = $callback;
+		
+		return $this;
+	}	
+
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param mixed $callback
+	 * @return grocery_CRUD
+	 */
+	public function callback_after_upload($callback = null)
+	{
+
+		$this->callback_after_upload = $callback;
+		
+		return $this;		
+		
 	}		
 	
 	/**
