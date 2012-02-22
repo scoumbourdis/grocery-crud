@@ -1052,13 +1052,21 @@ class grocery_Model_Driver extends grocery_Field_Types
 					'upload_url'	=> base_url().$upload_info->upload_path.'/'
 				);
 				$upload_handler = new UploadHandler($options);
-				$upload_handler->post();
-				die();
+				return $upload_handler->post();
 			}
 			else 
 			{
 				$state_info->encoded_field_name = $this->_unique_field_name($state_info->field_name);
 				$upload_response = call_user_func($this->callback_upload,$_FILES,$state_info );
+				
+				if($upload_response === false)
+				{
+					return false;
+				}
+				else 
+				{
+					return $upload_response;
+				}
 			}
 		}
 		else
@@ -1363,22 +1371,24 @@ class grocery_Layout extends grocery_Model_Driver
 
 	protected function upload_layout($upload_result, $field_name)
 	{
-		if($upload_result !== false)
+		if($upload_result !== false && !is_string($upload_result))
 		{
 			echo json_encode(
-				(object)array(
-					'success' => true, 
-					'file_name' => $upload_result->file_name,
-					'full_url' => base_url().$this->upload_fields[$field_name]->upload_path.'/'.$upload_result->file_name
-				)
-			);
-			$this->set_echo_and_die();	
+					(object)array(
+							'success' => true,
+							'files'	=> $upload_result
+					));
 		}
 		else
 		{
-			echo json_encode((object)array('success' => false));
-			$this->set_echo_and_die();	
+			$result = (object)array('success' => false);
+			if(is_string($upload_result))
+				$result->message = $upload_result;
+				
+			echo json_encode($result);	
 		}
+		
+		$this->set_echo_and_die();
 	}	
 	
 	protected function delete_file_layout($upload_result)
@@ -1386,13 +1396,13 @@ class grocery_Layout extends grocery_Model_Driver
 		if($upload_result !== false)
 		{
 			echo json_encode( (object)array( 'success' => true ) );
-			$this->set_echo_and_die();	
 		}
 		else
 		{
-			echo json_encode((object)array('success' => false));
-			$this->set_echo_and_die();	
+			echo json_encode((object)array('success' => false));	
 		}
+		
+		$this->set_echo_and_die();
 	}	
 	
 	public function set_css($css_file)
@@ -5086,7 +5096,7 @@ class UploadHandler
             );
         }
         header('Vary: Accept');
-        $json = json_encode($info);
+        
         $redirect = isset($_REQUEST['redirect']) ?
             stripslashes($_REQUEST['redirect']) : null;
         if ($redirect) {
@@ -5099,7 +5109,7 @@ class UploadHandler
         } else {
             header('Content-type: text/plain');
         }
-        echo $json;
+        return $info;
     }
     
     public function delete() {
