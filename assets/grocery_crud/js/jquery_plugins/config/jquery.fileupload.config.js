@@ -13,11 +13,33 @@ $(function(){
 	        dataType: 'json',
 	        url: uploader_url,
 	        cache: false,
+	        acceptFileTypes: /(\.|\/)(gif|jpeg|jpg|png)$/i,
 			beforeSend: function(){
 	    		$('#upload-state-message-'+unique_id).html(string_upload_file);
 				$("#loading-"+unique_id).show();
 				$("#upload-button-"+unique_id).slideUp("fast");
-			},		        
+			},
+			/*
+			send: function (e, data) {						
+				
+			    if (data.files.length > 1) {
+			    	 alert( 'maxNumberOfFiles' ) ;
+			    }
+				
+	            $.each(data.files,function(index, file){
+		            if (!(data.acceptFileTypes.test(file.type) || data.acceptFileTypes.test(file.name))) {
+		                alert( 'acceptFileTypes');
+		            }
+		            if (data.maxFileSize && file.size > data.maxFileSize) {
+		            	 alert(  'maxFileSize' );
+		            }
+		            if (typeof file.size === 'number' && file.size < data.minFileSize) {
+		            	alert( 'minFileSize' );
+		            }			            	
+	            });	
+				
+			    return true;
+			},*/
 	        done: function (e, data) {
 				if(typeof data.result.success != 'undefined' && data.result.success)
 				{
@@ -45,10 +67,20 @@ $(function(){
 					alert(error_on_uploading);
 				}
 	        },
+	        autoUpload: true,
+	        limitMultiFileUploads: 1,
+	        maxFileSize: 1000,
 	        error: function()
 	        {
 	        	alert(error_on_uploading);
 	        },
+	        fail: function(e, data)
+	        {
+	            // data.errorThrown
+	            // data.textStatus;
+	            // data.jqXHR;	        	
+	        	alert(error_on_uploading);
+	        },	        
 	        progress: function (e, data) {
                 $("#progress-"+unique_id).html(string_progress + parseInt(data.loaded / data.total * 100, 10) + '%');
             }	        
