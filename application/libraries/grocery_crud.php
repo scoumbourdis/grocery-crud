@@ -1046,10 +1046,17 @@ class grocery_Model_Driver extends grocery_Field_Types
 				header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
 				header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 				
+		$ci = &get_instance();
+		$ci->config->load('grocery_crud');		
+		
+		$allowed_files = $ci->config->item('grocery_crud_file_upload_allow_file_types');
+		$reg_exp = '/(\\.|\\/)('.$allowed_files.')$/i';			
+				
 				$options = array(
-					'upload_dir' 	=> $upload_info->upload_path.'/',
-					'param_name'	=> $this->_unique_field_name($state_info->field_name),
-					'upload_url'	=> base_url().$upload_info->upload_path.'/'
+					'upload_dir' 		=> $upload_info->upload_path.'/',
+					'param_name'		=> $this->_unique_field_name($state_info->field_name),
+					'upload_url'		=> base_url().$upload_info->upload_path.'/',
+					'accept_file_types' => $reg_exp
 				);
 				$upload_handler = new UploadHandler($options);
 				return $upload_handler->post();
@@ -1371,7 +1378,7 @@ class grocery_Layout extends grocery_Model_Driver
 
 	protected function upload_layout($upload_result, $field_name)
 	{
-		if($upload_result !== false && !is_string($upload_result))
+		if($upload_result !== false && !is_string($upload_result) && empty($upload_result[0]->error))
 		{
 			echo json_encode(
 					(object)array(
@@ -1384,6 +1391,8 @@ class grocery_Layout extends grocery_Model_Driver
 			$result = (object)array('success' => false);
 			if(is_string($upload_result))
 				$result->message = $upload_result;
+			if(!empty($upload_result[0]->error))
+				$result->message = $upload_result[0]->error;
 				
 			echo json_encode($result);	
 		}

@@ -21,7 +21,7 @@ $(function(){
 	        dataType: 'json',
 	        url: uploader_url,
 	        cache: false,
-	        acceptFileTypes: file_upload_info.accepted_file_types,
+	        acceptFileTypes:  file_upload_info.accepted_file_types,
 			beforeSend: function(){
 	    		$('#upload-state-message-'+unique_id).html(string_upload_file);
 				$("#loading-"+unique_id).show();
