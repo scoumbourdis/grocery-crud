@@ -1658,6 +1658,21 @@ class grocery_Layout extends grocery_Model_Driver
 		return $input;
 	}
 
+	protected function _convert_bytes_ui_to_bytes($bytes_ui)
+	{
+		$bytes_ui = str_replace(' ','',$bytes_ui);
+		if(strstr($bytes_ui,'MB'))
+			$bytes = (int)(str_replace('MB','',$bytes_ui))*1024*1024;
+		elseif(strstr($bytes_ui,'KB'))
+			$bytes = (int)(str_replace('KB','',$bytes_ui))*1024;
+		elseif(strstr($bytes_ui,'B'))
+			$bytes = (int)(str_replace('B','',$bytes_ui));
+		else 
+			$bytes = (int)($bytes_ui);
+			
+		return $bytes;
+	}
+	
 	protected function get_upload_file_input($field_info, $value)
 	{
 		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
@@ -1672,7 +1687,26 @@ class grocery_Layout extends grocery_Model_Driver
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.fileupload.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.fileupload.config.js');
 		
-		$unique = uniqid();		
+		$unique = uniqid();
+		
+		$ci = &get_instance();
+		$ci->config->load('grocery_crud');		
+		
+		$allowed_files = $ci->config->item('grocery_crud_file_upload_allow_file_types');
+		$allowed_files_ui = '.'.str_replace('|',',.',$allowed_files);
+		$max_file_size_ui = $ci->config->item('grocery_crud_file_upload_max_file_size');
+		$max_file_size_bytes = $this->_convert_bytes_ui_to_bytes($max_file_size_ui);
+		
+		$this->_inline_js('
+			var upload_info_'.$unique.' = { 
+				accepted_file_types: /(\\.|\\/)('.$allowed_files.')$/i, 
+				accepted_file_types_ui : "'.$allowed_files_ui.'", 
+				max_file_size: '.$max_file_size_bytes.', 
+				max_file_size_ui: "'.$max_file_size_ui.'" 
+			};
+		');		
+		
+		
 		
 		$uploader_display_none 	= empty($value) ? "" : "display:none;";
 		$file_display_none  	= empty($value) ?  "display:none;" : "";
@@ -1850,11 +1884,9 @@ class grocery_Layout extends grocery_Model_Driver
 		$this->views_as_string .= $buffer;
 	}
 	
-	private function _inline_js($inline_js = '')
+	protected function _inline_js($inline_js = '')
 	{
-		$this->views_as_string .= '<script type="text/javascript">
-			'.$inline_js.'
-		</script>';
+		$this->views_as_string .= "<script type=\"text/javascript\">\n{$inline_js}\n</script>\n";
 	}
 	
 	protected function get_views_as_string()

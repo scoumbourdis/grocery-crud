@@ -4,15 +4,13 @@
     display:block; /* or inline-block */
     padding: 7px 15px; 
     text-align:center;    
-    background:#ddd;
 	border:1px solid #AAA;
 	color: #555555;
 	border-radius: 5px;
 	float:left;
 }
 .qq-upload-button-hover {
-	background: #ccc;
-	color: #000;
+
 }
 .qq-upload-button-focus {outline:1px dotted black;}
 

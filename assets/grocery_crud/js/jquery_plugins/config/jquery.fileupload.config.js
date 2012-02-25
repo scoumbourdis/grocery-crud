@@ -1,45 +1,62 @@
 var string_upload_file 	= 'Uploading file';
 var string_delete_file 	= 'Deleting file';
-var string_progress 	= 'Progress: ';
-var error_on_uploading 	= 'An error has occurred on uploading.';
-var message_promt_delete_file = 'Are you sure you want to delete this file?';
+var string_progress 			= 'Progress: ';
+var error_on_uploading 			= 'An error has occurred on uploading.';
+var message_promt_delete_file 	= 'Are you sure that you want to delete this file?';
+
+var error_max_number_of_files 	= 'You can only upload one file each time.';
+var error_accept_file_types 	= 'You are not allow to upload this kind of extension.';
+var error_max_file_size 		= 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified.';
+var error_min_file_size 		= 'Your cannot upload an empty file.';
+
 $(function(){
 	$('.gc-file-upload').each(function(){
 		var unique_id 	= $(this).attr('id');
 		var uploader_url = $(this).attr('rel');
 		var uploader_element = $(this);
 		var delete_url 	= $('#delete_url_'+unique_id).attr('href');
+		eval("var file_upload_info = upload_info_"+unique_id+"");
+		
 	    $(this).fileupload({
 	        dataType: 'json',
 	        url: uploader_url,
 	        cache: false,
-	        acceptFileTypes: /(\.|\/)(gif|jpeg|jpg|png)$/i,
+	        acceptFileTypes: file_upload_info.accepted_file_types,
 			beforeSend: function(){
 	    		$('#upload-state-message-'+unique_id).html(string_upload_file);
 				$("#loading-"+unique_id).show();
 				$("#upload-button-"+unique_id).slideUp("fast");
 			},
-			/*
+	        limitMultiFileUploads: 1,
+	        maxFileSize: file_upload_info.max_file_size,			
 			send: function (e, data) {						
 				
+				var errors = '';
+				
 			    if (data.files.length > 1) {
-			    	 alert( 'maxNumberOfFiles' ) ;
+			    	errors += error_max_number_of_files + "\n" ;
 			    }
 				
 	            $.each(data.files,function(index, file){
 		            if (!(data.acceptFileTypes.test(file.type) || data.acceptFileTypes.test(file.name))) {
-		                alert( 'acceptFileTypes');
+		            	errors += error_accept_file_types + "\n";
 		            }
 		            if (data.maxFileSize && file.size > data.maxFileSize) {
-		            	 alert(  'maxFileSize' );
+		            	errors +=  error_max_file_size + "\n";
 		            }
 		            if (typeof file.size === 'number' && file.size < data.minFileSize) {
-		            	alert( 'minFileSize' );
+		            	errors += error_min_file_size + "\n";
 		            }			            	
 	            });	
+	            
+	            if(errors != '')
+	            {
+	            	alert(errors);
+	            	return false;
+	            }
 				
 			    return true;
-			},*/
+			},
 	        done: function (e, data) {
 				if(typeof data.result.success != 'undefined' && data.result.success)
 				{
@@ -68,8 +85,6 @@ $(function(){
 				}
 	        },
 	        autoUpload: true,
-	        limitMultiFileUploads: 1,
-	        maxFileSize: 1000,
 	        error: function()
 	        {
 	        	alert(error_on_uploading);
