@@ -9,6 +9,16 @@ var error_accept_file_types 	= 'You are not allow to upload this kind of extensi
 var error_max_file_size 		= 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified.';
 var error_min_file_size 		= 'Your cannot upload an empty file.';
 
+function show_upload_button(unique_id, uploader_element)
+{
+	$('#upload-state-message-'+unique_id).html('');
+	$("#loading-"+unique_id).hide();
+
+	$('#upload-button-'+unique_id).slideDown('fast');
+	$("input[rel="+uploader_element.attr('name')+"]").val('');
+	$('#success_'+unique_id).slideUp('fast');	
+}
+
 $(function(){
 	$('.gc-file-upload').each(function(){
 		var unique_id 	= $(this).attr('id');
@@ -78,16 +88,19 @@ $(function(){
 				else if(typeof data.result.message != 'undefined')
 				{
 					alert(data.result.message);
+					show_upload_button(unique_id, uploader_element);
 				}
 				else
 				{
 					alert(error_on_uploading);
+					show_upload_button(unique_id, uploader_element);
 				}
 	        },
 	        autoUpload: true,
 	        error: function()
 	        {
 	        	alert(error_on_uploading);
+	        	show_upload_button(unique_id, uploader_element);
 	        },
 	        fail: function(e, data)
 	        {
@@ -95,6 +108,7 @@ $(function(){
 	            // data.textStatus;
 	            // data.jqXHR;	        	
 	        	alert(error_on_uploading);
+	        	show_upload_button(unique_id, uploader_element);
 	        },	        
 	        progress: function (e, data) {
                 $("#progress-"+unique_id).html(string_progress + parseInt(data.loaded / data.total * 100, 10) + '%');
@@ -108,12 +122,7 @@ $(function(){
 					url: delete_url+"/"+file_name,
 					cache: false,
 					success:function(){
-						$('#upload-state-message-'+unique_id).html('');
-						$("#loading-"+unique_id).hide();
-					
-						$('#upload-button-'+unique_id).slideDown('fast');
-						$("input[rel="+uploader_element.attr('name')+"]").val('');
-						$('#success_'+unique_id).slideUp('fast');
+						show_upload_button(unique_id, uploader_element);
 					},
 					beforeSend: function(){
 						$('#upload-state-message-'+unique_id).html(string_delete_file);

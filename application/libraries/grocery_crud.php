@@ -1036,6 +1036,16 @@ class grocery_Model_Driver extends grocery_Field_Types
 		{
 			if($this->callback_upload === null)
 			{
+				if($this->callback_before_upload !== null)
+				{
+					$callback_before_upload_response = call_user_func($this->callback_before_upload, $_FILES, $state_info );
+					
+					if($callback_before_upload_response === false)
+						return false;
+					elseif(is_string($callback_before_upload_response))
+						return $callback_before_upload_response;
+				}
+				
 				$upload_info = $this->upload_fields[$state_info->field_name];
 				
 				header('Pragma: no-cache');
@@ -1063,13 +1073,27 @@ class grocery_Model_Driver extends grocery_Field_Types
 					'max_file_size'		=> $max_file_size_bytes
 				);
 				$upload_handler = new UploadHandler($options);
-				return $upload_handler->post();
+				$uploader_response = $upload_handler->post();
+				
+				if($this->callback_after_upload !== null)
+				{
+					$callback_after_upload_response = call_user_func($this->callback_after_upload, $uploader_response , $state_info , $_FILES );
+					
+					if($callback_after_upload_response === false)
+						return false;
+					elseif(is_string($callback_after_upload_response))
+						return $callback_after_upload_response;
+					elseif(is_array($callback_after_upload_response))
+						$uploader_response = $callback_after_upload_response;
+				}				
+				
+				return $uploader_response;
 			}
 			else 
 			{
 				$state_info->encoded_field_name = $this->_unique_field_name($state_info->field_name);
-				$upload_response = call_user_func($this->callback_upload,$_FILES,$state_info );
-				
+				$upload_response = call_user_func($this->callback_upload, $_FILES, $state_info );
+
 				if($upload_response === false)
 				{
 					return false;
@@ -2218,7 +2242,6 @@ class grocery_States extends grocery_Layout
 
 			case 11:
 				$state_info->field_name = $first_parameter;
-				$state_info->file_name = substr(uniqid(),-5).'-'.preg_replace('/[^A-Za-z0-9_\.]+/', '-', trim(urldecode($second_parameter)));
 			break;
 
 			case 12:
@@ -3241,7 +3264,8 @@ class grocery_CRUD extends grocery_States
 		
 	/**
 	 * 
-	 * Enter description here ...
+	 * Callback that replace the default auto uploader
+	 * 
 	 * @param mixed $callback
 	 * @return grocery_CRUD
 	 */
@@ -3251,10 +3275,10 @@ class grocery_CRUD extends grocery_States
 		
 		return $this;
 	}
-
+	
 	/**
 	 * 
-	 * Enter description here ...
+	 * A callback that triggered before the upload functionality. This callback is suggested for validation checks
 	 * @param mixed $callback
 	 * @return grocery_CRUD
 	 */
@@ -3267,13 +3291,12 @@ class grocery_CRUD extends grocery_States
 
 	/**
 	 * 
-	 * Enter description here ...
+	 * A callback that triggered after the upload functionality
 	 * @param mixed $callback
 	 * @return grocery_CRUD
 	 */
 	public function callback_after_upload($callback = null)
 	{
-
 		$this->callback_after_upload = $callback;
 		
 		return $this;		
@@ -3676,8 +3699,8 @@ class UploadHandler
             $file_name .= '.'.$matches[1];
         }
 
-        //Ensure that we don't have disallowed characters
-        $file_name = preg_replace("/([^a-zA-Z1-9\.\-\_]+?){1}/i", '_', $file_name);
+        //Ensure that we don't have disallowed characters and add a unique id just to ensure that the file name will be unique
+        $file_name = substr(uniqid(),-5).'-'.preg_replace("/([^a-zA-Z0-9\.\-\_]+?){1}/i", '-', $file_name);
 
         return $file_name;
     }
