@@ -32,7 +32,7 @@
  * @license     https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt  
  * @link		http://www.grocerycrud.com/crud/view/documentation
  */
-class grocery_Field_Types
+class grocery_CRUD_Field_Types
 {	
 	/**	 
 	 * Gets the field types of the main table.
@@ -391,7 +391,7 @@ class grocery_Field_Types
  * @version    	1.2  
  * @link		http://www.grocerycrud.com/crud/view/documentation
  */
-class grocery_Model_Driver extends grocery_Field_Types
+class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 {
 	/**
 	 * @var grocery_Model
@@ -584,7 +584,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 	{
 		if($this->form_validation === null)
 		{
-			$this->form_validation = new grocery_Form_validation();
+			$this->form_validation = new grocery_CRUD_Form_validation();
 			$ci = &get_instance();
 			$ci->load->library('form_validation');
 			$ci->form_validation = $this->form_validation;
@@ -896,7 +896,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 	{
 		$primary_key 	= $state_info->primary_key;
 		
-		if($this->callback_escape_delete == null)
+		if($this->callback_delete == null)
 		{
 			if($this->callback_before_delete != null)
 			{
@@ -937,7 +937,7 @@ class grocery_Model_Driver extends grocery_Field_Types
 		}
 		else
 		{
-			$callback_return = call_user_func($this->callback_escape_delete, $primary_key);
+			$callback_return = call_user_func($this->callback_delete, $primary_key);
 				
 			if($callback_return === false) 
 			{
@@ -1149,8 +1149,10 @@ class grocery_Model_Driver extends grocery_Field_Types
  *
  * LICENSE
  *
- * This source file is subject to the GPL license that is bundled
- * with this package in the file licence.txt.
+ * Grocery CRUD is released with dual licensing, using the GPL v3 (license-gpl3.txt) and the MIT license (license-mit.txt).
+ * You don't have to do anything special to choose one license or the other and you don't have to notify anyone which license you are using.
+ * Please see the corresponding license file for details of these licenses.
+ * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
@@ -1169,7 +1171,7 @@ class grocery_Model_Driver extends grocery_Field_Types
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  * @version    	1.2
  */
-class grocery_Layout extends grocery_Model_Driver
+class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 {
 	private $theme_path 				= null;
 	private $views_as_string			= '';
@@ -1941,8 +1943,10 @@ class grocery_Layout extends grocery_Model_Driver
  *
  * LICENSE
  *
- * This source file is subject to the GPL license that is bundled
- * with this package in the file licence.txt.
+ * Grocery CRUD is released with dual licensing, using the GPL v3 (license-gpl3.txt) and the MIT license (license-mit.txt).
+ * You don't have to do anything special to choose one license or the other and you don't have to notify anyone which license you are using.
+ * Please see the corresponding license file for details of these licenses.
+ * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
@@ -1961,7 +1965,7 @@ class grocery_Layout extends grocery_Model_Driver
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  * @version    	1.2
  */
-class grocery_States extends grocery_Layout
+class grocery_CRUD_States extends grocery_CRUD_Layout
 {
 	private $states = array(
 		0	=>	'unknown',
@@ -2260,13 +2264,16 @@ class grocery_States extends grocery_Layout
  *
  * LICENSE
  *
- * This source file is subject to the GPL license that is bundled
- * with this package in the file licence.txt.
+ * Grocery CRUD is released with dual licensing, using the GPL v3 (license-gpl3.txt) and the MIT license (license-mit.txt).
+ * You don't have to do anything special to choose one license or the other and you don't have to notify anyone which license you are using.
+ * Please see the corresponding license file for details of these licenses.
+ * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
+ * @version    	1.2
+ * @author     	John Skoumbourdis <scoumbourdisj@gmail.com> 
  */
 
 // ------------------------------------------------------------------------
@@ -2281,7 +2288,7 @@ class grocery_States extends grocery_Layout
  * @license     https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
  * @link		http://www.grocerycrud.com/crud/view/documentation
  */
-class grocery_CRUD extends grocery_States
+class grocery_CRUD extends grocery_CRUD_States
 {
 	private $state_code 			= null;
 	private $state_info 			= null;
@@ -2341,7 +2348,7 @@ class grocery_CRUD extends grocery_States
 	protected $callback_update 	= null;	
 	protected $callback_before_delete 	= null;
 	protected $callback_after_delete 	= null;
-	protected $callback_escape_delete 	= null;		
+	protected $callback_delete 	= null;		
 	protected $callback_column			= array();
 	protected $callback_add_field		= array();
 	protected $callback_edit_field		= array();
@@ -3204,9 +3211,9 @@ class grocery_CRUD extends grocery_States
 	 * 
 	 * Enter description here ...
 	 */
-	public function callback_escape_delete($callback = null)
+	public function callback_delete($callback = null)
 	{
-		$this->callback_escape_delete = $callback;
+		$this->callback_delete = $callback;
 	}		
 	
 	/**
@@ -3480,19 +3487,7 @@ class grocery_CRUD extends grocery_States
 $ci = &get_instance();
 $ci->load->library('Form_validation');
 
-/**
- * Form Validation Class - Copied and changed from the Codeigniter Form Validation library
- *		The main reason the library is copied is that codeigniter don't still have a stability of how the libraries structure will be.
- *		This is a good and stable way to have the form validation of codeigniter in our grocery CRUD library ignoring the changes 
- *		of this library.
- *
- * @package		CodeIgniter
- * @subpackage	Libraries
- * @category	Validation
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/libraries/form_validation.html
- */
-class grocery_Form_validation extends CI_Form_validation{
+class grocery_CRUD_Form_validation extends CI_Form_validation{
 
 	protected $CI;
 	public $_field_data			= array();
