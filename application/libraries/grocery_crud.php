@@ -1800,7 +1800,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			else
 			{
 				$field_input = $field_info;
-				$field_input->input = call_user_func($this->callback_add_field[$field->field_name]);
+				$field_input->input = call_user_func($this->callback_add_field[$field->field_name], $field_value, null, $field_info);
 			}
 			
 			switch ($field_info->crud_type) {
@@ -1843,7 +1843,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			{
 				$primary_key = $this->getStateInfo()->primary_key;
 				$field_input = $field_info;
-				$field_input->input = call_user_func($this->callback_edit_field[$field->field_name], $field_value, $primary_key);
+				$field_input->input = call_user_func($this->callback_edit_field[$field->field_name], $field_value, $primary_key, $field_info);
 			}
 			
 			switch ($field_info->crud_type) {
@@ -3473,14 +3473,27 @@ class grocery_CRUD extends grocery_CRUD_States
 	
 	/**
 	 * 
-	 * Enter description here ...
+	 * Transform a field to an upload field
+	 * 
 	 * @param string $field_name
 	 * @param string $upload_path
 	 */
-	public function set_field_upload($field_name, $upload_path)
+	public function set_field_upload($field_name, $upload_dir = null)
 	{
-		$upload_path = substr($upload_path,-1,1) == '/' ? substr($upload_path,0,-1) : $upload_path;
-		$this->upload_fields[$field_name] = (object)array( 'field_name' => $field_name , 'upload_path' => $upload_path);		
+		$options = array(
+			'allow_file_types' => 'gif|jpeg|jpg|png',
+			'max_file_size' => '10MB',
+			'upload_dir'	=> 'assets/uploads/images',
+			'upload_url'	=> 'assets/uploads/images',
+			'max_width'		=> 1024,
+			'max_height'	=> 768,
+			'thumb_width'	=> 100,
+			'thumb_height'	=> 75,
+			'type'			=> 'image'
+		);
+		
+		$upload_dir = substr($upload_dir,-1,1) == '/' ? substr($upload_dir,0,-1) : $upload_dir;
+		$this->upload_fields[$field_name] = (object)array( 'field_name' => $field_name , 'upload_path' => $upload_dir);		
 	}
 }
 
