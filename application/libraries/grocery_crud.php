@@ -3502,7 +3502,7 @@ $ci->load->library('Form_validation');
 
 class grocery_CRUD_Form_validation extends CI_Form_validation{
 
-	protected $CI;
+	public $CI;
 	public $_field_data			= array();
 	public $_config_rules		= array();
 	public $_error_array		= array();
