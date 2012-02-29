@@ -1632,6 +1632,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{
 		$this->set_css('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js');
+		$this->set_js('assets/grocery_crud/js/jquery_plugins/ajax-chosen.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
 
 //@todo have to do the Select {display_as} as a lang string		
@@ -1664,6 +1665,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		{
 			$this->set_css('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css');
 			$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js');
+			$this->set_js('assets/grocery_crud/js/jquery_plugins/ajax-chosen.js');
 			$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
 		}
 		$field_info 		= $this->relation_n_n[$field_info_type->name]; //As we use this function the relation_n_n exists, so don't need to check
