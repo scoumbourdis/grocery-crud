@@ -35,15 +35,15 @@
 				$even_odd = $counter % 2 == 0 ? 'odd' : 'even';
 				$counter++;
 		?>
-		<div class='form-field-box <?php echo $even_odd?>'>
-			<div class='form-display-as-box'>
-				<?php echo $input_fields[$field->field_name]->display_as?><?php echo ($input_fields[$field->field_name]->required)? "<span class='required'>*</span> " : ""?> :
+			<div class='form-field-box <?php echo $even_odd?>' id="<?php echo $field->field_name; ?>_field_box">
+				<div class='form-display-as-box' id="<?php echo $field->field_name; ?>_display_as_box">
+					<?php echo $input_fields[$field->field_name]->display_as?><?php echo ($input_fields[$field->field_name]->required)? "<span class='required'>*</span> " : ""?> :
+				</div>
+				<div class='form-input-box' id="<?php echo $field->field_name; ?>_input_box">
+					<?php echo $input_fields[$field->field_name]->input?>
+				</div>
+				<div class='clear'></div>	
 			</div>
-			<div class='form-input-box'>
-				<?php echo $input_fields[$field->field_name]->input?>
-			</div>
-			<div class='clear'></div>	
-		</div>
 		<?php }?>
 		<?php if(!empty($hidden_fields)){?>
 		<!-- Start of hidden inputs -->
