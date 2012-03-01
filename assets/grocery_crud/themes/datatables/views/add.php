@@ -36,7 +36,7 @@
 			?>
 			<div class='form-field-box <?php echo $even_odd?>'>
 				<div class='form-display-as-box'>
-					<?php echo $input_fields[$field->field_name]->display_as?><?php echo ($input_fields[$field->field_name]->required)? "* " : ""?> :
+					<?php echo $input_fields[$field->field_name]->display_as?><?php echo ($input_fields[$field->field_name]->required)? "<span class='required'>*</span> " : ""?> :
 				</div>
 				<div class='form-input-box'>
 					<?php echo $input_fields[$field->field_name]->input?>
