@@ -1687,15 +1687,18 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			{
 				$input .= "<option value='$option_value'selected='selected' >$option</option>";	
 			}
-			
-			// A limitation of 30 options just for the select to not be empty when the user press the drop down button.
+		}
+		
+		// A limitation of 30 options just for the select to not be empty when the user press the drop down button.
+		if($using_ajax)
+		{
 			$options_array = $this->get_relation_array($field_info->extras,null,30);
 			foreach($options_array as $option_value => $option)
 			{
 				$selected = !empty($value) && $value == $option_value ? true : false;
 				if(!$selected) //Make sure that the selected value doesn't appear two times
 					$input .= "<option value='$option_value' >$option</option>";
-			}			
+			}
 		}
 		
 		$input .= "</select>";
