@@ -30,7 +30,7 @@
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  * @license     https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt  
- * @link		http://www.grocerycrud.com/crud/view/documentation
+ * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD_Field_Types
 {	
@@ -389,21 +389,21 @@ class grocery_CRUD_Field_Types
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  * @version    	1.2  
- * @link		http://www.grocerycrud.com/crud/view/documentation
+ * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 {
 	/**
-	 * @var grocery_Model
+	 * @var grocery_CRUD_Model
 	 */
 	public $basic_model = null;
 	
 	protected function set_default_Model()
 	{
 		$ci = &get_instance();
-		$ci->load->model('grocery_Model');
+		$ci->load->model('grocery_CRUD_Model');
 		
-		$this->basic_model = $ci->grocery_Model;
+		$this->basic_model = $ci->grocery_CRUD_Model;
 	}
 	
 	protected function get_total_results()
@@ -434,7 +434,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 	public function set_model($model_name)
 	{
 		$ci = &get_instance();
-		$ci->load->model('grocery_Model');	
+		$ci->load->model('grocery_CRUD_Model');	
 		
 		$ci->load->model($model_name);
 		
@@ -517,14 +517,31 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		return false;
 	}	
 	
-	protected function get_relation_array($relation_info)
+	protected function get_relation_array($relation_info, $primary_key_value = null, $limit = null)
 	{
-		list($field_name , $related_table , $related_field_title, $where_clause)  = $relation_info;
+		list($field_name , $related_table , $related_field_title, $where_clause, $order_by)  = $relation_info;
 
-		$relation_array = $this->basic_model->get_relation_array($field_name , $related_table , $related_field_title, $where_clause);
+		if($primary_key_value !== null)
+		{
+			$primary_key = $this->basic_model->get_primary_key($related_table);
+			
+			//A where clause with the primary key is enough to take the selected key row
+			$where_clause = array($primary_key => $primary_key_value);		
+		}
+		
+		$relation_array = $this->basic_model->get_relation_array($field_name , $related_table , $related_field_title, $where_clause, $order_by, $limit);
 		
 		return $relation_array;
 	}
+	
+	protected function get_relation_total_rows($relation_info)
+	{
+		list($field_name , $related_table , $related_field_title, $where_clause)  = $relation_info;
+	
+		$relation_array = $this->basic_model->get_relation_total_rows($field_name , $related_table , $related_field_title, $where_clause);
+	
+		return $relation_array;
+	}	
 	
 	protected function db_insert_validation()
 	{
@@ -1635,14 +1652,50 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/ajax-chosen.js');
 		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
 
+		$ci = &get_instance();
+		$ci->load->config('grocery_crud');
+		
+		$ajax_limitation = $ci->config->item('grocery_crud_set_relation_max_data_without_ajax');
+		$total_rows = $this->get_relation_total_rows($field_info->extras);
+
+		//Check if we will use ajax for our queries or just clien-side javascript
+		$using_ajax = $total_rows > $ajax_limitation ? true : false;
+		
+		//Just for the commit. The functionality is not tottally finished
+		$using_ajax = false;
+		
+		//If total rows are more than the limitation, use the ajax plugin
+		$chosen_class = $using_ajax ? 'ajax-chosen-select' : 'chosen-select';
+		
 //@todo have to do the Select {display_as} as a lang string		
-		$input = "<select name='{$field_info->name}' class='chosen-select' data-placeholder='Select {$field_info->display_as}'>";
+		$input = "<select name='{$field_info->name}' id='' class='$chosen_class' data-placeholder='Select {$field_info->display_as}'>";
 		$input .= "<option value=''></option>";
-		$options_array = $this->get_relation_array($field_info->extras);
-		foreach($options_array as $option_value => $option)
+		
+		if(!$using_ajax)
 		{
-			$selected = !empty($value) && $value == $option_value ? "selected='selected'" : ''; 
-			$input .= "<option value='$option_value' $selected >$option</option>";	
+			$options_array = $this->get_relation_array($field_info->extras);
+			foreach($options_array as $option_value => $option)
+			{
+				$selected = !empty($value) && $value == $option_value ? "selected='selected'" : ''; 
+				$input .= "<option value='$option_value' $selected >$option</option>";	
+			}
+		}
+		elseif(!empty($value) || (is_numeric($value) && $value == '0') ) //If it's ajax then we only need the selected items and not all the items  
+		{ 
+			$selected_options_array = $this->get_relation_array($field_info->extras, $value);
+			foreach($selected_options_array as $option_value => $option)
+			{
+				$input .= "<option value='$option_value'selected='selected' >$option</option>";	
+			}
+			
+			// A limitation of 30 options just for the select to not be empty when the user press the drop down button.
+			$options_array = $this->get_relation_array($field_info->extras,null,30);
+			foreach($options_array as $option_value => $option)
+			{
+				$selected = !empty($value) && $value == $option_value ? true : false;
+				if(!$selected) //Make sure that the selected value doesn't appear two times
+					$input .= "<option value='$option_value' >$option</option>";
+			}			
 		}
 		
 		$input .= "</select>";
@@ -2288,7 +2341,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @package    	grocery CRUD 
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  * @license     https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @link		http://www.grocerycrud.com/crud/view/documentation
+ * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD extends grocery_CRUD_States
 {
@@ -3440,9 +3493,9 @@ class grocery_CRUD extends grocery_CRUD_States
 	 * @param string $related_table
 	 * @param string $related_title_field
 	 */
-	public function set_relation($field_name , $related_table, $related_title_field, $where_clause = null)
+	public function set_relation($field_name , $related_table, $related_title_field, $where_clause = null, $order_by = null)
 	{
-		$this->relation[$field_name] = array($field_name, $related_table,$related_title_field, $where_clause);
+		$this->relation[$field_name] = array($field_name, $related_table,$related_title_field, $where_clause, $order_by);
 		return $this;
 	}
 	

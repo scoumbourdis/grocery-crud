@@ -1,5 +1,33 @@
 <?php
-class grocery_Model  extends CI_Model  {
+/**
+ * PHP grocery CRUD
+ *
+ * LICENSE
+ *
+ * Grocery CRUD is released with dual licensing, using the GPL v3 (license-gpl3.txt) and the MIT license (license-mit.txt).
+ * You don't have to do anything special to choose one license or the other and you don't have to notify anyone which license you are using.
+ * Please see the corresponding license file for details of these licenses.
+ * You are free to use, modify and distribute this software, but all copyright information must remain.
+ *
+ * @package    	grocery CRUD
+ * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
+ * @version    	1.2
+ * @author     	John Skoumbourdis <scoumbourdisj@gmail.com> 
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Grocery CRUD Model
+ *
+ *
+ * @package    	grocery CRUD
+ * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
+ * @version    	1.2
+ * @link		http://www.grocerycrud.com/documentation
+ */
+class grocery_CRUD_Model  extends CI_Model  {
     
 	protected $primary_key = null;
 	protected $table_name = null;
@@ -129,7 +157,7 @@ class grocery_Model  extends CI_Model  {
     	return 's'.substr(md5($field_name),0,8); //This s is because is better for a string to begin with a letter and not with a number
     }    
     
-    function get_relation_array($field_name , $related_table , $related_field_title, $where_clause)
+    function get_relation_array($field_name , $related_table , $related_field_title, $where_clause, $order_by, $limit = null)
     {
     	$relation_array = array();
     	$field_name_hash = $this->_unique_field_name($field_name);
@@ -146,7 +174,14 @@ class grocery_Model  extends CI_Model  {
     	$this->db->select($select,false);
     	if($where_clause !== null)
     		$this->db->where($where_clause);
-    	$this->db->order_by($field_name_hash);
+    	
+    	if($limit !== null)
+    		$this->db->limit($limit);
+    	
+    	$order_by !== null 
+    		? $this->db->order_by($order_by) 
+    		: $this->db->order_by($field_name_hash);
+    	
     	$results = $this->db->get($related_table)->result();
     	
     	foreach($results as $row)
@@ -156,6 +191,15 @@ class grocery_Model  extends CI_Model  {
     	
     	return $relation_array;
     }
+    
+    
+    function get_relation_total_rows($field_name , $related_table , $related_field_title, $where_clause)
+    {
+    	if($where_clause !== null)
+    		$this->db->where($where_clause);
+    	
+    	return $this->db->get($related_table)->num_rows();
+    } 
     
     function get_relation_n_n_selection_array($primary_key_value, $field_info)
     {

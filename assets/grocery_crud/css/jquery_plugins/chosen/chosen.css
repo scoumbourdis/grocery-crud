@@ -371,7 +371,7 @@
 /* @end */
 
 /* for grocery CRUD */
-.chosen-multiple-select
+.chosen-multiple-select, .ajax-chosen-multiple-select
 {
 	width: 510px;	
 }
@@ -379,7 +379,7 @@
 {
 	box-shadow: none !important;	
 }
-.chosen-select
+.chosen-select, .ajax-chosen-select
 {
 	min-width:250px;	
 }

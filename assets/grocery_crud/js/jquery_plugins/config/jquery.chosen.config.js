@@ -1,8 +1,7 @@
 $(function(){
 	$(".chosen-select,.chosen-multiple-select").chosen({allow_single_deselect:true});
 	
-	/*
-	$(".chosen-select,.chosen-multiple-select").ajaxChosen({
+	$(".ajax-chosen-select,.ajax-chosen-multiple-select").ajaxChosen({
 	    type: 'POST',
 	    url: '/index.php/examples2/test2',
 	    dataType: 'json'
@@ -14,6 +13,5 @@ $(function(){
 		    });
 	
 		    return terms;
-	});
-	*/
+	});	
 });
