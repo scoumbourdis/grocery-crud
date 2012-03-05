@@ -3,7 +3,7 @@ $(function(){
 	
 	$(".ajax-chosen-select,.ajax-chosen-multiple-select").ajaxChosen({
 	    type: 'POST',
-	    url: '/index.php/examples2/test2',
+	    url: ajax_relation_url,
 	    dataType: 'json'
 	}, function (data) {
 		    var terms = {};

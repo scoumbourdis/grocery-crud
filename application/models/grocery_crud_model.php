@@ -157,7 +157,7 @@ class grocery_CRUD_Model  extends CI_Model  {
     	return 's'.substr(md5($field_name),0,8); //This s is because is better for a string to begin with a letter and not with a number
     }    
     
-    function get_relation_array($field_name , $related_table , $related_field_title, $where_clause, $order_by, $limit = null)
+    function get_relation_array($field_name , $related_table , $related_field_title, $where_clause, $order_by, $limit = null, $search_like = null)
     {
     	$relation_array = array();
     	$field_name_hash = $this->_unique_field_name($field_name);
@@ -174,9 +174,12 @@ class grocery_CRUD_Model  extends CI_Model  {
     	$this->db->select($select,false);
     	if($where_clause !== null)
     		$this->db->where($where_clause);
+
+    	if($where_clause !== null)
+    		$this->db->where($where_clause);    	
     	
-    	if($limit !== null)
-    		$this->db->limit($limit);
+    	if($search_like !== null)
+    		$this->db->having("$field_name_hash LIKE '%".$this->db->escape_like_str($search_like)."%'");
     	
     	$order_by !== null 
     		? $this->db->order_by($order_by) 
@@ -192,6 +195,10 @@ class grocery_CRUD_Model  extends CI_Model  {
     	return $relation_array;
     }
     
+    function get_ajax_relation_array($search, $field_name , $related_table , $related_field_title, $where_clause, $order_by)
+    {    
+    	return $this->get_relation_array($field_name , $related_table , $related_field_title, $where_clause, $order_by, 10 , $search);
+    }
     
     function get_relation_total_rows($field_name , $related_table , $related_field_title, $where_clause)
     {

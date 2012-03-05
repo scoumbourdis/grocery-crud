@@ -236,10 +236,10 @@ class grocery_CRUD_Field_Types
 				$value = $this->default_true_false_text[$value];
 			break;
 			case 'string':
-				$value = $this->character_limiter($value,30," [...]");
+				$value = $this->character_limiter($value,30,"...");
 			break;
 			case 'text':
-				$value = $this->character_limiter(strip_tags($value),30," [...]");
+				$value = $this->character_limiter(strip_tags($value),30,"...");
 			break;
 			case 'date':
 				if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
@@ -265,11 +265,11 @@ class grocery_CRUD_Field_Types
 				}
 			break;
 			case 'enum':
-				$value = $this->character_limiter($value,20," [...]");
+				$value = $this->character_limiter($value,20,"...");
 			break;	
 			case 'relation_n_n':
 				$value = implode(', ' ,$this->get_relation_n_n_selection_array( $value, $this->relation_n_n[$field_info->name] ));
-				$value = $this->character_limiter($value,30," [...]");
+				$value = $this->character_limiter($value,30,"...");
 			break;						
 			
 			case 'password':
@@ -279,13 +279,13 @@ class grocery_CRUD_Field_Types
 			case 'upload_file':
 				$value = !empty($value) ? 
 							"<a href='".base_url().$field_info->extras->upload_path."/$value' target='_blank'>".
-								$this->character_limiter($value,20," [...]",true).
+								$this->character_limiter($value,20,"...",true).
 							"</a>":
 							"";
 			break;
 			
 			default:
-				$value = $this->character_limiter($value,30," [...]");
+				$value = $this->character_limiter($value,30,"...");
 			break;
 		}
 		
@@ -476,13 +476,17 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			if($state_info->search->field != null)
 			{
 				if(isset($temp_relation[$state_info->search->field]))
+				{
 					if(is_array($temp_relation[$state_info->search->field]))
 						foreach($temp_relation[$state_info->search->field] as $search_field)
 							$this->or_like($search_field , $state_info->search->text);
 					else
 						$this->like($temp_relation[$state_info->search->field] , $state_info->search->text);
-				else
+				}
+				else 
+				{
 					$this->like($state_info->search->field , $state_info->search->text);
+				}
 			}
 			else 
 			{
@@ -1157,7 +1161,17 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		{
 			return false;
 		} 	
-	}	
+	}
+
+	protected function ajax_relation($state_info)
+	{
+		if(!isset($this->relation[$state_info->field_name]))
+			return false;
+		
+		list($field_name, $related_table, $related_field_title, $where_clause, $order_by)  = $this->relation[$state_info->field_name];
+		
+		return $this->basic_model->get_ajax_relation_array($state_info->search, $field_name, $related_table, $related_field_title, $where_clause, $order_by);
+	}
 }
 
 
@@ -1667,6 +1681,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		//If total rows are more than the limitation, use the ajax plugin
 		$chosen_class = $using_ajax ? 'ajax-chosen-select' : 'chosen-select';
 		
+		$this->_inline_js("var ajax_relation_url = '".$this->getAjaxRelationUrl()."';\n");
+		
 //@todo have to do the Select {display_as} as a lang string		
 		$input = "<select name='{$field_info->name}' id='' class='$chosen_class' data-placeholder='Select {$field_info->display_as}'>";
 		$input .= "<option value=''></option>";
@@ -2026,19 +2042,21 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
 	private $states = array(
-		0	=>	'unknown',
-		1	=>	'list',
-		2	=>	'add',
-		3	=>	'edit',
-		4	=>	'delete',
-		5	=>	'insert',
-		6	=>	'update',
-		7	=>  'ajax_list',
-		8   =>  'ajax_list_info',
-		9	=>  'insert_validation',
-		10	=>	'update_validation',
-		11	=>	'upload_file',
-		12	=>	'delete_file'
+		0	=> 'unknown',
+		1	=> 'list',
+		2	=> 'add',
+		3	=> 'edit',
+		4	=> 'delete',
+		5	=> 'insert',
+		6	=> 'update',
+		7	=> 'ajax_list',
+		8   => 'ajax_list_info',
+		9	=> 'insert_validation',
+		10	=> 'update_validation',
+		11	=> 'upload_file',
+		12	=> 'delete_file',
+		13	=> 'ajax_relation',
+		14	=> 'ajax_relation_n_n'
 	);
 	
 	protected function getStateCode()
@@ -2195,6 +2213,16 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 	{
 		return $this->state_url('delete_file/'.$field_name);
 	}	
+
+	protected function getAjaxRelationUrl()
+	{
+		return $this->state_url('ajax_relation');
+	}
+	
+	protected function getAjaxRelationManytoManyUrl()
+	{
+		return $this->state_url('ajax_relation_n_n');
+	}	
 	
 	public function getStateInfo()
 	{
@@ -2309,7 +2337,17 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			case 12:
 				$state_info->field_name = $first_parameter;
 				$state_info->file_name = $second_parameter;
-			break;				
+			break;
+
+			case 13:
+				$state_info->field_name = $_POST['field_name'];
+				$state_info->search 	= $_POST['term'];
+			break;
+
+			case 14:
+				$state_info->field_name = $_POST['field_name'];
+				$state_info->search 	= $_POST['term'];
+			break;			
 		}
 		
 		return $state_info;
@@ -3006,10 +3044,10 @@ class grocery_CRUD extends grocery_CRUD_States
 		if($this->basic_model === null)
 			$this->set_default_Model();
 		
+		$this->set_basic_db_table($this->get_table());		
+		
 		switch ($this->state_code) {			
 			case 1://list
-				$this->set_basic_db_table($this->get_table());
-				
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
 				$this->setThemeBasics();
@@ -3029,7 +3067,6 @@ class grocery_CRUD extends grocery_CRUD_States
 				
 				$this->_load_date_format();
 				
-				$this->set_basic_db_table($this->get_table());
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
 				$this->setThemeBasics();
@@ -3049,7 +3086,6 @@ class grocery_CRUD extends grocery_CRUD_States
 				
 				$this->_load_date_format();
 				
-				$this->set_basic_db_table($this->get_table());
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
 				$this->setThemeBasics();
@@ -3068,8 +3104,6 @@ class grocery_CRUD extends grocery_CRUD_States
 					throw new Exception('This user is not allowed to do this operation', 14);
 					die();
 				}
-					
-				$this->set_basic_db_table($this->get_table());
 				
 				$state_info = $this->getStateInfo();
 				$delete_result = $this->db_delete($state_info);
@@ -3084,8 +3118,6 @@ class grocery_CRUD extends grocery_CRUD_States
 					die();
 				}
 				$this->_load_date_format();
-				
-				$this->set_basic_db_table($this->get_table());
 				
 				$state_info = $this->getStateInfo();
 				$insert_result = $this->db_insert($state_info);
@@ -3102,8 +3134,6 @@ class grocery_CRUD extends grocery_CRUD_States
 				
 				$this->_load_date_format();
 				
-				$this->set_basic_db_table($this->get_table());
-				
 				$state_info = $this->getStateInfo();
 				$update_result = $this->db_update($state_info);
 				
@@ -3111,7 +3141,6 @@ class grocery_CRUD extends grocery_CRUD_States
 			break;	
 
 			case 7://ajax_list
-				$this->set_basic_db_table($this->get_table());
 				
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
@@ -3127,8 +3156,7 @@ class grocery_CRUD extends grocery_CRUD_States
 			break;
 
 			case 8://ajax_list_info
-				$this->set_basic_db_table($this->get_table());
-				
+
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
 				$this->setThemeBasics();
@@ -3142,7 +3170,6 @@ class grocery_CRUD extends grocery_CRUD_States
 			break;
 			
 			case 9://insert_validation
-				$this->set_basic_db_table($this->get_table());
 				
 				$validation_result = $this->db_insert_validation();
 				
@@ -3150,7 +3177,6 @@ class grocery_CRUD extends grocery_CRUD_States
 			break;
 			
 			case 10://update_validation
-				$this->set_basic_db_table($this->get_table());
 				
 				$validation_result = $this->db_update_validation();
 				
@@ -3158,7 +3184,7 @@ class grocery_CRUD extends grocery_CRUD_States
 			break;
 
 			case 11://upload_file
-				$this->set_basic_db_table($this->get_table());
+				
 				$state_info = $this->getStateInfo();
 				
 				$upload_result = $this->upload_file($state_info);
@@ -3167,13 +3193,26 @@ class grocery_CRUD extends grocery_CRUD_States
 			break;
 
 			case 12://delete_file
-				$this->set_basic_db_table($this->get_table());
 				$state_info = $this->getStateInfo();
 				
 				$delete_file_result = $this->delete_file($state_info);
 				
 				$this->delete_file_layout($delete_file_result);
 			break;
+			
+			case 13: //ajax_relation
+				$state_info = $this->getStateInfo();
+				
+				$ajax_relation_result = $this->ajax_relation($state_info);
+				
+				echo json_encode($ajax_relation_result);
+				die();				
+			break;
+			
+			case 14: //ajax_relation_n_n
+				echo json_encode(array("34" => 'Johnny' , "78" => "Test"));
+				die();
+			break;			
 			
 		}
 		
