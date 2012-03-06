@@ -1675,7 +1675,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		//Check if we will use ajax for our queries or just clien-side javascript
 		$using_ajax = $total_rows > $ajax_limitation ? true : false;
 		
-		//Just for the commit. The functionality is not tottally finished
+		//Still the ajax chosen have some bugs so until we fix the bug we will not use it.
 		$using_ajax = false;
 		
 		//If total rows are more than the limitation, use the ajax plugin
@@ -3204,6 +3204,8 @@ class grocery_CRUD extends grocery_CRUD_States
 				$state_info = $this->getStateInfo();
 				
 				$ajax_relation_result = $this->ajax_relation($state_info);
+				
+				$ajax_relation_result[""] = "";
 				
 				echo json_encode($ajax_relation_result);
 				die();				
