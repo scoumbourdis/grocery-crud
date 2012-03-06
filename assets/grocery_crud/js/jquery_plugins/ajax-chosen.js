@@ -1,6 +1,9 @@
 (function() {
 
   (function($) {
+	  var my_timer = null;
+	  var my_timer2 = null;
+	  
     return $.fn.ajaxChosen = function(options, callback) {
       var select;
       select = this;
@@ -33,14 +36,19 @@
           field.attr('value', val);
           if (typeof success !== "undefined" && success !== null) return success();
         };
-        return this.timer = setTimeout(function() {
-          return $.ajax(options);
+        
+        if(my_timer !== null) clearTimeout(my_timer);
+        
+        my_timer = setTimeout(function() {
+        	return $.ajax(options);
         }, 800);
+        return my_timer;
       });
       return this.next('.chzn-container').find(".chzn-search > input").bind('keyup', function() {
         var field, val;
         val = $.trim($(this).attr('value'));
         if (val.length < 2 || val === $(this).data('prevVal')) return false;
+        
         field = $(this);
         options.data = {
           term: val,
@@ -63,9 +71,13 @@
           field.attr('value', val);
           if (typeof success !== "undefined" && success !== null) return success();
         };
-        return this.timer = setTimeout(function() {
-          return $.ajax(options);
+        
+        if(my_timer2 !== null) clearTimeout(my_timer2);
+        
+        my_timer2 = setTimeout(function() {
+        	return $.ajax(options);
         }, 800);
+        return my_timer2;
       });
     };
   })(jQuery);

@@ -177,6 +177,9 @@ class grocery_CRUD_Model  extends CI_Model  {
 
     	if($where_clause !== null)
     		$this->db->where($where_clause);    	
+
+    	if($limit !== null)
+    		$this->db->limit($limit);    	
     	
     	if($search_like !== null)
     		$this->db->having("$field_name_hash LIKE '%".$this->db->escape_like_str($search_like)."%'");

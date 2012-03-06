@@ -1673,10 +1673,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$total_rows = $this->get_relation_total_rows($field_info->extras);
 
 		//Check if we will use ajax for our queries or just clien-side javascript
-		$using_ajax = $total_rows > $ajax_limitation ? true : false;
-		
-		//Still the ajax chosen have some bugs so until we fix the bug we will not use it.
-		$using_ajax = false;
+		$using_ajax = $total_rows > $ajax_limitation ? true : false;		
 		
 		//If total rows are more than the limitation, use the ajax plugin
 		$chosen_class = $using_ajax ? 'ajax-chosen-select' : 'chosen-select';

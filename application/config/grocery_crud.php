@@ -6,7 +6,7 @@
 	$config['grocery_crud_date_format']			= 'uk-date';
 	
 	//If the set_relation data is bigger than the specified number then call all the data with ajax every time the user types a letter.
-	$config['grocery_crud_set_relation_max_data_without_ajax'] = 150;
+	$config['grocery_crud_set_relation_max_data_without_ajax'] = 500;
 	
 	$config['grocery_crud_image_upload_allow_file_types'] 		= 'gif|jpeg|jpg|png';
 	$config['grocery_crud_image_upload_max_file_size'] 			= '10MB'; //ex. '10MB' (Mega Bytes), '1067KB' (Kilo Bytes), '5000B' (Bytes)
