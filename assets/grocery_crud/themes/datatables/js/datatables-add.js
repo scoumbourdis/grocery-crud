@@ -117,11 +117,7 @@ $(function(){
 			$(this).trigger('click');
 		});
 		
-		$('.chosen-multiple-select').each(function(){
+		$('.chosen-multiple-select, .chosen-select, .ajax-chosen-select').each(function(){
 			$(this).trigger("liszt:updated");
 		});
-		
-		$('.chosen-select').each(function(){
-			$(this).trigger("liszt:updated");
-		});		
 	}
