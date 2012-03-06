@@ -1672,16 +1672,20 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$ajax_limitation = $ci->config->item('grocery_crud_set_relation_max_data_without_ajax');
 		$total_rows = $this->get_relation_total_rows($field_info->extras);
 
+		
 		//Check if we will use ajax for our queries or just clien-side javascript
 		$using_ajax = $total_rows > $ajax_limitation ? true : false;		
 		
+		//We will not use it for now.
+		$using_ajax = false;
+		
 		//If total rows are more than the limitation, use the ajax plugin
-		$chosen_class = $using_ajax ? 'ajax-chosen-select' : 'chosen-select';
+		$ajax_or_not_class = $using_ajax ? 'chosen-select' : 'chosen-select';
 		
 		$this->_inline_js("var ajax_relation_url = '".$this->getAjaxRelationUrl()."';\n");
 		
 //@todo have to do the Select {display_as} as a lang string		
-		$input = "<select name='{$field_info->name}' id='' class='$chosen_class' data-placeholder='Select {$field_info->display_as}'>";
+		$input = "<select name='{$field_info->name}' id='' class='$ajax_or_not_class' data-placeholder='Select {$field_info->display_as}'>";
 		$input .= "<option value=''></option>";
 		
 		if(!$using_ajax)
@@ -1699,18 +1703,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			foreach($selected_options_array as $option_value => $option)
 			{
 				$input .= "<option value='$option_value'selected='selected' >$option</option>";	
-			}
-		}
-		
-		// A limitation of 30 options just for the select to not be empty when the user press the drop down button.
-		if($using_ajax)
-		{
-			$options_array = $this->get_relation_array($field_info->extras,null,30);
-			foreach($options_array as $option_value => $option)
-			{
-				$selected = !empty($value) && $value == $option_value ? true : false;
-				if(!$selected) //Make sure that the selected value doesn't appear two times
-					$input .= "<option value='$option_value' >$option</option>";
 			}
 		}
 		

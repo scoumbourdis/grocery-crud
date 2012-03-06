@@ -15,6 +15,7 @@
         if (this.timer) clearTimeout(this.timer);
         $(this).data('prevVal', val);
         field = $(this);
+
         options.data = {
           term: val,
           field_name: select.attr('name') //Inserted for grocery CRUD          
@@ -50,6 +51,7 @@
         if (val.length < 2 || val === $(this).data('prevVal')) return false;
         
         field = $(this);
+
         options.data = {
           term: val,
           field_name: select.attr('name') //Inserted for grocery CRUD
