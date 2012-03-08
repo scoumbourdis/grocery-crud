@@ -1685,7 +1685,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->_inline_js("var ajax_relation_url = '".$this->getAjaxRelationUrl()."';\n");
 		
 //@todo have to do the Select {display_as} as a lang string		
-		$input = "<select name='{$field_info->name}' id='' class='$ajax_or_not_class' data-placeholder='Select {$field_info->display_as}'>";
+		$input = "<select name='{$field_info->name}' id='' class='$ajax_or_not_class' data-placeholder='Select {$field_info->display_as}' style='width:300px'>";
 		$input .= "<option value=''></option>";
 		
 		if(!$using_ajax)
@@ -1729,6 +1729,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$this->set_js('assets/grocery_crud/js/jquery_plugins/ajax-chosen.js');
 			$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
 		}
+		
+		$this->_inline_js("var ajax_relation_url = '".$this->getAjaxRelationUrl()."';\n");
+		
 		$field_info 		= $this->relation_n_n[$field_info_type->name]; //As we use this function the relation_n_n exists, so don't need to check
 		$unselected_values 	= $this->get_relation_n_n_unselected_array($field_info, $selected_values);
 		
@@ -1739,8 +1742,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		else
 		{
 			$css_class = $has_priority_field ? 'multiselect': 'chosen-multiple-select';
+			$width_style = $has_priority_field ? '' : 'width:510px;';
 //@todo have to do the Select {display_as} as a lang string			
-			$input = "<select name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='Select {$field_info_type->display_as}'>";
+			$input = "<select name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='Select {$field_info_type->display_as}' style='$width_style' >";
 			
 			if(!empty($unselected_values))
 				foreach($unselected_values as $id => $name)
