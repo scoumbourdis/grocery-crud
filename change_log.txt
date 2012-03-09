@@ -1,5 +1,5 @@
 v.1.2
-	Adding languages: Arabic, Chinese, European, German, Portuguese, Persian, Polish, Indonesian, Ukrainian.
+	Adding languages: Arabic, Chinese, European, German, Portuguese, Persian, Polish, Indonesian, Turkish, Ukrainian.
 	Adding date format to the auto date fields. The format can be dd/mm/yyyy or mm/dd/yyyy or the old-one yyyy-mm-dd.
 	Adding date-time format to the auto date-time fields. The format is chosen by the default date format (uk-date , us-date or sql-date).
 	Adding a new uploader. Works with the most common browsers. Internet Explorer 8+, Mozilla Firefox, Google Chrome, Opera, Safari.
