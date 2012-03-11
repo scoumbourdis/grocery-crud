@@ -1676,7 +1676,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		//Check if we will use ajax for our queries or just clien-side javascript
 		$using_ajax = $total_rows > $ajax_limitation ? true : false;		
 		
-		//We will not use it for now.
+		//We will not use it for now. It is not ready yet. Probably we will have this functionality at version 1.2.2
 		$using_ajax = false;
 		
 		//If total rows are more than the limitation, use the ajax plugin
