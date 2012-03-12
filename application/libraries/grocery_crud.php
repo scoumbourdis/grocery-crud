@@ -1557,7 +1557,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_string_input($field_info,$value)
 	{
-		$value = !is_string($value) ? '' : $value; 
+		$value = !is_string($value) ? '' : str_replace('"',"&quot;",$value); 
 		
 		$extra_attributes = '';
 		if(!empty($field_info->db_max_length))
