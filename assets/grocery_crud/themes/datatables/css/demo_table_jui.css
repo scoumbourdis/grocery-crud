@@ -519,3 +519,7 @@ tr.even.gradeU td.sorting_3 {
 .ex_highlight #example tbody tr.odd:hover, #example tbody tr.odd td.highlighted {
 	background-color: #E6FF99;
 }
+table.display {
+	border-left:1px solid #ccc;
+	border-right: 1px solid #ccc	
+}
