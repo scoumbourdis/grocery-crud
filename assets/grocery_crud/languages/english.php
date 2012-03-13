@@ -45,5 +45,5 @@
 	$lang['alert_edit_form']		= 'The data you had change may not be saved.\\nAre you sure you want to go back to list?';
 	$lang['alert_delete']			= 'Are you sure that you want to delete this record?';
 	
-	$lang['insert_error']			= 'An error has been occured at the insert.';
-	$lang['update_error']			= 'An error has been occured on Saving.';
+	$lang['insert_error']			= 'An error has occurred on insert.';
+	$lang['update_error']			= 'An error has occurred on saving.';
