@@ -3525,10 +3525,12 @@ class grocery_CRUD extends grocery_CRUD_States
 	
 	/**
 	 * 
-	 * Enter description here ...
+	 * Set a simple 1-n foreign key relation 
 	 * @param string $field_name
 	 * @param string $related_table
 	 * @param string $related_title_field
+	 * @param mixed $where_clause
+	 * @param string $order_by
 	 */
 	public function set_relation($field_name , $related_table, $related_title_field, $where_clause = null, $order_by = null)
 	{
