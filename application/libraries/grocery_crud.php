@@ -1059,7 +1059,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			{
 				if($this->callback_before_upload !== null)
 				{
-					$callback_before_upload_response = call_user_func($this->callback_before_upload, $_FILES, $state_info );
+					$callback_before_upload_response = call_user_func($this->callback_before_upload, $_FILES,  $this->upload_fields[$state_info->field_name]);
 					
 					if($callback_before_upload_response === false)
 						return false;
@@ -1096,9 +1096,18 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$upload_handler = new UploadHandler($options);
 				$uploader_response = $upload_handler->post();
 				
+				if(is_array($uploader_response))
+				{
+					foreach($uploader_response as &$response)
+					{
+						unset($response->delete_url);
+						unset($response->delete_type);
+					}
+				}
+				
 				if($this->callback_after_upload !== null)
 				{
-					$callback_after_upload_response = call_user_func($this->callback_after_upload, $uploader_response , $state_info , $_FILES );
+					$callback_after_upload_response = call_user_func($this->callback_after_upload, $uploader_response ,  $this->upload_fields[$state_info->field_name] , $_FILES );
 					
 					if($callback_after_upload_response === false)
 						return false;
@@ -1112,8 +1121,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			}
 			else 
 			{
-				$state_info->encoded_field_name = $this->_unique_field_name($state_info->field_name);
-				$upload_response = call_user_func($this->callback_upload, $_FILES, $state_info );
+				$upload_response = call_user_func($this->callback_upload, $_FILES, $this->upload_fields[$state_info->field_name] );
 
 				if($upload_response === false)
 				{
@@ -3574,20 +3582,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	 */
 	public function set_field_upload($field_name, $upload_dir = null)
 	{
-		$options = array(
-			'allow_file_types' => 'gif|jpeg|jpg|png',
-			'max_file_size' => '10MB',
-			'upload_dir'	=> 'assets/uploads/images',
-			'upload_url'	=> 'assets/uploads/images',
-			'max_width'		=> 1024,
-			'max_height'	=> 768,
-			'thumb_width'	=> 100,
-			'thumb_height'	=> 75,
-			'type'			=> 'image'
-		);
-		
 		$upload_dir = substr($upload_dir,-1,1) == '/' ? substr($upload_dir,0,-1) : $upload_dir;
-		$this->upload_fields[$field_name] = (object)array( 'field_name' => $field_name , 'upload_path' => $upload_dir);		
+		$this->upload_fields[$field_name] = (object)array( 'field_name' => $field_name , 'upload_path' => $upload_dir, 'encrypted_field_name' =>  $this->_unique_field_name($field_name));		
 	}
 }
 
