@@ -1918,7 +1918,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			{
 				$primary_key = $this->getStateInfo()->primary_key;
 				$field_input = $field_info;
-				$field_input->input = call_user_func($this->callback_edit_field[$field->field_name], $field_value, $primary_key, $field_info);
+				$field_input->input = call_user_func($this->callback_edit_field[$field->field_name], $field_value, $primary_key, $field_info, $field_values);
 			}
 			
 			switch ($field_info->crud_type) {
