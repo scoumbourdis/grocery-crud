@@ -1,5 +1,5 @@
 v.1.2.1
-	Adding Japanese language.
+	Adding languages: Danish, Japanese.
 v.1.2
 	Adding languages: Arabic, Chinese, European Portuguese, German , Persian, Polish, Indonesian, Turkish, Ukrainian.
 	Adding date format to the auto date fields. The format can be dd/mm/yyyy or mm/dd/yyyy or the old-one yyyy-mm-dd.
