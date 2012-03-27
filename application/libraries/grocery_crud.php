@@ -2419,7 +2419,6 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $like 				= array();
 	protected $limit 				= null;
 	protected $required_fields		= array();
-	protected $unset_columns		= null;
 	protected $validation_rules		= array();
 	protected $relation				= array();
 	protected $relation_n_n			= array();
@@ -2435,17 +2434,20 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $unset_edit		= false;
 	protected $unset_delete		= false;
 	protected $unset_jquery		= false;
+	protected $unset_columns	= null;
+	protected $unset_add_fields = null;
+	protected $unset_edit_fields = null;
 	
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
 	protected $callback_after_insert 	= null;
-	protected $callback_insert 	= null;
+	protected $callback_insert 			= null;
 	protected $callback_before_update 	= null;
 	protected $callback_after_update 	= null;
-	protected $callback_update 	= null;	
+	protected $callback_update 			= null;	
 	protected $callback_before_delete 	= null;
 	protected $callback_after_delete 	= null;
-	protected $callback_delete 	= null;		
+	protected $callback_delete 			= null;		
 	protected $callback_column			= array();
 	protected $callback_add_field		= array();
 	protected $callback_edit_field		= array();
@@ -2633,6 +2635,49 @@ class grocery_CRUD extends grocery_CRUD_States
 		
 		$this->unset_columns = $args;
 		
+		return $this;
+	}	
+	
+	public function unset_fields()
+	{
+		$args = func_get_args();
+	
+		if(isset($args[0]) && is_array($args[0]))
+		{
+			$args = $args[0];
+		}
+	
+		$this->unset_add_fields = $args;
+		$this->unset_edit_fields = $args;
+	
+		return $this;
+	}	
+	
+	public function unset_add_fields()
+	{
+		$args = func_get_args();
+	
+		if(isset($args[0]) && is_array($args[0]))
+		{
+			$args = $args[0];
+		}
+	
+		$this->unset_add_fields = $args;
+	
+		return $this;
+	}	
+	
+	public function unset_edit_fields()
+	{
+		$args = func_get_args();
+	
+		if(isset($args[0]) && is_array($args[0]))
+		{
+			$args = $args[0];
+		}
+	
+		$this->unset_edit_fields = $args;
+	
 		return $this;
 	}	
 	
@@ -2933,7 +2978,11 @@ class grocery_CRUD extends grocery_CRUD_States
 				$this->add_fields = array();
 				foreach($field_types as $field)
 				{
-					if(!isset($field->db_extra) || $field->db_extra != 'auto_increment')
+					//Check if an unset_add_field is initialize for this field name
+					if($this->unset_add_fields !== null && is_array($this->unset_add_fields) && in_array($field->name,$this->unset_add_fields))
+						continue;
+					
+					if( (!isset($field->db_extra) || $field->db_extra != 'auto_increment') )
 					{
 						if(isset($this->display_as[$field->name]))
 							$this->add_fields[] = (object)array('field_name' => $field->name, 'display_as' => $this->display_as[$field->name]);
@@ -2972,6 +3021,10 @@ class grocery_CRUD extends grocery_CRUD_States
 				$this->edit_fields = array();
 				foreach($field_types as $field)
 				{
+					//Check if an unset_edit_field is initialize for this field name
+					if($this->unset_edit_fields !== null && is_array($this->unset_edit_fields) && in_array($field->name,$this->unset_edit_fields))
+						continue;
+					
 					if(!isset($field->db_extra) || $field->db_extra != 'auto_increment')
 					{
 						if(isset($this->display_as[$field->name]))

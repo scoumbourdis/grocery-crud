@@ -1,5 +1,6 @@
 v.1.2.1
 	Adding languages: Afrikaans, Danish, Japanese, Romanian.
+	Adding 3 new methods. unset_fields, unset_add_fields and unset_edit_fields.
 	Renewing Javascripts: tinymce.
 	#14 - In firefox browser if you add more than one textarea. Only the last textarea works properly.
 v.1.2
