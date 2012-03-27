@@ -144,6 +144,8 @@ function setupFormData() {
 	f.text_overline.checked = inStr(ce.style.textDecoration, 'overline');
 	f.text_linethrough.checked = inStr(ce.style.textDecoration, 'line-through');
 	f.text_blink.checked = inStr(ce.style.textDecoration, 'blink');
+	f.text_none.checked = inStr(ce.style.textDecoration, 'none');
+	updateTextDecorations();
 
 	// Setup background fields
 
@@ -177,11 +179,7 @@ function setupFormData() {
 
 	f.box_height.value = getNum(ce.style.height);
 	selectByValue(f, 'box_height_measurement', getMeasurement(ce.style.height));
-
-	if (tinymce.isGecko)
-		selectByValue(f, 'box_float', ce.style.cssFloat, true, true);
-	else
-		selectByValue(f, 'box_float', ce.style.styleFloat, true, true);
+	selectByValue(f, 'box_float', ce.style.cssFloat || ce.style.styleFloat, true, true);
 
 	selectByValue(f, 'box_clear', ce.style.clear, true, true);
 
@@ -376,7 +374,7 @@ function applyAction() {
 	generateCSS();
 
 	tinyMCEPopup.restoreSelection();
-	ed.dom.setAttrib(ed.selection.getNode(), 'style', tinyMCEPopup.editor.dom.serializeStyle(tinyMCEPopup.editor.dom.parseStyle(ce.style.cssText)));
+	ed.dom.setAttrib(ed.selection.getSelectedBlocks(), 'style', tinyMCEPopup.editor.dom.serializeStyle(tinyMCEPopup.editor.dom.parseStyle(ce.style.cssText)));
 }
 
 function updateAction() {
@@ -440,9 +438,7 @@ function generateCSS() {
 	ce.style.width = f.box_width.value + (isNum(f.box_width.value) ? f.box_width_measurement.value : "");
 	ce.style.height = f.box_height.value + (isNum(f.box_height.value) ? f.box_height_measurement.value : "");
 	ce.style.styleFloat = f.box_float.value;
-
-	if (tinymce.isGecko)
-		ce.style.cssFloat = f.box_float.value;
+	ce.style.cssFloat = f.box_float.value;
 
 	ce.style.clear = f.box_clear.value;
 
@@ -636,6 +632,19 @@ function synch(fr, to) {
 
 	if (f.elements[fr + "_measurement"])
 		selectByValue(f, to + "_measurement", f.elements[fr + "_measurement"].value);
+}
+
+function updateTextDecorations(){
+	var el = document.forms[0].elements;
+
+	var textDecorations = ["text_underline", "text_overline", "text_linethrough", "text_blink"];
+	var noneChecked = el["text_none"].checked;
+	tinymce.each(textDecorations, function(id) {
+		el[id].disabled = noneChecked;
+		if (noneChecked) {
+			el[id].checked = false;
+		}
+	});
 }
 
 tinyMCEPopup.onInit.add(init);
