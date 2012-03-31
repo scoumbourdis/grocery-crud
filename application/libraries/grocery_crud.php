@@ -2081,16 +2081,18 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		$segment_position = $segment_object->segment_position;
 		
 		$state_url_array = array();
-    $num = null;
-		foreach($ci->uri->segments as $num => $value)
-		{
-			$state_url_array[$num] = $value;
-			if($num == ($segment_position - 1))
-				break;
-		}
-				
-		if( $method_name == 'index' && !in_array( 'index', $state_url_array ) ) //there is a scenario that you don't have the index to your url
-			$state_url_array[$num+1] = 'index';
+
+    if( sizeof($ci->uri->segments) > 0 ) {
+      foreach($ci->uri->segments as $num => $value)
+      {
+        $state_url_array[$num] = $value;
+        if($num == ($segment_position - 1))
+          break;
+      }
+          
+      if( $method_name == 'index' && !in_array( 'index', $state_url_array ) ) //there is a scenario that you don't have the index to your url
+        $state_url_array[$num+1] = 'index';
+    }
 		
 		$state_url = implode('/',$state_url_array).'/'.$url;
 		
