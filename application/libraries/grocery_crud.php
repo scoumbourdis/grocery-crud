@@ -2081,6 +2081,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		$segment_position = $segment_object->segment_position;
 		
 		$state_url_array = array();
+    $num = null;
 		foreach($ci->uri->segments as $num => $value)
 		{
 			$state_url_array[$num] = $value;
