@@ -198,6 +198,9 @@ class grocery_CRUD_Field_Types
 				case 'enum':
 					$field_info->input = $this->get_enum_input($field_info,$value);
 				break;
+				case 'set':
+					$field_info->input = $this->get_set_input($field_info,$value);
+				break;				
 				case 'relation':
 					$field_info->input = $this->get_relation_input($field_info,$value);
 				break;
@@ -358,6 +361,12 @@ class grocery_CRUD_Field_Types
 						$type = 'string';
 					else
 						$type = 'enum';
+				break;
+				case 'set':
+					if($db_type->db_type != 'set')
+						$type = 'string';
+					else
+						$type = 'set';
 				break;
 				case '252':
 				case 'blob':
@@ -1664,6 +1673,28 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		
 		$input .= "</select>";
+		return $input;
+	}	
+	
+	protected function get_set_input($field_info,$value)
+	{
+		$selected_options = array();
+		if ( ! empty($value))
+		{
+			foreach (explode(',', $value) as $v) $selected_options[$v] = TRUE;
+		}
+	
+		$input = "<select multiple onchange=\"var v = ''; for (var i in this.options) if (this.options[i].selected) v += (v == '' ? '' : ',') + this.options[i].value; this.nextSibling.value = v;\">";
+		 
+		$options_array = explode("','",substr($field_info->db_max_length,1,-1));
+		foreach($options_array as $option)
+		{
+			$selected = !empty($value) && isset($selected_options[$option]) ? "selected='selected'" : '';
+			$input .= "<option value='$option' $selected >$option</option>";
+		}
+		 
+		$input .= "</select>";
+		$input .= "<input type='hidden' name='{$field_info->name}' />";
 		return $input;
 	}	
 	

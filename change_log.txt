@@ -2,7 +2,8 @@ v.1.2.1
 	Adding languages: Afrikaans, Danish, Japanese, Romanian.
 	Adding 3 new methods. unset_fields, unset_add_fields and unset_edit_fields.
 	Renewing Javascripts: tinymce.
-	#14 - In firefox browser if you add more than one textarea. Only the last textarea works properly.
+	Issue #14 - In firefox browser if you add more than one textarea. Only the last textarea works properly.
+	Adding the "set" field type.
 v.1.2
 	Adding languages: Arabic, Chinese, European Portuguese, German , Persian, Polish, Indonesian, Turkish, Ukrainian.
 	Adding date format to the auto date fields. The format can be dd/mm/yyyy or mm/dd/yyyy or the old-one yyyy-mm-dd.
