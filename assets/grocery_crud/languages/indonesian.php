@@ -53,3 +53,6 @@
 
 	$lang['crud_previous']			= 'Kembali ke halaman sebelumnya';
 	$lang['crud_next']				= 'Lanjut ke halaman selanjutnya';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';

@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= 'เกิดเหตุขัดข้องระหว่างการเพิ่มข้อมูล';
 	$lang['update_error']			= 'เกิดเหตุขัดข้องในระหว่างการบันทึกข้อมูล';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

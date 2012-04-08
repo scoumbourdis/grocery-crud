@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= 'Có lỗi khi thêm dữ liệu.';
 	$lang['update_error']			= 'Có lỗi khi thay đổi dữ liệu.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

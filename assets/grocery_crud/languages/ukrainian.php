@@ -48,3 +48,6 @@
 	
 	$lang['insert_error'] = 'При додаванні інформації виникла помилка.';
 	$lang['update_error'] = 'При збереженні інформації виникла помилка.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';

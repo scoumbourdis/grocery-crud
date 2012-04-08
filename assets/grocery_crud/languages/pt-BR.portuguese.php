@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= 'Ocorreu um erro ao tentar gravar o registro.';
 	$lang['update_error']			= 'Ocorreu um erro ao atualizar o registro.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

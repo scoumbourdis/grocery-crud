@@ -48,3 +48,6 @@
 
 	$lang['insert_error']			= 'Pojawił się błąd podczas dodawania rekordu.';
 	$lang['update_error']			= 'Pojawił się błąd podczas zapisywania rekordu.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

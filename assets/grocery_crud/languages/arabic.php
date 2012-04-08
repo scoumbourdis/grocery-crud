@@ -50,3 +50,5 @@
 	$lang['insert_error']			= '. حدث مشكلة عند ادخال البيانات';
 	$lang['update_error']			= '. حدث مشكلة عند تحديث البيانات';	
 	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';

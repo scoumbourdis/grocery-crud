@@ -46,5 +46,8 @@
 	$lang['alert_edit_form']		= 'I dati modificati non possono essere salvati.\\nSei sicuro di voler ritornare alla lista?';
 	$lang['alert_delete']			= 'Sei sicuro di voler eliminare questo record?';
 	
-	$lang['insert_error']			= 'Un errore si è verifica in fase di Inserimento.';
-	$lang['update_error']			= 'Un errore si è verificato in fase di Salvataggio.';
+	$lang['insert_error']			= 'Un errore si ï¿½ verifica in fase di Inserimento.';
+	$lang['update_error']			= 'Un errore si ï¿½ verificato in fase di Salvataggio.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

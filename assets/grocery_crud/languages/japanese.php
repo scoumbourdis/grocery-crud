@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= '行の挿入でエラーが発生しました。';
 	$lang['update_error']			= '変更の保存でエラーが発生しました。';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

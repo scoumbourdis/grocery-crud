@@ -1368,7 +1368,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function showAddForm()
 	{
-		$this->set_js('assets/grocery_crud/js/jquery-1.7.1.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery-1.7.1.min.js');
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1387,7 +1387,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function showEditForm($state_info)
 	{
-		$this->set_js('assets/grocery_crud/js/jquery-1.7.1.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery-1.7.1.min.js');
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1518,7 +1518,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$css_files =  $this->get_css_files();
 
 		if($this->unset_jquery)
-			unset($js_files[sha1('assets/grocery_crud/js/jquery-1.7.1.min.js')]);
+			unset($js_files[sha1($this->default_javascript_path.'/jquery-1.7.1.min.js')]);
 		
 		if($this->echo_and_die === false)
 		{
@@ -1551,8 +1551,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_integer_input($field_info,$value)
 	{
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.numeric.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.numeric.config.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.numeric.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.numeric.config.js');
 		$extra_attributes = '';
 		if(!empty($field_info->db_max_length))
 			$extra_attributes .= "maxlength='{$field_info->db_max_length}'"; 
@@ -1587,8 +1587,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{   
 		if($field_info->extras == 'text_editor')
 		{
-			$this->set_js('assets/grocery_crud/texteditor/jquery.tinymce.js');
-			$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.tine_mce.config.js');
+			$this->set_js($this->default_texteditor_path.'/jquery.tinymce.js');
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.tine_mce.config.js');
 			$input = "<textarea name='{$field_info->name}' class='texteditor' >$value</textarea>";
 		}
 		else
@@ -1600,11 +1600,11 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_datetime_input($field_info,$value)
 	{
-		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
-		$this->set_css('assets/grocery_crud/css/jquery_plugins/jquery.ui.datetime.css');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.ui.datetime.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.datetime.config.js');
+		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.10.custom.css');
+		$this->set_css($this->default_css_path.'/jquery_plugins/jquery.ui.datetime.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.ui.datetime.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.datetime.config.js');
 		
 		if(!empty($value) && $value != '0000-00-00 00:00:00' && $value != '1970-01-01 00:00:00'){
 			list($year,$month,$day) = explode('-',substr($value,0,10));
@@ -1642,9 +1642,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_date_input($field_info,$value)
 	{	
-		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.datepicker.config.js');
+		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.10.custom.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.datepicker.config.js');
 		
 		if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
 		{
@@ -1700,10 +1700,10 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_relation_input($field_info,$value)
 	{
-		$this->set_css('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/ajax-chosen.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
+		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 
 		$ci = &get_instance();
 		$ci->load->config('grocery_crud');
@@ -1724,7 +1724,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->_inline_js("var ajax_relation_url = '".$this->getAjaxRelationUrl()."';\n");
 		
 //@todo have to do the Select {display_as} as a lang string		
-		$input = "<select name='{$field_info->name}' id='' class='$ajax_or_not_class' data-placeholder='Select {$field_info->display_as}' style='width:300px'>";
+		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
+		$input = "<select name='{$field_info->name}' id='' class='$ajax_or_not_class' data-placeholder='$select_title' style='width:300px'>";
 		$input .= "<option value=''></option>";
 		
 		if(!$using_ajax)
@@ -1755,18 +1756,18 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		if($has_priority_field)
 		{
-			$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');	
-			$this->set_css('assets/grocery_crud/css/jquery_plugins/ui.multiselect.css');
-			$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');	
-			$this->set_js('assets/grocery_crud/js/jquery_plugins/ui.multiselect.js');
-			$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.multiselect.js');
+			$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.10.custom.css');	
+			$this->set_css($this->default_css_path.'/jquery_plugins/ui.multiselect.css');
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.10.custom.min.js');	
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui.multiselect.js');
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.multiselect.js');
 		}
 		else 
 		{
-			$this->set_css('assets/grocery_crud/css/jquery_plugins/chosen/chosen.css');
-			$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.chosen.min.js');
-			$this->set_js('assets/grocery_crud/js/jquery_plugins/ajax-chosen.js');
-			$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.chosen.config.js');
+			$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 		}
 		
 		$this->_inline_js("var ajax_relation_url = '".$this->getAjaxRelationUrl()."';\n");
@@ -1820,17 +1821,17 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_upload_file_input($field_info, $value)
 	{
-		$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
-		$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/file-uploader.css');
-		$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/jquery.fileupload-ui.css');
+		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.10.custom.css');
+		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/file-uploader.css');
+		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/jquery.fileupload-ui.css');
 
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/tmpl.min.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/load-image.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/tmpl.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/load-image.min.js');
 
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.iframe-transport.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery.fileupload.js');
-		$this->set_js('assets/grocery_crud/js/jquery_plugins/config/jquery.fileupload.config.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.iframe-transport.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fileupload.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.fileupload.config.js');
 		
 		$unique = uniqid();
 		
@@ -1862,7 +1863,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			<input class="hidden-upload-input" type="hidden" name="'.$field_info->name.'" value="'.$value.'" rel="'.$this->_unique_field_name($field_info->name).'" />
 		</span>';
 		
-		$this->set_css('assets/grocery_crud/css/jquery_plugins/file_upload/fileuploader.css');
+		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/fileuploader.css');
 		
 		$input .= "<div id='uploader_$unique' rel='$unique' class='grocery-crud-uploader' style='$uploader_display_none'></div>";
 		$input .= "<div id='success_$unique' class='upload-success-url' style='$file_display_none padding-top:7px;'>";
@@ -2430,8 +2431,6 @@ class grocery_CRUD extends grocery_CRUD_States
 	private $edit_fields_checked	= false;	
 	
 	protected $default_theme		= 'flexigrid';
-	protected $default_theme_path	= 'assets/grocery_crud/themes';
-	protected $default_language_path= 'assets/grocery_crud/languages';
 	protected $language				= null;
 	protected $lang_strings			= array();
 	protected $php_date_format		= null;
@@ -2488,6 +2487,12 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $callback_upload			= null;
 	protected $callback_before_upload	= null;
 	protected $callback_after_upload	= null;
+	
+	protected $default_javascript_path				= 'assets/grocery_crud/js';
+	protected $default_css_path						= 'assets/grocery_crud/css';
+	protected $default_texteditor_path 				= 'assets/grocery_crud/texteditor';
+	protected $default_theme_path					= 'assets/grocery_crud/themes';
+	protected $default_language_path				= 'assets/grocery_crud/languages';
 	
 	/**
 	 * 

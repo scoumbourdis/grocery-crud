@@ -47,3 +47,7 @@
 	
 	$lang['insert_error']			= 'An error has occurred on insert.';
 	$lang['update_error']			= 'An error has occurred on saving.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';
+	

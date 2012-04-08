@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= 'Ekleme esnasında bir hata oluştu.';
 	$lang['update_error']			= 'Kaydetme esnasında bir hata oluştu.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

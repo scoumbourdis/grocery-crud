@@ -48,3 +48,6 @@
 
 	$lang['insert_error']			= 'Iets het vout geloop met die voeging.';
 	$lang['update_error']			= 'Iets het vout geloop met die stooring.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

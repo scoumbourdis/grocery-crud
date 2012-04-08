@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= 'O eroare a avut loc in timpul introducerii datelor.';
 	$lang['update_error']			= 'O eroare a avut loc in timpul salvarii datelor.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

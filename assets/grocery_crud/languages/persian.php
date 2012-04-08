@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= 'در ارسال اطلاعات مشکلی وجود دارد.';
 	$lang['update_error']			= 'در ویرایش اطلاعات مشکلی وجود دارد.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

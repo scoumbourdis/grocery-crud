@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= 'Der opstod en fejl, da der blev indsat.';
 	$lang['update_error']			= 'Der opstod en fejl, da der blev gemt.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

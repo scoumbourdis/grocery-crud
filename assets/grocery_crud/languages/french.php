@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= 'Une erreur est survenue lors de l opération d insersion.';
 	$lang['update_error']			= 'Une erreur est survenue lors de l opération d enregistrement.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

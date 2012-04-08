@@ -48,3 +48,6 @@
 
 	$lang['insert_error']			= 'Ocurrio un error durante la insercion.';
 	$lang['update_error']			= 'Ocurrio un error guardando.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	

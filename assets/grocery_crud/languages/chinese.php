@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= '新增记录的时候发生错误.';
 	$lang['update_error']			= '保存记录的时候发生错误.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';

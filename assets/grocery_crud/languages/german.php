@@ -48,3 +48,6 @@
 	
 	$lang['insert_error']			= 'Bei dem Eintrag ist ein Fehler unterlaufen. Bitte pruefen.';
 	$lang['update_error']			= 'Ein Fehler beim Speichern. Bitte pruefen.';
+	
+	/* Added in version 1.2.1 */
+	$lang['set_relation_title']		= 'Select {field_display_as}';	
