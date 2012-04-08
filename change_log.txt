@@ -3,6 +3,7 @@ v.1.2.1
 	Adding 3 new methods. unset_fields, unset_add_fields and unset_edit_fields.
 	Renewing Javascripts: tinymce.
 	Issue #14 - In firefox browser if you add more than one textarea. Only the last textarea works properly.
+	Issue #16 - Flexigrid's Search string get garbled with multibyte string.
 	Adding the "set" field type.
 v.1.2
 	Adding languages: Arabic, Chinese, European Portuguese, German , Persian, Polish, Indonesian, Turkish, Ukrainian.
