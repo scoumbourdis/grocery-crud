@@ -1694,7 +1694,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		 
 		$input .= "</select>";
-		$input .= "<input type='hidden' name='{$field_info->name}' />";
+		$input .= "<input type='hidden' name='{$field_info->name}' value='$value'/>";
 		return $input;
 	}	
 	
@@ -2820,6 +2820,10 @@ class grocery_CRUD extends grocery_CRUD_States
 		foreach($lang as $handle => $lang_string)
 			if(!isset($this->lang_strings[$handle]))
 				$this->lang_strings[$handle] = $lang_string;
+		
+		$this->default_true_false_text = array('inactive','active');
+		$this->subject = $this->subject === null ? 'Record' : $this->subject;		
+		
 	}
 
 	private function _load_date_format()
