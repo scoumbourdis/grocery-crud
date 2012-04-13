@@ -1684,7 +1684,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			foreach (explode(',', $value) as $v) $selected_options[$v] = TRUE;
 		}
 	
-		$input = "<select multiple onchange=\"var v = ''; for (var i in this.options) if (this.options[i].selected) v += (v == '' ? '' : ',') + this.options[i].value; this.nextSibling.value = v;\">";
+		$input = "<select multiple onchange=\"var v = ''; for (var i = 0; i < this.options.length; i++) if (this.options[i].selected) v += (v == '' ? '' : ',') + this.options[i].value; this.nextSibling.value = v;\">";
 		 
 		$options_array = explode("','",substr($field_info->db_max_length,1,-1));
 		foreach($options_array as $option)
