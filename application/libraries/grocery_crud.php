@@ -2821,8 +2821,8 @@ class grocery_CRUD extends grocery_CRUD_States
 			if(!isset($this->lang_strings[$handle]))
 				$this->lang_strings[$handle] = $lang_string;
 		
-		$this->default_true_false_text = array('inactive','active');
-		$this->subject = $this->subject === null ? 'Record' : $this->subject;		
+		$this->default_true_false_text = array( $this->l('form_inactive') , $this->l('form_active'));
+		$this->subject = $this->subject === null ? $this->l('list_record') : $this->subject;		
 		
 	}
 

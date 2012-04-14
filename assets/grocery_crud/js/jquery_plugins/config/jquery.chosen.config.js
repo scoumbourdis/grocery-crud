@@ -1,6 +1,6 @@
 $(function(){
 	$(".chosen-select,.chosen-multiple-select").chosen({allow_single_deselect:true});
-	
+/*	
 	$(".ajax-chosen-select,.ajax-chosen-multiple-select").ajaxChosen({
 	    type: 'POST',
 	    url: ajax_relation_url,
@@ -13,5 +13,6 @@ $(function(){
 		    });
 	
 		    return terms;
-	});	
+	});
+*/	
 });

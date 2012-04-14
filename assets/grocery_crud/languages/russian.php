@@ -50,4 +50,7 @@
 	$lang['update_error'] = 'При сохранении информации произошла ошибка.';
 	
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';
+	$lang['set_relation_title'] = 'Выбрать {field_display_as}';
+	$lang['list_record']			= 'Record';
+	$lang['form_inactive']			= 'inactive';
+	$lang['form_active']			= 'active';
