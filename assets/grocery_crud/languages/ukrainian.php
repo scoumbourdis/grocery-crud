@@ -51,6 +51,6 @@
 	
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title'] = 'Вибрати {field_display_as}';
-	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
+	$lang['list_record'] = 'Запис';
+	$lang['form_inactive'] = 'не активно';
+	$lang['form_active'] = 'активно';
