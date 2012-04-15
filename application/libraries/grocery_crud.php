@@ -200,7 +200,7 @@ class grocery_CRUD_Field_Types
 				break;
 				case 'set':
 					$field_info->input = $this->get_set_input($field_info,$value);
-				break;				
+				break;
 				case 'relation':
 					$field_info->input = $this->get_relation_input($field_info,$value);
 				break;
@@ -216,6 +216,9 @@ class grocery_CRUD_Field_Types
 				case 'password':
 					$field_info->input = $this->get_password_input($field_info,$value);
 				break;															
+				case 'readonly':
+					$field_info->input = $this->get_readonly_input($field_info,$value);;
+				break;				
 				
 				default:
 					$field_info->input = $this->get_string_input($field_info,$value);
@@ -1674,7 +1677,12 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$input .= "</select>";
 		return $input;
-	}	
+	}
+	
+	protected function get_readonly_input($field_info,$value)
+	{
+		return '<div class="readonly_label">'.$value.'</div>';
+	}
 	
 	protected function get_set_input($field_info,$value)
 	{

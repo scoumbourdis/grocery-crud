@@ -4,6 +4,7 @@ v.1.2.1
 	Issue #14 - In firefox browser if you add more than one textarea. Only the last textarea works properly.
 	Issue #16 - Flexigrid's Search string get garbled with multibyte string.
 	Adding the "set" field type.
+	Adding the "readonly" field type.
 	Adding languages: Afrikaans, Danish, Japanese, Romanian.
 	Adding lang strings: "set_relation_title", "list_record", "form_inactive", "form_active";
 v.1.2
