@@ -715,6 +715,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						{
 							$insert_data[$field->field_name] = $this->_convert_date_to_sql_date($post_data[$field->field_name]);
 						}
+						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'readonly')
+						{
+							//This empty if statement is to make sure that a readonly field will never inserted/updated
+						}						
 						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'datetime'){
 							$insert_data[$field->field_name] = $this->_convert_date_to_sql_date(substr($post_data[$field->field_name],0,10)).
 																		substr($post_data[$field->field_name],10);
@@ -818,6 +822,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						{
 							$update_data[$field->field_name] = $this->_convert_date_to_sql_date($post_data[$field->field_name]);
 						}
+						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'readonly')
+						{
+							//This empty if statement is to make sure that a readonly field will never inserted/updated 
+						}						
 						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'datetime'){
 							$update_data[$field->field_name] = $this->_convert_date_to_sql_date(substr($post_data[$field->field_name],0,10)).
 																		substr($post_data[$field->field_name],10);
