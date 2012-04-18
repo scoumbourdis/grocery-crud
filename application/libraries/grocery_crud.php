@@ -3351,6 +3351,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function callback_before_insert($callback = null)
 	{
 		$this->callback_before_insert = $callback;
+		
+		return $this;
 	}
 
 	/**
@@ -3360,6 +3362,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function callback_after_insert($callback = null)
 	{
 		$this->callback_after_insert = $callback;
+		
+		return $this;
 	}
 
 	/**
@@ -3369,6 +3373,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function callback_insert($callback = null)
 	{
 		$this->callback_insert = $callback;
+		
+		return $this;
 	}
 
 	
@@ -3379,6 +3385,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function callback_before_update($callback = null)
 	{
 		$this->callback_before_update = $callback;
+		
+		return $this;
 	}
 
 	/**
@@ -3388,6 +3396,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function callback_after_update($callback = null)
 	{
 		$this->callback_after_update = $callback;
+		
+		return $this;
 	}
 
 
@@ -3399,6 +3409,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function callback_update($callback = null)
 	{
 		$this->callback_update = $callback;
+		
+		return $this;
 	}	
 	
 	/**
@@ -3408,6 +3420,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function callback_before_delete($callback = null)
 	{
 		$this->callback_before_delete = $callback;
+		
+		return $this;
 	}
 
 	/**
@@ -3417,6 +3431,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function callback_after_delete($callback = null)
 	{
 		$this->callback_after_delete = $callback;
+		
+		return $this;
 	}
 
 	/**
@@ -3426,6 +3442,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function callback_delete($callback = null)
 	{
 		$this->callback_delete = $callback;
+		
+		return $this;
 	}		
 	
 	/**
