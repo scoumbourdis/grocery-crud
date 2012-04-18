@@ -1,5 +1,7 @@
-v 1.2.2
-	Small bug fixes: #18
+v 1.2.1.1
+	Small bug fixes:
+		#18 - Returning $this to all the callbacks methods.
+		"set" type doesn't work properly.
 v.1.2.1
 	Adding languages: Afrikaans, Danish, Japanese, Romanian.
 	Adding 3 new methods. unset_fields, unset_add_fields and unset_edit_fields.
