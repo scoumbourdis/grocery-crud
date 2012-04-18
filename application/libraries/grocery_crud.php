@@ -718,7 +718,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'readonly')
 						{
 							//This empty if statement is to make sure that a readonly field will never inserted/updated
-						}						
+						}	
+						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'set')
+						{
+							$insert_data[$field->field_name] = !empty($post_data[$field->field_name]) ? implode(',',$post_data[$field->field_name]) : '';
+						}											
 						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'datetime'){
 							$insert_data[$field->field_name] = $this->_convert_date_to_sql_date(substr($post_data[$field->field_name],0,10)).
 																		substr($post_data[$field->field_name],10);
@@ -825,7 +829,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'readonly')
 						{
 							//This empty if statement is to make sure that a readonly field will never inserted/updated 
-						}						
+						}
+						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'set')
+						{
+							$update_data[$field->field_name] = !empty($post_data[$field->field_name]) ? implode(',',$post_data[$field->field_name]) : '';
+						}										
 						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'datetime'){
 							$update_data[$field->field_name] = $this->_convert_date_to_sql_date(substr($post_data[$field->field_name],0,10)).
 																		substr($post_data[$field->field_name],10);
@@ -1694,23 +1702,25 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_set_input($field_info,$value)
 	{
-		$selected_options = array();
-		if ( ! empty($value))
-		{
-			foreach (explode(',', $value) as $v) $selected_options[$v] = TRUE;
-		}
-	
-		$input = "<select multiple onchange=\"var v = ''; for (var i = 0; i < this.options.length; i++) if (this.options[i].selected) v += (v == '' ? '' : ',') + this.options[i].value; this.nextSibling.value = v;\">";
-		 
+		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+		
 		$options_array = explode("','",substr($field_info->db_max_length,1,-1));
+		$selected_values 	= !empty($value) ? explode(",",$value) : array();
+		
+		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
+		$input = "<select name='{$field_info->name}[]' multiple='multiple' size='8' class='chosen-multiple-select' data-placeholder='$select_title' style='width:510px;' >";
+		
 		foreach($options_array as $option)
 		{
-			$selected = !empty($value) && isset($selected_options[$option]) ? "selected='selected'" : '';
-			$input .= "<option value='$option' $selected >$option</option>";
+			$selected = !empty($value) && in_array($option,$selected_values) ? "selected='selected'" : ''; 
+			$input .= "<option value='$option' $selected >$option</option>";	
 		}
-		 
+			
 		$input .= "</select>";
-		$input .= "<input type='hidden' name='{$field_info->name}' value='$value'/>";
+		
 		return $input;
 	}	
 	
@@ -1739,7 +1749,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$this->_inline_js("var ajax_relation_url = '".$this->getAjaxRelationUrl()."';\n");
 		
-//@todo have to do the Select {display_as} as a lang string		
 		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
 		$input = "<select name='{$field_info->name}' id='' class='$ajax_or_not_class' data-placeholder='$select_title' style='width:300px'>";
 		$input .= "<option value=''></option>";
@@ -1799,8 +1808,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		{
 			$css_class = $has_priority_field ? 'multiselect': 'chosen-multiple-select';
 			$width_style = $has_priority_field ? '' : 'width:510px;';
-//@todo have to do the Select {display_as} as a lang string			
-			$input = "<select name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='Select {$field_info_type->display_as}' style='$width_style' >";
+
+			$select_title = str_replace('{field_display_as}',$field_info_type->display_as,$this->l('set_relation_title'));
+			$input = "<select name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='$select_title' style='$width_style' >";
 			
 			if(!empty($unselected_values))
 				foreach($unselected_values as $id => $name)
