@@ -50,7 +50,7 @@
 	$lang['update_error']			= 'Un errore si � verificato in fase di Salvataggio.';
 	
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';	
+	$lang['set_relation_title']		= 'Scegli {field_display_as}';	
 	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
+	$lang['form_inactive']			= 'inattivo';
+	$lang['form_active']			= 'attivo';

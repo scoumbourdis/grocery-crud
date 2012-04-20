@@ -31,6 +31,8 @@
 	var paging_last 	= "<?php echo $this->l('list_paging_last'); ?>";
 
 	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
+
+	var default_per_page = '<?php echo $default_per_page;?>';
 	
 </script>
 <?php 

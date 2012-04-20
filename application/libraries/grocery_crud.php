@@ -1036,7 +1036,18 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		{
 			if($this->limit == null)
 			{
-				$this->basic_model->limit(10);	
+				$ci = &get_instance();
+				$ci->load->config('grocery_crud');
+				
+				$default_per_page = $ci->config->item('grocery_crud_default_per_page');
+				if(is_numeric($default_per_page) && $default_per_page >1)
+				{
+					$this->basic_model->limit($default_per_page);
+				}
+				else
+				{
+					$this->basic_model->limit(10);
+				}
 			}
 			else
 			{
@@ -1286,6 +1297,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_add			= $this->unset_add;
 		$data->unset_edit			= $this->unset_edit;
 		$data->unset_delete			= $this->unset_delete;
+		
+		$ci = &get_instance();
+		$ci->load->config('grocery_crud');
+		
+		$default_per_page = $ci->config->item('grocery_crud_default_per_page');
+		$data->paging_options = array('10','25','50','100');
+		$data->default_per_page		= is_numeric($default_per_page) && $default_per_page >1 && in_array($default_per_page,$data->paging_options)? $default_per_page : 25; 
 		
 		if($data->list === false)
 		{
