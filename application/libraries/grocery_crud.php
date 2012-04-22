@@ -274,7 +274,6 @@ class grocery_CRUD_Field_Types
 				$value = $this->character_limiter($value,20,"...");
 			break;	
 			case 'relation_n_n':
-				$value = implode(', ' ,$this->get_relation_n_n_selection_array( $value, $this->relation_n_n[$field_info->name] ));
 				$value = $this->character_limiter($value,30,"...");
 			break;						
 			
@@ -435,11 +434,19 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->or_like))
 			foreach($this->or_like as $or_like)
 				$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);	
-				
+
+		if(!empty($this->having))
+			foreach($this->having as $having)
+				$this->basic_model->having($having[0],$having[1],$having[2]);		
+		
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);				
-				
+
+		if(!empty($this->relation_n_n))
+			foreach($this->relation_n_n as $relation_n_n_field_info)
+				$this->basic_model->set_relation_n_n_field($relation_n_n_field_info);		
+		
 		return $this->basic_model->get_total_results();
 	}
 	
@@ -495,7 +502,12 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					else
 						$this->like($temp_relation[$state_info->search->field] , $state_info->search->text);
 				}
-				else 
+				elseif(isset($this->relation_n_n[$state_info->search->field]))
+				{
+					$escaped_text = $this->basic_model->escape_str($state_info->search->text);
+					$this->having($state_info->search->field." LIKE '%".$escaped_text."%'");
+				} 
+				else
 				{
 					$this->like($state_info->search->field , $state_info->search->text);
 				}
@@ -504,24 +516,29 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			{
 				$columns = $this->get_columns();
 				
-				#region temporary solution for the search with relation_n_n
-				if(!empty($this->relation_n_n))
-					foreach($columns as $num_row => $column)
-						if(isset($this->relation_n_n[$column->field_name]))
-							unset($columns[$num_row]);
-				#endregion
-				
 				$search_text = $state_info->search->text;
 				
 				foreach($columns as $column)
+				{	
 					if(isset($temp_relation[$column->field_name]))
+					{
 						if(is_array($temp_relation[$column->field_name]))
+						{
 							foreach($temp_relation[$column->field_name] as $search_field)
-								$this->or_like($search_field, $search_text);				
-						else	
-							$this->or_like($temp_relation[$column->field_name], $search_text);					
-					else
+							{
+								$this->or_like($search_field, $search_text);
+							}
+						}				
+						else
+						{	
+							$this->or_like($temp_relation[$column->field_name], $search_text);
+						}
+					}					
+					else 
+					{
 						$this->or_like($column->field_name, $search_text);
+					}
+				}
 			}
 		}
 	}
@@ -1028,10 +1045,18 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($this->or_like as $or_like)
 				$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);				
 			
+		if(!empty($this->having))
+			foreach($this->having as $having)
+				$this->basic_model->having($having[0],$having[1],$having[2]);		
+		
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);
 				
+		if(!empty($this->relation_n_n))
+			foreach($this->relation_n_n as $relation_n_n_field_info)
+				$this->basic_model->set_relation_n_n_field($relation_n_n_field_info);		
+		
 		if($this->config['crud_paging'] === true)
 		{
 			if($this->limit == null)
@@ -1391,10 +1416,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				$field_value 	= isset( $row->{$column->field_name} ) ? $row->{$column->field_name} : null;
 				if( $has_callbacks && isset($this->callback_column[$field_name]) )
 					$list[$num_row]->$field_name = call_user_func($this->callback_column[$field_name], $field_value, $row);
-				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type != 'relation_n_n')
-					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $field_value);
-				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type == 'relation_n_n')
-					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $row->$primary_key);				
+				elseif(isset($types[$field_name]))
+					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $field_value);				
 				else
 					$list[$num_row]->$field_name = $field_value;
 			}
@@ -2494,6 +2517,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $order_by 			= null;
 	protected $where 				= array();
 	protected $like 				= array();
+	protected $having 				= array();
 	protected $limit 				= null;
 	protected $required_fields		= array();
 	protected $validation_rules		= array();
@@ -3147,6 +3171,11 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function like($field, $match = '', $side = 'both')
 	{
 		$this->like[] = array($field, $match, $side);
+	}
+
+	protected function having($key, $value = '', $escape = TRUE)
+	{
+		$this->having[] = array($key, $value, $escape);
 	}
 	
 	public function or_like($field, $match = '', $side = 'both')

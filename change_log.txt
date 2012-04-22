@@ -1,5 +1,6 @@
 v 1.2.2
 	Adding the default_per_page at the config file. This specifies the first visit per page that a user should see at the list page. For example 25 rows per page.
+	#13 - The list search and ordering is not working with the n-n relation columns.
 v 1.2.1.1
 	Small bug fixes:
 		#18 - Returning $this to all the callbacks methods.
