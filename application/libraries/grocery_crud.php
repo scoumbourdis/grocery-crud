@@ -239,7 +239,8 @@ class grocery_CRUD_Field_Types
 				
 			break;
 			case 'true_false':
-				$value = $this->default_true_false_text[$value];
+				if(isset($this->default_true_false_text[$value]))
+					$value = $this->default_true_false_text[$value];
 			break;
 			case 'string':
 				$value = $this->character_limiter($value,30,"...");
