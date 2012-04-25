@@ -4,7 +4,7 @@ v 1.2.2
 	Small bug fixes:
 		#20 - Pressing tab and enter after adding a date or a datetime field it clears the date.
 		#21 - By default the texteditor transform the utf8 to html entities.
-		#22 - Doesn't recognize that a tinyint 1 or int 1 can just take a numeric value more than 1
+		#22 - Doesn't recognize that a tinyint 1 or int 1 can just take a numeric value more than 1.
 v 1.2.1.1
 	Small bug fixes:
 		#18 - Returning $this to all the callbacks methods.

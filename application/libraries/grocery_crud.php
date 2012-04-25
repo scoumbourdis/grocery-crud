@@ -443,10 +443,20 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);				
-
+		
 		if(!empty($this->relation_n_n))
-			foreach($this->relation_n_n as $relation_n_n_field_info)
-				$this->basic_model->set_relation_n_n_field($relation_n_n_field_info);		
+		{
+			$columns = $this->get_columns();
+			foreach($columns as $column)
+			{
+				//Use the relation_n_n ONLY if the column is called . The set_relation_n_n are slow and it will make the table slower without any reason as we don't need those queries.
+				if(isset($this->relation_n_n[$column->field_name]))
+				{
+					$this->basic_model->set_relation_n_n_field($this->relation_n_n[$column->field_name]);
+				}
+			}
+				
+		}		
 		
 		return $this->basic_model->get_total_results();
 	}
@@ -1055,8 +1065,18 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);
 				
 		if(!empty($this->relation_n_n))
-			foreach($this->relation_n_n as $relation_n_n_field_info)
-				$this->basic_model->set_relation_n_n_field($relation_n_n_field_info);		
+		{
+			$columns = $this->get_columns();
+			foreach($columns as $column)
+			{
+				//Use the relation_n_n ONLY if the column is called . The set_relation_n_n are slow and it will make the table slower without any reason as we don't need those queries.
+				if(isset($this->relation_n_n[$column->field_name]))
+				{
+					$this->basic_model->set_relation_n_n_field($this->relation_n_n[$column->field_name]);
+				}
+			}
+				
+		}	
 		
 		if($this->config['crud_paging'] === true)
 		{
