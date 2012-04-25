@@ -3,6 +3,7 @@ v 1.2.2
 	#13 - The list search and ordering is not working with the n-n relation columns.
 	Small bug fixes:
 		#20 - Pressing tab and enter after adding a date or a datetime field it clears the date.
+		#21 - By default the texteditor transform the utf8 to html entities.
 v 1.2.1.1
 	Small bug fixes:
 		#18 - Returning $this to all the callbacks methods.

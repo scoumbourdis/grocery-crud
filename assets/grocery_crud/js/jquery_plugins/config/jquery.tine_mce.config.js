@@ -17,7 +17,7 @@
 			theme_advanced_toolbar_align : "left",
 			theme_advanced_statusbar_location : "bottom",
 			theme_advanced_resizing : true,
-
+			entity_encoding : "raw",
 			/*
 			// Example content CSS (should be your site CSS)
 			content_css : "css/content.css",
