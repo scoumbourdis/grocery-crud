@@ -50,7 +50,7 @@
 	$lang['update_error']			= 'O eroare a avut loc in timpul salvarii datelor.';
 	
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title'] 	= 'Selecteaza {field_display_as}'; 
-	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
+	$lang['set_relation_title'] 	= 'Selecteaza {field_display_as}';
+	$lang['list_record']			= 'Inregistrare';
+	$lang['form_inactive']			= 'inactiv';
+	$lang['form_active']			= 'activ';
