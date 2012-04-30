@@ -1697,7 +1697,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$datetime = '';
 		}
 		$input = "<input name='{$field_info->name}' type='text' value='$datetime' maxlength='19' class='datetime-input' /> 
-		<button class='datetime-input-clear' tabindex='-1'>".$this->l('form_button_clear')."</button>
+		<a class='datetime-input-clear' tabindex='-1'>".$this->l('form_button_clear')."</a>
 		({$this->ui_date_format}) hh:mm:ss";
 		return $input;
 	}
@@ -1738,7 +1738,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		
 		$input = "<input name='{$field_info->name}' type='text' value='$date' maxlength='10' class='datepicker-input' /> 
-		<button class='datepicker-input-clear' tabindex='-1'>".$this->l('form_button_clear')."</button> (".$this->ui_date_format.")";
+		<a class='datepicker-input-clear' tabindex='-1'>".$this->l('form_button_clear')."</a> (".$this->ui_date_format.")";
 		return $input;
 	}	
 
