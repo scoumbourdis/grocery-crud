@@ -1,4 +1,13 @@
 $(function(){
+	
+	var save_and_close = false;
+	
+	$('#save-and-go-back-button').click(function(){
+		save_and_close = true;
+		
+		$('#crudForm').trigger('submit');
+	});	
+	
 	$('#crudForm').submit(function(){
 		$(this).ajaxSubmit({
 			url: validation_url,
@@ -18,10 +27,17 @@ $(function(){
 							$("#FormLoading").show();
 						},		
 						success: function(result){
+							
 							$("#FormLoading").fadeOut("slow");
 							data = $.parseJSON( result );
 							if(data.success)
 							{	
+								if(save_and_close)
+								{
+									window.location = list_url;
+									return true;
+								}								
+								
 								$('#report-error').hide().html('');									
 								$('.field_error').each(function(){
 									$(this).removeClass('field_error');

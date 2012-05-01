@@ -58,7 +58,10 @@
 		<div class='buttons-box'>
 			<div class='form-button-box'>
 				<input type='submit' value='<?php echo $this->l('form_save'); ?>' class='ui-input-button'/>
-			</div>			
+			</div>
+			<div class='form-button-box'>
+				<input type='button' value='Save and go back to list' class='ui-input-button' id="save-and-go-back-button"/>
+			</div>					
 			<div class='form-button-box'>
 				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick="javascript: goToList()" class='ui-input-button' />
 			</div>

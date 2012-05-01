@@ -1,5 +1,6 @@
 v 1.2.2
 	Adding Dutch language. 
+	Adding a new button/feature save and go back to list. When a user press the "save and go back to list" it is automatically redirect you to the list page when a successful save is done. 
 	Adding the default_per_page at the config file. This specifies the first visit per page that a user should see at the list page. For example 25 rows per page.
 	#13 - The list search and ordering is not working with the n-n relation columns.
 	Small bug fixes:

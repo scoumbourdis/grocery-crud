@@ -60,6 +60,9 @@
 	<div class="pDiv">
 		<div class='form-button-box'>
 			<input type='submit' value='<?php echo $this->l('form_update_changes'); ?>' />
+		</div>
+		<div class='form-button-box'>
+			<input type='button' value='Update and go back to list' id="save-and-go-back-button"/>
 		</div>		
 		<div class='form-button-box'>
 			<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick='javascript: return goToList()' />
