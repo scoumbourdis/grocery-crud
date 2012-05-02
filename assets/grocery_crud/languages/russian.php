@@ -56,5 +56,5 @@
 	$lang['form_active'] = 'активно';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
+	$lang['form_save_and_go_back']	= 'Сохранить и вернуться к списку';
+	$lang['form_update_and_go_back']= 'Обновить и вернуться к списку';
