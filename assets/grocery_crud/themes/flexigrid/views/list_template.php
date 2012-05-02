@@ -20,7 +20,11 @@
 
 </script>
 <div id='report-error' class='report-div error'></div>
-<div id='report-success' class='report-div success'></div>	
+<div id='report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>>
+<?php if($success_message !== null){?>
+	<p><?php echo $success_message; ?></p>
+<?php }?>
+</div>	
 <div class="flexigrid" style='width: 100%;'>
 	<div class="mDiv">
 		<div class="ftitle">

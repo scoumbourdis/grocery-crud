@@ -50,6 +50,10 @@
 	
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= 'Επιλογή {field_display_as}';	
-	$lang['list_record']			= 'Εγγραφή';
+	$lang['list_record']			= 'Εγγραφής';
 	$lang['form_inactive']			= 'ανενεργό';
 	$lang['form_active']			= 'ενεργό';
+	
+	/* Added in version 1.2.2 */
+	$lang['form_save_and_go_back']	= 'Αποθήκευση &amp; επιστροφή στην λίστα';
+	$lang['form_update_and_go_back']= 'Αποθήκευση αλλαγών &amp; επιστροφή στην λίστα';

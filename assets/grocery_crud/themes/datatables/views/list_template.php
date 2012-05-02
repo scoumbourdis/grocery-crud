@@ -33,7 +33,7 @@
 	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
 
 	var default_per_page = '<?php echo $default_per_page;?>';
-	
+
 </script>
 <?php 
 	if(!empty($actions)){
@@ -51,7 +51,11 @@
 	}
 ?>
 <div id='report-error' class='report-div error report-list'></div>
-<div id='report-success' class='report-div success report-list'></div>	
+<div id='report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>>
+<?php if($success_message !== null){?>
+	<p><?php echo $success_message; ?></p>
+<?php }?>
+</div>	
 <?php if(!$unset_add){?>
 <a role="button" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="<?php echo $add_url?>">
 	<span class="ui-button-icon-primary ui-icon ui-icon-circle-plus"></span>

@@ -54,3 +54,7 @@
 	$lang['list_record']			= 'Inregistrare';
 	$lang['form_inactive']			= 'inactiv';
 	$lang['form_active']			= 'activ';
+	
+	/* Added in version 1.2.2 */
+	$lang['form_save_and_go_back']	= 'Save and go back to list';
+	$lang['form_update_and_go_back']= 'Update and go back to list';

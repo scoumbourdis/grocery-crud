@@ -1315,7 +1315,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 	}
 	
-	protected function showList($ajax = false)
+	protected function showList($ajax = false, $state_info = null)
 	{
 		$data = $this->get_common_data();
 		
@@ -1330,6 +1330,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->total_results = $this->get_total_results();
 		
 		$data->columns 				= $this->get_columns();
+		
+		$data->success_message		= $this->get_success_message_at_list($state_info);
 		
 		$data->primary_key 			= $this->get_primary_key();
 		$data->add_url				= $this->getAddUrl();
@@ -1506,6 +1508,18 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			echo json_encode(array('success' => true , 'success_message' => $success_message));
 		}
 		$this->set_echo_and_die();
+	}
+	
+	protected function get_success_message_at_list($field_info = null)
+	{
+		if($field_info !== null && !empty($field_info->primary_key))
+		{
+			return $this->l('insert_success_message')." <a href='".$this->getEditUrl($field_info->primary_key)."'>".$this->l('form_edit')." {$this->subject}</a> ";
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	protected function insert_layout($insert_result = false)
@@ -2177,7 +2191,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		11	=> 'upload_file',
 		12	=> 'delete_file',
 		13	=> 'ajax_relation',
-		14	=> 'ajax_relation_n_n'
+		14	=> 'ajax_relation_n_n',
+		15	=> 'success'
 	);
 	
 	protected function getStateCode()
@@ -2471,6 +2486,10 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			case 14:
 				$state_info->field_name = $_POST['field_name'];
 				$state_info->search 	= $_POST['term'];
+			break;
+
+			case 15:
+				$state_info = (object)array('primary_key' => $first_parameter);
 			break;			
 		}
 		
@@ -2532,8 +2551,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $field_types 			= null;	
 	protected $basic_db_table 		= null;
 	protected $config 				= array();
-	protected $subject 				= 'Record';
-	protected $subject_plural 		= 'Records';
+	protected $subject 				= null;
+	protected $subject_plural 		= null;
 	protected $display_as 			= array();
 	protected $order_by 			= null;
 	protected $where 				= array();
@@ -3237,7 +3256,8 @@ class grocery_CRUD extends grocery_CRUD_States
 		
 		$this->set_basic_db_table($this->get_table());		
 		
-		switch ($this->state_code) {			
+		switch ($this->state_code) {
+			case 15://success
 			case 1://list
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
@@ -3245,7 +3265,9 @@ class grocery_CRUD extends grocery_CRUD_States
 					
 				$this->set_basic_Layout();
 					
-				$this->showList();
+				$state_info = $this->getStateInfo();
+				
+				$this->showList(false,$state_info);
 
 			break;
 			

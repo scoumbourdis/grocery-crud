@@ -60,7 +60,7 @@
 				<input type='submit' value='<?php echo $this->l('form_update_changes'); ?>' class='ui-input-button' />
 			</div>
 			<div class='form-button-box'>
-				<input type='button' value='Update and go back to list' class='ui-input-button' id="save-and-go-back-button"/>
+				<input type='button' value='<?php echo $this->l('form_update_and_go_back'); ?>' class='ui-input-button' id="save-and-go-back-button"/>
 			</div>			
 			<div class='form-button-box'>
 				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick='javascript: return goToList()' class='ui-input-button' />
