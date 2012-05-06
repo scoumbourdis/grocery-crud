@@ -33,7 +33,7 @@ $(function(){
 							{	
 								if(save_and_close)
 								{
-									window.location = list_url;
+									window.location = data.success_list_url;
 									return true;
 								}								
 								

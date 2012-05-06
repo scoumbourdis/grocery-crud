@@ -1512,9 +1512,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_success_message_at_list($field_info = null)
 	{
-		if($field_info !== null && !empty($field_info->primary_key))
+		if($field_info !== null && isset($field_info->success_message) && $field_info->success_message)
 		{
-			return $this->l('insert_success_message')." <a href='".$this->getEditUrl($field_info->primary_key)."'>".$this->l('form_edit')." {$this->subject}</a> ";
+			if(!empty($field_info->primary_key))
+			{
+				return $this->l('insert_success_message')." <a href='".$this->getEditUrl($field_info->primary_key)."'>".$this->l('form_edit')." {$this->subject}</a> ";
+			}
+			else
+			{
+				return $this->l('insert_success_message');
+			}
 		}
 		else
 		{
@@ -1538,7 +1545,12 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
 			$success_message .= '</p>';
 			
-			echo "<textarea>".json_encode(array('success' => true , 'insert_primary_key' => $insert_result, 'success_message' => $success_message))."</textarea>";
+			echo "<textarea>".json_encode(array(
+					'success' => true , 
+					'insert_primary_key' => $insert_result, 
+					'success_message' => $success_message,
+					'success_list_url'	=> $this->getListSuccessUrl($insert_result)
+			))."</textarea>";
 		}
 		$this->set_echo_and_die();
 	}
@@ -1626,7 +1638,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}	
 	}
 	
-	protected function update_layout($update_result = false)
+	protected function update_layout($update_result = false, $state_info = null)
 	{
 		if($update_result === false)
 		{
@@ -1638,8 +1650,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
 			$success_message .= '</p>';
 			
-			/* The textarea is only because of a BUG of the jquery plugin jquery form */
-			echo "<textarea>".json_encode(array('success' => true , 'insert_primary_key' => $update_result, 'success_message' => $success_message))."</textarea>";
+			/* The textarea is only because of a BUG of the jquery form plugin with the combination of multipart forms */
+			echo "<textarea>".json_encode(array(
+					'success' => true , 
+					'insert_primary_key' => $update_result, 
+					'success_message' => $success_message,
+					'success_list_url'	=> $this->getListSuccessUrl($state_info->primary_key)
+			))."</textarea>";
 		}
 		$this->set_echo_and_die();
 	}
@@ -2343,6 +2360,14 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			return $this->state_url('delete/'.$state_info->primary_key);
 	}
 
+	protected function getListSuccessUrl($primary_key = null)
+	{
+		if(empty($primary_key))
+			return $this->state_url('success');
+		else
+			return $this->state_url('success/'.$primary_key);
+	}	
+	
 	protected function getUploadUrl($field_name)
 	{		
 		return $this->state_url('upload_file/'.$field_name);
@@ -2489,7 +2514,10 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			break;
 
 			case 15:
-				$state_info = (object)array('primary_key' => $first_parameter);
+				$state_info = (object)array(
+					'primary_key' 		=> $first_parameter,
+					'success_message'	=> true
+				);
 			break;			
 		}
 		
@@ -3350,7 +3378,7 @@ class grocery_CRUD extends grocery_CRUD_States
 				$state_info = $this->getStateInfo();
 				$update_result = $this->db_update($state_info);
 				
-				$this->update_layout( $update_result );
+				$this->update_layout( $update_result,$state_info);
 			break;	
 
 			case 7://ajax_list
