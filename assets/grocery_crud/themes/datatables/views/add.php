@@ -16,12 +16,14 @@
 	<h3 class="ui-accordion-header ui-helper-reset ui-state-default form-title">
 		<div class='floatL form-title-left'>
 			<a href="#"><?php echo $this->l('form_add'); ?> <?php echo $subject?></a>
-		</div> 
+		</div>
+<?php 	if(!$this->unset_back_to_list) { ?>			
 		<div class='floatR'>
 			<a href='<?php echo $list_url?>' onclick='javascript: return goToList()' class='gotoListButton' >
 				<?php echo $this->l('form_back_to_list'); ?>
 			</a>
 		</div>
+<?php  } ?>		
 		<div class='clear'></div>
 	</h3>
 <div class='form-content form-div'>
@@ -59,12 +61,14 @@
 			<div class='form-button-box'>
 				<input type='submit' value='<?php echo $this->l('form_save'); ?>' class='ui-input-button'/>
 			</div>
+<?php 	if(!$this->unset_back_to_list) { ?>				
 			<div class='form-button-box'>
 				<input type='button' value='<?php echo $this->l('form_save_and_go_back'); ?>' class='ui-input-button' id="save-and-go-back-button"/>
-			</div>					
+			</div>								
 			<div class='form-button-box'>
 				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick="javascript: goToList()" class='ui-input-button' />
 			</div>
+<?php   } ?>			
 			<div class='form-button-box loading-box'>
 				<div class='small-loading' id='FormLoading'><?php echo $this->l('form_insert_loading'); ?></div>
 			</div>

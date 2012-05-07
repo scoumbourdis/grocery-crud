@@ -1463,6 +1463,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$data->fields 			= $this->get_add_fields();
 		$data->hidden_fields	= $this->get_add_hidden_fields();
+		$data->unset_back_to_list	= $this->unset_back_to_list;
 		
 		$this->_theme_view('add.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
@@ -1486,6 +1487,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$data->fields 		= $this->get_edit_fields();
 		$data->hidden_fields	= $this->get_edit_hidden_fields();
+		$data->unset_back_to_list	= $this->unset_back_to_list;
 		
 		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key); 
 		
@@ -1514,7 +1516,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{
 		if($field_info !== null && isset($field_info->success_message) && $field_info->success_message)
 		{
-			if(!empty($field_info->primary_key))
+			if(!empty($field_info->primary_key) && !$this->unset_edit)
 			{
 				return $this->l('insert_success_message')." <a href='".$this->getEditUrl($field_info->primary_key)."'>".$this->l('form_edit')." {$this->subject}</a> ";
 			}
@@ -1538,11 +1540,17 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		else 
 		{
 			$success_message = '<p>'.$this->l('insert_success_message');
-			if($insert_result !== true)
+			
+			if(!$this->unset_back_to_list && !empty($insert_result) && !$this->unset_edit)
 			{
 				$success_message .= " <a href='".$this->getEditUrl($insert_result)."'>".$this->l('form_edit')." {$this->subject}</a> ".$this->l('form_or');
 			}
-			$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
+			
+			if(!$this->unset_back_to_list)
+			{
+				$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
+			}
+			
 			$success_message .= '</p>';
 			
 			echo "<textarea>".json_encode(array(
@@ -1647,7 +1655,10 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		else 
 		{
 			$success_message = '<p>'.$this->l('update_success_message');
-			$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
+			if(!$this->unset_back_to_list)
+			{
+				$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
+			}
 			$success_message .= '</p>';
 			
 			/* The textarea is only because of a BUG of the jquery form plugin with the combination of multipart forms */
@@ -2598,14 +2609,15 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $change_field_type	= null;
 	
 	/* The unsetters */
-	protected $unset_texteditor	= array();
-	protected $unset_add		= false;
-	protected $unset_edit		= false;
-	protected $unset_delete		= false;
-	protected $unset_jquery		= false;
-	protected $unset_columns	= null;
-	protected $unset_add_fields = null;
-	protected $unset_edit_fields = null;
+	protected $unset_texteditor		= array();
+	protected $unset_add			= false;
+	protected $unset_edit			= false;
+	protected $unset_delete			= false;
+	protected $unset_jquery			= false;
+	protected $unset_columns		= null;
+	protected $unset_add_fields 	= null;
+	protected $unset_edit_fields	= null;
+	protected $unset_back_to_list	= false;
 	
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
@@ -2855,6 +2867,19 @@ class grocery_CRUD extends grocery_CRUD_States
 	
 		return $this;
 	}	
+	
+	
+	/**
+	 * Unsets everything that has to do with buttons or links with go back to list message
+	 * @access	public
+	 * @return	void 
+	 */
+	public function unset_back_to_list()
+	{
+		$this->unset_back_to_list = true;
+		
+		return $this;
+	}
 	
 	/**
 	 * 
@@ -3302,7 +3327,7 @@ class grocery_CRUD extends grocery_CRUD_States
 			case 2://add
 				if($this->unset_add)
 				{
-					throw new Exception('This user is not allowed to do this operation', 14);
+					throw new Exception('You don\'t have permissions for this operation', 14);
 					die();
 				}
 				
@@ -3321,7 +3346,7 @@ class grocery_CRUD extends grocery_CRUD_States
 			case 3://edit
 				if($this->unset_edit)
 				{
-					throw new Exception('This user is not allowed to do this operation', 14);
+					throw new Exception('You don\'t have permissions for this operation', 14);
 					die();
 				}
 				

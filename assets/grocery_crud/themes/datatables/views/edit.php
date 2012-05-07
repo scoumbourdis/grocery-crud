@@ -17,11 +17,13 @@
 		<div class='floatL form-title-left'>
 			<a href="#"><?php echo $this->l('form_edit'); ?> <?php echo $subject?></a>
 		</div> 
+<?php 	if(!$this->unset_back_to_list) { ?>
 		<div class='floatR'>
 			<a href='<?php echo $list_url?>' onclick='javascript: return goToList()' class='gotoListButton' >
 				<?php echo $this->l('form_back_to_list'); ?>
 			</a>
 		</div>
+<?php 	} ?>		
 		<div class='clear'></div>
 	</h3>
 <div class='form-content form-div'>
@@ -59,12 +61,14 @@
 			<div class='form-button-box'>
 				<input type='submit' value='<?php echo $this->l('form_update_changes'); ?>' class='ui-input-button' />
 			</div>
+			<?php 	if(!$this->unset_back_to_list) { ?>
 			<div class='form-button-box'>
 				<input type='button' value='<?php echo $this->l('form_update_and_go_back'); ?>' class='ui-input-button' id="save-and-go-back-button"/>
 			</div>			
 			<div class='form-button-box'>
 				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick='javascript: return goToList()' class='ui-input-button' />
 			</div>
+			<?php }?>			
 			<div class='form-button-box loading-box'>
 				<div class='small-loading' id='FormLoading'><?php echo $this->l('form_update_loading'); ?></div>
 			</div>
