@@ -1,11 +1,11 @@
 <?php  
 	if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-	$this->set_css('assets/grocery_crud/themes/datatables/css/datatables.css');
-	$this->set_js('assets/grocery_crud/themes/flexigrid/js/jquery.form.js');	
-	$this->set_js('assets/grocery_crud/themes/datatables/js/datatables-add.js');
-	$this->set_css('assets/grocery_crud/css/ui/simple/jquery-ui-1.8.10.custom.css');
-	$this->set_js('assets/grocery_crud/js/jquery_plugins/jquery-ui-1.8.10.custom.min.js');	
+	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');
+	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');	
+	$this->set_js($this->default_theme_path.'/datatables/js/datatables-add.js');
+	$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.10.custom.css');
+	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.10.custom.min.js');	
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';

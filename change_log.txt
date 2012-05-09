@@ -1,6 +1,7 @@
 v 1.2.2
 	Adding Dutch language. 
 	Adding a new method "unset_back_to_list".  Unsets everything that has to do with buttons or links with go back to list message.
+	#28 - Change the hardcoded JavaScripts and CSS with variables.
 	#25 - Adding a new method "unset_list".  Unsets the first list and the ajax_list and gives an exception error for the user that tries to access it.
 	Adding a new button/feature "save and go back to list". When a user press the button "save and go back to list" it is automatically redirect you to the list page when a successful save is done. 
 	Adding the default_per_page at the config file. This specifies the first visit per page that a user should see at the list page. For example 25 rows per page.

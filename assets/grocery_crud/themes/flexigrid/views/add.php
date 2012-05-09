@@ -1,9 +1,9 @@
 <?php  
 	if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-	$this->set_css('assets/grocery_crud/themes/flexigrid/css/flexigrid.css');
-	$this->set_js('assets/grocery_crud/themes/flexigrid/js/jquery.form.js');	
-	$this->set_js('assets/grocery_crud/themes/flexigrid/js/flexigrid-add.js');
+	$this->set_css($this->default_theme_path.'/flexigrid/css/flexigrid.css');
+	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');	
+	$this->set_js($this->default_theme_path.'/flexigrid/js/flexigrid-add.js');
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
