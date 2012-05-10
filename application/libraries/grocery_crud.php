@@ -504,7 +504,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$temp_relation[$this->_unique_field_name($relation_name)] = $this->_get_field_names_to_search($relation_values);
 			
 			if($state_info->search->field != null)
-			{
+			{			
 				if(isset($temp_relation[$state_info->search->field]))
 				{
 					if(is_array($temp_relation[$state_info->search->field]))
@@ -528,6 +528,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$columns = $this->get_columns();
 				
 				$search_text = $state_info->search->text;
+
+				if(!empty($this->where))
+					foreach($this->where as $where)
+						$this->basic_model->having($where[0],$where[1],$where[2]);
 				
 				foreach($columns as $column)
 				{	

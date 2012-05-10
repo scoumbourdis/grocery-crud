@@ -151,7 +151,7 @@ class grocery_CRUD_Model  extends CI_Model  {
     	else 
     	{    	
     		$this->db->from($this->table_name);
-			return $this->db->count_all_results();
+			return $this->db->get()->num_rows();
     	}
     }
     
