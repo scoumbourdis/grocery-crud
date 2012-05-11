@@ -1,14 +1,3 @@
-var string_upload_file 	= 'Uploading file';
-var string_delete_file 	= 'Deleting file';
-var string_progress 			= 'Progress: ';
-var error_on_uploading 			= 'An error has occurred on uploading.';
-var message_promt_delete_file 	= 'Are you sure that you want to delete this file?';
-
-var error_max_number_of_files 	= 'You can only upload one file each time.';
-var error_accept_file_types 	= 'You are not allow to upload this kind of extension.';
-var error_max_file_size 		= 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified.';
-var error_min_file_size 		= 'Your cannot upload an empty file.';
-
 function show_upload_button(unique_id, uploader_element)
 {
 	$('#upload-state-message-'+unique_id).html('');
