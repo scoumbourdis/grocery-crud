@@ -1985,16 +1985,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				max_file_size_ui: "'.$max_file_size_ui.'" 
 			};
 				
-			var string_upload_file 	= "Uploading file";
-			var string_delete_file 	= "Deleting file";
-			var string_progress 			= "Progress: ";
-			var error_on_uploading 			= "An error has occurred on uploading.";
-			var message_promt_delete_file 	= "Are you sure that you want to delete this file?";
+			var string_upload_file 	= "'.$this->l('form_upload_a_file').'";
+			var string_delete_file 	= "'.$this->l('string_delete_file').'";
+			var string_progress 			= "'.$this->l('string_progress').'";
+			var error_on_uploading 			= "'.$this->l('error_on_uploading').'";
+			var message_promt_delete_file 	= "'.$this->l('message_promt_delete_file').'";
 			
-			var error_max_number_of_files 	= "You can only upload one file each time.";
-			var error_accept_file_types 	= "You are not allow to upload this kind of extension.";
-			var error_max_file_size 		= "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified.";
-			var error_min_file_size 		= "Your cannot upload an empty file.";				
+			var error_max_number_of_files 	= "'.$this->l('error_max_number_of_files').'";
+			var error_accept_file_types 	= "'.$this->l('error_accept_file_types').'";
+			var error_max_file_size 		= "'.str_replace("{max_file_size}","MAX_FILE_SIZE",$this->l('error_max_file_size')).'";
+			var error_min_file_size 		= "'.$this->l('error_min_file_size').'";				
 		');		
 		
 		
