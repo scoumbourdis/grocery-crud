@@ -2844,6 +2844,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function unset_list()
 	{
 		$this->unset_list = true;
+		
+		$this->unset_back_to_list();
 	
 		return $this;
 	}	
