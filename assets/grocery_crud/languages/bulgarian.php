@@ -50,22 +50,22 @@
 	$lang['update_error'] = 'Грешка при запазване на информацията.';
 	
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';
-	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
+	$lang['set_relation_title']  = 'Избери {field_display_as}';
+	$lang['list_record']   = 'Запис';
+	$lang['form_inactive']   = 'неактивен';
+	$lang['form_active']   = 'активен';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
-
-	/* Upload functionality */
-	$lang['string_delete_file'] 	= "Deleting file";
-	$lang['string_progress'] 		= "Progress: ";
-	$lang['error_on_uploading'] 	= "An error has occurred on uploading.";
-	$lang['message_promt_delete_file'] 	= "Are you sure that you want to delete this file?";
+	$lang['form_save_and_go_back'] = 'Запази и покажи списъка.';
+	$lang['form_update_and_go_back']= 'Промени и покажи списъка';
 	
-	$lang['error_max_number_of_files'] 	= "You can only upload one file each time.";
-	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
-	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
-	$lang['error_min_file_size'] 		= "Your cannot upload an empty file.";
+	/* Upload functionality */
+	$lang['string_delete_file']  = "Изтриване на файл";
+	$lang['string_progress']   = "Процес: ";
+	$lang['error_on_uploading']  = "Грешка при качване на файл.";
+	$lang['message_promt_delete_file']  = "Сигурни ли сте че искате да изтриете файла?";
+	
+	$lang['error_max_number_of_files']  = "Можете да качвате само по един файл.";
+	$lang['error_accept_file_types']  = "Този тип файлове не са разрешени за качване.";
+	$lang['error_max_file_size']   = "Опитвате се да качите прекалено голям файл.";
+	$lang['error_min_file_size']   = "Не можете да качвате празен файл.";
