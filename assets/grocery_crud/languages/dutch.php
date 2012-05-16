@@ -34,7 +34,7 @@
 	$lang['form_save'] 				= 'Opslaan';
 	$lang['form_insert_loading'] 	= 'Opslaan gegevens...';
 	
-	$lang['form_upload_a_file'] 	= 'File uploaden';
+	$lang['form_upload_a_file']     = 'Bestand uploaden';
 	$lang['form_upload_delete'] 	= 'verwijder';
 	$lang['form_button_clear'] 		= 'Leegmaken';	
 	
@@ -56,16 +56,16 @@
 	$lang['form_active']			= 'actief';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
-
-	/* Upload functionality */
-	$lang['string_delete_file'] 	= "Deleting file";
-	$lang['string_progress'] 		= "Progress: ";
-	$lang['error_on_uploading'] 	= "An error has occurred on uploading.";
-	$lang['message_promt_delete_file'] 	= "Are you sure that you want to delete this file?";
+	$lang['form_save_and_go_back'] = 'Opslaan en terug naar lijst';
+	$lang['form_update_and_go_back']= 'Verwerken en terug naar lijst';
 	
-	$lang['error_max_number_of_files'] 	= "You can only upload one file each time.";
-	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
-	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
-	$lang['error_min_file_size'] 		= "Your cannot upload an empty file.";
+	/* Upload functionality */
+	$lang['string_delete_file'] = "Bestand wordt verwijderd";
+	$lang['string_progress'] = "Voortgang: ";
+	$lang['error_on_uploading'] = "Er is een fout opgetreden bij het uploaden.";
+	$lang['message_promt_delete_file'] = "Bestand verwijderen?";
+	
+	$lang['error_max_number_of_files'] = "Er kan slechts één bestand per keer geupload worden.";
+	$lang['error_accept_file_types'] = "Het uploaden van dit bestandstype is niet toegestaan.";
+	$lang['error_max_file_size'] = "Het geuploade bestand is groter dan het ingestelde maximum van {max_file_size}.";
+	$lang['error_min_file_size'] = "Het uploaden van een leeg bestand is niet mogelijk.";

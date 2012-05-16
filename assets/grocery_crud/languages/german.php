@@ -56,16 +56,16 @@
 	$lang['form_active']			= 'active';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
-
-	/* Upload functionality */
-	$lang['string_delete_file'] 	= "Deleting file";
-	$lang['string_progress'] 		= "Progress: ";
-	$lang['error_on_uploading'] 	= "An error has occurred on uploading.";
-	$lang['message_promt_delete_file'] 	= "Are you sure that you want to delete this file?";
+	$lang['form_save_and_go_back'] = 'Speichern und zur Übersicht';
+	$lang['form_update_and_go_back']= 'Aktualisieren und zur Übersicht';
 	
-	$lang['error_max_number_of_files'] 	= "You can only upload one file each time.";
-	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
-	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
-	$lang['error_min_file_size'] 		= "Your cannot upload an empty file.";
+	/* Upload functionality */
+	$lang['string_delete_file'] = "Datei löschen";
+	$lang['string_progress'] = "Fortschritt: ";
+	$lang['error_on_uploading'] = "Beim Hochladen ist ein Fehler aufgetreten.";
+	$lang['message_promt_delete_file'] = "Bist Du sicher, dass du die Datei löschen willst?";
+	
+	$lang['error_max_number_of_files'] = "Du kannst nur eine Datei zur Zeit hochladen.";
+	$lang['error_accept_file_types'] = "Der Dateityp ist unzulässig";
+	$lang['error_max_file_size'] = "Die hochgeladene Datei Übersteigt die maximale Dateigröße.";
+	$lang['error_min_file_size'] = "Leere Dateien können nicht hochgeladen werden"; 

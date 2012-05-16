@@ -71,4 +71,4 @@
 	$lang['error_max_number_of_files'] 	= "You can only upload one file each time.";
 	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
 	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
-	$lang['error_min_file_size'] 		= "Your cannot upload an empty file.";
+	$lang['error_min_file_size'] 		= "You cannot upload an empty file.";
