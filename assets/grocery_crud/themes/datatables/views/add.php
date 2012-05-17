@@ -27,7 +27,7 @@
 		<div class='clear'></div>
 	</h3>
 <div class='form-content form-div'>
-	<form action='<?php echo $insert_url?>' method='post' id='crudForm' autocomplete='off' enctype="multipart/form-data">
+	<?php echo form_open( $insert_url, 'method="post"" id="crudForm"" autocomplete="off" enctype="multipart/form-data"'); ?>
 		<div>
 			<?php
 			$counter = 0; 
@@ -74,7 +74,7 @@
 			</div>
 			<div class='clear'></div>	
 		</div>
-	</form>	
+	<?php echo form_close(); ?>
 </div>
 </div>
 <script>

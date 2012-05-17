@@ -54,7 +54,7 @@
 	<div id='ajax_list'>
 		<?php echo $list_view?>
 	</div>
-	<form action='<?php echo $ajax_list_url?>' method='post' id='filtering_form' autocomplete = "off" >
+	<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" autocomplete = "off"'); ?>	
 	<div class="sDiv" id='quickSearchBox'>
 		<div class="sDiv2">
 			<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id='search_text'>
@@ -139,6 +139,6 @@
 		<div style="clear: both;">
 		</div>
 	</div>
-	</form>
+	<?php echo form_close(); ?>
 	</div>
 </div>
