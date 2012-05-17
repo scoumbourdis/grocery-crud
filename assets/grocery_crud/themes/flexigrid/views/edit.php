@@ -27,8 +27,8 @@
 			<span></span>
 		</div>	
 	</div>
-<div id='main-table-box'>	
-	<form action='<?php echo $update_url?>' method='post' id='crudForm' autocomplete='off' enctype="multipart/form-data">
+<div id='main-table-box'>
+	<?php echo form_open( $update_url, 'method="post"" id="crudForm"" autocomplete="off" enctype="multipart/form-data"'); ?>
 	<div class='form-div'>
 		<?php
 		$counter = 0; 
@@ -76,7 +76,7 @@
 		</div>		
 		<div class='clear'></div>	
 	</div>
-	</form>	
+	<?php echo form_close(); ?>
 </div>
 </div>	
 <script>

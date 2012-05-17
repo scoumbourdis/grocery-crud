@@ -3306,6 +3306,14 @@ class grocery_CRUD extends grocery_CRUD_States
 		$this->limit = array($limit,$offset);
 	}
 	
+	private function _initialize_helpers()
+	{
+		$ci = &get_instance();
+		
+		$ci->load->helper('url');
+		$ci->load->helper('form');
+	}
+	
 	/**
 	 * 
 	 * Or else ... make it work! The web application takes decision of what to do and show it to the final user.
@@ -3318,6 +3326,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	{
 		$this->_load_language();
 		$this->state_code = $this->getStateCode();
+		$this->_initialize_helpers();
 		
 		if( $this->state_code != 0 )
 		{
