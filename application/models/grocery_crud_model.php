@@ -121,6 +121,11 @@ class grocery_CRUD_Model  extends CI_Model  {
     {
     	$this->db->having( $key, $value, $escape);
     }    
+
+    function or_having($key, $value = NULL, $escape = TRUE)
+    {
+    	$this->db->or_having( $key, $value, $escape);
+    }    
     
     function like($field, $match = '', $side = 'both')
     {
