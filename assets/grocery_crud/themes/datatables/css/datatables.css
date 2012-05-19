@@ -203,6 +203,10 @@ td.actions
 {
 	padding-top:7px;
 }
+ul.chzn-choices li.search-field input
+{
+	box-shadow: none !important;
+}
 .datatables div.form-div{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color: #444;}
 .datatables div.form-div input[type=text],.datatables div.form-div textarea,.datatables div.form-div select{display:inline-block;line-height:18px;color:#444;border:1px solid #ccc;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
 .datatables div.form-div input[type=text],.datatables div.form-div select,.datatables div.form-div textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}
