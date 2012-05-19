@@ -55,7 +55,11 @@ class grocery_CRUD_Field_Types
 					
 			if($this->change_field_type != null && isset($this->change_field_type[$field_info->name]))
 			{
-				$field_info->crud_type 	= $this->change_field_type[$field_info->name]->type;
+				$field_type 			= $this->change_field_type[$field_info->name]; 
+				
+				$field_info->crud_type 	= $field_type->type;
+				$field_info->extras 	=  $field_type->extras;
+				
 				$real_type				= $field_info->crud_type;
 			}
 			elseif(isset($this->relation[$field_info->name]))
@@ -90,15 +94,9 @@ class grocery_CRUD_Field_Types
 					$field_info->extras 	= $this->upload_fields[$field_info->name];
 				break;
 				
-				case 'hidden':
-					if(isset($this->change_field_type[$field_info->name]->value))
-						$field_info->extras = $this->change_field_type[$field_info->name]->value;
-					else
-						$field_info->extras = false;
-				break;
-				
 				default:
-					$field_info->extras = false;
+					if(empty($field_info->extras))
+						$field_info->extras = false;
 				break;
 			}
 			
@@ -1803,8 +1801,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function get_enum_input($field_info,$value)
 	{		
 		$input = "<select name='{$field_info->name}'>";
-			
-		$options_array = explode("','",substr($field_info->db_max_length,1,-1));
+		$options_array = $field_info->extras !== false && is_array($field_info->extras)? $field_info->extras  : explode("','",substr($field_info->db_max_length,1,-1));
 		foreach($options_array as $option)
 		{
 			$selected = !empty($value) && $value == $option ? "selected='selected'" : ''; 
@@ -1827,7 +1824,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 		
-		$options_array = explode("','",substr($field_info->db_max_length,1,-1));
+		$options_array = $field_info->extras !== false && is_array($field_info->extras)? $field_info->extras : explode("','",substr($field_info->db_max_length,1,-1));
 		$selected_values 	= !empty($value) ? explode(",",$value) : array();
 		
 		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
@@ -2735,13 +2732,13 @@ class grocery_CRUD extends grocery_CRUD_States
 	 * Changes the default field type
 	 * @param string $field
 	 * @param string $type
-	 * @param string $value
+	 * @param array|string $extras
 	 */
-	public function change_field_type($field , $type, $value = null)
+	public function change_field_type($field , $type, $extras = null)
 	{
 		$field_type = (object)array('type' => $type);
-		if($value != null)
-			$field_type->value = $value;
+
+		$field_type->extras = $extras;
 		
 		$this->change_field_type[$field] = $field_type;
 		
