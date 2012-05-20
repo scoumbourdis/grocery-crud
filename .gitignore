@@ -19,6 +19,7 @@ application/config/routes.php
 application/config/smileys.php
 application/config/user_agents.php
 application/controllers/index.html
+application/controllers/examples.php
 application/controllers/examples2.php
 application/controllers/welcome.php
 application/core/
@@ -33,5 +34,6 @@ application/models/index.html
 application/third_party/
 application/views/index.html
 application/views/welcome_message.php
+application/views/example.php
 index.php
 license.txt
