@@ -178,16 +178,6 @@ div.form-div input.datetime-input
 	padding-top:1px;
 	display: none;
 }
-a
-{
-	font-size: 15px;
-	color: #333;
-	text-decoration: underline;
-}
-a:hover
-{
-	text-decoration: none;	
-}
 th.actions
 {
 	white-space:nowrap;
