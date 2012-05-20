@@ -3339,9 +3339,9 @@ class grocery_CRUD extends grocery_CRUD_States
 	 */
 	public function render()
 	{
+		$this->_initialize_helpers();
 		$this->_load_language();
 		$this->state_code = $this->getStateCode();
-		$this->_initialize_helpers();
 		
 		if( $this->state_code != 0 )
 		{
