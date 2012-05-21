@@ -882,7 +882,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						}
 					}
 				}				
-				$this->basic_model->db_update($update_data, $primary_key);
+				
+				if($this->basic_model->db_update($update_data, $primary_key) === false)
+				{
+					return false;
+				}
 				
 				if(!empty($this->relation_n_n))
 				{
