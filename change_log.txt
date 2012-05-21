@@ -1,6 +1,7 @@
 v 1.2.3
 	#37 - Doesn't work with csrf_protection = true
 	#27 - Adding value to enum and set of the change_field_type method.
+	#30 - Change field type doesn't work if the field is not at the table.
 v 1.2.2
 	Adding Dutch language. 
 	Adding a new method "unset_back_to_list".  Unsets everything that has to do with buttons or links with go back to list message.

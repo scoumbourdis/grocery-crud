@@ -130,7 +130,9 @@ class grocery_CRUD_Field_Types
 				{
 					$field_info = (object)array(
 						'name' => $field_name, 
-						'crud_type' => 'string',
+						'crud_type' => $this->change_field_type !== null && isset($this->change_field_type[$field_name]) ?
+											$this->change_field_type[$field_name]->type :
+											'string',
 						'display_as' => isset($this->display_as[$field_name]) ? 
 												$this->display_as[$field_name] : 
 												ucfirst(str_replace("_"," ",$field_name)),
@@ -150,7 +152,9 @@ class grocery_CRUD_Field_Types
 				{
 					$field_info = (object)array(
 						'name' => $field_name, 
-						'crud_type' => 'string',
+						'crud_type' => $this->change_field_type !== null && isset($this->change_field_type[$field_name]) ?
+											$this->change_field_type[$field_name]->type :
+											'string',
 						'display_as' => isset($this->display_as[$field_name]) ? 
 												$this->display_as[$field_name] : 
 												ucfirst(str_replace("_"," ",$field_name)),
