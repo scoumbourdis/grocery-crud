@@ -111,7 +111,7 @@ class grocery_CRUD_Field_Types
 				$field_info->name		= $field_name;
 				$field_info->crud_type 	= 'relation_n_n';
 				$field_info->extras 	= $field_extras;
-				$field_info->required	= false; //Temporary false
+				$field_info->required	= !empty($this->required_fields) && in_array($field_name,$this->required_fields) ? true : false;; 
 				$field_info->display_as = 
 					isset($this->display_as[$field_name]) ? 
 						$this->display_as[$field_name] : 
