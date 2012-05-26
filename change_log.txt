@@ -1,5 +1,6 @@
 v 1.2.3
 	#27 - Adding value to enum and set of the change_field_type method.
+	#44 - Changing the date format at the list table. For example the 10 Jan 2003 has to be 10/01/2003
 	Bug fixes
 		#37 - Doesn't work with csrf_protection = true
 		#30 - Change field type doesn't work if the field is not at the table.

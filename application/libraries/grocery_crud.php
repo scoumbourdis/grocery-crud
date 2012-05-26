@@ -254,7 +254,7 @@ class grocery_CRUD_Field_Types
 				if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
 				{
 					list($year,$month,$day) = explode("-",$value);
-					$value = date ("d M Y",mktime (0,0,0,(int)$month , (int)$day , (int)$year));
+					$value = date ($this->php_date_format,mktime (0,0,0,(int)$month , (int)$day , (int)$year));
 				}
 				else 
 				{
@@ -266,7 +266,7 @@ class grocery_CRUD_Field_Types
 				{
 					list($year,$month,$day) = explode("-",$value);
 					list($hours,$minutes) = explode(":",substr($value,11));		
-					$value = date ("d M Y - H:i", mktime ( (int)$hours , (int)$minutes ,0, (int)$month , (int)$day ,(int)$year));
+					$value = date ($this->php_date_format." - H:i", mktime ( (int)$hours , (int)$minutes ,0, (int)$month , (int)$day ,(int)$year));
 				}
 				else 
 				{
@@ -3346,7 +3346,9 @@ class grocery_CRUD extends grocery_CRUD_States
 		if($this->basic_model === null)
 			$this->set_default_Model();
 		
-		$this->set_basic_db_table($this->get_table());		
+		$this->set_basic_db_table($this->get_table());	
+
+		$this->_load_date_format();		
 	}
 	
 	/**
@@ -3399,8 +3401,6 @@ class grocery_CRUD extends grocery_CRUD_States
 					die();
 				}
 				
-				$this->_load_date_format();
-				
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
 				$this->setThemeBasics();
@@ -3417,8 +3417,6 @@ class grocery_CRUD extends grocery_CRUD_States
 					throw new Exception('You don\'t have permissions for this operation', 14);
 					die();
 				}
-				
-				$this->_load_date_format();
 				
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
@@ -3451,7 +3449,6 @@ class grocery_CRUD extends grocery_CRUD_States
 					throw new Exception('This user is not allowed to do this operation', 14);
 					die();
 				}
-				$this->_load_date_format();
 				
 				$state_info = $this->getStateInfo();
 				$insert_result = $this->db_insert($state_info);
@@ -3465,8 +3462,6 @@ class grocery_CRUD extends grocery_CRUD_States
 					throw new Exception('This user is not allowed to do this operation', 14);
 					die();
 				}
-				
-				$this->_load_date_format();
 				
 				$state_info = $this->getStateInfo();
 				$update_result = $this->db_update($state_info);
