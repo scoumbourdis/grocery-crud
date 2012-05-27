@@ -254,6 +254,7 @@ class grocery_CRUD_Field_Types
 				if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
 				{
 					list($year,$month,$day) = explode("-",$value);
+					
 					$value = date($this->php_date_format, mktime (0, 0, 0, (int)$month , (int)$day , (int)$year));
 				}
 				else 
@@ -265,7 +266,8 @@ class grocery_CRUD_Field_Types
 				if(!empty($value) && $value != '0000-00-00 00:00:00' && $value != '1970-01-01 00:00:00')
 				{
 					list($year,$month,$day) = explode("-",$value);
-					list($hours,$minutes) = explode(":",substr($value,11));		
+					list($hours,$minutes) = explode(":",substr($value,11));
+					
 					$value = date($this->php_date_format." - H:i", mktime ((int)$hours , (int)$minutes , 0, (int)$month , (int)$day ,(int)$year));
 				}
 				else 
