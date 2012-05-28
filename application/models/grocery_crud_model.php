@@ -83,7 +83,7 @@ class grocery_CRUD_Model  extends CI_Model  {
     	return $results;
     }
     
-    private function relation_n_n_queries($select)
+    protected function relation_n_n_queries($select)
     {
     	$this_table_primary_key = $this->get_primary_key();
     	foreach($this->relation_n_n as $relation_n_n)
