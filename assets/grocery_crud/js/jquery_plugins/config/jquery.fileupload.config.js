@@ -104,7 +104,7 @@ $(function(){
             }	        
 	    });
 		$('#delete_'+unique_id).click(function(){
-			if( confirm(message_promt_delete_file) )
+			if( confirm(message_prompt_delete_file) )
 			{
 				var file_name = $('#delete_url_'+unique_id).attr('rel');
 				$.ajax({

@@ -63,7 +63,7 @@
 	$lang['string_delete_file'] = "Удаление файла";
 	$lang['string_progress'] = "Прогресс: ";
 	$lang['error_on_uploading'] = "При загрузке произошла ошибка.";
-	$lang['message_promt_delete_file'] = "Вы уверены, что хотите удалить этот файл?";
+	$lang['message_prompt_delete_file'] = "Вы уверены, что хотите удалить этот файл?";
 	
 	$lang['error_max_number_of_files'] = "Одновременно можно загрузить только один файл.";
 	$lang['error_accept_file_types'] = "Не разрешается загружать файлы с данным расширением.";

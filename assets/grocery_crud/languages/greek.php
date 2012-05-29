@@ -62,7 +62,7 @@
 	$lang['string_delete_file'] 	= "Διαγραφή αρχείου";
 	$lang['string_progress'] 		= "Πρόοδος: ";
 	$lang['error_on_uploading'] 	= "Ένα σφάλμα δημιουργήθηκε κατά το ανέβασμα του αρχείου.";
-	$lang['message_promt_delete_file'] 	= "Είστε σίγουροι ότι θέλετε να διαγραφτεί αυτό το αρχείο?";
+	$lang['message_prompt_delete_file'] 	= "Είστε σίγουροι ότι θέλετε να διαγραφτεί αυτό το αρχείο?";
 	
 	$lang['error_max_number_of_files'] 	= "Δεν έχετε την δυνατότητα να ανεβάσετε πάνω απο ένα αρχείο την φορά.";
 	$lang['error_accept_file_types'] 	= "Δέν έχετε το δικαίωμα να ανεβάσετε αυτόν το τύπο αρχείου.";

@@ -63,7 +63,7 @@
 	$lang['string_delete_file'] = "Видалення файлу";
 	$lang['string_progress'] = "Прогрес: ";
 	$lang['error_on_uploading'] = "При завантаженні виникла помилка.";
-	$lang['message_promt_delete_file'] = "Ви впевнені, що бажаєте видалити цей файл?";
+	$lang['message_prompt_delete_file'] = "Ви впевнені, що бажаєте видалити цей файл?";
 	
 	$lang['error_max_number_of_files'] = "Одночасно можна завантажити тільки один файл.";
 	$lang['error_accept_file_types'] = "Не дозволяється завантажувати файли з даним розширенням.";
