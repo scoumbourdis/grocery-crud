@@ -63,7 +63,7 @@
 	$lang['string_delete_file'] 	= "Elimina file";
 	$lang['string_progress'] 		= "Avanzamento: ";
 	$lang['error_on_uploading'] 	= "Si e\' verificato un errore nell\'upload.";
-	$lang['message_promt_delete_file'] 	= "Sei sicuro di voler eliminare questo file?";
+	$lang['message_prompt_delete_file'] 	= "Sei sicuro di voler eliminare questo file?";
 	
 	$lang['error_max_number_of_files'] 	= "Puoi solo caricare un file per volta.";
 	$lang['error_accept_file_types'] 	= "Non hai il permesso per caricare questo tipo di estensione.";

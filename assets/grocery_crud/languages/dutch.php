@@ -63,7 +63,7 @@
 	$lang['string_delete_file'] = "Bestand wordt verwijderd";
 	$lang['string_progress'] = "Voortgang: ";
 	$lang['error_on_uploading'] = "Er is een fout opgetreden bij het uploaden.";
-	$lang['message_promt_delete_file'] = "Bestand verwijderen?";
+	$lang['message_prompt_delete_file'] = "Bestand verwijderen?";
 	
 	$lang['error_max_number_of_files'] = "Er kan slechts één bestand per keer geupload worden.";
 	$lang['error_accept_file_types'] = "Het uploaden van dit bestandstype is niet toegestaan.";

@@ -63,7 +63,7 @@
 	$lang['string_delete_file']  = "Изтриване на файл";
 	$lang['string_progress']   = "Процес: ";
 	$lang['error_on_uploading']  = "Грешка при качване на файл.";
-	$lang['message_promt_delete_file']  = "Сигурни ли сте че искате да изтриете файла?";
+	$lang['message_prompt_delete_file']  = "Сигурни ли сте че искате да изтриете файла?";
 	
 	$lang['error_max_number_of_files']  = "Можете да качвате само по един файл.";
 	$lang['error_accept_file_types']  = "Този тип файлове не са разрешени за качване.";

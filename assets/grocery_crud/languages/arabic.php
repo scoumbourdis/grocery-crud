@@ -64,7 +64,7 @@
 	$lang['string_delete_file'] 	= "... جاري حذف الملف ";
 	$lang['string_progress'] 		= "اكتمل : ";
 	$lang['error_on_uploading'] 	= "حدث خطأ أثناء الرفع .";
-	$lang['message_promt_delete_file'] 	= "هل انت متأكد انك تريد حذف هذا الملف ؟";
+	$lang['message_prompt_delete_file'] 	= "هل انت متأكد انك تريد حذف هذا الملف ؟";
 	
 	$lang['error_max_number_of_files'] 	= "يمكن رفع ملف واحد في كل مرة .";
 	$lang['error_accept_file_types'] 	= "لا يمكنك رفع هذا النوع من اللواحق .";
