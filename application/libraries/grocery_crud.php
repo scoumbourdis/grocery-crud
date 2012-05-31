@@ -219,7 +219,7 @@ class grocery_CRUD_Field_Types
 					$field_info->input = $this->get_password_input($field_info,$value);
 				break;															
 				case 'readonly':
-					$field_info->input = $this->get_readonly_input($field_info,$value);;
+					$field_info->input = $this->get_readonly_input($field_info,$value);
 				break;				
 				
 				default:
