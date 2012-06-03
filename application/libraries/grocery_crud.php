@@ -1809,28 +1809,15 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	}	
 
 	protected function get_enum_input($field_info,$value)
-	{		
-		if($field_info->extras !== false && is_array($field_info->extras))
-		{
-			$options_array = $field_info->extras;
-		}
-		else
-		{
-			$options_array = array();
-			foreach(explode("','",substr($field_info->db_max_length,1,-1)) as $option)
-			{
-				$options_array[$option] = $option;
-			}
-		}
-		
+	{
 		$input = "<select name='{$field_info->name}'>";
-		$options_array = $field_info->extras !== false && is_array($field_info->extras)? $field_info->extras  : explode("','",substr($field_info->db_max_length,1,-1));
-		foreach($options_array as $option_value => $option_label)
+		$options_array = $field_info->extras !== false && is_array($field_info->extras)? $field_info->extras : explode("','",substr($field_info->db_max_length,1,-1));
+		foreach($options_array as $option)
 		{
-			$selected = !empty($value) && $value == $option_value ? "selected='selected'" : ''; 
-			$input .= "<option value='$option_value' $selected >$option_label</option>";	
+			$selected = !empty($value) && $value == $option ? "selected='selected'" : '';
+			$input .= "<option value='$option' $selected >$option</option>";
 		}
-		
+	
 		$input .= "</select>";
 		return $input;
 	}
