@@ -1709,11 +1709,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 	protected function get_true_false_input($field_info,$value)
 	{
-		$input = "<input name='{$field_info->name}' type='text' value='$value' class='numeric' />";
-		
-		$checked = $value == 1 ? "checked = 'checked'" : "";
+		$input = "<input name='{$field_info->name}' type='text' value='$value' class='numeric' />";	
+		//make 'true' button
+		$checked = ($field_info->default == 1 || $value == 1)  ? "checked = 'checked'" : '';
 		$input = "<label><input type='radio' name='{$field_info->name}' value='1' $checked /> ".$this->default_true_false_text[1]."</label> ";
-		$checked = $value === '0' ? "checked = 'checked'" : ""; 
+		
+		//make 'false' button
+		$checked = ($field_info->default == 0 || $value === '0') ? "checked = 'checked'" : ''; 
 		$input .= "<label><input type='radio' name='{$field_info->name}' value='0' $checked /> ".$this->default_true_false_text[0]."</label>";
 		
 		return $input;
