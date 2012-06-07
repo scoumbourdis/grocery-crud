@@ -2,6 +2,19 @@ $(function(){
 	
 	var save_and_close = false;
 	
+	$('.ptogtitle').click(function(){
+		if($(this).hasClass('vsble'))
+		{
+			$(this).removeClass('vsble');
+			$('#main-table-box').slideDown("slow");
+		}
+		else
+		{
+			$(this).addClass('vsble');
+			$('#main-table-box').slideUp("slow");
+		}
+	});	
+	
 	$('#save-and-go-back-button').click(function(){
 		save_and_close = true;
 		
