@@ -1,4 +1,5 @@
 v 1.2.3
+	Adding Hungarian language.
 	#27 - Adding value to enum and set of the change_field_type method.
 	#44 - Changing the date format at the list table. For example the 10 Jan 2003 has to be 10/01/2003.
 	#56 - Field type true_false now uses default value.
