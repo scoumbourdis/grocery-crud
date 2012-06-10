@@ -1938,7 +1938,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$width_style = $has_priority_field ? '' : 'width:510px;';
 
 			$select_title = str_replace('{field_display_as}',$field_info_type->display_as,$this->l('set_relation_title'));
-			$input = "<select id='field-{$field_info->name}' name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='$select_title' style='$width_style' >";
+			$input = "<select id='field-{$field_info_type->name}' name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='$select_title' style='$width_style' >";
 			
 			if(!empty($unselected_values))
 				foreach($unselected_values as $id => $name)
@@ -2648,6 +2648,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	
 	protected $form_validation		= null;
 	protected $change_field_type	= null;
+	protected $primary_keys			= array();
 	
 	/* The unsetters */
 	protected $unset_texteditor		= array();
@@ -2772,6 +2773,20 @@ class grocery_CRUD extends grocery_CRUD_States
 	{
 		return $this->change_field_type($field , $type, $extras);
 	}	
+	
+	/**
+	 * Change the default primary key for a specific table. 
+	 * If the $table_name is NULL then the primary key is for the default table name that we added at the set_table method
+	 * 
+	 * @param string $primary_key_field
+	 * @param string $table_name
+	 */
+	public function set_primary_key($primary_key_field, $table_name = null)
+	{
+		$this->primary_keys[] = array('field_name' => $primary_key_field, 'table_name' => $table_name);
+		
+		return $this;
+	}
 	
 	/**
 	 * Unsets the texteditor of the selected fields
@@ -3347,12 +3362,23 @@ class grocery_CRUD extends grocery_CRUD_States
 		$this->limit = array($limit,$offset);
 	}
 	
-	private function _initialize_helpers()
+	protected function _initialize_helpers()
 	{
 		$ci = &get_instance();
 		
 		$ci->load->helper('url');
 		$ci->load->helper('form');
+	}
+	
+	protected function _set_primary_keys_to_model()
+	{
+		if(!empty($this->primary_keys))
+		{
+			foreach($this->primary_keys as $primary_key)
+			{
+				$this->basic_model->set_primary_key($primary_key['field_name'],$primary_key['table_name']);
+			}
+		}
 	}
 	
 	protected function pre_render()
@@ -3366,7 +3392,9 @@ class grocery_CRUD extends grocery_CRUD_States
 		
 		$this->set_basic_db_table($this->get_table());	
 
-		$this->_load_date_format();		
+		$this->_load_date_format();
+		
+		$this->_set_primary_keys_to_model();
 	}
 	
 	/**
