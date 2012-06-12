@@ -7,7 +7,6 @@ v 1.2.3
 	#56 - Field type true_false now uses default value.
 	#42 - Insert ids to all the inputs for easy Javascript changes.
 	Bug fixes:
-		#37 - Doesn't work with csrf_protection = true.
 		#30 - Change field type doesn't work if the field is not at the table.
 		#38 - required_field doesn't work for relation_n_n fields.
 v 1.2.2
