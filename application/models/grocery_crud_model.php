@@ -62,9 +62,14 @@ class grocery_CRUD_Model  extends CI_Model  {
     			$unique_field_name = $this->_unique_field_name($field_name);
     			
 				if(strstr($related_field_title,'{'))
+				{
+					$related_field_title = str_replace(" ","&nbsp;",$related_field_title);
     				$select .= ", CONCAT('".str_replace(array('{','}'),array("',COALESCE({$unique_join_name}.",", ''),'"),str_replace("'","\\'",$related_field_title))."') as $unique_field_name";
-    			else    			
+				}
+    			else
+    			{    			
     				$select .= ", $unique_join_name.$related_field_title AS $unique_field_name";
+    			}
     			
     			if($this->field_exists($related_field_title))
     				$select .= ", `{$this->table_name}`.$related_field_title AS '`{$this->table_name}`.$related_field_title'";
@@ -228,9 +233,14 @@ class grocery_CRUD_Model  extends CI_Model  {
     	$select = "$related_table.$related_primary_key, ";
     	
     	if(strstr($related_field_title,'{'))
+    	{
+    		$related_field_title = str_replace(" ", "&nbsp;", $related_field_title);
     		$select .= "CONCAT('".str_replace(array('{','}'),array("',COALESCE(",", ''),'"),str_replace("'","\\'",$related_field_title))."') as $field_name_hash";
+    	}
     	else
+    	{
 	    	$select .= "$related_table.$related_field_title as $field_name_hash";
+    	}
     	
     	$this->db->select($select,false);
     	if($where_clause !== null)
