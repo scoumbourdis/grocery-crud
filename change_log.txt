@@ -1,4 +1,5 @@
 v 1.2.3
+	Compatible with version 2.1.1
 	Adding Hungarian language.
 	Adding new method: field_type. For now it is just an alias to the change_field_type method.
 	#49 - Adding new method: set_primary_key.
