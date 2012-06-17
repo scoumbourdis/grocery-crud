@@ -221,8 +221,14 @@ class grocery_CRUD_Model  extends CI_Model  {
     	}
     	else 
     	{    	
-    		$this->db->from($this->table_name);
-			return $this->db->get()->num_rows();
+    		if(CI_VERSION == '2.1.0' || CI_VERSION == '2.1.1')//This hack is only for the release 2.1.1 that it seems that it has lot of bugs. They didn't even change the CI_VERSION to 2.1.1!
+    		{
+    			return $this->_hack_for_CI_2_1_1()->num_rows;
+    		}
+    		else
+    		{
+    			return $this->db->get($this->table_name)->num_rows();
+    		}
     	}
     }
     

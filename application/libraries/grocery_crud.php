@@ -53,7 +53,7 @@ class grocery_CRUD_Field_Types
 					$this->display_as[$field_info->name] : 
 					ucfirst(str_replace("_"," ",$field_info->name));
 					
-			if($this->change_field_type != null && isset($this->change_field_type[$field_info->name]))
+			if($this->change_field_type !== null && isset($this->change_field_type[$field_info->name]))
 			{
 				$field_type 			= $this->change_field_type[$field_info->name]; 
 				
@@ -511,7 +511,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				foreach($this->relation as $relation_name => $relation_values)
 					$temp_relation[$this->_unique_field_name($relation_name)] = $this->_get_field_names_to_search($relation_values);
 			
-			if($state_info->search->field != null)
+			if($state_info->search->field !== null)
 			{			
 				if(isset($temp_relation[$state_info->search->field]))
 				{
@@ -733,9 +733,9 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			
 			$add_fields = $this->get_add_fields();
 
-			if($this->callback_insert == null)
+			if($this->callback_insert === null)
 			{
-				if($this->callback_before_insert != null)
+				if($this->callback_before_insert !== null)
 				{
 					$callback_return = call_user_func($this->callback_before_insert, $post_data);
 					
@@ -798,7 +798,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					}
 				}
 				
-				if($this->callback_after_insert != null)
+				if($this->callback_after_insert !== null)
 				{
 					$callback_return = call_user_func($this->callback_after_insert, $post_data, $insert_primary_key);
 					
@@ -839,9 +839,9 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			$post_data 		= $state_info->unwrapped_data;
 			$primary_key 	= $state_info->primary_key;
 			
-			if($this->callback_update == null)
+			if($this->callback_update === null)
 			{
-				if($this->callback_before_update != null)
+				if($this->callback_before_update !== null)
 				{
 					$callback_return = call_user_func($this->callback_before_update, $post_data, $primary_key);
 					
@@ -903,7 +903,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					}
 				}				
 				
-				if($this->callback_after_update != null)
+				if($this->callback_after_update !== null)
 				{
 					$callback_return = call_user_func($this->callback_after_update, $post_data, $primary_key);
 					
@@ -993,9 +993,9 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 	{
 		$primary_key 	= $state_info->primary_key;
 		
-		if($this->callback_delete == null)
+		if($this->callback_delete === null)
 		{
-			if($this->callback_before_delete != null)
+			if($this->callback_before_delete !== null)
 			{
 				$callback_return = call_user_func($this->callback_before_delete, $primary_key);
 				
@@ -1021,7 +1021,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				return false;
 			}
 			
-			if($this->callback_after_delete != null)
+			if($this->callback_after_delete !== null)
 			{
 				$callback_return = call_user_func($this->callback_after_delete, $primary_key);
 				
@@ -1104,7 +1104,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		
 		if($this->config['crud_paging'] === true)
 		{
-			if($this->limit == null)
+			if($this->limit === null)
 			{
 				$ci = &get_instance();
 				$ci->load->config('grocery_crud');
@@ -1771,7 +1771,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_hidden_input($field_info,$value)
 	{
-		if($field_info->extras != null && $field_info->extras != false)
+		if($field_info->extras !== null && $field_info->extras != false)
 			$value = $field_info->extras;
 		$input = "<input id='field-{$field_info->name}' type='hidden' name='{$field_info->name}' value='$value' />";
 		return $input;		
@@ -2319,8 +2319,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		if($function_name == 'index' && !in_array('index',$ci->uri->segments))
 			$segment_position++;
 		
-		$first_parameter = !empty($segements[$segment_position+1]) || (!empty($segements[$segment_position+1]) && $segements[$segment_position+1] == 0) ? $segements[$segment_position+1] : false;
-		$second_parameter = !empty($segements[$segment_position+2]) || (!empty($segements[$segment_position+2]) && $segements[$segment_position+2] == 0) ? $segements[$segment_position+2] : false;		
+		$first_parameter = isset($segements[$segment_position+1]) ? $segements[$segment_position+1] : null;
+		$second_parameter = isset($segements[$segment_position+2]) ? $segements[$segment_position+2] : null;		
 		
 		return (object)array('segment_position' => $segment_position, 'operation' => $operation, 'first_parameter' => $first_parameter, 'second_parameter' => $second_parameter);
 	}
@@ -2456,7 +2456,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			break;		
 			
 			case 3:
-				if($first_parameter != null)
+				if($first_parameter !== null)
 				{
 					$state_info = (object)array('primary_key' => $first_parameter);
 				}	
@@ -2468,7 +2468,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			break;
 			
 			case 4:
-				if($first_parameter != null)
+				if($first_parameter !== null)
 				{
 					$state_info = (object)array('primary_key' => $first_parameter);
 				}	
@@ -2492,7 +2492,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			break;
 			
 			case 6:
-				if(!empty($_POST) && $first_parameter != null)
+				if(!empty($_POST) && $first_parameter !== null)
 				{
 					$state_info = (object)array('primary_key' => $first_parameter,'unwrapped_data' => $_POST);
 				}
@@ -3819,7 +3819,7 @@ class grocery_CRUD extends grocery_CRUD_States
 		{
 			return $this->basic_db_table;
 		}
-		elseif( $this->basic_db_table != null )
+		elseif( $this->basic_db_table !== null )
 		{
 			if(!$this->table_exists($this->basic_db_table))
 			{
