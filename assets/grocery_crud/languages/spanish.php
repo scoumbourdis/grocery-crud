@@ -63,7 +63,7 @@
 	$lang['string_delete_file'] 	= "Borrando archivo";
 	$lang['string_progress'] 		= "Progreso: ";
 	$lang['error_on_uploading'] 	= "Ocurrio un error al subir.";
-	$lang['message_promt_delete_file'] 	= "Esta seguro de que desea borrar el archivo?";
+	$lang['message_prompt_delete_file'] 	= "Esta seguro de que desea borrar el archivo?";
 	
 	$lang['error_max_number_of_files'] 	= "Solo puede subir un archivo a la vez.";
 	$lang['error_accept_file_types'] 	= "No esta permitido subir archivos con esta extension.";

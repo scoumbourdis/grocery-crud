@@ -65,7 +65,7 @@
     $lang['string_delete_file']     = "Fájl törlése";
     $lang['string_progress']        = "Állapot: ";
     $lang['error_on_uploading']     = "Feltöltés közben hiba történt";
-    $lang['message_promt_delete_file']  = "Biztosan törölni szeretné a fájlt?";
+    $lang['message_prompt_delete_file']  = "Biztosan törölni szeretné a fájlt?";
 	
     $lang['error_max_number_of_files']  = "Egy időben csak egy fájlt tud feltölteni.";
     $lang['error_accept_file_types']    = "Ilyen tipusú fájl feltöltése nem engedélyezett.";
