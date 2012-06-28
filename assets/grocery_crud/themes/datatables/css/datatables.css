@@ -11,6 +11,11 @@
 {
 	text-decoration: none;
 }
+.DTTT_button.ui-button
+{
+	margin-right: 0px !important;
+	margin-left: 4px !important;
+}
 .form-title
 {
 	padding: 0.4em !important;

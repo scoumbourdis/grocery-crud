@@ -79,7 +79,7 @@ class Examples extends CI_Controller {
 				 ->display_as('customerName','Name')
 				 ->display_as('contactLastName','Last Name');
 			$crud->set_subject('Customer');
-			$crud->set_relation('salesRepEmployeeNumber','employees','{lastName} {firstName}');
+			$crud->set_relation('salesRepEmployeeNumber','employees','lastName');
 			
 			$output = $crud->render();
 			
