@@ -20,8 +20,12 @@ $(document).ready(function() {
 		        "sNext":     paging_next,
 		        "sLast":     paging_last
 		    }		
-		}
-
+		},
+		"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
+		//"sDom": 'T<"clear">lfrtip',
+	    "oTableTools": {
+	        "sSwfPath": base_url+"assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
+	    }
 	});
 
 	$('a[role=button]').live("mouseover mouseout", function(event) {

@@ -4,10 +4,14 @@
 	$this->set_css($this->default_theme_path.'/datatables/css/demo_table_jui.css');
 	$this->set_css($this->default_theme_path.'/datatables/css/ui/simple/jquery-ui-1.8.10.custom.css');
 	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');	
+	$this->set_css($this->default_theme_path.'/datatables/css/jquery.dataTables.css');
+	$this->set_css($this->default_theme_path.'/datatables/extras/TableTools/media/css/TableTools.css');
 	$this->set_js($this->default_javascript_path.'/jquery-1.7.1.min.js');
 	$this->set_js($this->default_theme_path.'/datatables/js/jquery-ui-1.8.10.custom.min.js');
 	$this->set_js($this->default_theme_path.'/datatables/js/jquery.dataTables.min.js');
 	$this->set_js($this->default_theme_path.'/datatables/js/datatables.js');
+	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/ZeroClipboard.js');
+	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/TableTools.min.js');
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
