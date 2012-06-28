@@ -1,6 +1,15 @@
 var default_per_page = typeof default_per_page !== 'undefined' ? default_per_page : 25;
 
 $(document).ready(function() {
+	var mColumns = [];
+	
+	$('table#groceryCrudTable thead tr th').each(function(index){
+		if(!$(this).hasClass('actions'))
+		{
+			mColumns[index] = index;
+		}
+	});
+	
 	oTable = $('#groceryCrudTable').dataTable({
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
@@ -24,6 +33,23 @@ $(document).ready(function() {
 		"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
 		//"sDom": 'T<"clear">lfrtip',
 	    "oTableTools": {
+	    	"aButtons": [
+	    	                {
+	    	                    "sExtends":    "xls",
+	    	                    "sButtonText": "Excel",
+	    	                    "mColumns": mColumns
+	    	                },
+	    	                {
+	    	                    "sExtends":    "pdf",
+	    	                    "sButtonText": "PDF",
+	    	                    "mColumns": mColumns
+	    	                },
+	    	                {
+	    	                    "sExtends":    "print",
+	    	                    "sButtonText": "Print",
+	    	                    "mColumns": mColumns
+	    	                },	    	                
+	    	],
 	        "sSwfPath": base_url+"assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
 	    }
 	});
