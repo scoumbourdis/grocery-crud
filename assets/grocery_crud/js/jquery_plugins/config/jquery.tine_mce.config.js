@@ -1,8 +1,10 @@
 	$().ready(function() {
+		var tinymce_path = base_url+'assets/grocery_crud/texteditor/tiny_mce/';
+		
 		$('textarea.texteditor').tinymce({
 
 			// Location of TinyMCE script
-			script_url : base_url+'assets/grocery_crud/texteditor/tiny_mce.js',
+			script_url : tinymce_path +"tiny_mce.js",
 			
 			// General options
 			theme : "advanced",
@@ -23,10 +25,10 @@
 			content_css : "css/content.css",
 			*/
 			// Drop lists for link/image/media/template dialogs
-			template_external_list_url : base_url+'assets/grocery_crud/texteditor/lists/template_list.js',
-			external_link_list_url : base_url+"assets/grocery_crud/texteditor/lists/link_list.js",
-			external_image_list_url : base_url+"assets/grocery_crud/texteditor/lists/image_list.js",
-			media_external_list_url : base_url+"assets/grocery_crud/texteditor/lists/media_list.js",
+			template_external_list_url : tinymce_path +"lists/template_list.js",
+			external_link_list_url : tinymce_path +"lists/link_list.js",
+			external_image_list_url : tinymce_path +"lists/image_list.js",
+			media_external_list_url : tinymce_path +"lists/media_list.js",
 
 			// Replace values for the template plugin
 			template_replace_values : {

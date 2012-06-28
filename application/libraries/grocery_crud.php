@@ -1735,8 +1735,21 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{   
 		if($field_info->extras == 'text_editor')
 		{
-			$this->set_js($this->default_texteditor_path.'/jquery.tinymce.js');
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.tine_mce.config.js');
+			$ci = &get_instance();
+			$editor = $ci->config->item('grocery_crud_default_text_editor');
+			switch ($editor) {
+				case 'ckeditor':
+					$this->set_js($this->default_texteditor_path.'/ckeditor/ckeditor.js');
+					$this->set_js($this->default_texteditor_path.'/ckeditor/adapters/jquery.js');
+					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.ckeditor.config.js');
+				break;
+				
+				case 'tinymce':
+					$this->set_js($this->default_texteditor_path.'/tiny_mce/jquery.tinymce.js');
+					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.tine_mce.config.js');					
+				break;
+			}
+			
 			$input = "<textarea id='field-{$field_info->name}' name='{$field_info->name}' class='texteditor' >$value</textarea>";
 		}
 		else
