@@ -72,7 +72,7 @@ class grocery_CRUD_Model  extends CI_Model  {
     			}
     			
     			if($this->field_exists($related_field_title))
-    				$select .= ", `{$this->table_name}`.$related_field_title AS '`{$this->table_name}`.$related_field_title'";
+    				$select .= ", `{$this->table_name}`.$related_field_title AS '{$this->table_name}.$related_field_title'";
     		}
     	}
     	
