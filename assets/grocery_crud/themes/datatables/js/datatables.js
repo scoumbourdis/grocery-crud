@@ -40,11 +40,6 @@ $(document).ready(function() {
 	    	                    "mColumns": mColumns
 	    	                },
 	    	                {
-	    	                    "sExtends":    "pdf",
-	    	                    "sButtonText": "PDF",
-	    	                    "mColumns": mColumns
-	    	                },
-	    	                {
 	    	                    "sExtends":    "print",
 	    	                    "sButtonText": "Print",
 	    	                    "mColumns": mColumns

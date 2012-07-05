@@ -1,5 +1,7 @@
-v 1.3 BETA
-	Adding CKEditor as the default texteditor for grocery CRUD. You can also easily change to tinymce from the grocery_crud config file
+v 1.3
+	Adding export button and print button to datatables theme.
+	Adding CKEditor as the default texteditor for grocery CRUD. You can also easily change to tinymce from the grocery_crud config file.
+	#68 - set_relation doesn't work as expected when the third field (title name) is the same on two or more set_relation methods.
 v 1.2.3
 	Compatible with Codeigniter version 2.1.1
 	Adding Hungarian language.
