@@ -211,6 +211,7 @@ ul.chzn-choices li.search-field input
 	position: absolute;
 	margin-top:10px;
 	margin-left:5px;		
+	z-index: 5;
 }
 
 .datatables div.form-div{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color: #444;}
