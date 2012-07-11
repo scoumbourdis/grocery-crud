@@ -36,7 +36,7 @@
 
 	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
 
-	var default_per_page = '<?php echo $default_per_page;?>';
+	var default_per_page = <?php echo $default_per_page;?>;
 
 </script>
 <?php 
