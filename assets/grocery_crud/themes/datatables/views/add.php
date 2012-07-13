@@ -16,14 +16,7 @@
 	<h3 class="ui-accordion-header ui-helper-reset ui-state-default form-title">
 		<div class='floatL form-title-left'>
 			<a href="#"><?php echo $this->l('form_add'); ?> <?php echo $subject?></a>
-		</div>
-<?php 	if(!$this->unset_back_to_list) { ?>			
-		<div class='floatR'>
-			<a href='<?php echo $list_url?>' onclick='javascript: return goToList()' class='gotoListButton' >
-				<?php echo $this->l('form_back_to_list'); ?>
-			</a>
-		</div>
-<?php  } ?>		
+		</div>	
 		<div class='clear'></div>
 	</h3>
 <div class='form-content form-div'>

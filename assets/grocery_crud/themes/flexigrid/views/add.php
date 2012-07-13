@@ -15,12 +15,7 @@
 		<div class="ftitle">
 			<div class='ftitle-left'>
 				<?php echo $this->l('form_add'); ?> <?php echo $subject?>
-			</div>
-<?php 	if(!$this->unset_back_to_list) { ?>				
-			<div class='ftitle-right'>
-				<a href='<?php echo $list_url?>' onclick='javascript: return goToList()' ><?php echo $this->l('form_back_to_list'); ?></a>
-			</div>
-<?php 	} ?>			
+			</div>			
 			<div class='clear'></div>
 		</div>
 		<div title="Minimize/Maximize Table" class="ptogtitle">
@@ -61,14 +56,14 @@
 		</div>	
 		<div class="pDiv">
 			<div class='form-button-box'>
-				<input type='submit' value='<?php echo $this->l('form_save'); ?>'/>
+				<input type='submit' value='<?php echo $this->l('form_save'); ?>'  class="btn btn-large"/>
 			</div>
 <?php 	if(!$this->unset_back_to_list) { ?>				
 			<div class='form-button-box'>
-				<input type='button' value='<?php echo $this->l('form_save_and_go_back'); ?>' id="save-and-go-back-button"/>
+				<input type='button' value='<?php echo $this->l('form_save_and_go_back'); ?>' id="save-and-go-back-button"  class="btn btn-large"/>
 			</div>					
 			<div class='form-button-box'>
-				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick="javascript: goToList()" />
+				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick="javascript: goToList()"  class="btn btn-large" />
 			</div>
 <?php 	} ?>						
 			<div class='form-button-box'>
