@@ -36,7 +36,7 @@ $(document).ready(function() {
 	    	"aButtons": [
 	    	                {
 	    	                    "sExtends":    "xls",
-	    	                    "sButtonText": "Excel",
+	    	                    "sButtonText": "Export",
 	    	                    "mColumns": mColumns
 	    	                },
 	    	                {
