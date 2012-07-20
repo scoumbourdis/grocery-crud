@@ -50,22 +50,23 @@
 	$lang['update_error']			= 'Der opstod en fejl, da der blev gemt.';
 	
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';	
+	
+	$lang['set_relation_title']		= 'Vælg {field_display_as}';	
 	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
+	$lang['form_inactive']			= 'inaktiv';
+	$lang['form_active']			= 'aktiv';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
+	$lang['form_save_and_go_back']	= 'Gem og gå tilbage til listen';
+	$lang['form_update_and_go_back']= 'Opdatér og gå tilbage til listen';
 
 	/* Upload functionality */
-	$lang['string_delete_file'] 	= "Deleting file";
-	$lang['string_progress'] 		= "Progress: ";
-	$lang['error_on_uploading'] 	= "An error has occurred on uploading.";
-	$lang['message_prompt_delete_file'] 	= "Are you sure that you want to delete this file?";
+	$lang['string_delete_file'] 	= "Sletter fil";
+	$lang['string_progress'] 		= "Fremskridt: ";
+	$lang['error_on_uploading'] 	= "Der skete en fejl under upload.";
+	$lang['message_prompt_delete_file'] 	= "Er du sikker på at du vil slette denne fil?";
 	
-	$lang['error_max_number_of_files'] 	= "You can only upload one file each time.";
-	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
-	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
-	$lang['error_min_file_size'] 		= "You cannot upload an empty file.";
+	$lang['error_max_number_of_files'] 	= "Du kan kun uploade en fil ad gangen.";
+	$lang['error_accept_file_types'] 	= "Det er ikke tilladt at uploade filer med denne endelse.";
+	$lang['error_max_file_size'] 		= "Uploaden er større end de tillade {max_file_size} .";
+	$lang['error_min_file_size'] 		= "Du kan ikke uploade en tom fil.";
