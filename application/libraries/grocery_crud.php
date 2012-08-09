@@ -1748,6 +1748,14 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 					$this->set_js($this->default_texteditor_path.'/tiny_mce/jquery.tinymce.js');
 					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.tine_mce.config.js');					
 				break;
+				
+				case 'markitup':
+					$this->set_css($this->default_texteditor_path.'/markitup/skins/markitup/style.css');
+					$this->set_css($this->default_texteditor_path.'/markitup/sets/default/style.css');
+					
+					$this->set_js($this->default_texteditor_path.'/markitup/jquery.markitup.js');
+					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.markitup.config.js');
+				break;				
 			}
 			
 			$input = "<textarea id='field-{$field_info->name}' name='{$field_info->name}' class='texteditor' >$value</textarea>";
