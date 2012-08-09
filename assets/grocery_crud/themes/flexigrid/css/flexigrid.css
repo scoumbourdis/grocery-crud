@@ -151,7 +151,10 @@ table th
 }
 .flexigrid div.tDiv2 {
 	float:left;
-	clear:both;
+	padding:1px;
+}
+.flexigrid div.tDiv3 {
+	float:right;
 	padding:1px;
 }
 .flexigrid div.sDiv /*toolbar*/ {
@@ -196,6 +199,17 @@ table th
 }
 .flexigrid div.fbutton span.add {
 	background:url(images/add.png) no-repeat;
+	background-position: 0px 3px;
+	padding-left: 20px;
+}
+.flexigrid div.fbutton span.export {
+	background:url(images/export.png) no-repeat;
+	background-position: 0px 3px;
+	padding-left: 20px;
+}
+.flexigrid div.fbutton span.print {
+	background:url(images/print.png) no-repeat;
+	background-position: 0px 3px;
 	padding-left: 20px;
 }
 .flexigrid div.fbutton span.delete {
@@ -663,11 +677,7 @@ div.pGroup {
 {
 	text-align: right;	
 }
-.add-anchor
-{
-	color: #000;	
-}
-.delete-anchor
+.add-anchor, .delete-anchor, .export-anchor, .print-anchor
 {
 	color: #000;	
 }
