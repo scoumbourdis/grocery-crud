@@ -287,11 +287,35 @@ class grocery_CRUD_Field_Types
 			break;
 			
 			case 'upload_file':
-				$value = !empty($value) ? 
-							"<a href='".base_url().$field_info->extras->upload_path."/$value' target='_blank'>".
-								$this->character_limiter($value,20,"...",true).
-							"</a>":
-							"";
+				if(empty($value))
+				{
+					$value = "";
+				}
+				else
+				{
+					$is_image = !empty($value) &&
+					( substr($value,-4) == '.jpg'
+							|| substr($value,-4) == '.png'
+							|| substr($value,-5) == '.jpeg'
+							|| substr($value,-4) == '.gif'
+							|| substr($value,-5) == '.tiff')
+							? true : false;		
+								
+					$file_url = base_url().$field_info->extras->upload_path."/$value";
+					
+					$file_url_anchor = "<a href='".$file_url."' target='_blank'>";
+					if($is_image)
+					{
+						$file_url_anchor .= '<img src="'.$file_url.'" height="50" />';
+					}
+					else
+					{
+						$file_url_anchor .= $this->character_limiter($value,20,"...",true);
+					}
+					$file_url_anchor .= "</a>";
+					
+					$value = $file_url_anchor;
+				}
 			break;
 			
 			default:
