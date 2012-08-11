@@ -1,4 +1,5 @@
 v 1.3
+	#82 - Adding a thumbnail after uploading an image.
 	Adding Czech Language.
 	Adding export button and print button to datatables theme.
 	Adding CKEditor as the default texteditor for grocery CRUD. You can also easily change to tinymce from the grocery_crud config file.

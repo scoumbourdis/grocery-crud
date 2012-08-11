@@ -8,6 +8,17 @@ function show_upload_button(unique_id, uploader_element)
 	$('#success_'+unique_id).slideUp('fast');	
 }
 
+function load_fancybox(elem)
+{
+	elem.fancybox({
+		'transitionIn'	:	'elastic',
+		'transitionOut'	:	'elastic',
+		'speedIn'		:	600, 
+		'speedOut'		:	200, 
+		'overlayShow'	:	false
+	});		
+}
+
 $(function(){
 	$('.gc-file-upload').each(function(){
 		var unique_id 	= $(this).attr('id');
@@ -65,10 +76,29 @@ $(function(){
 		            	$('#upload-state-message-'+unique_id).html('');
 		            	$("input[rel="+uploader_element.attr('name')+"]").val(file.name);
 		            	var file_name = file.name;
-						$('#file_'+unique_id).html(file_name);
+						
+		            	var is_image = (file_name.substr(-4) == '.jpg'  
+		            						|| file_name.substr(-4) == '.png' 
+		            						|| file_name.substr(-5) == '.jpeg' 
+		            						|| file_name.substr(-4) == '.gif' 
+		            						|| file_name.substr(-5) == '.tiff')
+							? true : false;
+		            	if(is_image)
+		            	{
+		            		$('#file_'+unique_id).addClass('image-thumbnail');
+		            		load_fancybox($('#file_'+unique_id));
+		            		$('#file_'+unique_id).html('<img src="'+file.url+'" height="50" />');
+		            	}
+		            	else
+		            	{
+		            		$('#file_'+unique_id).removeClass('image-thumbnail');
+		            		$('#file_'+unique_id).unbind("click");
+		            		$('#file_'+unique_id).html(file_name);
+		            	}
+		            	
 						$('#file_'+unique_id).attr('href',file.url);
 						$('#hidden_'+unique_id).val(file_name);
-						//$('#'+uploader_id).hide();
+
 						$('#success_'+unique_id).fadeIn('slow');
 						$('#delete_url_'+unique_id).attr('rel',file_name);
 						$('#upload-button-'+unique_id).slideUp('fast');

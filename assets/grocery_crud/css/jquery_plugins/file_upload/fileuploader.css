@@ -55,4 +55,17 @@ a.delete-anchor
 {
 	color: red !important;	
 }
+.image-thumbnail img
+{
+	cursor: -moz-zoom-in;
+	cursor: -webkit-zoom-in;
+}
+.form-field-box.even .image-thumbnail img
+{
+	border: 4px solid #fff;
+}
+.form-field-box.odd .image-thumbnail img
+{
+	border: 4px solid #ddd;
+}
 /* ------------------- */

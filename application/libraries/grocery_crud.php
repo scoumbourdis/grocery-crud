@@ -2051,6 +2051,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$uploader_display_none 	= empty($value) ? "" : "display:none;";
 		$file_display_none  	= empty($value) ?  "display:none;" : "";
 		
+		$is_image = !empty($value) && 
+						( substr($value,-4) == '.jpg' 
+								|| substr($value,-4) == '.png' 
+								|| substr($value,-5) == '.jpeg' 
+								|| substr($value,-4) == '.gif' 
+								|| substr($value,-5) == '.tiff')
+					? true : false;
+		
+		$image_class = $is_image ? 'image-thumbnail' : '';
+		
 		$input = '<span class="fileinput-button qq-upload-button" id="upload-button-'.$unique.'" style="'.$uploader_display_none.'">
 			<span>'.$this->l('form_upload_a_file').'</span>
 			<input type="file" name="'.$this->_unique_field_name($field_info->name).'" class="gc-file-upload" rel="'.$this->getUploadUrl($field_info->name).'" id="'.$unique.'">
@@ -2059,9 +2069,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/fileuploader.css');
 		
+		$file_url = base_url().$field_info->extras->upload_path.'/'.$value;
+		
 		$input .= "<div id='uploader_$unique' rel='$unique' class='grocery-crud-uploader' style='$uploader_display_none'></div>";
 		$input .= "<div id='success_$unique' class='upload-success-url' style='$file_display_none padding-top:7px;'>";
-		$input .= "		<a href='".base_url().$field_info->extras->upload_path.'/'.$value."' class='open-file' target='_blank' id='file_$unique'>$value</a> ";
+		$input .= "		<a href='".$file_url."' class='open-file $image_class' target='_blank' id='file_$unique'>";
+		$input .= $is_image ? '<img height="50" src="'.$file_url.'"/>': "$value" ;
+		$input .= "</a> ";
 		$input .= "		<a href='javascript:void(0)' id='delete_$unique' class='delete-anchor'>".$this->l('form_upload_delete')."</a> ";
 		$input .= "</div><div style='clear:both'></div>";
 		$input .= "<div id='loading-$unique' style='display:none'><span id='upload-state-message-$unique'></span> <span class='qq-upload-spinner'></span> <span id='progress-$unique'></span></div>";
