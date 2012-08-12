@@ -380,6 +380,8 @@ class grocery_CRUD_Field_Types
 				case '3':
 				case 'int':
 				case 'tinyint':
+				case 'mediumint':
+				case 'longint':					
 					if( $db_type->db_type == 'tinyint' && $db_type->db_max_length ==  1)
 						$type = 'true_false';
 					else
@@ -402,6 +404,8 @@ class grocery_CRUD_Field_Types
 				case '252':
 				case 'blob':
 				case 'text':
+				case 'mediumtext':					
+				case 'longtext':
 					$type = 'text';
 				break;
 				case '10':
