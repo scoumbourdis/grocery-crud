@@ -1444,6 +1444,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_echo_and_die();
 		
 		$total_results = (int)$this->get_total_results();
+		ob_end_clean();
 		echo json_encode(array('total_results' => $total_results));
 		die();
 	}
@@ -1549,6 +1550,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function delete_layout($delete_result = true)
 	{
+		ob_end_clean();
 		if($delete_result === false)
 		{
 			$error_message = '<p>'.$this->l('delete_error_message').'</p>';
@@ -1585,6 +1587,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function insert_layout($insert_result = false)
 	{
+		ob_end_clean();
 		if($insert_result === false)
 		{
 			echo json_encode(array('success' => false));	
@@ -1617,12 +1620,14 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 	protected function validation_layout($validation_result)
 	{
+		ob_end_clean();
 		echo "<textarea>".json_encode($validation_result)."</textarea>";
 		$this->set_echo_and_die();
 	}
 
 	protected function upload_layout($upload_result, $field_name)
 	{
+		ob_end_clean();
 		if($upload_result !== false && !is_string($upload_result) && empty($upload_result[0]->error))
 		{
 			echo json_encode(
@@ -1647,6 +1652,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function delete_file_layout($upload_result)
 	{
+		ob_end_clean();
 		if($upload_result !== false)
 		{
 			echo json_encode( (object)array( 'success' => true ) );
@@ -1700,6 +1706,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function update_layout($update_result = false, $state_info = null)
 	{
+		ob_end_clean();
 		if($update_result === false)
 		{
 			echo json_encode(array('success' => $update_result));	
@@ -3651,7 +3658,7 @@ class grocery_CRUD extends grocery_CRUD_States
 				
 				$this->delete_file_layout($delete_file_result);
 			break;
-			
+			/*
 			case 13: //ajax_relation
 				$state_info = $this->getStateInfo();
 				
@@ -3666,7 +3673,8 @@ class grocery_CRUD extends grocery_CRUD_States
 			case 14: //ajax_relation_n_n
 				echo json_encode(array("34" => 'Johnny' , "78" => "Test"));
 				die();
-			break;			
+			break;
+			*/			
 			
 		}
 		
