@@ -16,7 +16,7 @@
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.2
+ * @version    	1.3
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -245,10 +245,10 @@ class grocery_CRUD_Field_Types
 					$value = $this->default_true_false_text[$value];
 			break;
 			case 'string':
-				$value = $this->character_limiter($value,30,"...");
+				$value = $this->character_limiter($value,$this->character_limiter,"...");
 			break;
 			case 'text':
-				$value = $this->character_limiter(strip_tags($value),30,"...");
+				$value = $this->character_limiter(strip_tags($value),$this->character_limiter,"...");
 			break;
 			case 'date':
 				if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
@@ -276,10 +276,10 @@ class grocery_CRUD_Field_Types
 				}
 			break;
 			case 'enum':
-				$value = $this->character_limiter($value,30,"...");
+				$value = $this->character_limiter($value,$this->character_limiter,"...");
 			break;	
 			case 'relation_n_n':
-				$value = $this->character_limiter($value,30,"...");
+				$value = $this->character_limiter($value,$this->character_limiter,"...");
 			break;						
 			
 			case 'password':
@@ -310,7 +310,7 @@ class grocery_CRUD_Field_Types
 					}
 					else
 					{
-						$file_url_anchor .= $this->character_limiter($value,20,"...",true);
+						$file_url_anchor .= $this->character_limiter($value,$this->character_limiter,"...",true);
 					}
 					$file_url_anchor .= "</a>";
 					
@@ -319,7 +319,7 @@ class grocery_CRUD_Field_Types
 			break;
 			
 			default:
-				$value = $this->character_limiter($value,30,"...");
+				$value = $this->character_limiter($value,$this->character_limiter,"...");
 			break;
 		}
 		
@@ -432,7 +432,7 @@ class grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.2  
+ * @version    	1.3  
  * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
@@ -1345,7 +1345,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.2
+ * @version    	1.3
  */
 class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 {
@@ -1986,7 +1986,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		//Check if we will use ajax for our queries or just clien-side javascript
 		$using_ajax = $total_rows > $ajax_limitation ? true : false;		
 		
-		//We will not use it for now. It is not ready yet. Probably we will have this functionality at version 1.2.2
+		//We will not use it for now. It is not ready yet. Probably we will have this functionality at version 1.4
 		$using_ajax = false;
 		
 		//If total rows are more than the limitation, use the ajax plugin
@@ -2374,7 +2374,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.2
+ * @version    	1.3
  */
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
@@ -2742,7 +2742,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.2
+ * @version    	1.3
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com> 
  */
 
@@ -2760,6 +2760,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  */
 class grocery_CRUD extends grocery_CRUD_States
 {
+	const	VERSION = "1.3";
+	
 	private $state_code 			= null;
 	private $state_info 			= null;
 	private $basic_db_table_checked = false;
@@ -2774,6 +2776,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $php_date_format		= null;
 	protected $js_date_format		= null;
 	protected $ui_date_format		= null;
+	protected $character_limiter    = null;
 	
 	protected $add_fields			= null;
 	protected $edit_fields			= null;
@@ -3551,6 +3554,23 @@ class grocery_CRUD extends grocery_CRUD_States
 		$ci->load->helper('form');
 	}
 	
+	protected function _initialize_variables()
+	{
+		$ci = &get_instance();
+		$ci->load->config('grocery_crud');
+		
+		$this->character_limiter = $ci->config->item('grocery_crud_character_limiter');
+		
+		if($this->character_limiter === 0 || $this->character_limiter === '0')
+		{
+			$this->character_limiter = 1000000; //a big number
+		}
+		elseif($this->character_limiter === null || $this->character_limiter === false)
+		{
+			$this->character_limiter = 30; //is better to have the number 30 rather than the 0 value
+		}
+	}
+	
 	protected function _set_primary_keys_to_model()
 	{
 		if(!empty($this->primary_keys))
@@ -3568,6 +3588,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected function pre_render()
 	{
 		$this->_initialize_helpers();
+		$this->_initialize_variables();
 		$this->_load_language();
 		$this->state_code = $this->getStateCode();
 		
@@ -3782,6 +3803,9 @@ class grocery_CRUD extends grocery_CRUD_States
 			break;
 			*/		
 			case 16: //export to excel
+				//a big number just to ensure that the table characters will not be cutted.
+				$this->character_limiter = 1000000;
+				
 				if($this->unset_export)
 				{
 					throw new Exception('You don\'t have permissions for this operation', 15);
