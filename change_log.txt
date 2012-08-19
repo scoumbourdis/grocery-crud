@@ -1,7 +1,8 @@
 v 1.3
 	#82 - Adding a thumbnail after uploading an image.
 	Adding Czech Language.
-	Adding export button and print button to datatables theme.
+	Adding export functionality to both flexigrid and datatables theme.
+	Adding print functionality to datatables theme.
 	Adding CKEditor as the default texteditor for grocery CRUD. You can also easily change to tinymce from the grocery_crud config file.
 	Adding Markitup texteditor. Really useful editor for developers.
 	#68 - set_relation doesn't work as expected when the third field (title name) is the same on two or more set_relation methods.
