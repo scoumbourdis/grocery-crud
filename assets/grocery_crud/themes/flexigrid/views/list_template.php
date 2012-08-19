@@ -19,6 +19,7 @@
 	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
 
 </script>
+<div id="hidden-operations"></div>
 <div id='report-error' class='report-div error'></div>
 <div id='report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>>
 <?php if($success_message !== null){?>
@@ -49,7 +50,7 @@
 			</div>
 		</div>
 		<div class="tDiv3">
-        	<a class="export-anchor">
+        	<a class="export-anchor" data-url="<?php echo $export_url; ?>" target="_blank">
 				<div class="fbutton">
 					<div>
 						<span class="export">Export</span>

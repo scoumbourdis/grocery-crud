@@ -1391,6 +1391,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->delete_url			= $this->getDeleteUrl();
 		$data->ajax_list_url		= $this->getAjaxListUrl();
 		$data->ajax_list_info_url	= $this->getAjaxListInfoUrl();
+		$data->export_url			= $this->getExportToExcelUrl();
 		$data->actions				= $this->actions;
 		$data->unique_hash			= $this->get_method_hash();
 		
@@ -1427,6 +1428,57 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$this->set_echo_and_die();
 			$this->_theme_view('list.php',$data);
 		}
+	}
+	
+	protected function exportToExcel($state_info = null)
+	{
+		$data = $this->get_common_data();
+	
+		$data->order_by 	= $this->order_by;
+		$data->types 		= $this->get_field_types();
+	
+		$data->list = $this->get_list();
+		$data->list = $this->change_list($data->list , $data->types);
+		$data->list = $this->change_list_add_actions($data->list);
+	
+		$data->total_results = $this->get_total_results();
+	
+		$data->columns 				= $this->get_columns();
+		$data->primary_key 			= $this->get_primary_key();
+	
+		ob_end_clean();		
+		$this->_export_to_excel($data);
+	}	
+	
+	protected function _export_to_excel($data)
+	{
+		/**
+		 * No need to use an external library here. The only bad thing without using external library is that Microsoft Excel is complaining 
+		 * that the file is in a different format than specified by the file extension. If you press "yes" everything will be all right
+		 * */
+		
+		$string_to_export = "";
+		foreach($data->columns as $column){
+			$string_to_export .= $column->display_as."\t";
+		}		
+		$string_to_export .= "\n";
+		
+		foreach($data->list as $num_row => $row){
+			foreach($data->columns as $column){
+				$string_to_export .= str_replace(array("\t","\n","\r"),"",$row->{$column->field_name})."\t";
+			}			
+			$string_to_export .= "\n";
+		}		
+		
+		// Convert to UTF-16LE and Prepend BOM
+		$string_to_export = "\xFF\xFE" .mb_convert_encoding($string_to_export, 'UTF-16LE', 'UTF-8');
+		
+		$filename = "export-".date("Y-m-d_H:i:s").".xls";
+		
+		header('Content-type: application/ms-excel;charset=UTF-16LE');
+		header('Content-Disposition: attachment; filename='.$filename);		
+		echo $string_to_export;
+		die();
 	}
 	
 	protected function set_echo_and_die()
@@ -2333,7 +2385,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		12	=> 'delete_file',
 		13	=> 'ajax_relation',
 		14	=> 'ajax_relation_n_n',
-		15	=> 'success'
+		15	=> 'success',
+		16  => 'export'
 	);
 	
 	protected function getStateCode()
@@ -2440,6 +2493,11 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		return $this->state_url('ajax_list');
 	}
 
+	protected function getExportToExcelUrl()
+	{
+		return $this->state_url('export');
+	}
+	
 	protected function getAjaxListInfoUrl()
 	{
 		return $this->state_url('ajax_list_info');
@@ -2588,6 +2646,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			
 			case 7:
 			case 8:
+			case 16: //export to excel
 				$state_info = (object)array();
 				if(!empty($_POST['per_page']))
 				{
@@ -2596,6 +2655,12 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 				if(!empty($_POST['page']))
 				{
 					$state_info->page = is_numeric($_POST['page']) ? $_POST['page'] : null;
+				}
+				//If we request an export we don't care about what page we are
+				if($state_code === 16)
+				{
+					$state_info->page = 1;
+					$state_info->per_page = 1000000; //a big number
 				}
 				if(!empty($_POST['order_by'][0]))
 				{
@@ -2647,7 +2712,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 					'primary_key' 		=> $first_parameter,
 					'success_message'	=> true
 				);
-			break;			
+			break;				
 		}
 		
 		return $state_info;
@@ -2735,6 +2800,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $unset_delete			= false;
 	protected $unset_jquery			= false;
 	protected $unset_list			= false;
+	protected $unset_export			= false;
+	protected $unset_print			= false;
 	protected $unset_back_to_list	= false;
 	protected $unset_columns		= null;
 	protected $unset_add_fields 	= null;
@@ -3459,6 +3526,9 @@ class grocery_CRUD extends grocery_CRUD_States
 		}
 	}
 	
+	/**
+	 * Initialize all the required libraries and variables before rendering
+	 */
 	protected function pre_render()
 	{
 		$this->_initialize_helpers();
@@ -3674,7 +3744,24 @@ class grocery_CRUD extends grocery_CRUD_States
 				echo json_encode(array("34" => 'Johnny' , "78" => "Test"));
 				die();
 			break;
-			*/			
+			*/		
+			case 16: //export to excel
+				if($this->unset_export)
+				{
+					throw new Exception('You don\'t have permissions for this operation', 15);
+					die();
+				}
+				
+				if($this->theme === null)
+					$this->set_theme($this->default_theme);
+				$this->setThemeBasics();
+				
+				$this->set_basic_Layout();
+				
+				$state_info = $this->getStateInfo();
+				$this->set_ajax_list_queries($state_info);
+				$this->exportToExcel($state_info);
+			break;
 			
 		}
 		

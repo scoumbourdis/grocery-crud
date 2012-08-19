@@ -15,7 +15,7 @@ $(function(){
 		}
 	});
 	
-	$('#filtering_form').submit(function(){
+	$('#filtering_form').submit(function(){		
 		var crud_page =  parseInt($('#crud_page').val());
 		var last_page = parseInt($('#last-page-number').html());
 		
@@ -146,6 +146,22 @@ $(function(){
 		}
 		
 		return false;
+	});
+	
+	$('.export-anchor').click(function(){
+		var export_url = $(this).attr('data-url');
+		
+		var form_input_html = '';
+		$.each($('#filtering_form').serializeArray(), function(i, field) {
+		    form_input_html = form_input_html + '<input type="hidden" name="'+field.name+'" value="'+field.value+'">';
+		});
+		
+		var form_on_demand = $("<form/>").attr("id","export_form").attr("method","post").attr("target","_blank")
+								.attr("action",export_url).html(form_input_html);
+		
+		$('#hidden-operations').html(form_on_demand);
+		
+		$('#export_form').submit();
 	});
 	
 	$('#crud_page').numeric();
