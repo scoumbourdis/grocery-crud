@@ -279,7 +279,7 @@ class grocery_CRUD_Field_Types
 				$value = $this->character_limiter($value,$this->character_limiter,"...");
 			break;	
 			case 'relation_n_n':
-				$value = $this->character_limiter($value,$this->character_limiter,"...");
+				$value = $this->character_limiter(str_replace(',',', ',$value),$this->character_limiter,"...");
 			break;						
 			
 			case 'password':
