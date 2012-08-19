@@ -1398,6 +1398,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_add			= $this->unset_add;
 		$data->unset_edit			= $this->unset_edit;
 		$data->unset_delete			= $this->unset_delete;
+		$data->unset_export			= $this->unset_export;
+		$data->unset_print			= $this->unset_print;
 		
 		$ci = &get_instance();
 		$ci->load->config('grocery_crud');
@@ -1465,7 +1467,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		foreach($data->list as $num_row => $row){
 			foreach($data->columns as $column){
-				$string_to_export .= str_replace(array("\t","\n","\r"),"",$row->{$column->field_name})."\t";
+				$string_to_export .= $this->_trim_export_string($row->{$column->field_name})."\t";
 			}			
 			$string_to_export .= "\n";
 		}		
@@ -1477,8 +1479,15 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		header('Content-type: application/ms-excel;charset=UTF-16LE');
 		header('Content-Disposition: attachment; filename='.$filename);		
+		header("Cache-Control: no-cache");
 		echo $string_to_export;
 		die();
+	}
+	
+	protected function _trim_export_string($value)
+	{
+		$value = str_replace(array("&nbsp;","&amp;","&gt;","&lt;"),array(" ","&",">","<"),$value);
+		return  str_replace(array("\t","\n","\r"),"",$value);
 	}
 	
 	protected function set_echo_and_die()
@@ -3007,6 +3016,31 @@ class grocery_CRUD extends grocery_CRUD_States
 	}
 	
 	/**
+	 * Unsets the export button and functionality from the list
+	 *
+	 * @return	void
+	 */
+	public function unset_export()
+	{
+		$this->unset_export = true;
+	
+		return $this;
+	}	
+	
+	
+	/**
+	 * Unsets the print button and functionality from the list
+	 *
+	 * @return	void
+	 */
+	public function unset_print()
+	{
+		$this->unset_print = true;
+	
+		return $this;
+	}	
+	
+	/**
 	 * Unsets all the operations from the list
 	 * 
 	 * @return	void
@@ -3016,6 +3050,8 @@ class grocery_CRUD extends grocery_CRUD_States
 		$this->unset_add 	= true;
 		$this->unset_edit 	= true;
 		$this->unset_delete = true;
+		$this->unset_export = true;
+		$this->unset_print  = true;
 		
 		return $this;
 	}		

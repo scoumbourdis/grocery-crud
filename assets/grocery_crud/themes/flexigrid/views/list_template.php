@@ -36,8 +36,10 @@
 		</div>
 	</div>
 	<div id='main-table-box'>
-	<?php if(!$unset_add){?>
+	
+	<?php if(!$unset_add || !$unset_export || !$unset_print){?>
 	<div class="tDiv">
+		<?php if(!$unset_add){?>
 		<div class="tDiv2">
         	<a href='<?php echo $add_url?>' title='<?php echo $this->l('list_add'); ?> <?php echo $subject?>' class='add-anchor'>
 			<div class="fbutton">
@@ -49,7 +51,9 @@
 			<div class="btnseparator">
 			</div>
 		</div>
+		<?php }?>
 		<div class="tDiv3">
+			<?php if(!$unset_export) { ?>
         	<a class="export-anchor" data-url="<?php echo $export_url; ?>" target="_blank">
 				<div class="fbutton">
 					<div>
@@ -58,6 +62,8 @@
 				</div>
             </a>
 			<div class="btnseparator"></div>
+			<?php } ?>
+			<?php if(!$unset_print) { ?>
         	<a class="print-anchor">
 				<div class="fbutton">
 					<div>
@@ -65,11 +71,13 @@
 					</div>
 				</div>
             </a>
-			<div class="btnseparator"></div>						
+			<div class="btnseparator"></div>
+			<?php }?>						
 		</div>
 		<div class='clear'></div>
 	</div>
 	<?php }?>
+	
 	<div id='ajax_list'>
 		<?php echo $list_view?>
 	</div>
