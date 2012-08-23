@@ -1,4 +1,5 @@
 v 1.3
+	#88 - Adding a where clause in set_relation_n_n
 	#87 - Adding templating system to the  set_relation_n_n method
 	#82 - Adding a thumbnail after uploading an image.
 	Adding Czech Language.
