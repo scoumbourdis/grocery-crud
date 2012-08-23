@@ -4180,8 +4180,9 @@ class grocery_CRUD extends grocery_CRUD_States
 	 * @param string $primary_key_alias_to_selection_table
 	 * @param string $title_field_selection_table
 	 * @param string $priority_field_relation_table
+	 * @param mixed $where_clause
 	 */
-	public function set_relation_n_n($field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table, $primary_key_alias_to_selection_table , $title_field_selection_table , $priority_field_relation_table = null)
+	public function set_relation_n_n($field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table, $primary_key_alias_to_selection_table , $title_field_selection_table , $priority_field_relation_table = null, $where_clause = null)
 	{
 		$this->relation_n_n[$field_name] = 
 			(object)array( 
@@ -4191,7 +4192,8 @@ class grocery_CRUD extends grocery_CRUD_States
 				'primary_key_alias_to_this_table' => $primary_key_alias_to_this_table, 
 				'primary_key_alias_to_selection_table' => $primary_key_alias_to_selection_table , 
 				'title_field_selection_table' => $title_field_selection_table , 
-				'priority_field_relation_table' => $priority_field_relation_table
+				'priority_field_relation_table' => $priority_field_relation_table,
+				'where_clause' => $where_clause
 			);
 			
 		return $this;
