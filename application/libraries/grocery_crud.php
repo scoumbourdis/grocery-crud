@@ -1395,6 +1395,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->print_url			= $this->getPrintUrl();
 		$data->actions				= $this->actions;
 		$data->unique_hash			= $this->get_method_hash();
+		$data->order_by				= $this->order_by;
 		
 		$data->unset_add			= $this->unset_add;
 		$data->unset_edit			= $this->unset_edit;

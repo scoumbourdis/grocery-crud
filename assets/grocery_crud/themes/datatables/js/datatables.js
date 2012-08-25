@@ -35,6 +35,7 @@ $(document).ready(function() {
 		"sPaginationType": "full_numbers",
 		"bStateSave": true,
 		"iDisplayLength": default_per_page,
+		"aaSorting": datatables_aaSorting,
 		"oLanguage":{
 		    "sProcessing":   list_loading,
 		    "sLengthMenu":   show_entries_string,

@@ -41,6 +41,24 @@
 	var unset_export = <?php echo ($unset_export ? 'true' : 'false'); ?>;
 	var unset_print = <?php echo ($unset_print ? 'true' : 'false'); ?>;
 
+	<?php
+	//A work around for method order_by that doesn't work correctly on datatables theme
+	//@todo remove PHP logic from the view to the basic library 
+	$ordering = 0;
+	$sorting = 'asc';
+	if(!empty($order_by))
+	{
+		foreach($columns as $num => $column) {
+			if($column->field_name == $order_by[0]) {
+				$ordering = $num;
+				$sorting = isset($order_by[1]) && $order_by[1] == 'asc' || $order_by[1] == 'desc' ? $order_by[1] : $sorting ;
+			}
+		}
+	}	
+	?>
+	
+	var datatables_aaSorting = [[ <?php echo $ordering; ?>, "<?php echo $sorting;?>" ]];
+	
 </script>
 <?php 
 	if(!empty($actions)){
