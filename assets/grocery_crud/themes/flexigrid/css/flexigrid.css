@@ -622,7 +622,7 @@ div.pGroup {
 .flexigrid .pReload {
 	background:url(images/load.png) no-repeat center;
 }
-.flexigrid .pReload.loading {
+.flexigrid .pReload.loading,.flexigrid .fbutton.loading{
 	background:url(images/load.gif) no-repeat center;
 }
 .flexigrid .search-div-clear-button

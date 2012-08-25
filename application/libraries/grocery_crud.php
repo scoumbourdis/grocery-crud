@@ -1392,6 +1392,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->ajax_list_url		= $this->getAjaxListUrl();
 		$data->ajax_list_info_url	= $this->getAjaxListInfoUrl();
 		$data->export_url			= $this->getExportToExcelUrl();
+		$data->print_url			= $this->getPrintUrl();
 		$data->actions				= $this->actions;
 		$data->unique_hash			= $this->get_method_hash();
 		
@@ -1456,7 +1457,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{
 		/**
 		 * No need to use an external library here. The only bad thing without using external library is that Microsoft Excel is complaining 
-		 * that the file is in a different format than specified by the file extension. If you press "yes" everything will be all right
+		 * that the file is in a different format than specified by the file extension. If you press "Yes" everything will be just fine.
 		 * */
 		
 		$string_to_export = "";
@@ -1484,10 +1485,72 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		die();
 	}
 	
+	protected function print_webpage($state_info = null)
+	{
+		$data = $this->get_common_data();
+	
+		$data->order_by 	= $this->order_by;
+		$data->types 		= $this->get_field_types();
+	
+		$data->list = $this->get_list();
+		$data->list = $this->change_list($data->list , $data->types);
+		$data->list = $this->change_list_add_actions($data->list);
+	
+		$data->total_results = $this->get_total_results();
+	
+		$data->columns 				= $this->get_columns();
+		$data->primary_key 			= $this->get_primary_key();
+	
+		ob_end_clean();
+		$this->_print_webpage($data);
+	}	
+	
+	protected function _print_webpage($data)
+	{
+		$string_to_print = "<meta charset=\"utf-8\" /><style type=\"text/css\" >
+		#print-table{ color: #000; background: #fff; font-family: Verdana,Tahoma,Helvetica,sans-serif; font-size: 13px;}
+		#print-table table tr td, #print-table table tr th{ border: 1px solid black; border-bottom: none; border-right: none; padding: 4px 8px 4px 4px}
+		#print-table table{ border-bottom: 1px solid black; border-right: 1px solid black}
+		#print-table table tr th{text-align: left;background: #ddd}
+		#print-table table tr:nth-child(odd){background: #eee}
+		</style>";
+		$string_to_print .= "<div id='print-table'>";
+		
+		$string_to_print .= '<table width="100%" cellpadding="0" cellspacing="0" ><tr>';
+		foreach($data->columns as $column){
+			$string_to_print .= "<th>".$column->display_as."</th>";
+		}
+		$string_to_print .= "</tr>";
+	
+		foreach($data->list as $num_row => $row){
+			$string_to_print .= "<tr>";
+			foreach($data->columns as $column){
+				$string_to_print .= "<td>".$this->_trim_print_string($row->{$column->field_name})."</td>";
+			}
+			$string_to_print .= "</tr>";
+		}
+		
+		$string_to_print .= "</table></div>";
+		
+		echo $string_to_print;
+		die();
+	}	
+	
 	protected function _trim_export_string($value)
 	{
 		$value = str_replace(array("&nbsp;","&amp;","&gt;","&lt;"),array(" ","&",">","<"),$value);
 		return  str_replace(array("\t","\n","\r"),"",$value);
+	}
+	
+	protected function _trim_print_string($value)
+	{
+		$value = str_replace(array("&nbsp;","&amp;","&gt;","&lt;"),array(" ","&",">","<"),$value);
+		
+		//If the value has only spaces and nothing more then add the whitespace html character 
+		if(str_replace(" ","",$value) == "")
+			$value = "&nbsp;";
+		
+		return $value;
 	}
 	
 	protected function set_echo_and_die()
@@ -2395,7 +2458,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		13	=> 'ajax_relation',
 		14	=> 'ajax_relation_n_n',
 		15	=> 'success',
-		16  => 'export'
+		16  => 'export',
+		17  => 'print'
 	);
 	
 	protected function getStateCode()
@@ -2506,6 +2570,11 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 	{
 		return $this->state_url('export');
 	}
+	
+	protected function getPrintUrl()
+	{
+		return $this->state_url('print');
+	}	
 	
 	protected function getAjaxListInfoUrl()
 	{
@@ -2656,6 +2725,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			case 7:
 			case 8:
 			case 16: //export to excel
+			case 17: //print
 				$state_info = (object)array();
 				if(!empty($_POST['per_page']))
 				{
@@ -2665,8 +2735,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 				{
 					$state_info->page = is_numeric($_POST['page']) ? $_POST['page'] : null;
 				}
-				//If we request an export we don't care about what page we are
-				if($state_code === 16)
+				//If we request an export or a print we don't care about what page we are
+				if($state_code === 16 || $state_code === 17)
 				{
 					$state_info->page = 1;
 					$state_info->per_page = 1000000; //a big number
@@ -3822,6 +3892,27 @@ class grocery_CRUD extends grocery_CRUD_States
 				$this->set_ajax_list_queries($state_info);
 				$this->exportToExcel($state_info);
 			break;
+			
+			case 17: //print
+				//a big number just to ensure that the table characters will not be cutted.
+				$this->character_limiter = 1000000;
+			
+				if($this->unset_export)
+				{
+					throw new Exception('You don\'t have permissions for this operation', 15);
+					die();
+				}
+			
+				if($this->theme === null)
+					$this->set_theme($this->default_theme);
+				$this->setThemeBasics();
+			
+				$this->set_basic_Layout();
+			
+				$state_info = $this->getStateInfo();
+				$this->set_ajax_list_queries($state_info);
+				$this->print_webpage($state_info);
+			break;			
 			
 		}
 		

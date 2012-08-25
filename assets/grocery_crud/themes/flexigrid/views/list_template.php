@@ -7,6 +7,7 @@
 	$this->set_js($this->default_theme_path.'/flexigrid/js/flexigrid.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.numeric.js');
+	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.printElement.min.js');
 	
 ?>
 <script type='text/javascript'>
@@ -64,7 +65,7 @@
 			<div class="btnseparator"></div>
 			<?php } ?>
 			<?php if(!$unset_print) { ?>
-        	<a class="print-anchor">
+        	<a class="print-anchor" data-url="<?php echo $print_url; ?>">
 				<div class="fbutton">
 					<div>
 						<span class="print">Print</span>

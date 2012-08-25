@@ -3,6 +3,7 @@ v 1.3
 	#87 - Adding templating system to the  set_relation_n_n method
 	#82 - Adding a thumbnail after uploading an image.
 	Adding Czech Language.
+	#86 - Adding print functionality to both flexigrid and datatables theme.
 	#85 - Adding export functionality to both flexigrid and datatables theme.
 	Adding print functionality to datatables theme.
 	Adding CKEditor as the default texteditor for grocery CRUD.
