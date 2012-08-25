@@ -38,6 +38,9 @@
 
 	var default_per_page = <?php echo $default_per_page;?>;
 
+	var unset_export = <?php echo ($unset_export ? 'true' : 'false'); ?>;
+	var unset_print = <?php echo ($unset_print ? 'true' : 'false'); ?>;
+
 </script>
 <?php 
 	if(!empty($actions)){
@@ -54,6 +57,14 @@
 <?php 
 	}
 ?>
+<?php if($unset_export && $unset_print){?>
+<style type="text/css">
+	.datatables-add-button
+	{
+		position: static !important;	
+	}
+</style>
+<?php }?>
 <div id='report-error' class='report-div error report-list'></div>
 <div id='report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>>
 <?php if($success_message !== null){?>
