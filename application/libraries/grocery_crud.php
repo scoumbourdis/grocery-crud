@@ -1629,7 +1629,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function showAddForm()
 	{
-		$this->set_js($this->default_javascript_path.'/jquery-1.7.1.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery-1.8.0.min.js');
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1649,7 +1649,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function showEditForm($state_info)
 	{
-		$this->set_js($this->default_javascript_path.'/jquery-1.7.1.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery-1.8.0.min.js');
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1816,7 +1816,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$css_files =  $this->get_css_files();
 
 		if($this->unset_jquery)
-			unset($js_files[sha1($this->default_javascript_path.'/jquery-1.7.1.min.js')]);
+			unset($js_files[sha1($this->default_javascript_path.'/jquery-1.8.0.min.js')]);
 		
 		if($this->echo_and_die === false)
 		{
@@ -1929,11 +1929,11 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_datetime_input($field_info,$value)
 	{
-		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.10.custom.css');
+		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery.ui.datetime.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.ui.datetime.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.datetime.config.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.23.custom.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery-ui-timepicker-addon.config.js');
 		
 		if(!empty($value) && $value != '0000-00-00 00:00:00' && $value != '1970-01-01 00:00:00'){
 			list($year,$month,$day) = explode('-',substr($value,0,10));
@@ -1971,8 +1971,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_date_input($field_info,$value)
 	{	
-		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.10.custom.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
+		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.23.custom.min.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.datepicker.config.js');
 		
 		if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
@@ -2090,9 +2090,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		if($has_priority_field)
 		{
-			$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.10.custom.css');	
+			$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');	
 			$this->set_css($this->default_css_path.'/jquery_plugins/ui.multiselect.css');
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.10.custom.min.js');	
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.23.custom.min.js');	
 			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui.multiselect.js');
 			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.multiselect.js');
 		}
@@ -2156,11 +2156,11 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_upload_file_input($field_info, $value)
 	{
-		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.10.custom.css');
+		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/file-uploader.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/jquery.fileupload-ui.css');
 
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.10.custom.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.23.custom.min.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/tmpl.min.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/load-image.min.js');
 
