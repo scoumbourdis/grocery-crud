@@ -1931,6 +1931,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{
 		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery.ui.datetime.css');
+		$this->set_css($this->default_css_path.'/jquery_plugins/jquery-ui-timepicker-addon.css');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.23.custom.min.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery-ui-timepicker-addon.config.js');

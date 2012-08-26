@@ -1,5 +1,5 @@
 $(function(){
-    $('.datetime-input').datetimepicker();
+    $('.datetime-input').datetimepicker({timeFormat: 'hh:mm:ss'});
     
 	$('.datetime-input-clear').button();
 	
