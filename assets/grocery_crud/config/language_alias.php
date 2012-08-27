@@ -1,12 +1,12 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $language_alias = array(
 	'afrikaans'	=> 'af',
-	'arabic'	=> 'ar',	
-	'bulgarian'	=> 'bg',
-	'chinese'	=> 'zh-cn',	
+	'arabic'	=> 'ar', // Timepicker is not avaliable yet
+	'bulgarian'	=> 'bg', // Timepicker is not avaliable yet
+	'chinese'	=> 'zh-cn',
 	'czech'		=> 'cs',
-	'danish'	=> 'da',
+	'danish'	=> 'da', // Timepicker is not avaliable yet
 	'dutch'		=> 'nl',
 	'french'	=> 'fr',
 	'german'	=> 'de',
@@ -15,13 +15,14 @@ $language_alias = array(
 	'indonesian'=> 'id',
 	'italian'	=> 'it',
 	'japanese'	=> 'ja',
+	'persian'	=> 'fa', // Timepicker is not avaliable yet
 	'polish'	=> 'pl',
 	'pt-br.portuguese'	=> 'pt-br',
 	'pt-pt.portuguese'	=> 'pt',
 	'romanian' 	=> 'ro',
 	'russian'	=> 'ru',
 	'spanish'	=> 'es',
-	'thai'		=> 'th',
+	'thai'		=> 'th', // Timepicker is not avaliable yet
 	'turkish'	=>	'tr',
 	'ukrainian'	=>	'uk',
 	'vietnamese' => 'vi'
