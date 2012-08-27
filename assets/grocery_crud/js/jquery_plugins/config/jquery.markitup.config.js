@@ -31,4 +31,5 @@ var mySettings = {
 
 $(document).ready(function()	{
 	$('.texteditor').markItUp(mySettings);
+	$( 'textarea.mini-texteditor' ).markItUp(mySettings);
 });

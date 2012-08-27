@@ -1,0 +1,18 @@
+/* Russian translation for the jQuery Timepicker Addon */
+/* Written by Trent Richardson */
+(function($) {
+	$.timepicker.regional['ru'] = {
+		timeOnlyTitle: 'Выберите время',
+		timeText: 'Время',
+		hourText: 'Часы',
+		minuteText: 'Минуты',
+		secondText: 'Секунды',
+		millisecText: 'Миллисекунды',
+		timezoneText: 'Часовой пояс',
+		currentText: 'Сейчас',
+		closeText: 'Закрыть',
+		amNames: ['AM', 'A'],
+		pmNames: ['PM', 'P']
+	};
+	$.timepicker.setDefaults($.timepicker.regional['ru']);
+})(jQuery);

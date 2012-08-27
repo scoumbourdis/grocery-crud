@@ -1,13 +1,14 @@
 v 1.3
-	#73 - Adding jquery version 1.8.0
-	#88 - Adding a where clause in set_relation_n_n.
-	#87 - Adding templating system to the  set_relation_n_n method.
-	#82 - Adding a thumbnail after uploading an image.
+	#73 - Jquery version 1.8.0
+	#88 - Where clause in set_relation_n_n.
+	#87 - Templating system to the  set_relation_n_n method.
+	#82 - Have a thumbnail after uploading an image.
 	Adding Czech Language.
-	#86 - Adding print functionality to both flexigrid and datatables theme.
-	#85 - Adding export functionality to both flexigrid and datatables theme.
-	Adding print functionality to datatables theme.
-	Adding CKEditor as the default texteditor for grocery CRUD.
+	Internationalisation for datepicker ui and datetime picker.
+	#86 - Print functionality to both flexigrid and datatables theme.
+	#85 - Export functionality to both flexigrid and datatables theme.
+	Print functionality to datatables theme.
+	Having CKEditor as the default texteditor for grocery CRUD.
 	Adding Markitup texteditor. Really useful editor for developers.
 	#68 - set_relation doesn't work as expected when the third field (title name) is the same on two or more set_relation methods.
 	#80 - method order_by doesn't work correctly on datatables theme.

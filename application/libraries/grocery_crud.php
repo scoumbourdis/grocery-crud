@@ -1932,8 +1932,28 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery.ui.datetime.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery-ui-timepicker-addon.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.23.custom.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/jquery-ui-1.8.23.custom.min.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.js');
+		
+		if($this->language !== 'english')
+		{
+			include($this->default_config_path.'/language_alias.php');
+			if(array_key_exists($this->language, $language_alias))
+			{
+				$i18n_date_js_file = $this->default_javascript_path.'/jquery_plugins/ui/i18n/datepicker/jquery.ui.datepicker-'.$language_alias[$this->language].'.js'; 
+				if(file_exists($i18n_date_js_file))
+				{
+					$this->set_js($i18n_date_js_file);
+				}
+				
+				$i18n_datetime_js_file = $this->default_javascript_path.'/jquery_plugins/ui/i18n/timepicker/jquery-ui-timepicker-'.$language_alias[$this->language].'.js';
+				if(file_exists($i18n_datetime_js_file))
+				{
+					$this->set_js($i18n_datetime_js_file);
+				}				
+			}
+		}
+		
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery-ui-timepicker-addon.config.js');
 		
 		if(!empty($value) && $value != '0000-00-00 00:00:00' && $value != '1970-01-01 00:00:00'){
@@ -1973,7 +1993,21 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function get_date_input($field_info,$value)
 	{	
 		$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.23.custom.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/jquery-ui-1.8.23.custom.min.js');
+		
+		if($this->language !== 'english')
+		{
+			include($this->default_config_path.'/language_alias.php');
+			if(array_key_exists($this->language, $language_alias))
+			{
+				$i18n_date_js_file = $this->default_javascript_path.'/jquery_plugins/ui/i18n/datepicker/jquery.ui.datepicker-'.$language_alias[$this->language].'.js';
+				if(file_exists($i18n_date_js_file))
+				{
+					$this->set_js($i18n_date_js_file);
+				}
+			}
+		}		
+		
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.datepicker.config.js');
 		
 		if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
@@ -2093,7 +2127,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		{
 			$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');	
 			$this->set_css($this->default_css_path.'/jquery_plugins/ui.multiselect.css');
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.23.custom.min.js');	
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/jquery-ui-1.8.23.custom.min.js');	
 			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui.multiselect.js');
 			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.multiselect.js');
 		}
@@ -2161,7 +2195,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/file-uploader.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/jquery.fileupload-ui.css');
 
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-1.8.23.custom.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/jquery-ui-1.8.23.custom.min.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/tmpl.min.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/load-image.min.js');
 
@@ -2913,6 +2947,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $default_texteditor_path 				= 'assets/grocery_crud/texteditor';
 	protected $default_theme_path					= 'assets/grocery_crud/themes';
 	protected $default_language_path				= 'assets/grocery_crud/languages';
+	protected $default_config_path					= 'assets/grocery_crud/config';
 	
 	/**
 	 * 
