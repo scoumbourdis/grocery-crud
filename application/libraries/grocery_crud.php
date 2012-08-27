@@ -3936,7 +3936,7 @@ class grocery_CRUD extends grocery_CRUD_States
 				//a big number just to ensure that the table characters will not be cutted.
 				$this->character_limiter = 1000000;
 			
-				if($this->unset_export)
+				if($this->unset_print)
 				{
 					throw new Exception('You don\'t have permissions for this operation', 15);
 					die();
