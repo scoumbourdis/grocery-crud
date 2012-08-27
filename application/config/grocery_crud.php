@@ -14,7 +14,7 @@
 	//You can choose 'ckeditor','tinymce' or 'markitup'
 	$config['grocery_crud_default_text_editor'] = 'ckeditor';
 	//You can choose 'minimal' or 'full'
-	$config['grocery_crud_text_editor_type'] 	= 'minimal'; 
+	$config['grocery_crud_text_editor_type'] 	= 'full'; 
 	
 	//The character limiter at the list page, zero(0) value if you don't want character limiter at your list page
 	$config['grocery_crud_character_limiter'] 	= 30; 

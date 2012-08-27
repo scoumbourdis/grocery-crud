@@ -1,4 +1,4 @@
 $(function(){
-	$( 'textarea.texteditor' ).ckeditor();
-	$( 'textarea.mini-texteditor' ).ckeditor();
+	$( 'textarea.texteditor' ).ckeditor({toolbar:'Full'});
+	$( 'textarea.mini-texteditor' ).ckeditor({toolbar:'Basic',width:700});
 });

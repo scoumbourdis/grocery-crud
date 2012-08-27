@@ -806,6 +806,11 @@ ul.chzn-choices li.search-field input
 	padding-bottom:10px;
 	border-radius: 0px 0px 5px 5px;
 }
+textarea.texteditor, textarea.mini-texteditor
+{
+	width:750px;
+	height: 200px;
+}
 .flexigrid div.form-div{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color: #444;}
 .flexigrid div.form-div input[type=text],.flexigrid div.form-div textarea,.flexigrid div.form-div select{display:inline-block;line-height:18px;color:#444;border:1px solid #ccc;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
 .flexigrid div.form-div input[type=text],.flexigrid div.form-div select,.flexigrid div.form-div textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}
