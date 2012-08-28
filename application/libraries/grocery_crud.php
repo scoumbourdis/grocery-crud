@@ -2378,7 +2378,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->theme = $theme;
 	}
 	
-	private function _theme_view($view, $vars = array(), $return = FALSE)
+	protected function _theme_view($view, $vars = array(), $return = FALSE)
 	{
 		$vars = (is_object($vars)) ? get_object_vars($vars) : $vars;
 		
@@ -2496,7 +2496,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		return $state_code;
 	}
 	
-	private function state_url($url = '')
+	protected function state_url($url = '')
 	{
 		$ci = &get_instance();
 		
@@ -2523,7 +2523,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		return site_url($state_url);
 	}
 	
-	private function get_state_info_from_url()
+	protected function get_state_info_from_url()
 	{
 		$ci = &get_instance();
 		
@@ -3322,7 +3322,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	 * 
 	 * Load the language strings array from the language file
 	 */
-	private function _load_language()
+	protected function _load_language()
 	{
 		if($this->language === null)
 		{
@@ -3339,7 +3339,7 @@ class grocery_CRUD extends grocery_CRUD_States
 		
 	}
 
-	private function _load_date_format()
+	protected function _load_date_format()
 	{
 		list($php_day, $php_month, $php_year) = array('d','m','Y');
 		list($js_day, $js_month, $js_year) = array('dd','mm','yy');
