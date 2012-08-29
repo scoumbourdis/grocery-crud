@@ -2463,7 +2463,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  */
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
-	private $states = array(
+	protected $states = array(
 		0	=> 'unknown',
 		1	=> 'list',
 		2	=> 'add',
