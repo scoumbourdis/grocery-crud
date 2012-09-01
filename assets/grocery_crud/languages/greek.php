@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
 	$lang['list_add'] 				= 'Προσθήκη';
 	$lang['list_actions'] 			= 'Εργαλεία';
 	$lang['list_page'] 				= 'Σελίδα';
@@ -68,3 +68,8 @@
 	$lang['error_accept_file_types'] 	= "Δέν έχετε το δικαίωμα να ανεβάσετε αυτόν το τύπο αρχείου.";
 	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
 	$lang['error_min_file_size'] 		= "Δεν μπορείτε να ανεβάσετε ένα άδειο αρχείο.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Εξαγωγή";
+	$lang['list_print'] 	= "Εκτύπωση";

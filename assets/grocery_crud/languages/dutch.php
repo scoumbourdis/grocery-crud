@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 /* Translated by @lherlaar */
 	$lang['list_add'] 				= 'Toevoegen';
 	$lang['list_actions'] 			= 'Acties';
@@ -69,3 +69,8 @@
 	$lang['error_accept_file_types'] = "Het uploaden van dit bestandstype is niet toegestaan.";
 	$lang['error_max_file_size'] = "Het geuploade bestand is groter dan het ingestelde maximum van {max_file_size}.";
 	$lang['error_min_file_size'] = "Het uploaden van een leeg bestand is niet mogelijk.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

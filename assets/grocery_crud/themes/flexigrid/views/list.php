@@ -1,5 +1,4 @@
-<?php  
-	if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
 
 	$column_width = (int)(80/count($columns));
 	

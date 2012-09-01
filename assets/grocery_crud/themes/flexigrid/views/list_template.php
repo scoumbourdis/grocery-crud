@@ -1,6 +1,4 @@
 <?php  
-	if (!defined('BASEPATH')) exit('No direct script access allowed');
-
 	$this->set_css($this->default_theme_path.'/flexigrid/css/flexigrid.css');
 	$this->set_js($this->default_javascript_path.'/jquery-1.8.0.min.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/cookies.js');
@@ -58,7 +56,7 @@
         	<a class="export-anchor" data-url="<?php echo $export_url; ?>" target="_blank">
 				<div class="fbutton">
 					<div>
-						<span class="export">Export</span>
+						<span class="export"><?php echo $this->l('list_export');?></span>
 					</div>
 				</div>
             </a>
@@ -68,7 +66,7 @@
         	<a class="print-anchor" data-url="<?php echo $print_url; ?>">
 				<div class="fbutton">
 					<div>
-						<span class="print">Print</span>
+						<span class="print"><?php echo $this->l('list_print');?></span>
 					</div>
 				</div>
             </a>

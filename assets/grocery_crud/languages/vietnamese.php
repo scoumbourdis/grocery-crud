@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  
 /* Translated by: @Vuong */
 	$lang['list_add'] 				= 'Thêm';
 	$lang['list_actions'] 			= 'Tác vụ';
@@ -69,3 +69,8 @@
 	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
 	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
 	$lang['error_min_file_size'] 		= "You cannot upload an empty file.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

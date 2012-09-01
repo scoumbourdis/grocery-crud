@@ -1,5 +1,4 @@
 <?php  
-	if (!defined('BASEPATH')) exit('No direct script access allowed');
 	
 	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');	

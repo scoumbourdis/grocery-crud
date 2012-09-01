@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 /* Translated by hunterbit */
 	$lang['list_add'] 				= 'Aggiungi';
 	$lang['list_actions'] 			= 'Azioni';
@@ -69,3 +69,8 @@
 	$lang['error_accept_file_types'] 	= "Non hai il permesso per caricare questo tipo di estensione.";
 	$lang['error_max_file_size'] 		= "Il file caricato supera il {max_file_size} che e\' stato specificato.";
 	$lang['error_min_file_size'] 		= "Non puoi caricare un file vuoto.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

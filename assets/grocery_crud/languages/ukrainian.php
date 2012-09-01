@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
 /*	Translated by @noskov.biz */
 	$lang['list_add'] = 'Додати';
 	$lang['list_actions'] = 'Дії';
@@ -69,3 +69,8 @@
 	$lang['error_accept_file_types'] = "Не дозволяється завантажувати файли з даним розширенням.";
 	$lang['error_max_file_size'] = "Розмір файлу, що завантажується, перевищує максимально допустиме значення {max_file_size}.";
 	$lang['error_min_file_size'] = "Не можна завантажити порожній файл.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

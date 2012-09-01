@@ -1,5 +1,4 @@
 <?php  
-	if (!defined('BASEPATH')) exit('No direct script access allowed');
 	
 	$this->set_css($this->default_theme_path.'/datatables/css/demo_table_jui.css');
 	$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');
@@ -41,6 +40,9 @@
 	var unset_export = <?php echo ($unset_export ? 'true' : 'false'); ?>;
 	var unset_print = <?php echo ($unset_print ? 'true' : 'false'); ?>;
 
+	var export_text = '<?php echo $this->l('list_export');?>';
+	var print_text = '<?php echo $this->l('list_print');?>';
+	
 	<?php
 	//A work around for method order_by that doesn't work correctly on datatables theme
 	//@todo remove PHP logic from the view to the basic library 

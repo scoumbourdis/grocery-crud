@@ -1,2 +1,2 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 $config['crud_paging'] 			= false;

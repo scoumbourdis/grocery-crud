@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 	/* Translated by: Marek Polan */
 	$lang['list_add'] 				= 'Přidat';
 	$lang['list_actions'] 			= 'Akce';
@@ -69,3 +69,8 @@
 	$lang['error_accept_file_types'] 	= "Tento typ souboru není povolen.";
 	$lang['error_max_file_size'] 		= "Váš soubor překračuje maximální povolenou velikost {max_file_size}.";
 	$lang['error_min_file_size'] 		= "Nelze nahrát prázdný soubor.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

@@ -1,6 +1,4 @@
-<?php  
-	if (!defined('BASEPATH')) exit('No direct script access allowed');
-?><table cellpadding="0" cellspacing="0" border="0" class="display" id="groceryCrudTable">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="groceryCrudTable">
 	<thead>
 		<tr>
 			<?php foreach($columns as $column){?>

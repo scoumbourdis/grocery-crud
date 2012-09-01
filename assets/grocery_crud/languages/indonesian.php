@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 /* Translated by: M. Yuhdi & Ibrahim Yusuf */
 	$lang['list_add'] 				= 'Tambah';
 	$lang['list_actions'] 			= 'Pilihan';
@@ -74,3 +74,8 @@
 	$lang['error_accept_file_types'] 	= "Anda tidak dapat mengunggah file dengan jenis ini.";
 	$lang['error_max_file_size'] 		= "Ukuran file melebihi {max_file_size}.";
 	$lang['error_min_file_size'] 		= "Anda tidak dapat mengunggah file kosong.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

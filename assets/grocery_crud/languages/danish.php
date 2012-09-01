@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 /* Translated by: @mikkelkaas */
 	$lang['list_add'] 				= 'Tilføj';
 	$lang['list_actions'] 			= 'Handlinger';
@@ -70,3 +70,8 @@
 	$lang['error_accept_file_types'] 	= "Det er ikke tilladt at uploade filer med denne endelse.";
 	$lang['error_max_file_size'] 		= "Uploaden er større end de tillade {max_file_size} .";
 	$lang['error_min_file_size'] 		= "Du kan ikke uploade en tom fil.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

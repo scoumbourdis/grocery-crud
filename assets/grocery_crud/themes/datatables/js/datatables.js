@@ -16,7 +16,7 @@ $(document).ready(function() {
 	{
 		aButtons.push(    {
 	         "sExtends":    "xls",
-	         "sButtonText": "Export",
+	         "sButtonText": export_text,
 	         "mColumns": mColumns
 	     });
 	}
@@ -25,7 +25,7 @@ $(document).ready(function() {
 	{
 		aButtons.push({
 	         "sExtends":    "print",
-	         "sButtonText": "Print",
+	         "sButtonText": print_text,
 	         "mColumns": mColumns
 	     });		
 	}

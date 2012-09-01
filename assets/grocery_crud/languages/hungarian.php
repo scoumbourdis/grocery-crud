@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
 /* Translated by: Wathfea */
     $lang['list_add']               = 'Hozzáadás';
     $lang['list_actions']           = 'Feladatok';
@@ -71,3 +71,8 @@
     $lang['error_accept_file_types']    = "Ilyen tipusú fájl feltöltése nem engedélyezett.";
     $lang['error_max_file_size']        = "A feltölteni kívánt file mérete meghaladja a maximális fájl méretet: {max_file_size}";
     $lang['error_min_file_size']        = "Üres fájlt nem tud feltölteni.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

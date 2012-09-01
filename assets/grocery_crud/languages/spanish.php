@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  
 /* Translated by Hector Cyc */
 	$lang['list_add']				= 'Agregar';
 	$lang['list_actions']			= 'Acciones';
@@ -69,3 +69,8 @@
 	$lang['error_accept_file_types'] 	= "No esta permitido subir archivos con esta extension.";
 	$lang['error_max_file_size'] 		= "El archivo subido excede el tamaño maximo permitido: {max_file_size}.";
 	$lang['error_min_file_size'] 		= "No puede subir un archivo vacio.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 	/* Translated by xaxxo */
 	$lang['list_add'] = 'Добави';
 	$lang['list_actions'] = 'Действие';
@@ -69,3 +69,8 @@
 	$lang['error_accept_file_types']  = "Този тип файлове не са разрешени за качване.";
 	$lang['error_max_file_size']   = "Опитвате се да качите прекалено голям файл.";
 	$lang['error_min_file_size']   = "Не можете да качвате празен файл.";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";

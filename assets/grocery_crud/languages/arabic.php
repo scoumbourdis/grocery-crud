@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 /* Translated by Mohammed Yasser Moghrabiah */
 	$lang['list_add'] 				= 'اضافة';
 	$lang['list_actions'] 			= '';
@@ -70,3 +70,8 @@
 	$lang['error_accept_file_types'] 	= "لا يمكنك رفع هذا النوع من اللواحق .";
 	$lang['error_max_file_size'] 		= "الملف المراد رفعه يتجاوز الحد الاعلى للرفع  {max_file_size} المحدد مسبقا .";
 	$lang['error_min_file_size'] 		= "لا يمكنك رفع ملف فارغ .";
+
+	
+	/* Added in version 1.3.1 */
+	$lang['list_export'] 	= "Export";
+	$lang['list_print'] 	= "Print";
