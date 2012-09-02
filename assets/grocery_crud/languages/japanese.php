@@ -73,4 +73,4 @@
 	/* Added in version 1.3.1 */
 	$lang['list_export'] 	= "Export";
 	$lang['list_print'] 	= "Print";
-	$lang['minimize_maximize'] = 'Minimize/Maximize Table';
+	$lang['minimize_maximize'] = 'Minimize/Maximize';
