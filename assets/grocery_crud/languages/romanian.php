@@ -70,7 +70,7 @@
 	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
 	$lang['error_min_file_size'] 		= "You cannot upload an empty file.";
 
-	
 	/* Added in version 1.3.1 */
 	$lang['list_export'] 	= "Export";
 	$lang['list_print'] 	= "Print";
+	$lang['minimize_maximize'] = 'Minimize/Maximize Table';

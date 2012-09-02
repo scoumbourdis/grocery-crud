@@ -17,7 +17,7 @@
 			</div>		
 			<div class='clear'></div>				
 		</div>
-		<div title="Minimize/Maximize Table" class="ptogtitle">
+		<div title="<?php echo $this->l('minimize_maximize');?>" class="ptogtitle">
 			<span></span>
 		</div>	
 	</div>

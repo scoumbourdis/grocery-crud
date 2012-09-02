@@ -22,8 +22,8 @@
 	
 	$lang['form_edit'] = 'Редагувати';
 	$lang['form_back_to_list'] = 'Назад до списку';
-	$lang['form_update_changes'] = 'Оновити інформацію';
-	$lang['form_cancel'] = 'Відміна';
+	$lang['form_update_changes'] = 'Зберегти зміни';
+	$lang['form_cancel'] = 'Скасувати';
 	$lang['form_update_loading'] = 'Завантаження, оновлення інформації...';
 	$lang['update_success_message'] = 'Інформація успішно оновлена.';
 	$lang['form_go_back_to_list'] = 'Повернутися до списку';
@@ -52,25 +52,25 @@
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title'] = 'Вибрати {field_display_as}';
 	$lang['list_record'] = 'Запис';
-	$lang['form_inactive'] = 'не активно';
-	$lang['form_active'] = 'активно';
+	$lang['form_inactive'] = 'неактивне';
+	$lang['form_active'] = 'активне';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Додати та повернутися до списку';
-	$lang['form_update_and_go_back']= 'Оновити та повернутися до списку';
+	$lang['form_save_and_go_back']	= 'Зберегти та повернутися до списку';
+	$lang['form_update_and_go_back']= 'Зберегти зміни та повернутися до списку';
 
 	/* Upload functionality */
-	$lang['string_delete_file'] = "Видалення файлу";
-	$lang['string_progress'] = "Прогрес: ";
-	$lang['error_on_uploading'] = "При завантаженні виникла помилка.";
-	$lang['message_prompt_delete_file'] = "Ви впевнені, що бажаєте видалити цей файл?";
+	$lang['string_delete_file'] = 'Видалення файлу';
+	$lang['string_progress'] = 'Прогрес: ';
+	$lang['error_on_uploading'] = 'При завантаженні виникла помилка.';
+	$lang['message_prompt_delete_file'] = 'Ви впевнені, що бажаєте видалити цей файл?';
 	
-	$lang['error_max_number_of_files'] = "Одночасно можна завантажити тільки один файл.";
-	$lang['error_accept_file_types'] = "Не дозволяється завантажувати файли з даним розширенням.";
-	$lang['error_max_file_size'] = "Розмір файлу, що завантажується, перевищує максимально допустиме значення {max_file_size}.";
-	$lang['error_min_file_size'] = "Не можна завантажити порожній файл.";
-
+	$lang['error_max_number_of_files'] = 'Одночасно можна завантажити тільки один файл.';
+	$lang['error_accept_file_types'] = 'Не дозволяється завантажувати файли з даним розширенням.';
+	$lang['error_max_file_size'] = 'Розмір файлу, що завантажується, перевищує максимально допустиме значення {max_file_size}.';
+	$lang['error_min_file_size'] = 'Не можна завантажити порожній файл.';
 	
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
+	$lang['list_export'] = 'Експорт';
+	$lang['list_print'] = 'Друк';
+	$lang['minimize_maximize'] = 'Згорнути/розгорнути';
