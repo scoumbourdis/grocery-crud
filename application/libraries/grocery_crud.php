@@ -1470,7 +1470,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$filename = "export-".date("Y-m-d_H:i:s").".xls";
 		
-		header('Content-type: application/ms-excel;charset=UTF-16LE');
+		header('Content-type: application/vnd.ms-excel;charset=UTF-16LE');
 		header('Content-Disposition: attachment; filename='.$filename);		
 		header("Cache-Control: no-cache");
 		echo $string_to_export;
