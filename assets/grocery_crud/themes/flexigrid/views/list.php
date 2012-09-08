@@ -29,7 +29,7 @@
 		<tr  <?php if($num_row % 2 == 1){?>class="erow"<?php }?>>
 			<?php foreach($columns as $column){?>
 			<td width='<?php echo $column_width?>%' class='<?php if(isset($order_by[0]) &&  $column->field_name == $order_by[0]){?>sorted<?php }?>'>
-				<div style="width: 100%;" class='text-left'><?php echo $row->{$column->field_name}; ?></div>
+				<div class='text-left'><?php echo $row->{$column->field_name} != '' ? $row->{$column->field_name} : '&nbsp;' ; ?></div>
 			</td>
 			<?php }?>
 			<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
