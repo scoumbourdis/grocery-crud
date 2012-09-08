@@ -2111,8 +2111,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function get_relation_n_n_input($field_info_type, $selected_values)
 	{	
 		$has_priority_field = !empty($field_info_type->extras->priority_field_relation_table) ? true : false;
+		$is_ie_7 = isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7') !== false) ? true : false;
 		
-		if($has_priority_field)
+		if($has_priority_field || $is_ie_7)
 		{
 			$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');	
 			$this->set_css($this->default_css_path.'/jquery_plugins/ui.multiselect.css');
@@ -2139,8 +2140,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		else
 		{
-			$css_class = $has_priority_field ? 'multiselect': 'chosen-multiple-select';
-			$width_style = $has_priority_field ? '' : 'width:510px;';
+			$css_class = $has_priority_field || $is_ie_7 ? 'multiselect': 'chosen-multiple-select';
+			$width_style = $has_priority_field || $is_ie_7 ? '' : 'width:510px;';
 
 			$select_title = str_replace('{field_display_as}',$field_info_type->display_as,$this->l('set_relation_title'));
 			$input = "<select id='field-{$field_info_type->name}' name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='$select_title' style='$width_style' >";
