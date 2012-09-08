@@ -21,7 +21,9 @@ application/config/smileys.php
 application/config/user_agents.php
 application/controllers/index.html
 application/controllers/examples2.php
+application/controllers/build.php
 application/controllers/welcome.php
+application/views/example2.php
 application/core/
 application/errors/
 application/helpers/
@@ -30,6 +32,7 @@ application/index.html
 application/language/
 application/libraries/index.html
 application/logs/
+assets/uploads/images/
 application/models/index.html
 application/third_party/
 application/views/index.html
