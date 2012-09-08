@@ -3649,6 +3649,8 @@ class grocery_CRUD extends grocery_CRUD_States
 		$ci = &get_instance();
 		$ci->load->config('grocery_crud');
 		
+		$this->config = (object)array();
+		
 		/** Initialize all the config variables into this object */
 		$this->config->default_language 	= $ci->config->item('grocery_crud_default_language');
 		$this->config->date_format 			= $ci->config->item('grocery_crud_date_format');
