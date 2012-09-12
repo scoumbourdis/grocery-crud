@@ -1,4 +1,4 @@
-﻿<?php  
+<?php  
 	/* Translated by Moslem Mansouri www.hozn.ir */
 	$lang['list_add'] 				= 'افزودن';
 	$lang['list_actions'] 			= 'عمل';

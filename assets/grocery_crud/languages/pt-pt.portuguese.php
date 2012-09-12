@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* Translated by: @pedrocorreia */
 	$lang['list_add'] 				= 'Adicionar';
 	$lang['list_actions'] 			= 'Ações';
