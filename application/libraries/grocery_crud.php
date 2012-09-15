@@ -1531,7 +1531,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function _trim_export_string($value)
 	{
 		$value = str_replace(array("&nbsp;","&amp;","&gt;","&lt;"),array(" ","&",">","<"),$value);
-		return  str_replace(array("\t","\n","\r"),"",$value);
+		return  strip_tags(str_replace(array("\t","\n","\r"),"",$value));
 	}
 	
 	protected function _trim_print_string($value)
@@ -1542,7 +1542,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		if(str_replace(" ","",$value) == "")
 			$value = "&nbsp;";
 		
-		return $value;
+		return strip_tags($value);
 	}
 	
 	protected function set_echo_and_die()
