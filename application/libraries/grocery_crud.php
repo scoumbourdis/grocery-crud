@@ -2862,7 +2862,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	private $columns_checked		= false;
 	private $add_fields_checked		= false;
 	private $edit_fields_checked	= false;
-	private $set_datbase 		= false;
+	private $set_database 		= false;
 	
 	protected $default_theme		= 'flexigrid';
 	protected $language				= null;
