@@ -2861,7 +2861,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	private $columns				= null;
 	private $columns_checked		= false;
 	private $add_fields_checked		= false;
-	private $edit_fields_checked	= false;	
+	private $edit_fields_checked	= false;
+	private $set_datbase 		= false;
 	
 	protected $default_theme		= 'flexigrid';
 	protected $language				= null;
@@ -2946,7 +2947,23 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function __construct()
 	{
 
-	}	
+	}
+
+
+	/**
+	* Set a specified database connection
+	* 
+	* @author Stefan Mertens (info@seamex.de)
+	* @param String $db_group_before Database group name from config/database.php to set the db 
+	* @param String $db_group_after Database group name from config/database.php to set the db back to something else after crud
+	*/
+	public function setDatabase($db_group_before, $db_group_after = 'default') {
+	    $ci = &get_instance();
+	    $ci->db = $ci->load->database($db_group, TRUE);
+	    $ci->db->db_select();
+	    $this->set_database = $db_group_after;
+	}
+	
 	
 	/**
 	 * The displayed columns that user see
@@ -3947,6 +3964,10 @@ class grocery_CRUD extends grocery_CRUD_States
 				$this->print_webpage($state_info);
 			break;			
 			
+		}
+		// If set_database switch back to the default database
+		if($this->set_database != false){
+			$this->set_database($this->set_database);
 		}
 		
 		return $this->get_layout();
