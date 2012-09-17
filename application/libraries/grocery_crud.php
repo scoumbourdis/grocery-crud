@@ -2930,12 +2930,13 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $callback_before_upload	= null;
 	protected $callback_after_upload	= null;
 	
-	protected $default_javascript_path				= 'assets/grocery_crud/js';
-	protected $default_css_path						= 'assets/grocery_crud/css';
-	protected $default_texteditor_path 				= 'assets/grocery_crud/texteditor';
-	protected $default_theme_path					= 'assets/grocery_crud/themes';
+	protected $default_javascript_path				= null; //autogenerate, please do not modify
+	protected $default_css_path						= null; //autogenerate, please do not modify
+	protected $default_texteditor_path 				= null; //autogenerate, please do not modify
+	protected $default_theme_path					= null; //autogenerate, please do not modify
 	protected $default_language_path				= 'assets/grocery_crud/languages';
 	protected $default_config_path					= 'assets/grocery_crud/config';
+	protected $default_assets_path					= 'assets/grocery_crud';
 	
 	/**
 	 * 
@@ -3661,6 +3662,13 @@ class grocery_CRUD extends grocery_CRUD_States
 		$this->config->default_text_editor	= $ci->config->item('grocery_crud_default_text_editor');
 		$this->config->text_editor_type		= $ci->config->item('grocery_crud_text_editor_type');
 		$this->config->character_limiter	= $ci->config->item('grocery_crud_character_limiter');
+		
+		/** Initialize default paths */
+		$this->default_javascript_path				= $this->default_assets_path.'/js';
+		$this->default_css_path						= $this->default_assets_path.'/css';
+		$this->default_texteditor_path 				= $this->default_assets_path.'/texteditor';
+		$this->default_theme_path					= $this->default_assets_path.'/themes';
+	
 		
 		$this->character_limiter = $this->config->character_limiter;
 		
