@@ -1,6 +1,6 @@
 <?php  
 	$this->set_css($this->default_theme_path.'/flexigrid/css/flexigrid.css');
-	$this->set_js($this->default_javascript_path.'/jquery-1.8.1.min.js');
+	$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 	$this->set_js($this->default_theme_path.'/flexigrid/js/cookies.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/flexigrid.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');

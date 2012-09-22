@@ -1620,7 +1620,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function showAddForm()
 	{
-		$this->set_js($this->default_javascript_path.'/jquery-1.8.1.min.js');
+		$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1640,7 +1640,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function showEditForm($state_info)
 	{
-		$this->set_js($this->default_javascript_path.'/jquery-1.8.1.min.js');
+		$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1807,7 +1807,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$css_files =  $this->get_css_files();
 
 		if($this->unset_jquery)
-			unset($js_files[sha1($this->default_javascript_path.'/jquery-1.8.1.min.js')]);
+			unset($js_files[sha1($this->default_javascript_path.'/'.grocery_CRUD::JQUERY)]);
 		
 		if($this->echo_and_die === false)
 		{
@@ -2854,6 +2854,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 class grocery_CRUD extends grocery_CRUD_States
 {
 	const	VERSION = "1.3";
+	const	JQUERY = "jquery-1.8.1.min.js";
 	
 	private $state_code 			= null;
 	private $state_info 			= null;

@@ -5,7 +5,7 @@
 	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');	
 	$this->set_css($this->default_theme_path.'/datatables/css/jquery.dataTables.css');
 	$this->set_css($this->default_theme_path.'/datatables/extras/TableTools/media/css/TableTools.css');
-	$this->set_js($this->default_javascript_path.'/jquery-1.8.1.min.js');
+	$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/jquery-ui-1.8.23.custom.min.js');
 	$this->set_js($this->default_theme_path.'/datatables/js/jquery.dataTables.min.js');
 	$this->set_js($this->default_theme_path.'/datatables/js/datatables.js');
