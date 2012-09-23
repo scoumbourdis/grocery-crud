@@ -3,8 +3,8 @@
 	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');	
 	$this->set_js($this->default_theme_path.'/datatables/js/datatables-add.js');
-	$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');
-	$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/jquery-ui-1.8.23.custom.min.js');	
+	$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
+	$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);	
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';

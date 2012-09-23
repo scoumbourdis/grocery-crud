@@ -1,12 +1,12 @@
 <?php  
 	
 	$this->set_css($this->default_theme_path.'/datatables/css/demo_table_jui.css');
-	$this->set_css($this->default_css_path.'/ui/simple/jquery-ui-1.8.23.custom.css');
+	$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
 	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');	
 	$this->set_css($this->default_theme_path.'/datatables/css/jquery.dataTables.css');
 	$this->set_css($this->default_theme_path.'/datatables/extras/TableTools/media/css/TableTools.css');
 	$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
-	$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/jquery-ui-1.8.23.custom.min.js');
+	$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
 	$this->set_js($this->default_theme_path.'/datatables/js/jquery.dataTables.min.js');
 	$this->set_js($this->default_theme_path.'/datatables/js/datatables.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/ZeroClipboard.js');

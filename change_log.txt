@@ -1,4 +1,5 @@
 v 1.3.2
+	#97 - Add new method and functionality - unset_jquery_ui
 	#46 - Supporting IE7.
 	#95 - Export and print doesn't remove the html tags.
 v 1.3.1
