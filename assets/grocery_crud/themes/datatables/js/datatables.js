@@ -1,5 +1,27 @@
 var default_per_page = typeof default_per_page !== 'undefined' ? default_per_page : 25;
 
+//http://mathiasbynens.be/notes/localstorage-pattern
+function localstorage_supported()
+{
+   var storage, fail, uid;
+   var supported = false;
+   
+   try {
+         uid = new Date;
+         (storage = window.localStorage).setItem(uid, uid);
+         fail = storage.getItem(uid) != uid;
+         storage.removeItem(uid);
+         fail && (storage = false);
+   } catch(e) { }
+   
+   if(storage) 
+	   supported = true;
+   
+   return supported;
+}
+
+var use_storage = localstorage_supported();
+
 $(document).ready(function() {
 	var mColumns = [];
 	
@@ -33,7 +55,13 @@ $(document).ready(function() {
 	oTable = $('#groceryCrudTable').dataTable({
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
-		"bStateSave": true,
+		"bStateSave": use_storage,
+        "fnStateSave": function (oSettings, oData) {
+            localStorage.setItem( 'DataTables_' + unique_hash, JSON.stringify(oData) );
+        },
+    	"fnStateLoad": function (oSettings) {
+            return JSON.parse( localStorage.getItem('DataTables_'+unique_hash) );
+    	},		
 		"iDisplayLength": default_per_page,
 		"aaSorting": datatables_aaSorting,
 		"oLanguage":{

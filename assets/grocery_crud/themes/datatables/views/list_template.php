@@ -16,6 +16,8 @@
 	var base_url = '<?php echo base_url();?>';
 	var subject = '<?php echo $subject?>';
 
+	var unique_hash = '<?php echo $unique_hash; ?>';
+	
 	var displaying_paging_string = "<?php echo str_replace( array('{start}','{end}','{results}'),
 		array('_START_', '_END_', '_TOTAL_'),
 		$this->l('list_displaying')
