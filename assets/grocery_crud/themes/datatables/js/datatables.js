@@ -1,27 +1,18 @@
 var default_per_page = typeof default_per_page !== 'undefined' ? default_per_page : 25;
 
 //http://mathiasbynens.be/notes/localstorage-pattern
-function localstorage_supported()
-{
-   var storage, fail, uid;
-   var supported = false;
-   
-   try {
-         uid = new Date;
-         (storage = window.localStorage).setItem(uid, uid);
-         fail = storage.getItem(uid) != uid;
-         storage.removeItem(uid);
-         fail && (storage = false);
-   } catch(e) { }
-   
-   if(storage) 
-	   supported = true;
-   
-   return supported;
+function supports_html5_storage()
+{	
+	try {
+		JSON.parse("{}");
+		return 'localStorage' in window && window['localStorage'] !== null;
+	} catch (e) {
+		return false;
+	}
 }
 
-var use_storage = localstorage_supported();
-
+var use_storage = supports_html5_storage();
+	
 $(document).ready(function() {
 	var mColumns = [];
 	
