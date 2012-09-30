@@ -1396,3 +1396,13 @@ input[type="submit"].btn.btn-mini {
 }
 
 /* End of twitter bootstrap buttons */
+
+.pretty-radio-buttons
+{
+	margin-top: 6px;
+}
+
+.pretty-radio-buttons label
+{
+	margin-right: 10px;
+}

@@ -1856,13 +1856,21 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 	protected function get_true_false_input($field_info,$value)
 	{
+		$this->set_css($this->default_css_path.'/jquery_plugins/uniform/uniform.default.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.uniform.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.uniform.config.js');
+		
 		$value_is_null = empty($value) && $value !== '0' && $value !== 0 ? true : false;
 		
+		$input = "<div class='pretty-radio-buttons'>";
+		
 		$checked = $value === '1' || ($value_is_null && $field_info->default === '1') ? "checked = 'checked'" : "";
-		$input = "<label><input id='field-{$field_info->name}-true'  type='radio' name='{$field_info->name}' value='1' $checked /> ".$this->default_true_false_text[1]."</label> ";
+		$input .= "<label><input id='field-{$field_info->name}-true' class='radio-uniform'  type='radio' name='{$field_info->name}' value='1' $checked /> ".$this->default_true_false_text[1]."</label> ";
 		
 		$checked = $value === '0' || ($value_is_null && $field_info->default === '0') ? "checked = 'checked'" : ""; 
-		$input .= "<label><input id='field-{$field_info->name}-false' type='radio' name='{$field_info->name}' value='0' $checked /> ".$this->default_true_false_text[0]."</label>";
+		$input .= "<label><input id='field-{$field_info->name}-false' class='radio-uniform' type='radio' name='{$field_info->name}' value='0' $checked /> ".$this->default_true_false_text[0]."</label>";
+		
+		$input .= "</div>";
 		
 		return $input;
 	}	

@@ -1,0 +1,3 @@
+$(function(){
+	$(".radio-uniform").uniform();	
+});
