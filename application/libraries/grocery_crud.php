@@ -175,56 +175,46 @@ class grocery_CRUD_Field_Types
 		return $this->basic_model->get_primary_key();
 	}
 	
+	/**
+	 * Get the html input for the specific field with the 
+	 * current value
+	 * 
+	 * @param object $field_info
+	 * @param string $value
+	 * @return object
+	 */
 	protected function get_field_input($field_info, $value = null)
 	{
 			$real_type = $field_info->crud_type;
-			switch ($real_type) {
-				case 'integer':
-					$field_info->input = $this->get_integer_input($field_info,$value);
-				break;
-				case 'true_false':
-					$field_info->input = $this->get_true_false_input($field_info,$value);
-				break;
-				case 'string':
-					$field_info->input = $this->get_string_input($field_info,$value);
-				break;
-				case 'text':
-					$field_info->input = $this->get_text_input($field_info,$value);
-				break;
-				case 'date':
-					$field_info->input = $this->get_date_input($field_info,$value);
-				break;
-				case 'datetime':
-					$field_info->input = $this->get_datetime_input($field_info,$value);
-				break;			
-				case 'enum':
-					$field_info->input = $this->get_enum_input($field_info,$value);
-				break;
-				case 'set':
-					$field_info->input = $this->get_set_input($field_info,$value);
-				break;
-				case 'relation':
-					$field_info->input = $this->get_relation_input($field_info,$value);
-				break;
-				case 'relation_n_n':
-					$field_info->input = $this->get_relation_n_n_input($field_info,$value);
-				break;								
-				case 'upload_file':
-					$field_info->input = $this->get_upload_file_input($field_info,$value);
-				break;
-				case 'hidden':
-					$field_info->input = $this->get_hidden_input($field_info,$value);
-				break;
-				case 'password':
-					$field_info->input = $this->get_password_input($field_info,$value);
-				break;															
-				case 'readonly':
-					$field_info->input = $this->get_readonly_input($field_info,$value);
-				break;				
-				
-				default:
-					$field_info->input = $this->get_string_input($field_info,$value);
-				break;
+			
+			$types_array = array(
+					'integer', 
+					'text',
+					'true_false',
+					'string', 
+					'date',
+					'datetime',
+					'enum',
+					'set',
+					'relation', 
+					'relation_n_n',
+					'upload_file',
+					'hidden',
+					'password', 
+					'readonly',
+					'dropdown'
+					);
+			
+			if (in_array($real_type,$types_array)) {
+				/* A quick way to go to an internal method of type $this->get_{type}_input . 
+				 * For example if the real type is integer then we will use the method
+				 * $this->get_integer_input
+				 *  */
+				$field_info->input = $this->{"get_".$real_type."_input"}($field_info,$value);
+			}
+			else
+			{
+				$field_info->input = $this->get_string_input($field_info,$value);
 			}
 		
 		return $field_info;
@@ -2023,10 +2013,38 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		return $input;
 	}	
 
+	protected function get_dropdown_input($field_info,$value)
+	{
+		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+	
+		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
+		
+		$input = "<select id='field-{$field_info->name}' name='{$field_info->name}' class='chosen-select' data-placeholder='".$select_title."'>";
+		$options = array('' => '') + $field_info->extras;
+		foreach($options as $option_value => $option_label)
+		{
+			$selected = !empty($value) && $value == $option_value ? "selected='selected'" : '';
+			$input .= "<option value='$option_value' $selected >$option_label</option>";
+		}
+	
+		$input .= "</select>";
+		return $input;
+	}	
+	
 	protected function get_enum_input($field_info,$value)
 	{
-		$input = "<select id='field-{$field_info->name}' name='{$field_info->name}'>";
+		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+		
+		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
+		
+		$input = "<select id='field-{$field_info->name}' name='{$field_info->name}' class='chosen-select' data-placeholder='".$select_title."'>";
 		$options_array = $field_info->extras !== false && is_array($field_info->extras)? $field_info->extras : explode("','",substr($field_info->db_max_length,1,-1));
+		$options_array = array('' => '') + $options_array;
+		
 		foreach($options_array as $option)
 		{
 			$selected = !empty($value) && $value == $option ? "selected='selected'" : '';
@@ -2070,7 +2088,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{
 		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 		
 		$ajax_limitation = 10000;
@@ -2866,9 +2883,9 @@ class grocery_CRUD extends grocery_CRUD_States
 	 */
 	const	VERSION = "1.3";
 	
-	const	JQUERY = "jquery-1.8.1.min.js";
-	const	JQUERY_UI_JS = "jquery-ui-1.8.23.custom.min.js";
-	const	JQUERY_UI_CSS = "jquery-ui-1.8.23.custom.css";
+	const	JQUERY 			= "jquery-1.8.1.min.js";
+	const	JQUERY_UI_JS 	= "jquery-ui-1.8.23.custom.min.js";
+	const	JQUERY_UI_CSS 	= "jquery-ui-1.8.23.custom.css";
 	
 	private $state_code 			= null;
 	private $state_info 			= null;
