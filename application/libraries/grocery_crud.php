@@ -202,8 +202,9 @@ class grocery_CRUD_Field_Types
 					'hidden',
 					'password', 
 					'readonly',
-					'dropdown'
-					);
+					'dropdown',
+					'multiselect'
+			);
 			
 			if (in_array($real_type,$types_array)) {
 				/* A quick way to go to an internal method of type $this->get_{type}_input . 
@@ -267,7 +268,17 @@ class grocery_CRUD_Field_Types
 			break;
 			case 'enum':
 				$value = $this->character_limiter($value,$this->character_limiter,"...");
-			break;	
+			break;
+
+			case 'multiselect':
+				$value_as_array = array();
+				foreach(explode(",",$value) as $row_value)
+				{
+					$value_as_array[] = array_key_exists($row_value,$field_info->extras) ? $field_info->extras[$row_value] : $row_value;
+				}
+				$value = implode(",",$value_as_array);
+			break;			
+			
 			case 'relation_n_n':
 				$value = $this->character_limiter(str_replace(',',', ',$value),$this->character_limiter,"...");
 			break;						
@@ -275,6 +286,10 @@ class grocery_CRUD_Field_Types
 			case 'password':
 				$value = '******';
 			break;
+			
+			case 'dropdown':
+				$value = array_key_exists($value,$field_info->extras) ? $field_info->extras[$value] : $value; 
+			break;			
 			
 			case 'upload_file':
 				if(empty($value))
@@ -767,9 +782,19 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$types = $this->get_field_types();
 				foreach($add_fields as $num_row => $field)
 				{
+					/* If the multiselect or the set is empty then the browser doesn't send an empty array. Instead it sends nothing */
+					if(isset($types[$field->field_name]->crud_type) && ($types[$field->field_name]->crud_type == 'set' || $types[$field->field_name]->crud_type == 'multiselect') && !isset($post_data[$field->field_name]))
+					{
+						$post_data[$field->field_name] = array();
+					}
+					
 					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
 					{
-						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && $post_data[$field->field_name] === '')
+						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && is_array($post_data[$field->field_name]) && empty($post_data[$field->field_name]))
+						{
+							$insert_data[$field->field_name] = null;
+						}
+						elseif(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && $post_data[$field->field_name] === '')
 						{
 							$insert_data[$field->field_name] = null;
 						}
@@ -781,7 +806,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						{
 							//This empty if statement is to make sure that a readonly field will never inserted/updated
 						}	
-						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'set')
+						elseif(isset($types[$field->field_name]->crud_type) && ($types[$field->field_name]->crud_type == 'set' || $types[$field->field_name]->crud_type == 'multiselect'))
 						{
 							$insert_data[$field->field_name] = !empty($post_data[$field->field_name]) ? implode(',',$post_data[$field->field_name]) : '';
 						}											
@@ -878,9 +903,19 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$types = $this->get_field_types();
 				foreach($edit_fields as $num_row => $field)
 				{
+					/* If the multiselect or the set is empty then the browser doesn't send an empty array. Instead it sends nothing */
+					if(isset($types[$field->field_name]->crud_type) && ($types[$field->field_name]->crud_type == 'set' || $types[$field->field_name]->crud_type == 'multiselect') && !isset($post_data[$field->field_name]))
+					{
+						$post_data[$field->field_name] = array();
+					}					
+					
 					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
 					{
-						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && $post_data[$field->field_name] === '')
+						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && is_array($post_data[$field->field_name]) && empty($post_data[$field->field_name]))
+						{
+							$update_data[$field->field_name] = null;
+						}
+						elseif(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && $post_data[$field->field_name] === '')
 						{
 							$update_data[$field->field_name] = null;
 						}
@@ -892,7 +927,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						{
 							//This empty if statement is to make sure that a readonly field will never inserted/updated 
 						}
-						elseif(isset($types[$field->field_name]->crud_type) && $types[$field->field_name]->crud_type == 'set')
+						elseif(isset($types[$field->field_name]->crud_type) && ($types[$field->field_name]->crud_type == 'set' || $types[$field->field_name]->crud_type == 'multiselect'))
 						{
 							$update_data[$field->field_name] = !empty($post_data[$field->field_name]) ? implode(',',$post_data[$field->field_name]) : '';
 						}										
@@ -2089,6 +2124,30 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			
 		$input .= "</select>";
 		
+		return $input;
+	}	
+	
+	protected function get_multiselect_input($field_info,$value)
+	{
+		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+	
+		$options_array = $field_info->extras;
+		$selected_values 	= !empty($value) ? explode(",",$value) : array();
+	
+		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
+		$input = "<select id='field-{$field_info->name}' name='{$field_info->name}[]' multiple='multiple' size='8' class='chosen-multiple-select' data-placeholder='$select_title' style='width:510px;' >";
+	
+		foreach($options_array as $option_value => $option_label)
+		{
+			$selected = !empty($value) && in_array($option_value,$selected_values) ? "selected='selected'" : '';
+			$input .= "<option value='$option_value' $selected >$option_label</option>";
+		}
+	
+		$input .= "</select>";
+	
 		return $input;
 	}	
 	
