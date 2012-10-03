@@ -1,6 +1,5 @@
 var default_per_page = typeof default_per_page !== 'undefined' ? default_per_page : 25;
 
-//http://mathiasbynens.be/notes/localstorage-pattern
 function supports_html5_storage()
 {	
 	try {
@@ -43,7 +42,7 @@ $(document).ready(function() {
 	     });		
 	}
 	
-	oTable = $('#groceryCrudTable').dataTable({
+	var oTable = $('#groceryCrudTable').dataTable({
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
 		"bStateSave": use_storage,
@@ -77,6 +76,39 @@ $(document).ready(function() {
 	    }
 	});
 
+	$("#groceryCrudTable tfoot input").keyup( function () {
+		oTable.fnFilter( this.value, $("#groceryCrudTable tfoot input").index(this) );
+		
+		if(use_storage)
+		{
+			var search_values_array = [];
+			
+			$("#groceryCrudTable tfoot tr th").each(function(index,value){
+				search_values_array[index] = $(this).children(':first').val();
+			});
+		
+			localStorage.setItem( 'datatables_search_'+ unique_hash ,'["' + search_values_array.join('","') + '"]');
+		}
+	} );
+	
+	var search_values = localStorage.getItem('datatables_search_'+ unique_hash);
+	
+	if( search_values !== null)
+	{
+		$.each($.parseJSON(search_values),function(num,val){
+			if(val !== '')
+			{
+				$("#groceryCrudTable tfoot tr th:eq("+num+")").children(':first').val(val);
+			}
+		});
+	}
+	
+	$('.clear-filtering').click(function(){
+		localStorage.removeItem( 'DataTables_' + unique_hash);
+		localStorage.removeItem( 'datatables_search_'+ unique_hash);
+		window.location.reload();
+	});
+	
 	$('a[role=button]').live("mouseover mouseout", function(event) {
 		  if ( event.type == "mouseover" ) {
 			  $(this).addClass('ui-state-hover');

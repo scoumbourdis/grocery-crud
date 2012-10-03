@@ -235,3 +235,28 @@ ul.chzn-choices li.search-field input
 {
 	min-width: 200px;
 }
+tfoot tr th input
+{
+	color:#000;
+	border: 1px solid #999;
+}
+tfoot tr th input::-webkit-input-placeholder {
+    color:    #999;
+    border: 1px solid #CCC;
+}
+tfoot tr th input:-moz-placeholder {
+    color:    #999;
+    border: 1px solid #CCC;
+}
+tfoot tr th input:-ms-input-placeholder {
+    color:    #999;
+    border: 1px solid #CCC;
+}
+table.dataTable thead tr th
+{
+	text-align:left;
+}
+table.dataTable thead tr th.actions
+{
+	text-align:right;
+} 
