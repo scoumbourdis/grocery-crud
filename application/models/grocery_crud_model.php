@@ -491,7 +491,15 @@ class grocery_CRUD_Model  extends CI_Model  {
     		
     		if(isset($type[1]))
     		{
-    			$length = substr($type[1],0,-1);
+    			if(substr($type[1],-1) == ')')
+    			{
+    				$length = substr($type[1],0,-1);
+    			}
+    			else
+    			{
+    				list($length) = explode(" ",$type[1]);
+    				$length = substr($length,0,-1);
+    			}
     		}
     		else 
     		{
