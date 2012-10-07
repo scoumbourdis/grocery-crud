@@ -32,7 +32,6 @@ class Examples extends CI_Controller {
 	function offices_management()
 	{
 		try{
-			/* This is only for the autocompletion */
 			$crud = new grocery_CRUD();
 
 			$crud->set_theme('datatables');
