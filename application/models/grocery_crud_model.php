@@ -636,3 +636,390 @@ class grocery_CRUD_Model  extends CI_Model  {
     }
 		
 }
+
+
+/**
+ * Grocery CRUD Model driver 
+ */
+class gcrud_drivered_model extends grocery_CRUD_Model {
+
+    protected  $driver_name='';
+    protected  $driver_obj=NULL;
+    protected static $driverfolder='sys/gcrud/driver/';
+    protected static $driver_prefix='gcrud_driver_';
+    
+    function __construct() {        
+        parent::__construct(); 
+        //Load a drivername
+        include  APPPATH.'config/database.php';
+        $this->driver_name=$db['default']['dbdriver'];        
+    }
+
+    /**
+     * FUNTION TO DRIVE
+     */
+    function get_list() {
+        if ($this->table_name === null)
+            return false;
+
+        $select = "{$this->table_name}.*";
+
+        //set_relation special queries 
+        if (!empty($this->relation)) {
+            foreach ($this->relation as $relation) {
+                list($field_name, $related_table, $related_field_title) = $relation;
+                $unique_join_name = $this->_unique_join_name($field_name);
+                $unique_field_name = $this->_unique_field_name($field_name);
+
+                if (strstr($related_field_title, '{')) {
+                    $related_field_title = str_replace(" ", "&nbsp;", $related_field_title);
+                    //HERE:
+                    $select .= $this->do_drive_get_list_select_relation($related_field_title,$unique_join_name,$unique_field_name);                    
+                           
+                } else {
+                    $select .= ", $unique_join_name.$related_field_title AS $unique_field_name";
+                }
+
+                if ($this->field_exists($related_field_title))
+                    $select .= ", `{$this->table_name}`.$related_field_title AS '{$this->table_name}.$related_field_title'";
+            }
+        }
+
+        //set_relation_n_n special queries. We prefer sub queries from a simple join for the relation_n_n as it is faster and more stable on big tables.
+        if (!empty($this->relation_n_n)) {
+            $select = $this->relation_n_n_queries($select);
+        }
+        
+        $this->db->select($select, false);
+
+        if (CI_VERSION == '2.1.0' || CI_VERSION == '2.1.1') {//This hack is only for the release 2.1.1 that it seems that it has lot of bugs. They didn't even change the CI_VERSION to 2.1.1!
+            $results = $this->_hack_for_CI_2_1_1()->data;
+        } else {
+            $results = $this->db->get($this->table_name)->result();
+        }
+
+        return $results;
+    }
+    
+    protected function do_drive_get_list_select_relation($related_field_title,$unique_join_name,$unique_field_name){
+        return  ", CONCAT('" .
+                            str_replace(
+                                    array('{', '}'), array("',COALESCE({$unique_join_name}.", ", ''),'"), str_replace("'", "\\'", $related_field_title)
+                            ) . "') as $unique_field_name";
+    }
+    /**
+     * FUNTION TO DRIVE
+     */
+
+    protected function _hack_for_CI_2_1_1() {
+       $this->do_drive_hack_for_CI_2_1_1();
+    }
+
+    
+    function do_drive_hack_for_CI_2_1_1() {
+        return parent::_hack_for_CI_2_1_1();
+    }
+    
+    /**
+     * FUNTION TO DRIVE
+     */
+
+    protected function relation_n_n_queries($select) {
+        $this_table_primary_key = $this->get_primary_key();
+        foreach ($this->relation_n_n as $relation_n_n) {
+            list($field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table,
+                    $primary_key_alias_to_selection_table, $title_field_selection_table, $priority_field_relation_table) = array_values((array) $relation_n_n);
+
+            $primary_key_selection_table = $this->get_primary_key($selection_table);
+
+            $field = "";
+            $use_template = strpos($title_field_selection_table, '{') !== false;
+            $field_name_hash = $this->_unique_field_name($title_field_selection_table);
+            if ($use_template) {
+                $title_field_selection_table = str_replace(" ", "&nbsp;", $title_field_selection_table);
+                //HERE:
+                $field .= $this->do_drive_relation_n_n_queries_select_field($title_field_selection_table);
+            } else {
+                $field .= "$selection_table.$title_field_selection_table";
+            }
+
+            //Sorry Codeigniter but you cannot help me with the subquery!
+            //HERE:
+            $select .= $this->do_drive_relation_n_n_queries_select_group_concat($field, $field_name, $primary_key_alias_to_this_table, $this_table_primary_key, $primary_key_alias_to_selection_table, $selection_table, $primary_key_selection_table, $relation_table);
+        }
+
+        return $select;
+    }
+
+     protected function do_drive_relation_n_n_queries_select_group_concat(
+                $field,
+                $field_name, 
+                $primary_key_alias_to_this_table,
+                $this_table_primary_key,
+                $primary_key_alias_to_selection_table,
+                $selection_table,
+                $primary_key_selection_table,
+                $relation_table
+                ){
+         return  ", (SELECT GROUP_CONCAT(DISTINCT $field) FROM $selection_table "
+                    . "LEFT JOIN $relation_table ON $relation_table.$primary_key_alias_to_selection_table = $selection_table.$primary_key_selection_table "
+                    . "WHERE $relation_table.$primary_key_alias_to_this_table = `{$this->table_name}`.$this_table_primary_key GROUP BY $relation_table.$primary_key_alias_to_this_table) AS $field_name";
+     }
+     
+     protected function do_drive_relation_n_n_queries_select_field($title_field_selection_table){
+         return  "CONCAT('" . str_replace(array('{', '}'), 
+                 array("',COALESCE(", ", ''),'"),
+                 str_replace("'", "\\'", $title_field_selection_table)) . "')";
+     }
+    
+    /**
+     * FUNTION TO DRIVE
+     */
+
+    function get_relation_array($field_name, $related_table, $related_field_title, $where_clause, $order_by, $limit = null, $search_like = null) {
+        $relation_array = array();
+        $field_name_hash = $this->_unique_field_name($field_name);
+
+        $related_primary_key = $this->get_primary_key($related_table);
+
+        $select = "$related_table.$related_primary_key, ";
+
+        if (strstr($related_field_title, '{')) {
+            $related_field_title = str_replace(" ", "&nbsp;", $related_field_title);
+            //HERE:
+            $select .= $this->do_drive_get_relation_array_select ($related_field_title,$field_name_hash);
+        } else {
+            $select .= "$related_table.$related_field_title as $field_name_hash";
+        }
+        
+        $this->db->select($select, false);
+        if ($where_clause !== null)
+            $this->db->where($where_clause);
+
+        if ($where_clause !== null)
+            $this->db->where($where_clause);
+
+        if ($limit !== null)
+            $this->db->limit($limit);
+
+        if ($search_like !== null)
+        //HERE:?
+            $this->db->having("$field_name_hash LIKE '%" . $this->db->escape_like_str($search_like) . "%'");
+
+        $order_by !== null ? $this->db->order_by($order_by) : $this->db->order_by($field_name_hash);
+
+        $results = $this->db->get($related_table)->result();
+
+        foreach ($results as $row) {
+            $relation_array[$row->$related_primary_key] = $row->$field_name_hash;
+        }
+
+        return $relation_array;
+    }
+    
+    function do_drive_get_relation_array_select ($related_field_title,$field_name_hash){
+        return
+        "CONCAT('" . str_replace(array('{', '}'), array("',COALESCE(", ", ''),'"),
+                str_replace("'", "\\'", $related_field_title)) . "')
+                as $field_name_hash";
+    }
+    
+    /**
+     * FUNTION TO DRIVE
+     */
+
+    function get_relation_n_n_selection_array($primary_key_value, $field_info) {
+        $select = "";
+        $related_field_title = $field_info->title_field_selection_table;
+        $use_template = strpos($related_field_title, '{') !== false;
+        ;
+        $field_name_hash = $this->_unique_field_name($related_field_title);
+        if ($use_template) {
+            $related_field_title = str_replace(" ", "&nbsp;", $related_field_title);
+            //HERE:
+            $select .= "CONCAT('" . str_replace(array('{', '}'), array("',COALESCE(", ", ''),'"), str_replace("'", "\\'", $related_field_title)) . "') as $field_name_hash";
+        } else {
+            $select .= "$related_field_title as $field_name_hash";
+        }
+        $this->db->select('*, ' . $select, false);
+
+        $selection_primary_key = $this->get_primary_key($field_info->selection_table);
+
+        if (empty($field_info->priority_field_relation_table)) {
+            if (!$use_template) {
+                $this->db->order_by("{$field_info->selection_table}.{$field_info->title_field_selection_table}");
+            }
+        } else {
+            $this->db->order_by("{$field_info->relation_table}.{$field_info->priority_field_relation_table}");
+        }
+        $this->db->where($field_info->primary_key_alias_to_this_table, $primary_key_value);
+        $this->db->join(
+                $field_info->selection_table, "{$field_info->relation_table}.{$field_info->primary_key_alias_to_selection_table} = {$field_info->selection_table}.{$selection_primary_key}"
+        );
+        $results = $this->db->get($field_info->relation_table)->result();
+
+        $results_array = array();
+        foreach ($results as $row) {
+            $results_array[$row->{$field_info->primary_key_alias_to_selection_table}] = $row->{$field_name_hash};
+        }
+
+        return $results_array;
+    }
+
+    /**
+     * FUNTION TO DRIVE
+     */
+    
+    function get_relation_n_n_unselected_array($field_info, $selected_values) {
+        $use_where_clause = !empty($field_info->where_clause);
+
+        $select = "";
+        $related_field_title = $field_info->title_field_selection_table;
+        $use_template = strpos($related_field_title, '{') !== false;
+        $field_name_hash = $this->_unique_field_name($related_field_title);
+
+        if ($use_template) {
+            $related_field_title = str_replace(" ", "&nbsp;", $related_field_title);
+            //HERE:
+            $select .= "CONCAT('" . str_replace(array('{', '}'), array("',COALESCE(", ", ''),'"), str_replace("'", "\\'", $related_field_title)) . "') as $field_name_hash";
+        } else {
+            $select .= "$related_field_title as $field_name_hash";
+        }
+        $this->db->select('*, ' . $select, false);
+
+        if ($use_where_clause) {
+            $this->db->where($field_info->where_clause);
+        }
+
+        $selection_primary_key = $this->get_primary_key($field_info->selection_table);
+        if (!$use_template)
+            $this->db->order_by("{$field_info->selection_table}.{$field_info->title_field_selection_table}");
+        $results = $this->db->get($field_info->selection_table)->result();
+
+        $results_array = array();
+        foreach ($results as $row) {
+            if (!isset($selected_values[$row->$selection_primary_key]))
+                $results_array[$row->$selection_primary_key] = $row->{$field_name_hash};
+        }
+
+        return $results_array;
+    }
+
+    /**
+     * FUNTION TO DRIVE
+     */        
+    
+    function get_field_types_basic_table(){         
+        return $this->do_drive_get_field_types_basic_table();
+    }    
+    
+    function do_drive_get_field_types_basic_table() {        
+        return parent::get_field_types_basic_table();        
+    }
+
+   
+    function get_field_types($table_name) {
+        return $this->do_drive_get_field_types($table_name);
+    }
+    function do_drive_get_field_types($table_name) {
+        return parent::get_field_types($table_name);
+    }
+    
+    
+    function field_exists($field, $table_name = null) {
+        return $this->do_drive_field_exists($field,$table_name);
+    }    
+    function do_drive_field_exists($field, $table_name = null) {        
+        return parent::field_exists($field, $table_name);
+    }    
+    
+    function get_primary_key($related_table=''){
+        return $this->do_drive_get_primary_key($related_table);
+    }
+    function do_drive_get_primary_key($related_table=''){
+        return parent::get_primary_key();
+    }
+    
+}
+
+/**
+ * Grocery CRUD Model for sqlite3
+ */
+class gcrud_driver_sqlite3 extends gcrud_drivered_model {
+
+    protected $sqlite3 = 0;
+
+    function __construct() {
+        parent::__construct();
+    }
+    
+    protected function do_drive_get_list_select_relation($related_field_title,$unique_join_name, $unique_field_name) {
+        $rfield_title = str_replace("'", "\\'", $related_field_title);
+        $apertura = "'||COALESCE({$unique_join_name}.";
+        $cierre = ", '')||'";
+        $replace2 = str_replace(array('{', '}'), array($apertura, $cierre), $rfield_title);
+        return ", ('$replace2') as $unique_field_name";
+    }
+
+    function do_drive_hack_for_CI_2_1_1() {
+        $temp_debug_value = $this->db->db_debug;
+        $this->db->db_debug = false;
+        $db_result = $this->db->get($this->table_name);
+        return (object) array('data' => $db_result->result(), 'num_rows' => $db_result->num_rows());
+    }
+    function do_drive_get_relation_array_select ($related_field_title,$field_name_hash){
+            $related_field_title = str_replace(" ", "&nbsp;", $related_field_title);
+            $apertura = "'||COALESCE("; 
+            $cierre = ", '')||'"; 
+            return "('" . str_replace(array('{', '}'), array($apertura, $cierre), str_replace("'", "\\'", $related_field_title)) . "') as $field_name_hash";
+    }
+    
+    function do_drive_field_exists($field, $table_name = null) {
+        if (empty($table_name)) {
+            $table_name = $this->table_name;
+        }
+        foreach ($this->db->query("pragma table_info($table_name);")->result() as $db_field_type) {
+            if ($db_field_type->name == $field) {
+                return true;
+            }
+        }
+        return false;
+    }
+   
+    function do_drive_get_field_types_basic_table() {
+        return $this->get_field_types($this->table_name);
+    }
+    function do_drive_get_primary_key($related_table=''){
+        //FIXME:
+        return 'id';
+    }
+    function do_drive_get_field_types($table_name) {
+        $db_field_types = array();
+        foreach ($this->db->query("pragma table_info($table_name);")->result() as $db_field_type) {
+            $type = explode("(", $db_field_type->type);
+            $db_type = $type[0];
+
+            if (isset($type[1])) {
+                $length = substr($type[1], 0, -1);
+            } else {
+                $length = '';
+            }
+            $db_field_types[$db_field_type->name] = new stdClass();
+            $db_field_types[$db_field_type->name]->max_length =
+                    $db_field_types[$db_field_type->name]->db_max_length = $length;
+            $db_field_types[$db_field_type->name]->type =
+                    $db_field_types[$db_field_type->name]->db_type = $db_type;
+            $db_field_types[$db_field_type->name]->db_null = $db_field_type->notnull == 1;
+
+            //Parche
+            $db_field_types[$db_field_type->name]->db_extra = $db_field_type->pk ? 'auto_increment' : ''; //???
+
+            $db_field_types[$db_field_type->name]->primary_key = $db_field_type->pk;
+            $db_field_types[$db_field_type->name]->default = $db_field_type->dflt_value;
+            $db_field_types[$db_field_type->name]->name = $db_field_type->name;
+        }
+        
+        return $db_field_types;
+    }
+
+}
