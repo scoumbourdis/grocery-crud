@@ -1,10 +1,10 @@
 <?php
 
 $language_alias = array(
-	'afrikaans'		=> 'af',
+	'afrikaans'			=> 'af',
 	'arabic'			=> 'ar', // Timepicker is not avaliable yet
 	'bengali'			=> 'bn', // Timepicker is not avaliable yet
-	'bulgarian'		=> 'bg',
+	'bulgarian'			=> 'bg',
 	'chinese'			=> 'zh-cn',
 	'czech'				=> 'cs',
 	'danish'			=> 'da', // Timepicker is not avaliable yet
@@ -12,20 +12,20 @@ $language_alias = array(
 	'french'			=> 'fr',
 	'german'			=> 'de',
 	'greek'				=> 'el',
-	'hungarian'		=> 'hu',
-	'indonesian'	=> 'id',
+	'hungarian'			=> 'hu',
+	'indonesian'		=> 'id',
 	'italian'			=> 'it',
-	'japanese'		=> 'ja',
+	'japanese'			=> 'ja',
 	'persian'			=> 'fa', // Timepicker is not avaliable yet
 	'polish'			=> 'pl',
 	'pt-br.portuguese'	=> 'pt-br',
 	'pt-pt.portuguese'	=> 'pt',
-	'romanian'		=> 'ro',
+	'romanian'			=> 'ro',
 	'russian'			=> 'ru',
 	'slovak'			=> 'sk',
 	'spanish'			=> 'es',
 	'thai'				=> 'th', // Timepicker is not avaliable yet
 	'turkish'			=> 'tr',
-	'ukrainian'		=> 'uk',
-	'vietnamese'	=> 'vi'
+	'ukrainian'			=> 'uk',
+	'vietnamese'		=> 'vi'
 );
