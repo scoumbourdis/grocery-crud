@@ -17,4 +17,4 @@
 	$config['grocery_crud_text_editor_type'] 	= 'full'; 
 	
 	//The character limiter at the list page, zero(0) value if you don't want character limiter at your list page
-	$config['grocery_crud_character_limiter'] 	= 30; 
+	$config['grocery_crud_character_limiter'] 	= 30;

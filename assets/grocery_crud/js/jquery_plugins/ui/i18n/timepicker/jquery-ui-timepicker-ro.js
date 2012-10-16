@@ -11,10 +11,11 @@
 		timezoneText: 'Fus orar',
 		currentText: 'Acum',
 		closeText: 'Închide',
-		timeFormat: 'hh:mm:ss',
+		timeFormat: 'hh:mm',
 		amNames: ['AM', 'A'],
 		pmNames: ['PM', 'P'],
-		ampm: false
+		ampm: false,
+		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['ro']);
 })(jQuery);

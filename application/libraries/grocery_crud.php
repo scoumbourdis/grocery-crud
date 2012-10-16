@@ -1964,7 +1964,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery.ui.datetime.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery-ui-timepicker-addon.css');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.min.js');
 		
 		if($this->language !== 'english')
 		{
@@ -2951,8 +2951,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	const	VERSION = "1.3";
 	
 	const	JQUERY 			= "jquery-1.8.2.min.js";
-	const	JQUERY_UI_JS 	= "jquery-ui-1.8.23.custom.min.js";
-	const	JQUERY_UI_CSS 	= "jquery-ui-1.8.23.custom.css";
+	const	JQUERY_UI_JS 	= "jquery-ui-1.9.0.custom.min.js";
+	const	JQUERY_UI_CSS 	= "jquery-ui-1.9.0.custom.min.css";
 	
 	private $state_code 			= null;
 	private $state_info 			= null;

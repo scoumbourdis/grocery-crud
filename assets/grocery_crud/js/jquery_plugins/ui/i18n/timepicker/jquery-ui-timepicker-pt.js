@@ -11,10 +11,11 @@
 		timezoneText: 'Fuso horário',
 		currentText: 'Agora',
 		closeText: 'Fechar',
-		timeFormat: 'hh:mm:ss',
+		timeFormat: 'hh:mm',
 		amNames: ['a.m.', 'AM', 'A'],
 		pmNames: ['p.m.', 'PM', 'P'],
-		ampm: false
+		ampm: false,
+		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['pt']);
 })(jQuery);
