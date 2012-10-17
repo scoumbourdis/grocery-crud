@@ -11,10 +11,11 @@
 		timezoneText: 'Zaman Dilimi',
 		currentText: 'Şu an',
 		closeText: 'Tamam',
-		timeFormat: 'hh:mm:ss',
+		timeFormat: 'hh:mm',
 		amNames: ['ÖÖ', 'Ö'],
 		pmNames: ['ÖS', 'S'],
-		ampm: false
+		ampm: false,
+		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['tr']);
 })(jQuery);
