@@ -1,4 +1,5 @@
 var default_per_page = typeof default_per_page !== 'undefined' ? default_per_page : 25;
+var oTable = null;
 
 function supports_html5_storage()
 {	
@@ -42,7 +43,7 @@ $(document).ready(function() {
 	     });		
 	}
 	
-	var oTable = $('#groceryCrudTable').dataTable({
+	oTable = $('#groceryCrudTable').dataTable({
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
 		"bStateSave": use_storage,
