@@ -16,6 +16,7 @@ $language_alias = array(
 	'indonesian'	=> 'id',
 	'italian'		=> 'it',
 	'japanese'		=> 'ja',
+	'korean'		=> 'ko',
 	'persian'		=> 'fa', // Timepicker is not avaliable yet
 	'polish'		=> 'pl',
 	'pt-br.portuguese'	=> 'pt-br',
