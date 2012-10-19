@@ -2208,8 +2208,21 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);	
 			$this->set_css($this->default_css_path.'/jquery_plugins/ui.multiselect.css');
 			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);	
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui.multiselect.js');
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui.multiselect.min.js');
 			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.multiselect.js');
+
+			if($this->language !== 'english')
+			{
+				include($this->default_config_path.'/language_alias.php');
+				if(array_key_exists($this->language, $language_alias))
+				{
+					$i18n_date_js_file = $this->default_javascript_path.'/jquery_plugins/ui/i18n/multiselect/ui-multiselect-'.$language_alias[$this->language].'.js';
+					if(file_exists($i18n_date_js_file))
+					{
+						$this->set_js($i18n_date_js_file);
+					}
+				}
+			}
 		}
 		else 
 		{
