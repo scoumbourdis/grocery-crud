@@ -2324,11 +2324,12 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			var error_max_number_of_files 	= "'.$this->l('error_max_number_of_files').'";
 			var error_accept_file_types 	= "'.$this->l('error_accept_file_types').'";
 			var error_max_file_size 		= "'.str_replace("{max_file_size}",$max_file_size_ui,$this->l('error_max_file_size')).'";
-			var error_min_file_size 		= "'.$this->l('error_min_file_size').'";				
-		');		
-		
-		
-		
+			var error_min_file_size 		= "'.$this->l('error_min_file_size').'";
+
+			var base_url = "'.base_url().'";
+			var upload_a_file_string = "'.$this->l('form_upload_a_file').'";			
+		');
+
 		$uploader_display_none 	= empty($value) ? "" : "display:none;";
 		$file_display_none  	= empty($value) ?  "display:none;" : "";
 		

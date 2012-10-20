@@ -4,11 +4,6 @@
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');	
 	$this->set_js($this->default_theme_path.'/flexigrid/js/flexigrid-add.js');
 ?>
-<script type='text/javascript'>
-	var base_url = '<?php echo base_url();?>';
-	
-	var upload_a_file_string = '<?php echo $this->l('form_upload_a_file');?>';
-</script>
 <div class="flexigrid crud-form" style='width: 100%;'>	
 	<div class="mDiv">
 		<div class="ftitle">
