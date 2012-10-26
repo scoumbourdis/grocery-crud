@@ -1,5 +1,5 @@
 <?php  
-	/* Translated by Moslem Mansouri www.hozn.ir */
+	/* Translated by Moslem Mansouri www.itkak.com +989163996607 */
 	$lang['list_add'] 				= 'افزودن';
 	$lang['list_actions'] 			= 'عمل';
 	$lang['list_page'] 				= 'صفحه';	
@@ -50,27 +50,27 @@
 	$lang['update_error']			= 'در ویرایش اطلاعات مشکلی وجود دارد.';
 	
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';	
-	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
+	$lang['set_relation_title']		= 'انتخاب {field_display_as}';	
+	$lang['list_record']			= 'رکورد';
+	$lang['form_inactive']			= 'غیرفعال';
+	$lang['form_active']			= 'فعال';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
+	$lang['form_save_and_go_back']	= 'ذخیره و بازگشت به لیست';
+	$lang['form_update_and_go_back']= 'ویرایش و بازگشت به لیست';
 
 	/* Upload functionality */
-	$lang['string_delete_file'] 	= "Deleting file";
-	$lang['string_progress'] 		= "Progress: ";
-	$lang['error_on_uploading'] 	= "An error has occurred on uploading.";
-	$lang['message_prompt_delete_file'] 	= "Are you sure that you want to delete this file?";
+	$lang['string_delete_file'] 	= "حذف فایل";
+	$lang['string_progress'] 		= "پردازش: ";
+	$lang['error_on_uploading'] 	= "خطا : در آپلود فایل مشکلی وجود دارد.";
+	$lang['message_prompt_delete_file'] 	= "از حذف فایل اطمینان دارید؟";
 	
-	$lang['error_max_number_of_files'] 	= "You can only upload one file each time.";
-	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
-	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
-	$lang['error_min_file_size'] 		= "You cannot upload an empty file.";
+	$lang['error_max_number_of_files'] 	= "فقط باید یک فایل آپلود شود.";
+	$lang['error_accept_file_types'] 	= "این نوع فایل مجاز نمی باشد.";
+	$lang['error_max_file_size'] 		= "حجم فایل ارسالی نباید بیشتر از {max_file_size} باشد.";
+	$lang['error_min_file_size'] 		= "خطا : اندازه فایل خلی کم است.";
 	
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
-	$lang['minimize_maximize'] = 'Minimize/Maximize';
+	$lang['list_export'] 				= "خروجی اکسل";
+	$lang['list_print'] 				= "نسخه چاپی";
+	$lang['minimize_maximize'] 			= 'نمایش/عدم نمایش';
