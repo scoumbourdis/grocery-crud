@@ -1372,6 +1372,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected $css_files				= array();
 	protected $js_files					= array();
+
+
+	
+	//array of field names. If type of datetime  & adding a new entry it will put current date/time
+	protected $show_now_when_adding_datetime = array();
+
+	// if set it will put current date/time on the datetime input, if adding a new one
+	public function set_datetime_field_show_now_if_adding($field) {
+		$this->show_now_when_adding_datetime[] = $field;
+	}
 	
 	protected function set_basic_Layout()
 	{			
@@ -1990,7 +2000,24 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		else 
 		{
-			$datetime = '';
+			
+			// show current date/time if set up to do so:
+			// state_code 2 = add
+			if ($this->getStateCode() == 2  && in_array($field_info->name,	$this->show_now_when_adding_datetime)) {
+
+				// we are adding a new entry, and this field is in $show_now_when_adding_datetime so show the current date time
+
+				// base current date on current server time() . not using $this->php_date_format because need full date
+				$datetime = date('Y-m-d H:i:s', time());
+
+
+			}
+			else {
+				// just show a blankfield
+				$datetime = '';
+
+			}
+
 		}
 		$input = "<input id='field-{$field_info->name}' name='{$field_info->name}' type='text' value='$datetime' maxlength='19' class='datetime-input' /> 
 		<a class='datetime-input-clear' tabindex='-1'>".$this->l('form_button_clear')."</a>
