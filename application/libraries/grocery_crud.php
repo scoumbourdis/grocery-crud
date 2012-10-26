@@ -1876,7 +1876,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_integer_input($field_info,$value)
 	{
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.numeric.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.numeric.min.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.numeric.config.js');
 		$extra_attributes = '';
 		if(!empty($field_info->db_max_length))
