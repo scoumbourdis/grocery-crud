@@ -947,6 +947,13 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				{
 					foreach($this->relation_n_n as $field_name => $field_info)
 					{
+						if (   $this->unset_edit_fields !== null 
+							&& is_array($this->unset_edit_fields) 
+							&& in_array($field_name,$this->unset_edit_fields)
+						) {
+								continue;
+						}
+						
 						$relation_data = isset( $post_data[$field_name] ) ? $post_data[$field_name] : array() ; 
 						$this->db_relation_n_n_update($field_info, $relation_data ,$primary_key);
 					}
