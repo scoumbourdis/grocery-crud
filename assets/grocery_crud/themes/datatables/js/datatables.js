@@ -107,7 +107,9 @@ $(document).ready(function() {
 	$('.clear-filtering').click(function(){
 		localStorage.removeItem( 'DataTables_' + unique_hash);
 		localStorage.removeItem( 'datatables_search_'+ unique_hash);
-		window.location.reload();
+		
+		oTable.fnFilterClear();
+		$("#groceryCrudTable tfoot tr th input").val("");
 	});
 	
 	$('a[role=button]').live("mouseover mouseout", function(event) {

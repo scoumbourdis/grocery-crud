@@ -8,6 +8,7 @@
 	$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
 	$this->set_js($this->default_theme_path.'/datatables/js/jquery.dataTables.min.js');
+	$this->set_js($this->default_theme_path.'/datatables/js/datatables-extras.js');
 	$this->set_js($this->default_theme_path.'/datatables/js/datatables.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/ZeroClipboard.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/TableTools.min.js');
