@@ -308,14 +308,14 @@ class grocery_CRUD_Field_Types
 								
 					$file_url = base_url().$field_info->extras->upload_path."/$value";
 					
-					$file_url_anchor = "<a href='".$file_url."' target='_blank'>";
+					$file_url_anchor = '<a href="'.$file_url.'"';
 					if($is_image)
 					{
-						$file_url_anchor .= '<img src="'.$file_url.'" height="50" />';
+						$file_url_anchor .= ' class="color-box" rel="color-box"><img src="'.$file_url.'" height="50px">';
 					}
 					else
 					{
-						$file_url_anchor .= $this->character_limiter($value,$this->character_limiter,"...",true);
+						$file_url_anchor .= ' target="_blank">'.$this->character_limiter($value,$this->character_limiter,"...",true);
 					}
 					$file_url_anchor .= "</a>";
 					
@@ -2298,14 +2298,11 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.iframe-transport.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fileupload.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.fileupload.config.js');
-		
-		//Fancybox
-		$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
-		
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.mousewheel-3.0.4.pack.js');		
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.fancybox.config.js');		
+
+		//Colorbox
+		$this->set_css($this->default_css_path.'/jquery_plugins/colorbox/colorbox.css');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.colorbox.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.colorbox.config.js');
 		
 		$unique = uniqid();
 		
@@ -2348,8 +2345,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 								|| substr($value,-5) == '.tiff')
 					? true : false;
 		
-		$image_class = $is_image ? 'image-thumbnail' : '';
-		
 		$input = '<span class="fileinput-button qq-upload-button" id="upload-button-'.$unique.'" style="'.$uploader_display_none.'">
 			<span>'.$this->l('form_upload_a_file').'</span>
 			<input type="file" name="'.$this->_unique_field_name($field_info->name).'" class="gc-file-upload" rel="'.$this->getUploadUrl($field_info->name).'" id="'.$unique.'">
@@ -2362,9 +2357,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$input .= "<div id='uploader_$unique' rel='$unique' class='grocery-crud-uploader' style='$uploader_display_none'></div>";
 		$input .= "<div id='success_$unique' class='upload-success-url' style='$file_display_none padding-top:7px;'>";
-		$input .= "		<a href='".$file_url."' class='open-file $image_class' target='_blank' id='file_$unique'>";
-		$input .= $is_image ? '<img height="50" src="'.$file_url.'"/>': "$value" ;
-		$input .= "</a> ";
+		$input .= "<a href='".$file_url."' id='file_$unique' class='open-file";
+		$input .= $is_image ? " color-box' rel='color-box'><img src='".$file_url."' height='50px'>" : "' target='_blank'>$value";
+		$input .= "</a>&ensp;";
 		$input .= "		<a href='javascript:void(0)' id='delete_$unique' class='delete-anchor'>".$this->l('form_upload_delete')."</a> ";
 		$input .= "</div><div style='clear:both'></div>";
 		$input .= "<div id='loading-$unique' style='display:none'><span id='upload-state-message-$unique'></span> <span class='qq-upload-spinner'></span> <span id='progress-$unique'></span></div>";

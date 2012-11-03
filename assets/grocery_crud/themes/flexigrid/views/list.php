@@ -71,4 +71,9 @@
 	&nbsp;&nbsp;&nbsp;&nbsp; <?php echo $this->l('list_no_items'); ?>
 	<br/>
 	<br/>
-<?php }?>	
+<?php }?>
+<script>
+$(function(){
+	$('a.color-box').colorbox({rel:'color-box'});
+});
+</script>
