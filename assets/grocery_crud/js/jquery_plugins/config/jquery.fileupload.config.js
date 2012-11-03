@@ -8,15 +8,9 @@ function show_upload_button(unique_id, uploader_element)
 	$('#success_'+unique_id).slideUp('fast');	
 }
 
-function load_fancybox(elem)
+function load_colorbox(elem)
 {
-	elem.fancybox({
-		'transitionIn'	:	'elastic',
-		'transitionOut'	:	'elastic',
-		'speedIn'		:	600, 
-		'speedOut'		:	200, 
-		'overlayShow'	:	false
-	});		
+	elem.colorbox({rel:'color-box'});		
 }
 
 $(function(){
@@ -85,13 +79,13 @@ $(function(){
 							? true : false;
 		            	if(is_image)
 		            	{
-		            		$('#file_'+unique_id).addClass('image-thumbnail');
-		            		load_fancybox($('#file_'+unique_id));
-		            		$('#file_'+unique_id).html('<img src="'+file.url+'" height="50" />');
+		            		$('#file_'+unique_id).addClass('color-box');
+		            		load_colorbox($('#file_'+unique_id));
+		            		$('#file_'+unique_id).html('<img src="'+file.url+'" height="50px">');
 		            	}
 		            	else
 		            	{
-		            		$('#file_'+unique_id).removeClass('image-thumbnail');
+		            		$('#file_'+unique_id).removeClass('color-box');
 		            		$('#file_'+unique_id).unbind("click");
 		            		$('#file_'+unique_id).html(file_name);
 		            	}

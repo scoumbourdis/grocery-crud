@@ -1,12 +1,13 @@
 <?php  
 	$this->set_css($this->default_theme_path.'/flexigrid/css/flexigrid.css');
+	$this->set_css($this->default_css_path.'/jquery_plugins/colorbox/colorbox.css');
 	$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 	$this->set_js($this->default_theme_path.'/flexigrid/js/cookies.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/flexigrid.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.numeric.min.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.printElement.min.js');
-	
+	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.colorbox.min.js');
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';

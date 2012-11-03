@@ -5,6 +5,7 @@
 	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');	
 	$this->set_css($this->default_theme_path.'/datatables/css/jquery.dataTables.css');
 	$this->set_css($this->default_theme_path.'/datatables/extras/TableTools/media/css/TableTools.css');
+	$this->set_css($this->default_css_path.'/jquery_plugins/colorbox/colorbox.css');
 	$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
 	$this->set_js($this->default_theme_path.'/datatables/js/jquery.dataTables.min.js');
@@ -12,6 +13,8 @@
 	$this->set_js($this->default_theme_path.'/datatables/js/datatables.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/ZeroClipboard.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/TableTools.min.js');
+	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.colorbox.min.js');
+	$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.colorbox.config.js');
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
