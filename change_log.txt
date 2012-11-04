@@ -4,6 +4,7 @@ v 1.3.3
 	#113 - Relation n_n missing when unset field.
 	Adding languages: Bengali, Slovak, Korean.
 	Stop supporting Codeigniter version 2.1.1 with ugly workarounds.
+	Use fancybox for previewing the thumbnails at the list page.
 	Updating jQuery to version 1.8.2 
 	Updating jQuery Plugins:
 		- jQuery UI Library to v1.9.0
