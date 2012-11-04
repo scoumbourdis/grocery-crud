@@ -308,7 +308,7 @@ class grocery_CRUD_Field_Types
 								
 					$file_url = base_url().$field_info->extras->upload_path."/$value";
 					
-					$file_url_anchor = "<a href='".$file_url."' target='_blank'>";
+					$file_url_anchor = "<a href='".$file_url."' target='_blank' class='image-thumbnail'>";
 					if($is_image)
 					{
 						$file_url_anchor .= '<img src="'.$file_url.'" height="50" />';
@@ -3864,7 +3864,6 @@ class grocery_CRUD extends grocery_CRUD_States
 	 * Or else ... make it work! The web application takes decision of what to do and show it to the final user.
 	 * Without this function nothing works. Here is the core of grocery CRUD project.
 	 * 
-	 * @return void
 	 * @access	public
 	 */
 	public function render()

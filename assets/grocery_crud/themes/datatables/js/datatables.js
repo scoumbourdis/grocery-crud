@@ -70,6 +70,15 @@ $(document).ready(function() {
 		        "sLast":     paging_last
 		    }		
 		},
+		"fnDrawCallback": function() {
+			$('.image-thumbnail').fancybox({
+				'transitionIn'	:	'elastic',
+				'transitionOut'	:	'elastic',
+				'speedIn'		:	600, 
+				'speedOut'		:	200, 
+				'overlayShow'	:	false
+			});			
+		},
 		"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
 	    "oTableTools": {
 	    	"aButtons": aButtons,
@@ -118,7 +127,7 @@ $(document).ready(function() {
 		  } else {
 			  $(this).removeClass('ui-state-hover');
 		  }
-	});	
+	});
 	
 	$('th.actions').unbind('click');
 	$('th.actions>div').html($('th.actions>div').text());
