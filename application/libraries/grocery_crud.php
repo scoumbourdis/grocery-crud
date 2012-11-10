@@ -2304,7 +2304,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.mousewheel-3.0.4.pack.js');		
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.mousewheel.min.js');		
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.fancybox.config.js');		
 		
 		$unique = uniqid();
