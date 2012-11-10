@@ -1,5 +1,5 @@
 	$(function() {
-		var tinymce_path = base_url+'assets/grocery_crud/texteditor/tiny_mce/';
+		var tinymce_path = default_texteditor_path+'/tiny_mce/';
 	
 		var tinymce_options = {
 
@@ -38,5 +38,10 @@
 			};
 		
 		$('textarea.texteditor').tinymce(tinymce_options);
-		$('textarea.mini-texteditor').tinymce(tinymce_options);
+		
+		var minimal_tinymce_options = $.extend({}, tinymce_options);
+		minimal_tinymce_options.theme = "simple";
+		
+		$('textarea.mini-texteditor').tinymce(minimal_tinymce_options);
+		
 	});
