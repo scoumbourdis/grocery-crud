@@ -308,16 +308,16 @@ class grocery_CRUD_Field_Types
 								
 					$file_url = base_url().$field_info->extras->upload_path."/$value";
 					
-					$file_url_anchor = "<a href='".$file_url."' target='_blank' class='image-thumbnail'>";
+					$file_url_anchor = '<a href="'.$file_url.'"';
 					if($is_image)
 					{
-						$file_url_anchor .= '<img src="'.$file_url.'" height="50" />';
+						$file_url_anchor .= ' class="image-thumbnail"><img src="'.$file_url.'" height="50px">';
 					}
 					else
 					{
-						$file_url_anchor .= $this->character_limiter($value,$this->character_limiter,"...",true);
+						$file_url_anchor .= ' target="_blank">'.$this->character_limiter($value,$this->character_limiter,'...',true);
 					}
-					$file_url_anchor .= "</a>";
+					$file_url_anchor .= '</a>';
 					
 					$value = $file_url_anchor;
 				}
@@ -2362,10 +2362,10 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$input .= "<div id='uploader_$unique' rel='$unique' class='grocery-crud-uploader' style='$uploader_display_none'></div>";
 		$input .= "<div id='success_$unique' class='upload-success-url' style='$file_display_none padding-top:7px;'>";
-		$input .= "		<a href='".$file_url."' class='open-file $image_class' target='_blank' id='file_$unique'>";
-		$input .= $is_image ? '<img height="50" src="'.$file_url.'"/>': "$value" ;
+		$input .= "<a href='".$file_url."' id='file_$unique' class='open-file";
+		$input .= $is_image ? " $image_class'><img src='".$file_url."' height='50px'>" : "' target='_blank'>$value";
 		$input .= "</a> ";
-		$input .= "		<a href='javascript:void(0)' id='delete_$unique' class='delete-anchor'>".$this->l('form_upload_delete')."</a> ";
+		$input .= "<a href='javascript:void(0)' id='delete_$unique' class='delete-anchor'>".$this->l('form_upload_delete')."</a> ";
 		$input .= "</div><div style='clear:both'></div>";
 		$input .= "<div id='loading-$unique' style='display:none'><span id='upload-state-message-$unique'></span> <span class='qq-upload-spinner'></span> <span id='progress-$unique'></span></div>";
 		$input .= "<div style='display:none'><a href='".$this->getUploadUrl($field_info->name)."' id='url_$unique'></a></div>";
