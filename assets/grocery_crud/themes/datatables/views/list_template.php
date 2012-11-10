@@ -17,7 +17,7 @@
 	$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');
-	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.mousewheel-3.0.4.pack.js');	
+	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.mousewheel.min.js');	
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
