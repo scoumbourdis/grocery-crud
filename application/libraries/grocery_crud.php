@@ -2942,7 +2942,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.3
+ * @version    	1.3.3
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com> 
  */
 
@@ -2965,7 +2965,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	 * 
 	 * @var	string
 	 */
-	const	VERSION = "1.3";
+	const	VERSION = "1.3.3";
 	
 	const	JQUERY 			= "jquery-1.8.2.min.js";
 	const	JQUERY_UI_JS 	= "jquery-ui-1.9.0.custom.min.js";
@@ -3826,6 +3826,9 @@ class grocery_CRUD extends grocery_CRUD_States
 		{
 			$this->character_limiter = 30; //is better to have the number 30 rather than the 0 value
 		}
+		
+		/** Initialize JavaScript variables */
+		$this->_inline_js("var base_url = '".base_url()."'");
 	}
 	
 	protected function _set_primary_keys_to_model()
