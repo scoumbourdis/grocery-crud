@@ -1253,6 +1253,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					'max_file_size'		=> $max_file_size_bytes
 				);
 				$upload_handler = new UploadHandler($options);
+				$upload_handler->default_config_path = $this->default_config_path;
 				$uploader_response = $upload_handler->post();
 				
 				if(is_array($uploader_response))
@@ -4544,6 +4545,7 @@ if(defined('CI_VERSION'))
 class UploadHandler
 {
     private $options;
+    public $default_config_path = null;
     
     function __construct($options=null) {
         $this->options = array(
@@ -4737,7 +4739,8 @@ class UploadHandler
 		{
 			return preg_replace("/([^a-zA-Z0-9\.\-\_]+?){1}/i", '-', $file_name);
 		}
-		return preg_replace(array_keys($translit_characters), array_values($translit_characters), $file_name);
+		$transformed_file_name = preg_replace(array_keys($translit_characters), array_values($translit_characters), $file_name);
+		return str_replace(" ", "-", $transformed_file_name);
 	}
 
     private function orient_image($file_path) {
