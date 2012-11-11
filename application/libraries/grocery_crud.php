@@ -4725,10 +4725,20 @@ class UploadHandler
         }
 
         //Ensure that we don't have disallowed characters and add a unique id just to ensure that the file name will be unique
-        $file_name = substr(uniqid(),-5).'-'.preg_replace("/([^a-zA-Z0-9\.\-\_]+?){1}/i", '-', $file_name);
+        $file_name = substr(uniqid(),-5).'-'.$this->_transliterate_characters($file_name);
 
         return $file_name;
     }
+
+    private function _transliterate_characters($file_name)
+	{
+		include('assets/grocery_crud/config/translit_chars.php');
+		if ( ! isset($translit_characters))
+		{
+			return preg_replace("/([^a-zA-Z0-9\.\-\_]+?){1}/i", '-', $file_name);
+		}
+		return preg_replace(array_keys($translit_characters), array_values($translit_characters), $file_name);
+	}
 
     private function orient_image($file_path) {
       	$exif = exif_read_data($file_path);
