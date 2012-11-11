@@ -4732,7 +4732,7 @@ class UploadHandler
 
     private function _transliterate_characters($file_name)
 	{
-		include('assets/grocery_crud/config/translit_chars.php');
+		include($this->default_config_path.'/translit_chars.php');
 		if ( ! isset($translit_characters))
 		{
 			return preg_replace("/([^a-zA-Z0-9\.\-\_]+?){1}/i", '-', $file_name);
