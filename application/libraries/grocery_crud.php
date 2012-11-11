@@ -1845,6 +1845,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		if($this->echo_and_die === false)
 		{
+			/** Initialize JavaScript variables */
+			$js_vars =  array(
+					'default_javascript_path'	=> base_url().$this->default_javascript_path,
+					'default_css_path'			=> base_url().$this->default_css_path,
+					'default_texteditor_path'	=> base_url().$this->default_texteditor_path,
+					'default_theme_path'		=> base_url().$this->default_theme_path,
+					'base_url'				 	=> base_url()
+			);
+			$this->_add_js_vars($js_vars);			
+			
 			return (object)array('output' => $this->views_as_string, 'js_files' => $js_files, 'css_files' => $css_files);
 		}
 		elseif($this->echo_and_die === true)
@@ -3835,16 +3845,6 @@ class grocery_CRUD extends grocery_CRUD_States
 		{
 			$this->character_limiter = 30; //is better to have the number 30 rather than the 0 value
 		}
-		
-		/** Initialize JavaScript variables */
-		$js_vars =  array(
-			'default_javascript_path'	=> base_url().$this->default_javascript_path,
-			'default_css_path'			=> base_url().$this->default_css_path,
-			'default_texteditor_path'	=> base_url().$this->default_texteditor_path,
-			'default_theme_path'		=> base_url().$this->default_theme_path,
-			'base_url'				 	=> base_url()
-		);
-		$this->_add_js_vars($js_vars);
 	}
 	
 	protected function _set_primary_keys_to_model()
