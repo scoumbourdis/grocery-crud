@@ -4729,6 +4729,9 @@ class UploadHandler
         //Ensure that we don't have disallowed characters and add a unique id just to ensure that the file name will be unique
         $file_name = substr(uniqid(),-5).'-'.$this->_transliterate_characters($file_name);
 
+        //all the characters has to be lowercase
+        $file_name = strtolower($file_name);
+        
         return $file_name;
     }
 
