@@ -101,7 +101,7 @@
 ?></div>	
 <?php if(!$unset_add){?>
 <div class="datatables-add-button">
-<a role="button" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="<?php echo $add_url?>">
+<a role="button" class="add_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="<?php echo $add_url?>">
 	<span class="ui-button-icon-primary ui-icon ui-icon-circle-plus"></span>
 	<span class="ui-button-text"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
 </a>

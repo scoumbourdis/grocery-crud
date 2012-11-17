@@ -1406,3 +1406,7 @@ input[type="submit"].btn.btn-mini {
 {
 	margin-right: 10px;
 }
+.ui-widget
+{
+	font-size: 12px !important;
+}

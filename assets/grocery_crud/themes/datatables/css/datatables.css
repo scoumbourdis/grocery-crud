@@ -256,3 +256,7 @@ table.dataTable thead tr th.actions
 {
 	text-align:right;
 } 
+.ui-widget
+{
+	font-size: 12px !important;
+}

@@ -1380,6 +1380,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected $css_files				= array();
 	protected $js_files					= array();
+	protected $js_lib_files				= array();
+	protected $js_config_files			= array();
 	
 	protected function set_basic_Layout()
 	{			
@@ -1445,6 +1447,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		if(!$ajax)
 		{
 			$data->list_view = $this->_theme_view('list.php',$data,true);
+			$this->set_js($this->default_javascript_path.'/common/list.js');
 			$this->_theme_view('list_template.php',$data);	
 		}
 		else
@@ -1649,7 +1652,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function showAddForm()
 	{
-		$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
+		$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1669,7 +1672,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function showEditForm($state_info)
 	{
-		$this->set_js($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
+		$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 		
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
@@ -1691,6 +1694,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$this->_theme_view('edit.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
+		
+		$this->_get_ajax_results();
 	}
 	
 	protected function delete_layout($delete_result = true)
@@ -1819,7 +1824,19 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{
 		$this->js_files[sha1($js_file)] = base_url().$js_file;
 	}
-
+	
+	public function set_js_lib($js_file)
+	{
+		$this->js_lib_files[sha1($js_file)] = base_url().$js_file;
+		$this->js_files[sha1($js_file)] = base_url().$js_file;
+	}
+	
+	public function set_js_config($js_file)
+	{
+		$this->js_config_files[sha1($js_file)] = base_url().$js_file;
+		$this->js_files[sha1($js_file)] = base_url().$js_file;
+	}	
+	
 	public function get_css_files()
 	{
 		return $this->css_files;
@@ -1828,7 +1845,49 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	public function get_js_files()
 	{
 		return $this->js_files;
+	}
+
+	public function get_js_lib_files()
+	{
+		return $this->js_lib_files;
+	}
+	
+	public function get_js_config_files()
+	{
+		return $this->js_config_files;
 	}	
+	
+	/** 
+	 * Load Javascripts
+	 **/
+	protected function load_js_fancybox()
+	{
+		$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
+		
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');		
+	}
+	
+	protected function load_js_chosen()
+	{
+		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
+	}	
+	
+	protected function load_js_uploader()
+	{
+		$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
+		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/file-uploader.css');
+		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/jquery.fileupload-ui.css');
+		
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/tmpl.min.js');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/load-image.min.js');
+		
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.iframe-transport.js');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.fileupload.js');
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.fileupload.config.js');		
+	}
 	
 	protected function get_layout()
 	{		
@@ -2072,10 +2131,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 	protected function get_dropdown_input($field_info,$value)
 	{
-		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
-	
+		$this->load_js_chosen();
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+		
 		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
 		
 		$input = "<select id='field-{$field_info->name}' name='{$field_info->name}' class='chosen-select' data-placeholder='".$select_title."'>";
@@ -2092,9 +2150,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_enum_input($field_info,$value)
 	{
-		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+		$this->load_js_chosen();
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 		
 		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
 		
@@ -2119,10 +2176,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_set_input($field_info,$value)
 	{
-		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+		$this->load_js_chosen();
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 		
 		$options_array = $field_info->extras !== false && is_array($field_info->extras)? $field_info->extras : explode("','",substr($field_info->db_max_length,1,-1));
 		$selected_values 	= !empty($value) ? explode(",",$value) : array();
@@ -2143,10 +2198,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_multiselect_input($field_info,$value)
 	{
-		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+		$this->load_js_chosen();
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 	
 		$options_array = $field_info->extras;
 		$selected_values 	= !empty($value) ? explode(",",$value) : array();
@@ -2167,9 +2220,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_relation_input($field_info,$value)
 	{
-		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+		$this->load_js_chosen();
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 		
 		$ajax_limitation = 10000;
 		$total_rows = $this->get_relation_total_rows($field_info->extras);
@@ -2297,25 +2349,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	}
 	
 	protected function get_upload_file_input($field_info, $value)
-	{
-		$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
-		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/file-uploader.css');
-		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/jquery.fileupload-ui.css');
-
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/tmpl.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/load-image.min.js');
-
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.iframe-transport.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fileupload.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.fileupload.config.js');
+	{	
+		$this->load_js_uploader();
 		
 		//Fancybox
-		$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
+		$this->load_js_fancybox();
 		
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');	
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.fancybox.config.js');		
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.fancybox.config.js');		
 		
 		$unique = uniqid();
 		
@@ -2494,6 +2534,24 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	public function set_theme($theme = null)
 	{
 		$this->theme = $theme;
+	}
+	
+	protected function _get_ajax_results()
+	{
+		if (array_key_exists('is_ajax', $_POST) && $_POST['is_ajax'] == 'true') {
+			@ob_end_clean();
+			$results= (object)array(
+					'output' => $this->views_as_string,
+					'js_files' => array_values($this->get_js_files()),
+					'js_lib_files' => array_values($this->get_js_lib_files()),
+					'js_config_files' => array_values($this->get_js_config_files()),
+					'css_files' => array_values($this->get_css_files())
+			);
+			
+			echo json_encode($results);
+			die;
+		}
+		//else just continue
 	}
 	
 	protected function _theme_view($view, $vars = array(), $return = FALSE)
@@ -2988,8 +3046,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	const	VERSION = "1.3.3";
 	
 	const	JQUERY 			= "jquery-1.8.2.min.js";
-	const	JQUERY_UI_JS 	= "jquery-ui-1.9.0.custom.min.js";
-	const	JQUERY_UI_CSS 	= "jquery-ui-1.9.0.custom.min.css";
+	const	JQUERY_UI_JS 	= "jquery-ui-1.9.1.custom.min.js";
+	const	JQUERY_UI_CSS 	= "jquery-ui-1.9.1.custom.min.css";
 	
 	private $state_code 			= null;
 	private $state_info 			= null;
