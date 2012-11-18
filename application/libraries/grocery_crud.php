@@ -2009,22 +2009,22 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$editor = $this->config->default_text_editor;
 			switch ($editor) {
 				case 'ckeditor':
-					$this->set_js($this->default_texteditor_path.'/ckeditor/ckeditor.js');
-					$this->set_js($this->default_texteditor_path.'/ckeditor/adapters/jquery.js');
-					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.ckeditor.config.js');
+					$this->set_js_lib($this->default_texteditor_path.'/ckeditor/ckeditor.js');
+					$this->set_js_lib($this->default_texteditor_path.'/ckeditor/adapters/jquery.js');
+					$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.ckeditor.config.js');
 				break;
 				
 				case 'tinymce':
-					$this->set_js($this->default_texteditor_path.'/tiny_mce/jquery.tinymce.js');
-					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.tine_mce.config.js');					
+					$this->set_js_lib($this->default_texteditor_path.'/tiny_mce/jquery.tinymce.js');
+					$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.tine_mce.config.js');					
 				break;
 				
 				case 'markitup':
 					$this->set_css($this->default_texteditor_path.'/markitup/skins/markitup/style.css');
 					$this->set_css($this->default_texteditor_path.'/markitup/sets/default/style.css');
 					
-					$this->set_js($this->default_texteditor_path.'/markitup/jquery.markitup.js');
-					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.markitup.config.js');
+					$this->set_js_lib($this->default_texteditor_path.'/markitup/jquery.markitup.js');
+					$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.markitup.config.js');
 				break;				
 			}
 			

@@ -33,7 +33,6 @@ var add_edit_button_listener = function() {
 				$("<div/>").html(data.output).dialog({
 					width: 910,
 					modal: true,
-					minHeight: 600,
 					height: dialog_height,
 					close: function(){
 						$(this).remove();
