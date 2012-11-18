@@ -1,8 +1,10 @@
 var js_libraries = [];
 
-var edit_button_listener = function() {
-	$('.edit_button').unbind('click');
-	$('.edit_button').click(function(){
+var add_edit_button_listener = function() {
+	var dialog_height = $(window).height() - 80;
+
+	$('.edit_button,.add_button').unbind('click');
+	$('.edit_button,.add_button').click(function(){
 		$.ajax({
 			url: $(this).attr("href"),
 			data: {
@@ -25,15 +27,14 @@ var edit_button_listener = function() {
 				});
 				
 				$.each(data.css_files,function(index,css_file){
-					if ($('head').find('link[href="'+css_file+'"]').length == 0) {
-						$('head').append($('<link/>').attr("type","text/css")
-								.attr("rel","stylesheet").attr("href",css_file));
-					}
+					load_css_file(css_file);
 				});				
 				
 				$("<div/>").html(data.output).dialog({
-					width: 810,
+					width: 910,
 					modal: true,
+					minHeight: 600,
+					height: dialog_height,
 					close: function(){
 						$(this).remove();
 					}
@@ -49,4 +50,11 @@ var load_js_file = function(js_file) {
 	script.type = 'text/javascript'; 
 	script.src = js_file;
 	document.body.appendChild(script);
-}
+};
+
+var load_css_file = function(css_file) {
+	if ($('head').find('link[href="'+css_file+'"]').length == 0) {
+		$('head').append($('<link/>').attr("type","text/css")
+				.attr("rel","stylesheet").attr("href",css_file));
+	}
+};

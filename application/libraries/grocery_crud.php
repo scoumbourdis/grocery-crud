@@ -1668,6 +1668,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$this->_theme_view('add.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
+		
+		$this->_get_ajax_results();
 	}
 	
 	protected function showEditForm($state_info)
@@ -1872,6 +1874,12 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{
 		$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
 		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
+	}
+	
+	protected function load_js_jqueryui()
+	{
+		$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
 	}	
 	
 	protected function load_js_uploader()
@@ -2036,7 +2044,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery.ui.datetime.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery-ui-timepicker-addon.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.min.js');
 		
 		if($this->language !== 'english')
@@ -2538,6 +2546,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function _get_ajax_results()
 	{
+		//This is a $_POST request rather that $_GET request , because 
+		//Codeigniter doesn't like the $_GET requests! 
 		if (array_key_exists('is_ajax', $_POST) && $_POST['is_ajax'] == 'true') {
 			@ob_end_clean();
 			$results= (object)array(

@@ -78,7 +78,7 @@ $(document).ready(function() {
 				'speedOut'		:	200, 
 				'overlayShow'	:	false
 			});
-			edit_button_listener();
+			add_edit_button_listener();
 		},
 		"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
 	    "oTableTools": {

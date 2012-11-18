@@ -26,6 +26,7 @@ $(function(){
 	};
 	
 	call_fancybox();
+	add_edit_button_listener();
 	
 	$('#filtering_form').submit(function(){		
 		var crud_page =  parseInt($('#crud_page').val());
@@ -49,6 +50,7 @@ $(function(){
 					 success:    function(data){
 						$('#ajax_list').html(data);
 						call_fancybox();
+						add_edit_button_listener();
 					 }
 				}); 
 			 }

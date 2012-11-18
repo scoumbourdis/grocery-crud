@@ -12,6 +12,9 @@
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');	
 	
+	/** Jquery UI */
+	$this->load_js_jqueryui();
+	
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
@@ -45,7 +48,7 @@ if($success_message !== null){?>
 	<div class="tDiv">
 		<?php if(!$unset_add){?>
 		<div class="tDiv2">
-        	<a href='<?php echo $add_url?>' title='<?php echo $this->l('list_add'); ?> <?php echo $subject?>' class='add-anchor'>
+        	<a href='<?php echo $add_url?>' title='<?php echo $this->l('list_add'); ?> <?php echo $subject?>' class='add-anchor add_button'>
 			<div class="fbutton">
 				<div>
 					<span class="add"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
