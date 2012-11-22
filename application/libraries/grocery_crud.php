@@ -1447,7 +1447,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		if(!$ajax)
 		{
 			$data->list_view = $this->_theme_view('list.php',$data,true);
-			$this->set_js($this->default_javascript_path.'/common/list.js');
+			$this->set_js_lib($this->default_javascript_path.'/common/lazyload-min.js');
+			$this->set_js_lib($this->default_javascript_path.'/common/list.js');
 			$this->_theme_view('list_template.php',$data);	
 		}
 		else
@@ -1961,8 +1962,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	
 	protected function get_integer_input($field_info,$value)
 	{
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.numeric.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.numeric.config.js');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.numeric.min.js');
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.numeric.config.js');
 		$extra_attributes = '';
 		if(!empty($field_info->db_max_length))
 			$extra_attributes .= "maxlength='{$field_info->db_max_length}'"; 
@@ -1973,8 +1974,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function get_true_false_input($field_info,$value)
 	{
 		$this->set_css($this->default_css_path.'/jquery_plugins/uniform/uniform.default.css');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.uniform.min.js');
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.uniform.config.js');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.uniform.min.js');
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.uniform.config.js');
 		
 		$value_is_null = empty($value) && $value !== '0' && $value !== 0 ? true : false;
 		
@@ -2045,7 +2046,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery.ui.datetime.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery-ui-timepicker-addon.css');
 		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.min.js');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.min.js');
 		
 		if($this->language !== 'english')
 		{
@@ -2055,18 +2056,18 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				$i18n_date_js_file = $this->default_javascript_path.'/jquery_plugins/ui/i18n/datepicker/jquery.ui.datepicker-'.$language_alias[$this->language].'.js'; 
 				if(file_exists($i18n_date_js_file))
 				{
-					$this->set_js($i18n_date_js_file);
+					$this->set_js_lib($i18n_date_js_file);
 				}
 				
 				$i18n_datetime_js_file = $this->default_javascript_path.'/jquery_plugins/ui/i18n/timepicker/jquery-ui-timepicker-'.$language_alias[$this->language].'.js';
 				if(file_exists($i18n_datetime_js_file))
 				{
-					$this->set_js($i18n_datetime_js_file);
+					$this->set_js_lib($i18n_datetime_js_file);
 				}				
 			}
 		}
 		
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery-ui-timepicker-addon.config.js');
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery-ui-timepicker-addon.config.js');
 		
 		if(!empty($value) && $value != '0000-00-00 00:00:00' && $value != '1970-01-01 00:00:00'){
 			list($year,$month,$day) = explode('-',substr($value,0,10));
@@ -2105,7 +2106,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function get_date_input($field_info,$value)
 	{	
 		$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
 		
 		if($this->language !== 'english')
 		{
@@ -2115,12 +2116,12 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				$i18n_date_js_file = $this->default_javascript_path.'/jquery_plugins/ui/i18n/datepicker/jquery.ui.datepicker-'.$language_alias[$this->language].'.js';
 				if(file_exists($i18n_date_js_file))
 				{
-					$this->set_js($i18n_date_js_file);
+					$this->set_js_lib($i18n_date_js_file);
 				}
 			}
 		}		
 		
-		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.datepicker.config.js');
+		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.datepicker.config.js');
 		
 		if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
 		{
@@ -2281,9 +2282,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		{
 			$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);	
 			$this->set_css($this->default_css_path.'/jquery_plugins/ui.multiselect.css');
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);	
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui.multiselect.min.js');
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.multiselect.js');
+			$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);	
+			$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui.multiselect.min.js');
+			$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.multiselect.js');
 
 			if($this->language !== 'english')
 			{
@@ -2293,7 +2294,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 					$i18n_date_js_file = $this->default_javascript_path.'/jquery_plugins/ui/i18n/multiselect/ui-multiselect-'.$language_alias[$this->language].'.js';
 					if(file_exists($i18n_date_js_file))
 					{
-						$this->set_js($i18n_date_js_file);
+						$this->set_js_lib($i18n_date_js_file);
 					}
 				}
 			}
@@ -2301,9 +2302,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		else 
 		{
 			$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
-			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+			$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');			
+			$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 		}
 		
 		$this->_inline_js("var ajax_relation_url = '".$this->getAjaxRelationUrl()."';\n");

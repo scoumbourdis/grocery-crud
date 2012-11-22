@@ -1,10 +1,10 @@
 <?php  
 	
 	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');
-	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');	
-	$this->set_js($this->default_theme_path.'/datatables/js/datatables-edit.js');
+	$this->set_js_lib($this->default_theme_path.'/flexigrid/js/jquery.form.js');	
+	$this->set_js_config($this->default_theme_path.'/datatables/js/datatables-edit.js');
 	$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
-	$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);	
+	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);	
 ?>
 <div class='ui-widget-content ui-corner-all datatables'>
 	<h3 class="ui-accordion-header ui-helper-reset ui-state-default form-title">

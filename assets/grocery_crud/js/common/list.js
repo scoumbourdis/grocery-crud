@@ -14,17 +14,8 @@ var add_edit_button_listener = function() {
 			dataType: 'json',
 			success: function(data){
 				
-				$.each(data.js_files,function(index,js_file){
-					if($.inArray(js_file,js_libraries) === -1) {
-						load_js_file(js_file);
-						
-						if($.inArray(js_file,data.js_lib_files) !== -1) {
-							js_libraries.push(js_file);
-							load_js_file(js_file);			
-						}
-						
-					}
-				});
+				LazyLoad.loadOnce(data.js_lib_files);
+				LazyLoad.load(data.js_config_files);
 				
 				$.each(data.css_files,function(index,css_file){
 					load_css_file(css_file);
@@ -43,13 +34,6 @@ var add_edit_button_listener = function() {
 		return false;
 	});	
 }
-
-var load_js_file = function(js_file) {
-	var script = document.createElement('script'); 
-	script.type = 'text/javascript'; 
-	script.src = js_file;
-	document.body.appendChild(script);
-};
 
 var load_css_file = function(css_file) {
 	if ($('head').find('link[href="'+css_file+'"]').length == 0) {
