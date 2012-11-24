@@ -49,23 +49,17 @@ $(function(){
 								{
 									window.location = data.success_list_url;
 									return true;
-								}								
+								}
 								
-								$('#report-error').hide().html('');									
-								$('.field_error').each(function(){
-									$(this).removeClass('field_error');
-								});									
-								
-								$('#report-success').html(data.success_message);
-								$('#report-success').slideDown('slow');
+								success_message(data.success_message);
 							}
 							else
 							{
-								alert( message_update_error );
+								error_message(message_update_error);
 							}
 						},
 						error: function(){
-							alert( message_update_error );
+							error_message( message_update_error );
 						}
 					});
 				}

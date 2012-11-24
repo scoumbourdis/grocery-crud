@@ -147,17 +147,12 @@ $(function(){
 					if(data.success)
 					{
 						$('#ajax_refresh_and_loading').trigger('click');
-						if ($('#report-success').is(":empty")) {
-							$('#report-success').html( data.success_message ).slideDown('slow');
-						} else {
-							$('#report-success').html( data.success_message ).fadeOut('fast').fadeIn('slow').fadeOut('fast').fadeIn('slow');
-						}
-						$('#report-error').html('').slideUp('fast');
+						
+						success_message(data.success_message);
 					}
 					else
 					{
-						$('#report-error').html( data.error_message ).slideUp('fast').slideDown('slow');						
-						$('#report-success').html('').slideUp('fast');						
+						error_message(data.error_message);							
 						
 					}
 				}
