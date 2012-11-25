@@ -2979,8 +2979,14 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			break;
 			
 			case 9:
-			case 10:
 				
+			break;
+			
+			case 10:
+				if($first_parameter !== null)
+				{
+					$state_info = (object)array('primary_key' => $first_parameter);
+				}
 			break;
 
 			case 11:
