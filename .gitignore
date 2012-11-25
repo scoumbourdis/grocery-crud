@@ -31,6 +31,7 @@ application/hooks/
 application/index.html
 application/language/
 application/libraries/index.html
+application/libraries/grocery_crud_extended.php
 application/logs/
 assets/uploads/images/
 application/models/index.html
