@@ -66,7 +66,7 @@ $(function(){
 						$('.field_error').removeClass('field_error');
 						error_message(data.error_message);
 						$.each(data.error_fields, function(index,value){
-							$('input[name='+index+']').addClass('field_error');
+							$('#crudForm input[name='+index+']').addClass('field_error');
 						});
 						
 					}
