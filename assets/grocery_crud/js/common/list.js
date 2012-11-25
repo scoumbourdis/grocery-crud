@@ -13,6 +13,11 @@ var add_edit_button_listener = function() {
 			type: 'post',
 			dataType: 'json',
 			success: function(data){
+				if (typeof CKEDITOR !== 'undefined' && typeof CKEDITOR.instances !== 'undefined') {
+						$.each(CKEDITOR.instances,function(index){
+							delete CKEDITOR.instances[index];
+						});					
+				}
 				
 				LazyLoad.loadOnce(data.js_lib_files);
 				LazyLoad.load(data.js_config_files);
