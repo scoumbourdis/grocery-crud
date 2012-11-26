@@ -299,13 +299,11 @@ class grocery_CRUD_Field_Types
 				else
 				{
 					$is_image = !empty($value) &&
-					( substr($value,-4) == '.jpg'
-							|| substr($value,-4) == '.png'
-							|| substr($value,-5) == '.jpeg'
-							|| substr($value,-4) == '.gif'
-							|| substr($value,-5) == '.tiff')
-							? true : false;		
-								
+                					( strtolower(substr($value, -4)) == '.jpg'
+                					|| strtolower(substr($value, -4)) == '.png'
+					                || strtolower(substr($value, -5)) == '.jpeg'
+					                || strtolower(substr($value, -4)) == '.gif'
+					                || strtolower(substr($value, -5)) == '.tiff') ? true : false;				
 					$file_url = base_url().$field_info->extras->upload_path."/$value";
 					
 					$file_url_anchor = "<a href='".$file_url."' target='_blank'>";
@@ -2322,14 +2320,14 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$uploader_display_none 	= empty($value) ? "" : "display:none;";
 		$file_display_none  	= empty($value) ?  "display:none;" : "";
-		
-		$is_image = !empty($value) && 
-						( substr($value,-4) == '.jpg' 
-								|| substr($value,-4) == '.png' 
-								|| substr($value,-5) == '.jpeg' 
-								|| substr($value,-4) == '.gif' 
-								|| substr($value,-5) == '.tiff')
-					? true : false;
+				
+		$is_image = !empty($value) &&
+                				( strtolower(substr($value, -4)) == '.jpg'
+					                || strtolower(substr($value, -4)) == '.png'
+					                || strtolower(substr($value, -5)) == '.jpeg'
+					                || strtolower(substr($value, -4)) == '.gif'
+					                || strtolower(substr($value, -5)) == '.tiff')
+				           ? true : false;						
 		
 		$image_class = $is_image ? 'image-thumbnail' : '';
 		
