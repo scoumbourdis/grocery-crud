@@ -1838,6 +1838,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->js_files[sha1($js_file)] = base_url().$js_file;
 	}	
 	
+	public function is_IE7()
+	{
+		return isset($_SERVER['HTTP_USER_AGENT']) 
+					&& (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7') !== false) 
+					? true : false;
+	}
+	
 	public function get_css_files()
 	{
 		return $this->css_files;

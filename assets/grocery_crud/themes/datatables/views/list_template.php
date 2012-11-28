@@ -10,7 +10,10 @@
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
 	$this->set_js_lib($this->default_javascript_path.'/common/lazyload-min.js');
-	$this->set_js_lib($this->default_javascript_path.'/common/list.js');	
+	
+	if (!$this->is_IE7()) {
+		$this->set_js_lib($this->default_javascript_path.'/common/list.js');
+	}	
 	
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
 	$this->set_js($this->default_theme_path.'/datatables/js/jquery.dataTables.min.js');
