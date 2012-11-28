@@ -72,6 +72,6 @@
 	$lang['error_min_file_size'] 		= "لا يمكنك رفع ملف فارغ .";
 
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
-	$lang['minimize_maximize'] = 'Minimize/Maximize';
+	$lang['list_export'] 	= "استخراج";
+	$lang['list_print'] 	= "اطبع";
+	$lang['minimize_maximize'] = 'تكبير\تصغير';
