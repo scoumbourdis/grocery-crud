@@ -7,9 +7,9 @@ function success_message(success_message)
 		  layout: 'top',
 		  callback: {
 		    afterShow: function() {
-		    	var noty_id = this.options.id;
+		    	
 		        setTimeout(function(){
-		            $.noty.close(noty_id);             
+		        	$.noty.closeAll();                 
 		        },7000);
 		    }
 		  }  
