@@ -56,7 +56,7 @@
 	$lang['form_active']			= 'ทำงาน';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'บันทึกและกลับไปยังรายการt';
+	$lang['form_save_and_go_back']	= 'บันทึกและกลับไปยังรายการ';
 	$lang['form_update_and_go_back']= 'อัพเดตและกลับไปยังรายการ';
 
 	/* Upload functionality */
