@@ -1,4 +1,4 @@
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="groceryCrudTable">
+<table cellpadding="0" cellspacing="0" border="0" class="display groceryCrudTable" id="<?php echo uniqid(); ?>">
 	<thead>
 		<tr>
 			<?php foreach($columns as $column){?>
