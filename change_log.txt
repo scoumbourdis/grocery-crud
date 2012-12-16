@@ -1,5 +1,6 @@
 v 1.4
 	#129 - Small bug uploading images.
+	#142 - Extras doesn't work properly when the field doesn't exist in the database
 	Add and Edit forms are now loaded through AJAX
 	Noty Jquery Plugin to load all the messages (errors, success, information)
 v 1.3.3
