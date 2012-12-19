@@ -654,6 +654,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		
 		$field_types = $this->get_field_types();
 		$required_fields = $this->required_fields;
+		$unique_fields = $this->_unique_fields;
 		$add_fields = $this->get_add_fields();
 		
 		if(!empty($required_fields))
@@ -667,6 +668,32 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				}	
 			}			
 		}
+		
+		/** Checking for unique fields. If the field value is not unique then 
+		 * return a validation error straight away, if not continue... */
+		if(!empty($unique_fields))
+		{
+			$form_validation = $this->form_validation();
+		
+			foreach($add_fields as $add_field)
+			{
+				$field_name = $add_field->field_name;
+				if(in_array( $field_name, $unique_fields) )
+				{
+					$form_validation->set_rules( $field_name,
+							$field_types[$field_name]->display_as,
+							'is_unique['.$this->basic_db_table.'.'.$field_name.']');
+				}
+			}
+		
+			if(!$form_validation->run())
+			{
+				$validation_result->error_message = $form_validation->error_string();
+				$validation_result->error_fields = $form_validation->_error_array;
+		
+				return $validation_result;
+			}
+		}		
 		
 		if(!empty($this->validation_rules))
 		{		
@@ -720,6 +747,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		
 		$field_types = $this->get_field_types();
 		$required_fields = $this->required_fields;
+		$unique_fields = $this->_unique_fields;
 		$edit_fields = $this->get_edit_fields();
 		
 		if(!empty($required_fields))
@@ -733,6 +761,54 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				}	
 			}			
 		}
+		
+		
+		/** Checking for unique fields. If the field value is not unique then
+		 * return a validation error straight away, if not continue... */		
+		if(!empty($unique_fields))
+		{
+			$form_validation = $this->form_validation();
+		
+			$form_validation_check = false;
+		
+			foreach($edit_fields as $edit_field)
+			{
+				$field_name = $edit_field->field_name;
+				if(in_array( $field_name, $unique_fields) )
+				{
+					$state_info = $this->getStateInfo();
+					$primary_key = $this->get_primary_key();
+					$field_name_value = $_POST[$field_name];
+		
+					$this->basic_model->where($primary_key,$state_info->primary_key);
+					$row = $this->basic_model->get_row();
+					
+					if(empty($row->$field_name)) {
+						throw new Exception("The field name doesn't exist in the database. ".
+								 			"Please use the required fields only for fields ".
+											"that exists in the database");
+					} 
+					
+					$previous_field_name_value = $row->$field_name;
+					
+					if(!empty($previous_field_name_value) && $previous_field_name_value != $field_name_value) {
+						$form_validation->set_rules( $field_name,
+								$field_types[$field_name]->display_as,
+								'is_unique['.$this->basic_db_table.'.'.$field_name.']');
+		
+						$form_validation_check = true;
+					}
+				}
+			}
+		
+			if($form_validation_check && !$form_validation->run())
+			{
+				$validation_result->error_message = $form_validation->error_string();
+				$validation_result->error_fields = $form_validation->_error_array;
+		
+				return $validation_result;
+			}
+		}		
 		
 		if(!empty($this->validation_rules))
 		{
@@ -3120,6 +3196,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $or_having 			= array();
 	protected $limit 				= null;
 	protected $required_fields		= array();
+	protected $_unique_fields 			= array();
 	protected $validation_rules		= array();
 	protected $relation				= array();
 	protected $relation_n_n			= array();
@@ -4480,6 +4557,25 @@ class grocery_CRUD extends grocery_CRUD_States
 		
 		return $this;
 	}
+	
+	/**
+	 * Add the fields that they are as UNIQUE in the database structure
+	 * 
+	 * @return grocery_CRUD
+	 */
+	public function unique_fields()
+	{
+		$args = func_get_args();
+	
+		if(isset($args[0]) && is_array($args[0]))
+		{
+			$args = $args[0];
+		}
+	
+		$this->_unique_fields = $args;
+	
+		return $this;
+	}	
 	
 	/**
 	 * 
