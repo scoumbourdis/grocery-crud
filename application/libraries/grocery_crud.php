@@ -783,10 +783,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$this->basic_model->where($primary_key,$state_info->primary_key);
 					$row = $this->basic_model->get_row();
 					
-					if(empty($row->$field_name)) {
+					if(!isset($row->$field_name)) {
 						throw new Exception("The field name doesn't exist in the database. ".
-								 			"Please use the required fields only for fields ".
-											"that exists in the database");
+								 			"Please use the unique fields only for fields ".
+											"that exist in the database");
 					} 
 					
 					$previous_field_name_value = $row->$field_name;
@@ -1538,6 +1538,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		if(!$ajax)
 		{
+			$this->_add_js_vars(array('dialog_forms' => $this->config->dialog_forms));
+			
 			$data->list_view = $this->_theme_view('list.php',$data,true);
 			$this->_theme_view('list_template.php',$data);	
 		}
@@ -4000,6 +4002,7 @@ class grocery_CRUD extends grocery_CRUD_States
 		$this->config->default_text_editor	= $ci->config->item('grocery_crud_default_text_editor');
 		$this->config->text_editor_type		= $ci->config->item('grocery_crud_text_editor_type');
 		$this->config->character_limiter	= $ci->config->item('grocery_crud_character_limiter');
+		$this->config->dialog_forms			= $ci->config->item('grocery_crud_dialog_forms');
 		
 		/** Initialize default paths */
 		$this->default_javascript_path				= $this->default_assets_path.'/js';

@@ -53,7 +53,7 @@ $(function(){
 										$(this).removeClass('field_error');
 									});									
 									clearForm();
-									success_message(data.success_message);
+									form_success_message(data.success_message);
 								}
 								else
 								{
@@ -69,7 +69,7 @@ $(function(){
 					else
 					{
 						$('.field_error').removeClass('field_error');
-						error_message(data.error_message);
+						form_error_message(data.error_message);
 						$.each(data.error_fields, function(index,value){
 							$('input[name='+index+']').addClass('field_error');
 						});

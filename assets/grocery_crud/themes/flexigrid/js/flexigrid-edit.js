@@ -51,15 +51,15 @@ $(function(){
 									return true;
 								}
 								
-								success_message(data.success_message);
+								form_success_message(data.success_message);
 							}
 							else
 							{
-								error_message(message_update_error);
+								form_error_message(message_update_error);
 							}
 						},
 						error: function(){
-							error_message( message_update_error );
+							form_error_message( message_update_error );
 						}
 					});
 				}

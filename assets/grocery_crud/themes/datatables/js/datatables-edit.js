@@ -39,23 +39,23 @@ $(function(){
 								
 								$('.field_error').removeClass('field_error');
 								
-								success_message(data.success_message);
+								form_success_message(data.success_message);
 								
 							}
 							else
 							{
-								error_message(message_update_error);
+								form_error_message(message_update_error);
 							}
 						},
 						error: function(){
-							error_message( message_update_error );
+							form_error_message( message_update_error );
 						}
 					});
 				}
 				else
 				{
 					$('.field_error').removeClass('field_error');
-					error_message(data.error_message);
+					form_error_message(data.error_message);
 					$.each(data.error_fields, function(index,value){
 						$('#crudForm input[name='+index+']').addClass('field_error');
 					});

@@ -1,5 +1,5 @@
 v 1.4
-	
+	#144 - Unique fields as new functionallity for unique fields in the database.
 	#129 - Small bug uploading images.
 	#142 - Extras doesn't work properly when the field doesn't exist in the database
 	Add and Edit forms are now loaded through AJAX
