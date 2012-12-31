@@ -51,6 +51,9 @@ class Films extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+
+		$this->load->database();
+		$this->load->helper(array('url', 'file', 'form'));
 		$this->load->library('grocery_CRUD');
 		$this->grocery_crud->set_theme('twitter-bootstrap');
 	}
