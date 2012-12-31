@@ -55,10 +55,10 @@
 	$lang['crud_next']				= 'Halaman selanjutnya';
 
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';
-	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
+	$lang['set_relation_title']		= 'Pilih {field_display_as}';
+	$lang['list_record']			= 'Baris';
+	$lang['form_inactive']			= 'tidak aktif';
+	$lang['form_active']			= 'aktif';
 
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']	= 'Simpan dan Kembali';
@@ -76,6 +76,6 @@
 	$lang['error_min_file_size'] 		= "Anda tidak dapat mengunggah file kosong.";
 
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
+	$lang['list_export'] 	= "Ekspor";
+	$lang['list_print'] 	= "Cetak";
 	$lang['minimize_maximize'] = 'Minimize/Maximize';
