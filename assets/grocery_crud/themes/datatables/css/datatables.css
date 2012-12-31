@@ -1,0 +1,262 @@
+.datatables
+{
+	font-family: Verdana,Arial,sans-serif;	
+	font-size: 14px;
+}
+.datatables a
+{
+	text-decoration: underline;	
+}
+.datatables a:hover
+{
+	text-decoration: none;
+}
+.DTTT_button.ui-button
+{
+	margin-right: 0px !important;
+	margin-left: 4px !important;
+}
+div.DTTT_container
+{
+	margin-bottom: 8px !important;
+}
+.form-title
+{
+	padding: 0.4em !important;
+	font-weight: bold !important;	
+}
+.ui-input-button
+{
+	font-size: 15px !important;	
+}
+.form-content
+{
+	
+}
+.floatL
+{
+	float: left;	
+}
+.floatR
+{
+	float: right;	
+}
+.clear
+{
+	clear: both;	
+}
+.form-title-left
+{
+	padding-top:4px;
+	padding-left:6px;
+}
+div.form-button-box {
+	float:left;
+	margin-top:11px;
+	margin-left:10px;
+}
+.form-field-box
+{
+	padding: 5px 10px 5px 15px;
+	margin: 5px 0px;
+	min-height: 30px;	
+}
+.form-field-box.odd
+{
+	background: #fff;	
+}
+.form-field-box.even
+{
+	background: #ededed;
+}
+.form-display-as-box
+{
+	float:left;
+	width:200px;
+	padding-top: 7px;
+}
+.form-input-box
+{
+	float:left;
+}
+.line-1px
+{
+	margin-top:11px;
+	border-top: 1px solid #aaaaaa;
+	height: 1px;
+	margin-bottom: 9px;	
+}
+.report-div
+{
+	padding: 10px;
+	border-style: solid;
+	border-width: 1px;
+	margin:10px 10px 5px 10px;
+	display:none;
+	font-family: Arial,Helvetica,sans-serif;
+}
+.report-div.report-list
+{
+	padding: 10px;
+	border-style: solid;
+	border-width: 1px;
+	margin:10px 0px 15px 0px;
+}
+.report-div.success
+{
+	border-color: green;
+}
+.report-div.success p
+{
+	background: url(images/success.png) no-repeat left center;
+	margin: 0px !important;
+	padding: 10px 0px 10px 25px !important;
+}
+.report-div.error
+{
+	border-color: red;
+}
+.report-div.error p
+{
+	background: url(images/error.png) no-repeat left center;
+	margin: 0px !important;
+	padding: 10px 0px 10px 25px !important;
+}
+input.field_error
+{
+	border: 1px solid red !important;	
+}
+.buttons-box
+{
+	padding-bottom: 20px;	
+}
+.datatables div.form-div select
+{
+	font-size: 15px;
+	border: 1px solid #AAA;
+	padding: 5px 5px 5px 5px;
+	background: #fafafa;
+}
+.datatables div.form-div select option
+{
+	padding-right: 10px;	
+}
+.datatables div.form-div input[type=text], .datatables div.form-div input[type=password]
+{
+	font-size: 15px;
+	width: 500px;	
+	height:20px;
+	border: 1px solid #AAA;
+	padding: 5px 5px 5px 5px;
+	background: #fafafa;
+}
+.datatables div.form-div textarea
+{
+	font-size: 15px;
+	border: 1px solid #AAA;
+	padding: 5px 5px 5px 5px;
+	background: #fafafa;
+	width: 500px;
+	height: 100px;	
+}
+
+.datatables div.form-div textarea:hover, .datatables div.form-div textarea:focus,
+.datatables div.form-div input[type=text]:hover, .datatables div.form-div input[type=text]:focus,
+.datatables div.form-div select:hover, .datatables div.form-div select:focus
+{
+	border: 1px solid #444;
+	background: #fff;
+}
+div.form-div input.datepicker-input
+{
+	width: 100px !important;	
+}
+div.form-div input.datetime-input
+{
+	width:150px !important;	
+}
+.loading-box
+{
+	padding-top:7px;	
+}
+.small-loading
+{
+	background: url('images/small-loading.gif') no-repeat;
+	height:15px;
+	padding-left:25px;
+	padding-top:1px;
+	display: none;
+}
+th.actions
+{
+	white-space:nowrap;
+	text-align: right;
+	cursor: auto !important;
+}
+td.actions
+{
+	white-space:nowrap;
+	text-align: right;	
+}
+.readonly_label
+{
+	padding-top:7px;
+}
+ul.chzn-choices li.search-field input
+{
+	box-shadow: none !important;
+}
+.datatables-add-button
+{
+	position: absolute;
+	margin-top:10px;
+	margin-left:5px;		
+	z-index: 5;
+}
+
+.datatables div.form-div{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color: #444;}
+.groceryCrudTable tfoot tr th input[type=text],.datatables div.form-div input[type=text],.datatables div.form-div textarea,.datatables div.form-div select{display:inline-block;line-height:18px;color:#444;border:1px solid #ccc;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+.groceryCrudTable tfoot tr th input[type=text],.datatables div.form-div input[type=text],.datatables div.form-div select,.datatables div.form-div textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}
+.groceryCrudTable tfoot tr th input[type=text],.datatables div.form-div input[type=text]{line-height:normal;*overflow:visible;}
+.groceryCrudTable tfoot tr th input[type=text],.datatables div.form-div input[type=text],.datatables div.form-div select,.datatables div.form-div textarea{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:normal;line-height:normal;}
+.groceryCrudTable tfoot tr th input[type=text],.datatables div.form-div input[type=text],.datatables div.form-div textarea{-webkit-transition:border linear 0.2s,box-shadow linear 0.2s;-moz-transition:border linear 0.2s,box-shadow linear 0.2s;-ms-transition:border linear 0.2s,box-shadow linear 0.2s;-o-transition:border linear 0.2s,box-shadow linear 0.2s;transition:border linear 0.2s,box-shadow linear 0.2s;-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);}
+.groceryCrudTable tfoot tr th input[type=text]:focus,.datatables div.form-div input[type=text]:focus,.datatables div.form-div textarea:focus{outline:0;border-color:rgba(82, 168, 236, 0.8);-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);}
+
+.pretty-radio-buttons
+{
+	margin-top: 6px;
+}
+
+.pretty-radio-buttons label
+{
+	margin-right: 10px;
+}
+.form-content select
+{
+	min-width: 200px;
+}
+tfoot tr th input
+{
+	color:#000;
+	border: 1px solid #999;
+}
+tfoot tr th input:-moz-placeholder {
+    color:    #AAA !important;
+    border: 1px solid #CCC;
+}
+tfoot tr th input:-ms-input-placeholder {
+    color:    #AAA !important;
+    border: 1px solid #CCC;
+}
+table.dataTable thead tr th
+{
+	text-align:left;
+}
+table.dataTable thead tr th.actions
+{
+	text-align:right;
+} 
+.ui-widget
+{
+	font-size: 12px !important;
+}

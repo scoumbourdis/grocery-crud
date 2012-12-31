@@ -1,0 +1,7 @@
+Grocery CRUD - A Codeigniter library that Create a CRUD automatically with just few lines of code.
+Copyright (C) 2010 - 2012  John Skoumbourdis. 
+
+Grocery CRUD is released with dual licensing, using the GPL v3 (license-gpl3.txt) and the MIT license (license-mit.txt).
+You don’t have to do anything special to choose one license or the other and you don’t have to notify anyone which license you are using.
+Please see the corresponding license file for details of these licenses.
+You are free to use, modify and distribute this software, but all copyright information must remain.
