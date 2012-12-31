@@ -702,7 +702,7 @@ div.pGroup {
 	height:0px;
 	width:0px;
 }
-a img
+.flexigrid a img
 {
 	border: none;	
 }
@@ -770,12 +770,12 @@ input.field_error
 {
 	text-decoration: underline;	
 }
-a
+.flexigrid a
 {
 	color: blue;
 	text-decoration: none;	
 }
-a:hover
+.flexigrid a:hover
 {
 	text-decoration: underline;	
 }
