@@ -71,6 +71,6 @@
 	$lang['error_min_file_size'] 		= "No puede subir un archivo vacio.";
 
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
-	$lang['minimize_maximize'] = 'Minimize/Maximize';
+	$lang['list_export'] 	= "Exportar";
+	$lang['list_print'] 	= "Imprimir";
+	$lang['minimize_maximize'] = 'Minimizar/Maximizar';
