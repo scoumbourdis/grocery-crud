@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-<?php 
+<?php
 foreach($css_files as $file): ?>
 	<link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
 <?php endforeach; ?>
@@ -31,11 +31,12 @@ a:hover
 		<a href='<?php echo site_url('examples/customers_management')?>'>Customers</a> |
 		<a href='<?php echo site_url('examples/orders_management')?>'>Orders</a> |
 		<a href='<?php echo site_url('examples/products_management')?>'>Products</a> |
-		<a href='<?php echo site_url('examples/offices_management')?>'>Offices</a> | 
-		<a href='<?php echo site_url('examples/employees_management')?>'>Employees</a> |		 
-		<a href='<?php echo site_url('examples/film_management')?>'>Films</a>
+		<a href='<?php echo site_url('examples/offices_management')?>'>Offices</a> |
+		<a href='<?php echo site_url('examples/employees_management')?>'>Employees</a> |
+		<a href='<?php echo site_url('examples/film_management')?>'>Films</a>|
+-		<a href='<?php echo site_url('films')?>'>Films (Twitter Bootstrao theme)</a>
 	</div>
-	<div style='height:20px;'></div>  
+	<div style='height:20px;'></div>
     <div>
 		<?php echo $output; ?>
     </div>
