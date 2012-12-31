@@ -1,6 +1,6 @@
 <?php
 if(!empty($list)){ ?>
-<div class="bDiv" >
+<div class="span12" >
 	<table class="table table-bordered tablesorter table-striped">
 		<thead>
 			<tr>
@@ -36,23 +36,25 @@ if(!empty($list)){ ?>
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
-								<?php if(!$unset_edit){?>
+								<?php
+								if(!$unset_edit){?>
 									<li>
 										<a href="<?php echo $row->edit_url?>" title="<?php echo $this->l('list_edit')?> <?php echo $subject?>">
 											<i class="icon-pencil"></i>
 											<?php echo $this->l('list_edit') . ' ' . $subject; ?>
 										</a>
 									</li>
-								<?php }?>
-								<?php if(!$unset_delete){?>
+								<?php
+								}
+								if(!$unset_delete){?>
 									<li>
 										<a href="<?php echo $row->delete_url?>" title="<?php echo $this->l('list_delete')?> <?php echo $subject?>" class="delete-row" >
 											<i class="icon-trash"></i>
 											<?php echo $this->l('list_delete') . ' ' . $subject; ?>
 										</a>
 									</li>
-								<?php }?>
 								<?php
+								}
 								if(!empty($row->action_urls)){
 									foreach($row->action_urls as $action_unique_id => $action_url){
 										$action = $actions[$action_unique_id];

@@ -62,52 +62,57 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 
 <!-- UTILIZADO PARA IMPRESSÃO DA LISTAGEM -->
 <div id="hidden-operations"></div>
-<!-- CONTENT FOR ALERT MESSAGES -->
-<div id="message-box">
-	<div class="alert alert-sucess <?php echo ($success_message !== null) ? '' : 'hide'; ?>">
-		<a class="close" data-dismiss="alert" href="#"> x </a>
-		<?php echo ($success_message !== null) ? $success_message : ''; ?>
-	</div>
-</div>
+
 <div class="twitter-bootstrap">
 	<div id="main-table-box">
 		<br/>
-		<div class="span12">
-		<?php if(!$unset_add || !$unset_export || !$unset_print){?>
+		<div id="options-content" class="span12">
+		<?php
+		if(!$unset_add || !$unset_export || !$unset_print){?>
 			<?php if(!$unset_add){?>
 				<a href="<?php echo $add_url?>" title="<?php echo $this->l('list_add'); ?> <?php echo $subject?>" class="add-anchor btn">
 					<i class="icon-plus"></i>
 					<?php echo $this->l('list_add'); ?> <?php echo $subject?>
 				</a>
- 			<?php }?>
- 			<?php if(!$unset_export) { ?>
+ 			<?php
+ 			}
+ 			if(!$unset_export) { ?>
 	 			<a class="export-anchor btn" data-url="<?php echo $export_url; ?>" rel="external">
 	 				<i class="icon-download"></i>
 	 				<?php echo $this->l('list_export');?>
 	 			</a>
- 			<?php } ?>
- 			<?php if(!$unset_print) { ?>
+ 			<?php
+ 			}
+ 			if(!$unset_print) { ?>
 	 			<a class="print-anchor btn" data-url="<?php echo $print_url; ?>">
 	 				<i class="icon-print"></i>
 	 				<?php echo $this->l('list_print');?>
 	 			</a>
- 			<?php }?>
- 		<?php }?>
+ 			<?php
+ 			}
+ 		} ?>
  		</div>
 		<br/>
 
-		<div id="ajax_list span12">
+		<!-- CONTENT FOR ALERT MESSAGES -->
+		<div id="message-box" class="span12">
+			<div class="alert alert-sucess <?php echo ($success_message !== null) ? '' : 'hide'; ?>">
+				<a class="close" data-dismiss="alert" href="#"> x </a>
+				<?php echo ($success_message !== null) ? $success_message : ''; ?>
+			</div>
+		</div>
+		<div id="ajax_list">
 			<?php echo $list_view; ?>
 		</div>
 
-		<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" autocomplete = "off"'); ?>
-		<div class="sDiv" id="quickSearchBox" class="span12">
+		<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" class="span12" autocomplete = "off"'); ?>
+		<div class="sDiv" id="quickSearchBox">
 			<div class="sDiv2">
 				<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id="search_text">
 				<select name="search_field" id="search_field">
 					<option value=""><?php echo $this->l('list_search_all');?></option>
 					<?php foreach($columns as $column){?>
-					<option value="<?php echo $column->field_name?>"><?php echo $column->display_as; ?></option>
+						<option value="<?php echo $column->field_name?>"><?php echo $column->display_as; ?></option>
 					<?php }?>
 				</select>
 
@@ -118,7 +123,7 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 
 				<select name="per_page" id="per_page">
 					<?php foreach($paging_options as $option){?>
-					<option value="<?php echo $option; ?>" <?php if($option == $default_per_page){?>selected="selected"<?php }?>><?php echo $option; ?>&nbsp;&nbsp;</option>
+						<option value="<?php echo $option; ?>" <?php if($option == $default_per_page){?>selected="selected"<?php }?>><?php echo $option; ?>&nbsp;&nbsp;</option>
 					<?php }?>
 				</select>
 				<input type="hidden" name="order_by[0]" id="hidden-sorting" value="<?php if(!empty($order_by[0])){?><?php echo $order_by[0]?><?php }?>" />

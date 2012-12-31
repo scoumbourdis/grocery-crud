@@ -75,7 +75,7 @@ $(function(){
 //	Mensagens para a aplicação
 var alert_message = function(type_message, text_message){
 	$('.alert-'+type_message).remove();
-	$('#message-box').prepend('<div class="alert alert-'+type_message+'"><a class="close" data-dismiss="alert" href="#"> x </a>'+text_message+'</div>');
+	$('#message-box').prepend('<div class="alert alert-'+type_message+' fade in"><a class="close" data-dismiss="alert" href="#"> x </a>'+text_message+'</div>');
 	$('html, body').animate({
 		scrollTop:0
 	}, 600);

@@ -53,47 +53,40 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 
 <div class="twitter-bootstrap crud-form">
 
-	<h2><?php echo $this->l('form_edit'); ?> <?php echo $subject?></h2>
+	<h2 class="span12"><?php echo $this->l('form_add'); ?> <?php echo $subject?></h2>
 
 	<!-- CONTENT FOR ALERT MESSAGES -->
-	<div id="message-box"></div>
+	<div id="message-box" class="span12"></div>
 	<div id="main-table-box span12">
-		<?php echo form_open( $insert_url, 'method="post" id="crudForm" autocomplete="off" enctype="multipart/form-data"'); ?>
-			<div class="form-div">
-				<?php
-				$counter = 0;
-					foreach($fields as $field)
-					{
-						$even_odd = $counter % 2 == 0 ? 'odd' : 'even';
-						$counter++;
-						?>
-						<div class="form-field-box <?php echo $even_odd?>" id="<?php echo $field->field_name; ?>_field_box">
-							<div class="form-display-as-box" id="<?php echo $field->field_name; ?>_display_as_box">
-								<?php echo $input_fields[$field->field_name]->display_as; ?><?php echo ($input_fields[$field->field_name]->required)? '<span class="required">*</span>' : ""; ?> :
-							</div>
-							<div class="form-input-box control-group" id="<?php echo $field->field_name; ?>_input_box">
-								<?php echo $input_fields[$field->field_name]->input?>
-							</div>
-							<div class="clear"></div>
-						</div>
-						<?php
-					}
-					//	Hidden Elements
-					foreach($hidden_fields as $hidden_field){
-						echo $hidden_field->input;
-					}
+		<?php
+		echo form_open( $insert_url, 'method="post" id="crudForm" class="form-div span12" autocomplete="off" enctype="multipart/form-data"');
+			foreach($fields as $field)
+			{
 				?>
-			</div>
-			<div class="span12">
-				<input type="submit" value="<?php echo $this->l('form_save'); ?>"  class="btn btn-large btn-primary"/>
-				<?php 	if(!$this->unset_back_to_list) { ?>
-					<input type="button" value="<?php echo $this->l('form_save_and_go_back'); ?>" id="save-and-go-back-button"  class="btn btn-large btn-primary"/>
-					<input type="button" value="<?php echo $this->l('form_cancel'); ?>" onclick="javascript: goToList()"  class="btn btn-large" />
-				<?php 	} ?>
+				<div class="form-field-box" id="<?php echo $field->field_name; ?>_field_box">
+					<div class="form-display-as-box" id="<?php echo $field->field_name; ?>_display_as_box">
+						<?php echo $input_fields[$field->field_name]->display_as; ?><?php echo ($input_fields[$field->field_name]->required)? '<span class="required">*</span>' : ""; ?> :
+					</div>
+					<div class="form-input-box control-group" id="<?php echo $field->field_name; ?>_input_box">
+						<?php echo $input_fields[$field->field_name]->input?>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<?php
+			}
+			//	Hidden Elements
+			foreach($hidden_fields as $hidden_field){
+				echo $hidden_field->input;
+			}
+			?>
 
-				<div class="hide loading" id="ajax-loading"><?php echo $this->l('form_update_loading'); ?></div>
+			<input type="submit" value="<?php echo $this->l('form_save'); ?>"  class="btn btn-large btn-primary"/>
+			<?php 	if(!$this->unset_back_to_list) { ?>
+				<input type="button" value="<?php echo $this->l('form_save_and_go_back'); ?>" id="save-and-go-back-button"  class="btn btn-large btn-primary"/>
+				<input type="button" value="<?php echo $this->l('form_cancel'); ?>" onclick="javascript: goToList()"  class="btn btn-large" />
+			<?php 	} ?>
 
-			</div>
+			<div class="hide loading" id="ajax-loading"><?php echo $this->l('form_update_loading'); ?></div>
 		<?php echo form_close(); ?>
 	</div>
 </div>
