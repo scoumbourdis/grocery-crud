@@ -72,5 +72,5 @@
 
 	/* Added in version 1.3.1 */
 	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Listare";
+	$lang['list_print'] 	= "Printare";
 	$lang['minimize_maximize'] = 'Minimizare/Maximizare';
