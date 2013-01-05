@@ -3208,6 +3208,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $form_validation		= null;
 	protected $change_field_type	= null;
 	protected $primary_keys			= array();
+	protected $crud_url_path		= null;
+	protected $list_url_path		= null;
 	
 	/* The unsetters */
 	protected $unset_texteditor		= array();
@@ -4602,6 +4604,32 @@ class grocery_CRUD extends grocery_CRUD_States
 			die();
 		}
 			
+		return $this;
+	}
+	
+	/**
+	 * Set a full URL path to this method.
+	 * 
+	 * This method is useful when the path is not specified correctly. 
+	 * Especially when we are using routes.	 
+	 * For example:
+	 * Let's say we have the path http://www.example.com/ however the original url path is
+	 * http://www.example.com/example/index . We have to specify the url so we can have 
+	 * all the CRUD operations correctly.
+	 * The url path has to be set from this method like this:
+	 * <code>
+	 * 		$crud->set_crud_url_path(site_url('example/index'));
+	 * </code>
+	 * 
+	 * @param string $crud_url_path
+	 * @param string $list_url_path
+	 * @return grocery_CRUD
+	 */
+	public function set_crud_url_path($crud_url_path, $list_url_path = null)
+	{
+		$this->crud_url_path = $crud_url_path;
+		$this->list_url_path = $list_url_path;
+		
 		return $this;
 	}
 	
