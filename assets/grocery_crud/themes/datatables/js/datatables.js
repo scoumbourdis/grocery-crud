@@ -146,7 +146,7 @@ $(document).ready(function() {
 	});
 	
 	$('th.actions').unbind('click');
-	$('th.actions>div').html($('th.actions>div').text());
+	$('th.actions>div .DataTables_sort_icon').remove();
 	
 } ); 
 
