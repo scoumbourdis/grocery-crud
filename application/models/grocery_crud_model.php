@@ -184,14 +184,10 @@ class grocery_CRUD_Model  extends CI_Model  {
     		$select = $this->relation_n_n_queries($select);
     		
     		$this->db->select($select,false);
-    		
-    		return $this->db->get($this->table_name)->num_rows();
-    		    		
     	}
-    	else 
-    	{    	
-    		return $this->db->get($this->table_name)->num_rows();
-    	}
+    	
+    	return $this->db->count_all_results($this->table_name);
+    	
     }
     
     function set_basic_table($table_name = null)
@@ -300,7 +296,7 @@ class grocery_CRUD_Model  extends CI_Model  {
     	if($where_clause !== null)
     		$this->db->where($where_clause);
     	
-    	return $this->db->get($related_table)->num_rows();
+    	return $this->db->count_all_results($related_table);
     } 
     
     function get_relation_n_n_selection_array($primary_key_value, $field_info)
