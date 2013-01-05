@@ -177,7 +177,7 @@ function delete_row(delete_url , row_id)
 				}
 				else
 				{	
-					success_message(data.error_message);
+					error_message(data.error_message);
 				}
 			}
 		});
