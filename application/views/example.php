@@ -33,7 +33,8 @@ a:hover
 		<a href='<?php echo site_url('examples/products_management')?>'>Products</a> |
 		<a href='<?php echo site_url('examples/offices_management')?>'>Offices</a> | 
 		<a href='<?php echo site_url('examples/employees_management')?>'>Employees</a> |		 
-		<a href='<?php echo site_url('examples/film_management')?>'>Films</a>
+		<a href='<?php echo site_url('examples/film_management')?>'>Films</a> | 
+		<a href='<?php echo site_url('examples/film_management_twitter_bootstrap')?>'>Films (Twitter Bootstrap Theme)</a>
 	</div>
 	<div style='height:20px;'></div>  
     <div>

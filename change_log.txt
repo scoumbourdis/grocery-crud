@@ -1,4 +1,5 @@
 v 1.4
+	#148 - New theme twiiter-bootstrap
 	#150 - Optimizing the SELECT statement for counting rows.
 	#144 - Unique fields as new functionallity for unique fields in the database.
 	#129 - Small bug uploading images.
