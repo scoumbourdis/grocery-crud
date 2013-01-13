@@ -2,48 +2,6 @@
 
 class Examples extends CI_Controller {
 
-	/**
-	 * @param array $_rules
-	 * Form rules validation (action film_management_twitter_bootstrap())
-	 */
-	private $_rules = array(
-        array(
-            'field' => 'title'
-            ,'label' => 'Title'
-            ,'rules' => 'trim|required|xss_clean'
-        ),
-        array(
-            'field' => 'release_year'
-            ,'label' => 'Release Year'
-            ,'rules' => 'trim|is_numeric|required|xss_clean'
-        ),
-        array(
-            'field' => 'rental_duration'
-            ,'label' => 'Rental duration'
-            ,'rules' => 'trim|required|xss_clean'
-        ),
-        array(
-            'field' => 'rental_rate'
-            ,'label' => 'Rental rate'
-            ,'rules' => 'trim|required|xss_clean'
-        ),
-        array(
-            'field' => 'length'
-            ,'label' => 'Length'
-            ,'rules' => 'trim|required|xss_clean'
-        ),
-        array(
-            'field' => 'replacement_cost'
-            ,'label' => 'Replacement cost'
-            ,'rules' => 'trim|required|xss_clean'
-        ),
-        array(
-            'field' => 'rating'
-            ,'label' => 'Rating'
-            ,'rules' => 'trim|required|xss_clean'
-        ),
-	);
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -190,11 +148,6 @@ class Examples extends CI_Controller {
 			$crud->unset_columns('special_features','description','actors');
 
 			$crud->fields('title', 'description', 'actors' ,  'category' ,'release_year', 'rental_duration', 'rental_rate', 'length', 'replacement_cost', 'rating', 'special_features');
-
-
-			if( in_array($crud->getState(), array('insert', 'insert_validation', 'update', 'update_validation')) ) {
-			    $crud->set_rules($this->_rules);
-			}
 
 			$output = $crud->render();
 			$this->_example_output($output);
