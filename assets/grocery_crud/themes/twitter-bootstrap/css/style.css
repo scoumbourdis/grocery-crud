@@ -3,9 +3,7 @@
 @import 'tablesorter.css';
 @import '../../../css/jquery_plugins/fancybox/jquery.fancybox.css';
 @import '../../../css/ui/simple/jquery-ui-1.9.1.custom.min.css';
-
 #options-content{
-	margin-top: 30px;
 	margin-bottom: 20px;
 }
 .row{

@@ -43,16 +43,19 @@ $(function(){
 	 */
 	$('#filtering_form').submit(function(){
 
-		var crud_page =  parseInt($('#crud_page').val()),
+		var crud_page =  parseInt($('#tb_crud_page').val()),
 			last_page = parseInt($('#last-page-number').html()),
 			this_form = $(this);
 
 		$('#ajax-loading').removeClass('hide');
 
 		if(crud_page > last_page)
-			$('#crud_page').val(last_page);
+			$('#tb_crud_page').val(last_page);
 		if(crud_page <= 0)
-			$('#crud_page').val('1');
+			$('#tb_crud_page').val('1');
+		// Inserindo valores da quantidade de registros e pagina atual no formulario
+		$('input[name="per_page"]').val($('#tb_per_page').val());
+		$('input[name="page"]').val($('#tb_crud_page').val());
 
 		$(this).ajaxSubmit({
 			 url: ajax_list_info_url,
@@ -95,8 +98,8 @@ $(function(){
 	});
 
 	//	Verifica o modificador de quantidade de registros por paginação
-	$('#per_page').change(function(){
-		$('#crud_page').val('1');
+	$('#tb_per_page').change(function(){
+		$('#tb_crud_page').val('1');
 		$('#filtering_form').trigger('submit');
 	});
 
@@ -114,31 +117,31 @@ $(function(){
 	});
 	//	Insere a visualização a partir do primeiro índice da paginação
 	$('.first-button').click(function(){
-		$('#crud_page').val('1');
+		$('#tb_crud_page').val('1');
 		$('#filtering_form').trigger('submit');
 	});
 	//	Insere a visualização a partir do índice anterior da paginação
 	$('.prev-button').click(function(){
-		if( $('#crud_page').val() != "1")
+		if( $('#tb_crud_page').val() != "1")
 		{
-			$('#crud_page').val( parseInt($('#crud_page').val()) - 1 );
-			$('#crud_page').trigger('change');
+			$('#tb_crud_page').val( parseInt($('#tb_crud_page').val()) - 1 );
+			$('#tb_crud_page').trigger('change');
 		}
 	});
 	//	Insere a visualização a partir do último índice da paginação
 	$('.last-button').click(function(){
-		$('#crud_page').val( $('#last-page-number').html());
+		$('#tb_crud_page').val( $('#last-page-number').html());
 		$('#filtering_form').trigger('submit');
 	});
 
 	//	Insere a visualização a partir do próximo índice da paginação
 	$('.next-button').click(function(){
-		$('#crud_page').val( parseInt($('#crud_page').val()) + 1 );
-		$('#crud_page').trigger('change');
+		$('#tb_crud_page').val( parseInt($('#tb_crud_page').val()) + 1 );
+		$('#tb_crud_page').trigger('change');
 	});
 
 	//	Submete a busca caso o valor da paginação seja modificada manualmente
-	$('#crud_page').change(function(){
+	$('#tb_crud_page').change(function(){
 		$('#filtering_form').trigger('submit');
 	});
 
