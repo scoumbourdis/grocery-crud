@@ -145,7 +145,7 @@ $(function(){
 	//	Modifica a ordenação da tabela com base no nome do campo no banco de dados que está no REL da classe
 	//	".field-sorting" inserida no th da tabela
 	$('.field-sorting').live('click', function(){
-		$('#hidden-sorting').val($(this).attr('rel'));
+		$('#hidden-sorting').val($(this).data('field-name'));
 
 		if($(this).hasClass('asc'))
 			$('#hidden-ordering').val('desc');
