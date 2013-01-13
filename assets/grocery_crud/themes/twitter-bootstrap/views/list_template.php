@@ -14,7 +14,6 @@ if (!$this->is_IE7()) {
 	$this->set_js_lib($this->default_javascript_path.'/common/list.js');
 }
 //	JAVASCRIPTS - TWITTER BOOTSTRAP
-//$this->set_js($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap.min.js');
 $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-transition.js');
 $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-alert.js');
 $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-modal.js');
@@ -98,7 +97,6 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
  		</div>
 		<br/>
 
-
 		<!-- CONTENT FOR ALERT MESSAGES -->
 		<div id="message-box" class="span12">
 			<div class="alert alert-sucess <?php echo ($success_message !== null) ? '' : 'hide'; ?>">
@@ -107,48 +105,44 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 			</div>
 		</div>
 
-
 		<div id="ajax_list">
 			<?php echo $list_view; ?>
 		</div>
 
-			<div class="pGroup">
+		<div class="pGroup span12">
+			<select name="tb_per_page" id="tb_per_page">
+				<?php foreach($paging_options as $option){?>
+					<option value="<?php echo $option; ?>" <?php echo ($option == $default_per_page) ? 'selected="selected"' : ''; ?> ><?php echo $option; ?></option>
+				<?php }?>
+			</select>
 
-				<select name="per_page" id="per_page">
-					<?php foreach($paging_options as $option){?>
-						<option value="<?php echo $option; ?>" <?php if($option == $default_per_page){?>selected="selected"<?php }?>><?php echo $option; ?>&nbsp;&nbsp;</option>
-					<?php }?>
-				</select>
-				<input type="hidden" name="order_by[0]" id="hidden-sorting" value="<?php if(!empty($order_by[0])){?><?php echo $order_by[0]?><?php }?>" />
-				<input type="hidden" name="order_by[1]" id="hidden-ordering"  value="<?php if(!empty($order_by[1])){?><?php echo $order_by[1]?><?php }?>"/>
+			<span class="pPageStat">
+				<?php
+				$paging_starts_from = '<span id="page-starts-from">1</span>';
+				$paging_ends_to = '<span id="page-ends-to">'. ($total_results < $default_per_page ? $total_results : $default_per_page) .'</span>';
+				$paging_total_results = '<span id="total_items" class="badge badge-info">'.$total_results.'</span>';
+				echo str_replace( array('{start}','{end}','{results}'), array($paging_starts_from, $paging_ends_to, $paging_total_results), $this->l('list_displaying')); ?>
+			</span>
 
-				<span class="pPageStat">
-					<?php
-					$paging_starts_from = '<span id="page-starts-from">1</span>';
-					$paging_ends_to = '<span id="page-ends-to">'. ($total_results < $default_per_page ? $total_results : $default_per_page) .'</span>';
-					$paging_total_results = '<span id="total_items" class="badge badge-info">'.$total_results.'</span>';
-					echo str_replace( array('{start}','{end}','{results}'), array($paging_starts_from, $paging_ends_to, $paging_total_results), $this->l('list_displaying')); ?>
-				</span>
+			<span class="pcontrol">
+				<?php echo $this->l('list_page'); ?>
+				<input name="tb_crud_page" type="text" value="1" size="4" id="tb_crud_page">
+				<?php echo $this->l('list_paging_of'); ?>
+				<span id="last-page-number"><?php echo ceil($total_results / $default_per_page); ?></span>
+			</span>
 
-				<span class="pcontrol">
-					<?php echo $this->l('list_page'); ?>
-					<input name="page" type="text" value="1" size="4" id="crud_page">
-					<?php echo $this->l('list_paging_of'); ?>
-					<span id="last-page-number"><?php echo ceil($total_results / $default_per_page); ?></span>
-				</span>
+			<div class="hide loading" id="ajax-loading"><?php echo $this->l('form_update_loading'); ?></div>
 
-				<div class="hide loading" id="ajax-loading"><?php echo $this->l('form_update_loading'); ?></div>
-
-				<div class="pagination pagination-centered">
-					<ul>
-						<li class="first-button"><a href="javascript:void(0);">&laquo; <?php echo $this->l('list_paging_first'); ?></a></li>
-						<li class="prev-button"><a href="javascript:void(0);">&laquo; <?php echo $this->l('list_paging_previous'); ?></a></li>
-						<li class="next-button"><a href="javascript:void(0);"><?php echo $this->l('list_paging_next'); ?> &raquo;</a></li>
-						<li class="last-button"><a href="javascript:void(0);"><?php echo $this->l('list_paging_last'); ?> &raquo;</a></li>
-					</ul>
-				</div>
-
+			<div class="pagination pagination-centered">
+				<ul>
+					<li class="first-button"><a href="javascript:void(0);">&laquo; <?php echo $this->l('list_paging_first'); ?></a></li>
+					<li class="prev-button"><a href="javascript:void(0);">&laquo; <?php echo $this->l('list_paging_previous'); ?></a></li>
+					<li class="next-button"><a href="javascript:void(0);"><?php echo $this->l('list_paging_next'); ?> &raquo;</a></li>
+					<li class="last-button"><a href="javascript:void(0);"><?php echo $this->l('list_paging_last'); ?> &raquo;</a></li>
+				</ul>
 			</div>
+
+		</div>
 	</div>
 </div>
 
@@ -166,6 +160,11 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 						<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" autocomplete = "off"'); ?>
 						<div class="sDiv" id="quickSearchBox">
 							<div class="sDiv2">
+								<input type="hidden" name="page" value="1" size="4" id="crud_page">
+								<input type="hidden" name="per_page" id="per_page" value="<?php echo $default_per_page; ?>" />
+								<input type="hidden" name="order_by[0]" id="hidden-sorting" value="<?php if(!empty($order_by[0])){?><?php echo $order_by[0]?><?php }?>" />
+								<input type="hidden" name="order_by[1]" id="hidden-ordering"  value="<?php if(!empty($order_by[1])){?><?php echo $order_by[1]?><?php }?>"/>
+
 								<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id="search_text">
 								<select name="search_field" id="search_field">
 									<option value=""><?php echo $this->l('list_search_all');?></option>

@@ -1,8 +1,8 @@
-@import url('bootstrap.min.css');
-@import url('bootstrap-responsive.min.css');
-@import url('tablesorter.css');
-@import url('../../../css/jquery_plugins/fancybox/jquery.fancybox.css');
-@import url('../../../css/ui/simple/jquery-ui-1.9.1.custom.min.css');
+@import 'bootstrap.min.css';
+@import 'bootstrap-responsive.min.css';
+@import 'tablesorter.css';
+@import '../../../css/jquery_plugins/fancybox/jquery.fancybox.css';
+@import '../../../css/ui/simple/jquery-ui-1.9.1.custom.min.css';
 #options-content{
 	margin-bottom: 20px;
 }
@@ -12,7 +12,4 @@
 .loading{
 	background:url('images/loading.gif') left top no-repeat;
 	padding-left: 30px;
-}
-.alert p{
-	font-weight: bold;
 }

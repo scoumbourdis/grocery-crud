@@ -5,8 +5,11 @@ if(!empty($list)){ ?>
 		<thead>
 			<tr>
 				<?php foreach($columns as $column){?>
-				<th class="field-sorting <?php echo (isset($order_by[0]) &&  $column->field_name == $order_by[0]) ? $order_by[1] : ''; ?>" data-field-name="<?php echo $column->field_name; ?>" >
-					<?php echo $column->display_as; ?>
+				<th>
+					<div class="text-left field-sorting <?php if(isset($order_by[0]) &&  $column->field_name == $order_by[0]){?><?php echo $order_by[1]?><?php }?>"
+						rel="<?php echo $column->field_name?>">
+						<?php echo $column->display_as; ?>
+					</div>
 				</th>
 				<?php }?>
 				<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
@@ -18,10 +21,10 @@ if(!empty($list)){ ?>
 		</thead>
 		<tbody>
 			<?php foreach($list as $num_row => $row){ ?>
-			<tr>
+			<tr class="<?php echo ($num_row % 2 == 1) ? 'erow' : ''; ?>">
 				<?php foreach($columns as $column){?>
-					<td class="<?php echo (isset($order_by[0]) &&  $column->field_name == $order_by[0]) ? 'sorted' : ''; ?>" >
-						<?php echo ($row->{$column->field_name} != '') ? $row->{$column->field_name} : '&nbsp;' ; ?>
+					<td class="<?php if(isset($order_by[0]) &&  $column->field_name == $order_by[0]){?>sorted<?php }?>">
+						<div class="text-left"><?php echo ($row->{$column->field_name} != '') ? $row->{$column->field_name} : '&nbsp;' ; ?></div>
 					</td>
 				<?php }?>
 				<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
