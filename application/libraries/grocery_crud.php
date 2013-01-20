@@ -2791,31 +2791,40 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		return $state_code;
 	}
 	
-	protected function state_url($url = '')
+	protected function state_url($url = '', $is_list_page = false)
 	{
-		$ci = &get_instance();
+		//Easy scenario, we had set the crud_url_path
+		if (!empty($this->crud_url_path)) {
+			$state_url = !empty($this->list_url_path) && $is_list_page? 
+							$this->list_url_path :
+							$this->crud_url_path.'/'.$url ;
+		} else {
+			//Complicated scenario. The crud_url_path is not specified so we are 
+			//trying to understand what is going on from the URL.
+			$ci = &get_instance();
+			
+			$segment_object = $this->get_state_info_from_url();
+			$method_name = $this->get_method_name();
+			$segment_position = $segment_object->segment_position;
+			
+			$state_url_array = array();
+	
+		    if( sizeof($ci->uri->segments) > 0 ) {
+		      foreach($ci->uri->segments as $num => $value)
+		      {
+		        $state_url_array[$num] = $value;
+		        if($num == ($segment_position - 1))
+		          break;
+		      }
+		          
+		      if( $method_name == 'index' && !in_array( 'index', $state_url_array ) ) //there is a scenario that you don't have the index to your url
+		        $state_url_array[$num+1] = 'index';
+		    }
+			
+			$state_url =  site_url(implode('/',$state_url_array).'/'.$url);
+		}
 		
-		$segment_object = $this->get_state_info_from_url();
-		$method_name = $this->get_method_name();
-		$segment_position = $segment_object->segment_position;
-		
-		$state_url_array = array();
-
-    if( sizeof($ci->uri->segments) > 0 ) {
-      foreach($ci->uri->segments as $num => $value)
-      {
-        $state_url_array[$num] = $value;
-        if($num == ($segment_position - 1))
-          break;
-      }
-          
-      if( $method_name == 'index' && !in_array( 'index', $state_url_array ) ) //there is a scenario that you don't have the index to your url
-        $state_url_array[$num+1] = 'index';
-    }
-		
-		$state_url = implode('/',$state_url_array).'/'.$url;
-		
-		return site_url($state_url);
+		return $state_url;
 	}
 	
 	protected function get_state_info_from_url()
@@ -2875,7 +2884,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 	
 	protected function getListUrl()
 	{
-		return $this->state_url('');
+		return $this->state_url('',true);
 	}
 
 	protected function getAjaxListUrl()
@@ -2945,9 +2954,9 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 	protected function getListSuccessUrl($primary_key = null)
 	{
 		if(empty($primary_key))
-			return $this->state_url('success');
+			return $this->state_url('success',true);
 		else
-			return $this->state_url('success/'.$primary_key);
+			return $this->state_url('success/'.$primary_key,true);
 	}	
 	
 	protected function getUploadUrl($field_name)
@@ -4628,7 +4637,10 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function set_crud_url_path($crud_url_path, $list_url_path = null)
 	{
 		$this->crud_url_path = $crud_url_path;
-		$this->list_url_path = $list_url_path;
+		
+		//If the list_url_path is empty so we are guessing that the list_url_path 
+		//will be the same with crud_url_path
+		$this->list_url_path = !empty($list_url_path) ? $list_url_path : $crud_url_path;
 		
 		return $this;
 	}
