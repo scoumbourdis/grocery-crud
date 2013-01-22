@@ -2,7 +2,7 @@
 
 $language_alias = array(
     'afrikaans'         => 'af',
-    'arabic'            => 'ar', // Timepicker is not avaliable yet
+    'arabic'            => 'ar',
     'bengali'           => 'bn', // Timepicker is not avaliable yet
     'bulgarian'         => 'bg',
     'chinese'           => 'zh-cn',
