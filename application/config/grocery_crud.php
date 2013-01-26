@@ -19,5 +19,5 @@
 	//The character limiter at the list page, zero(0) value if you don't want character limiter at your list page
 	$config['grocery_crud_character_limiter'] 	= 30;
 	
-	//This functionallity is still on BETA phase, if you want to try it and contribute some thoughts you can turn this into true :)
+	//This functionallity is still on Alpha phase, if you want to try it and contribute some thoughts you can turn this into true :)
 	$config['grocery_crud_dialog_forms'] = false;

@@ -45,6 +45,11 @@ $(document).ready(function() {
 	     });		
 	}
 	
+	//For mutliplegrids disable bStateSave as it is causing many problems
+	if ($('.groceryCrudTable').length > 1) {
+		use_storage = false;
+	}
+	
 	$('.groceryCrudTable').each(function(index){
 		if (typeof oTableArray[index] !== 'undefined') {
 			return false;
