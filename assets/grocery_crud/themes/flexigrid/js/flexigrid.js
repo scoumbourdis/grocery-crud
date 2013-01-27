@@ -1,17 +1,15 @@
 $(function(){
-	$('#quickSearchButton').click(function(){
-		$('#quickSearchBox').slideToggle('normal');
+	$('.quickSearchButton').click(function(){
+		$(this).closest('.flexigrid').find('.quickSearchBox').slideToggle('normal');
+		
 	});
 	$('.ptogtitle').click(function(){
-		if($(this).hasClass('vsble'))
-		{
+		if ($(this).hasClass('vsble')) {
 			$(this).removeClass('vsble');
-			$('#main-table-box').slideDown("slow");
-		}
-		else
-		{
+			$(this).closest('.flexigrid').find('.main-table-box').slideDown("slow");
+		} else {
 			$(this).addClass('vsble');
-			$('#main-table-box').slideUp("slow");
+			$(this).closest('.flexigrid').find('.main-table-box').slideUp("slow");
 		}
 	});
 	
@@ -29,13 +27,15 @@ $(function(){
 	add_edit_button_listener();
 	
 	$('#filtering_form').submit(function(){		
-		var crud_page =  parseInt($('#crud_page').val());
-		var last_page = parseInt($('#last-page-number').html());
+		var crud_page =  parseInt($('#crud_page').val(), 10);
+		var last_page = parseInt($('#last-page-number').html(), 10);
 		
-		if(crud_page > last_page)
+		if (crud_page > last_page) {
 			$('#crud_page').val(last_page);
-		if(crud_page <= 0)
+		}
+		if (crud_page <= 0) {
 			$('#crud_page').val('1');
+		}
 		
 		var this_form = $(this);
 		
@@ -66,8 +66,8 @@ $(function(){
 		return false;
 	});
 	
-	$('#crud_search').click(function(){
-		$('#crud_page').val('1');
+	$('.crud_search').click(function(){
+		$(this).closest('.flexigrid').find('.crud_page').val('1');
 		$('#filtering_form').trigger('submit');
 	});
 	
@@ -207,7 +207,7 @@ $(function(){
 		});
 	});	
 	
-	$('#crud_page').numeric();
+	$('.crud_page').numeric();
 	
 	var cookie_crud_page = readCookie('crud_page_'+unique_hash);
 	var cookie_per_page  = readCookie('per_page_'+unique_hash);

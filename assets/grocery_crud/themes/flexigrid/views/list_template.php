@@ -51,7 +51,7 @@ if($success_message !== null){?>
 			<span></span>
 		</div>
 	</div>
-	<div id='main-table-box'>
+	<div id='main-table-box' class="main-table-box">
 	
 	<?php if(!$unset_add || !$unset_export || !$unset_print){?>
 	<div class="tDiv">
@@ -97,8 +97,8 @@ if($success_message !== null){?>
 	<div id='ajax_list'>
 		<?php echo $list_view?>
 	</div>
-	<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" autocomplete = "off"'); ?>	
-	<div class="sDiv" id='quickSearchBox'>
+	<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" class="filtering_form" autocomplete = "off"'); ?>	
+	<div class="sDiv quickSearchBox" id='quickSearchBox'>
 		<div class="sDiv2">
 			<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id='search_text'>
 			<select name="search_field" id="search_field">
@@ -107,7 +107,7 @@ if($success_message !== null){?>
 				<option value="<?php echo $column->field_name?>"><?php echo $column->display_as?>&nbsp;&nbsp;</option>
 				<?php }?>
 			</select>
-            <input type="button" value="<?php echo $this->l('list_search');?>" id='crud_search'> 
+            <input type="button" value="<?php echo $this->l('list_search');?>" class="crud_search" id='crud_search'> 
 		</div>
         <div class='search-div-clear-button'>
         	<input type="button" value="<?php echo $this->l('list_clear_filtering');?>" id='search_clear'>
@@ -116,7 +116,7 @@ if($success_message !== null){?>
 	<div class="pDiv">
 		<div class="pDiv2">
 			<div class="pGroup">
-				<div class="pSearch pButton" id='quickSearchButton' title="<?php echo $this->l('list_search');?>">
+				<div class="pSearch pButton quickSearchButton" id='quickSearchButton' title="<?php echo $this->l('list_search');?>">
 					<span></span>
 				</div>
 			</div>
@@ -144,7 +144,7 @@ if($success_message !== null){?>
 			<div class="btnseparator">
 			</div>
 			<div class="pGroup">
-				<span class="pcontrol"><?php echo $this->l('list_page'); ?> <input name='page' type="text" value="1" size="4" id='crud_page'> 
+				<span class="pcontrol"><?php echo $this->l('list_page'); ?> <input name='page' type="text" value="1" size="4" id='crud_page' class="crud_page"> 
 				<?php echo $this->l('list_paging_of'); ?> 
 				<span id='last-page-number'><?php echo ceil($total_results / $default_per_page)?></span></span>
 			</div>
