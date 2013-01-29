@@ -100,7 +100,7 @@ if($success_message !== null){?>
 	<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" class="filtering_form" autocomplete = "off"'); ?>	
 	<div class="sDiv quickSearchBox" id='quickSearchBox'>
 		<div class="sDiv2">
-			<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox" name="search_text" size="30" id='search_text'>
+			<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox search_text" name="search_text" size="30" id='search_text'>
 			<select name="search_field" id="search_field">
 				<option value=""><?php echo $this->l('list_search_all');?></option>
 				<?php foreach($columns as $column){?>
