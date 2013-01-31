@@ -248,7 +248,7 @@ class grocery_CRUD_Field_Types
 				
 			break;
 			case 'true_false':
-				if(array_key_exists($value,$field_info->extras)) {
+				if(is_array($field_info->extras) && array_key_exists($value,$field_info->extras)) {
 					$value = $field_info->extras[$value];
 				} else if(isset($this->default_true_false_text[$value])) {
 					$value = $this->default_true_false_text[$value];
@@ -2083,11 +2083,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$input = "<div class='pretty-radio-buttons'>";
 		
+		$true_string = is_array($field_info->extras) && array_key_exists(1,$field_info->extras) ? $field_info->extras[1] : $this->default_true_false_text[1];
 		$checked = $value === '1' || ($value_is_null && $field_info->default === '1') ? "checked = 'checked'" : "";
-		$input .= "<label><input id='field-{$field_info->name}-true' class='radio-uniform'  type='radio' name='{$field_info->name}' value='1' $checked /> ".(array_key_exists(1,$field_info->extras) ? $field_info->extras[1] : $this->default_true_false_text[1])."</label> ";
+		$input .= "<label><input id='field-{$field_info->name}-true' class='radio-uniform'  type='radio' name='{$field_info->name}' value='1' $checked /> ".$true_string."</label> ";
 		
+		$false_string =  is_array($field_info->extras) && array_key_exists(0,$field_info->extras) ? $field_info->extras[0] : $this->default_true_false_text[0];
 		$checked = $value === '0' || ($value_is_null && $field_info->default === '0') ? "checked = 'checked'" : ""; 
-		$input .= "<label><input id='field-{$field_info->name}-false' class='radio-uniform' type='radio' name='{$field_info->name}' value='0' $checked /> ".(array_key_exists(0,$field_info->extras) ? $field_info->extras[0] : $this->default_true_false_text[0])."</label>";
+		$input .= "<label><input id='field-{$field_info->name}-false' class='radio-uniform' type='radio' name='{$field_info->name}' value='0' $checked /> ".$false_string."</label>";
 		
 		$input .= "</div>";
 		
