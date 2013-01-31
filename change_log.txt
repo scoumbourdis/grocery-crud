@@ -5,6 +5,7 @@ v 1.3.4
 	#129 - Small bug uploading images.
 	#142 - Extras doesn't work properly when the field doesn't exist in the database
 	#158 - New method name set_crud_url_path. This method is useful when the path is not specified correctly.	
+	#163 - Custom field type label for true_false. Like hidden, enum and set.
 	Noty Jquery Plugin to load when you delete a record.
 v 1.3.3
 	#102 - Unsigned field type bug.
