@@ -49,10 +49,16 @@ $(function(){
 
 		$('#ajax-loading').removeClass('hide');
 
-		if(crud_page > last_page)
+		$('.first-button, .last-button').removeClass('disabled');
+		if(crud_page > last_page){
 			$('#tb_crud_page').val(last_page);
-		if(crud_page <= 0)
+		}else if(crud_page <= 1){
 			$('#tb_crud_page').val('1');
+			$('.first-button').addClass('disabled');
+		}else if(crud_page >= last_page){
+			$('.last-button').addClass('disabled');
+		}
+
 		// Inserindo valores da quantidade de registros e pagina atual no formulario
 		$('input[name="per_page"]').val($('#tb_per_page').val());
 		$('input[name="page"]').val($('#tb_crud_page').val());

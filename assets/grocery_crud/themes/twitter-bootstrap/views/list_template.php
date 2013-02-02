@@ -133,15 +133,12 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 
 			<div class="hide loading" id="ajax-loading"><?php echo $this->l('form_update_loading'); ?></div>
 
-			<div class="pagination pagination-centered">
-				<ul>
-					<li class="first-button"><a href="javascript:void(0);">&laquo; <?php echo $this->l('list_paging_first'); ?></a></li>
-					<li class="prev-button"><a href="javascript:void(0);">&laquo; <?php echo $this->l('list_paging_previous'); ?></a></li>
-					<li class="next-button"><a href="javascript:void(0);"><?php echo $this->l('list_paging_next'); ?> &raquo;</a></li>
-					<li class="last-button"><a href="javascript:void(0);"><?php echo $this->l('list_paging_last'); ?> &raquo;</a></li>
-				</ul>
-			</div>
-
+			<ul class="pager">
+				<li class="previous first-button"><a href="javascript:void(0);">&laquo; <?php echo $this->l('list_paging_first'); ?></a></li>
+				<li class="prev-button"><a href="javascript:void(0);">&laquo; <?php echo $this->l('list_paging_previous'); ?></a></li>
+				<li class="next-button"><a href="javascript:void(0);"><?php echo $this->l('list_paging_next'); ?> &raquo;</a></li>
+				<li class="next last-button"><a href="javascript:void(0);"><?php echo $this->l('list_paging_last'); ?> &raquo;</a></li>
+			</ul>
 		</div>
 	</div>
 </div>
