@@ -1969,7 +1969,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{
 		$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
 		
-		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.fancybox-1.3.4.js');
 		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');		
 	}
 	
@@ -3174,9 +3174,9 @@ class grocery_CRUD extends grocery_CRUD_States
 	 */
 	const	VERSION = "1.3.3";
 	
-	const	JQUERY 			= "jquery-1.8.2.min.js";
-	const	JQUERY_UI_JS 	= "jquery-ui-1.9.1.custom.min.js";
-	const	JQUERY_UI_CSS 	= "jquery-ui-1.9.1.custom.min.css";
+	const	JQUERY 			= "jquery-1.9.0.min.js";
+	const	JQUERY_UI_JS 	= "jquery-ui-1.10.0.custom.min.js";
+	const	JQUERY_UI_CSS 	= "jquery-ui-1.10.0.custom.min.css";
 	
 	private $state_code 			= null;
 	private $state_info 			= null;

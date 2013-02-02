@@ -1,4 +1,4 @@
-v 1.3.4
+v 1.4
 	#148 - New theme twiiter-bootstrap
 	#150 - Optimizing the SELECT statement for counting rows.
 	#144 - Unique fields as new functionallity for unique fields in the database.
@@ -7,6 +7,7 @@ v 1.3.4
 	#158 - New method name set_crud_url_path. This method is useful when the path is not specified correctly.	
 	#163 - Custom field type label for true_false. Like hidden, enum and set.
 	Noty Jquery Plugin to load when you delete a record.
+	Upgrading Jquery to Jquery 1.9
 v 1.3.3
 	#102 - Unsigned field type bug.
 	#103 - Multiple columns search filtering at datatables.

@@ -18,7 +18,7 @@
 	
 	/** Fancybox */
 	$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
-	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
+	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox-1.3.4.js');
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');	
 	
 	/** Jquery UI */
@@ -94,7 +94,7 @@ if($success_message !== null){?>
 	</div>
 	<?php }?>
 	
-	<div id='ajax_list'>
+	<div id='ajax_list' class="ajax_list">
 		<?php echo $list_view?>
 	</div>
 	<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" class="filtering_form" autocomplete = "off"'); ?>	

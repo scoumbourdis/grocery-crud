@@ -42,7 +42,7 @@ $this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.numeric.min
 //	JAVASCRIPTS - JQUERY-PRINT-ELEMENT
 $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/libs/print-element/jquery.printElement.min.js');
 //	JAVASCRIPTS - JQUERY FANCYBOX
-$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
+$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox-1.3.4.js');
 //	JAVASCRIPTS - JQUERY EASING
 $this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');
 

@@ -122,19 +122,20 @@ $(function(){
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
 	});
 	
-	$('.field-sorting').live('click', function(){
+	$('.ajax_list').on('click','.field-sorting', function(){
 		$('#hidden-sorting').val($(this).attr('rel'));
 		
-		if($(this).hasClass('asc'))
+		if ($(this).hasClass('asc')) {
 			$('#hidden-ordering').val('desc');
-		else
+		} else {
 			$('#hidden-ordering').val('asc');
+		}
 		
 		$(this).closest('.flexigrid').find('.crud_page').val('1');
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
 	});
 	
-	$('.delete-row').live('click', function(){
+	$('.ajax_list').on('click','.delete-row', function(){
 		var delete_url = $(this).attr('href');
 		
 		if( confirm( message_alert_delete ) )

@@ -24,7 +24,7 @@
 	
 	/** Fancybox */
 	$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
-	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox.pack.js');
+	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox-1.3.4.js');
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');
 ?>
 <script type='text/javascript'>
