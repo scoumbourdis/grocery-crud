@@ -2867,7 +2867,9 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		$state_info = $this->get_state_info_from_url();
 		$extra_values = $ci->uri->segment($state_info->segment_position - 1) != $this->get_method_name() ? $ci->uri->segment($state_info->segment_position - 1) : '';
 		
-		return md5($this->get_controller_name().$this->get_method_name().$extra_values);
+		return $this->crud_url_path !== null 
+					? md5($this->crud_url_path) 
+					: md5($this->get_controller_name().$this->get_method_name().$extra_values);
 	}
 	
 	protected function get_method_name()

@@ -28,7 +28,7 @@ $(function(){
 	
 	$('.filtering_form').submit(function(){		
 		var crud_page =  parseInt($(this).closest('.flexigrid').find('.crud_page').val(), 10);
-		var last_page = parseInt($('#last-page-number').html(), 10);
+		var last_page = parseInt($(this).closest('.flexigrid').find('.last-page-number').html(), 10);
 		
 		if (crud_page > last_page) {
 			$(this).closest('.flexigrid').find('.crud_page').val(last_page);
@@ -39,16 +39,18 @@ $(function(){
 		
 		var this_form = $(this);
 		
+		var ajax_list_info_url = $(this).attr('data-ajax-list-info-url');
+		
 		$(this).ajaxSubmit({
 			 url: ajax_list_info_url,
 			 dataType: 'json',
 			 success:    function(data){
-				$('#total_items').html( data.total_results);
-				displaying_and_pages();
+				this_form.closest('.flexigrid').find('.total_items').html( data.total_results);
+				displaying_and_pages(this_form.closest('.flexigrid'));
 				
 				this_form.ajaxSubmit({
 					 success:    function(data){
-						$('#ajax_list').html(data);
+						this_form.closest('.flexigrid').find('.ajax_list').html(data);
 						call_fancybox();
 						add_edit_button_listener();
 					 }
@@ -77,21 +79,20 @@ $(function(){
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
 	});
 	
-	$('#per_page').change(function(){
+	$('.per_page').change(function(){
 		$(this).closest('.flexigrid').find('.crud_page').val('1');
-		
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
 	});
 	
 	$('.filtering_form').ajaxStart(function(){
-		$('#ajax_refresh_and_loading').addClass('loading');
+		$(this).closest('.flexigrid').find('.ajax_refresh_and_loading').addClass('loading');
 	});
 	
 	$('.filtering_form').ajaxStop(function(){
-		$('#ajax_refresh_and_loading').removeClass('loading');
+		$(this).closest('.flexigrid').find('.ajax_refresh_and_loading').removeClass('loading');
 	});
 	
-	$('#ajax_refresh_and_loading').click(function(){
+	$('.ajax_refresh_and_loading').click(function(){
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
 	});
 	
@@ -109,7 +110,7 @@ $(function(){
 	});
 	
 	$('.last-button').click(function(){
-		$(this).closest('.flexigrid').find('.crud_page').val( $('#last-page-number').html());
+		$(this).closest('.flexigrid').find('.crud_page').val( $(this).closest('.flexigrid').find('.last-page-number').html());
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
 	});
 	
@@ -238,25 +239,27 @@ $(function(){
 	
 });
 
-function displaying_and_pages()
+function displaying_and_pages(this_container)
 {
-	if ($('#crud_page').val() == 0) {
-		$('#crud_page').val('1');	
+	if (this_container.find('.crud_page').val() == 0) {
+		this_container.find('.crud_page').val('1');	
 	}
 	
-	var crud_page 		= parseInt( $('#crud_page').val()) ;
-	var per_page	 	= parseInt( $('#per_page').val() );
-	var total_items 	= parseInt( $('#total_items').html() );
+	var crud_page 		= parseInt( this_container.find('.crud_page').val(), 10) ;
+	var per_page	 	= parseInt( this_container.find('.per_page').val(), 10 );
+	var total_items 	= parseInt( this_container.find('.total_items').html(), 10 );
 	
-	$('#last-page-number').html( Math.ceil( total_items / per_page) );
+	this_container.find('.last-page-number').html( Math.ceil( total_items / per_page) );
 	
-	if(total_items == 0)
-		$('#page-starts-from').html( '0');
-	else
-		$('#page-starts-from').html( (crud_page - 1)*per_page + 1 );
+	if (total_items == 0) {
+		this_container.find('.page-starts-from').html( '0');
+	} else {
+		this_container.find('.page-starts-from').html( (crud_page - 1)*per_page + 1 );
+	}
 	
-	if(crud_page*per_page > total_items)
-		$('#page-ends-to').html( total_items );
-	else
-		$('#page-ends-to').html( crud_page*per_page );
+	if (crud_page*per_page > total_items) {
+		this_container.find('.page-ends-to').html( total_items );
+	} else {
+		this_container.find('.page-ends-to').html( crud_page*per_page );
+	}
 }

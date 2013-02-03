@@ -29,7 +29,7 @@
 	var base_url = '<?php echo base_url();?>';
 
 	var subject = '<?php echo $subject?>';
-	var ajax_list_info_url = '<?php echo $ajax_list_info_url?>';
+	var ajax_list_info_url = '<?php echo $ajax_list_info_url; ?>';
 	var unique_hash = '<?php echo $unique_hash; ?>';
 
 	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
@@ -97,7 +97,7 @@ if($success_message !== null){?>
 	<div id='ajax_list' class="ajax_list">
 		<?php echo $list_view?>
 	</div>
-	<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" class="filtering_form" autocomplete = "off"'); ?>	
+	<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" class="filtering_form" autocomplete = "off" data-ajax-list-info-url="'.$ajax_list_info_url.'"'); ?>	
 	<div class="sDiv quickSearchBox" id='quickSearchBox'>
 		<div class="sDiv2">
 			<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox search_text" name="search_text" size="30" id='search_text'>
@@ -123,7 +123,7 @@ if($success_message !== null){?>
 			<div class="btnseparator">
 			</div>
 			<div class="pGroup">
-				<select name="per_page" id='per_page'>
+				<select name="per_page" id='per_page' class="per_page">
 					<?php foreach($paging_options as $option){?>
 						<option value="<?php echo $option; ?>" <?php if($option == $default_per_page){?>selected="selected"<?php }?>><?php echo $option; ?>&nbsp;&nbsp;</option>
 					<?php }?>
@@ -146,7 +146,7 @@ if($success_message !== null){?>
 			<div class="pGroup">
 				<span class="pcontrol"><?php echo $this->l('list_page'); ?> <input name='page' type="text" value="1" size="4" id='crud_page' class="crud_page"> 
 				<?php echo $this->l('list_paging_of'); ?> 
-				<span id='last-page-number'><?php echo ceil($total_results / $default_per_page)?></span></span>
+				<span id='last-page-number' class="last-page-number"><?php echo ceil($total_results / $default_per_page)?></span></span>
 			</div>
 			<div class="btnseparator">
 			</div>
@@ -161,7 +161,7 @@ if($success_message !== null){?>
 			<div class="btnseparator">
 			</div>
 			<div class="pGroup">
-				<div class="pReload pButton" id='ajax_refresh_and_loading'>
+				<div class="pReload pButton ajax_refresh_and_loading" id='ajax_refresh_and_loading'>
 					<span></span>
 				</div>
 			</div>
@@ -169,9 +169,9 @@ if($success_message !== null){?>
 			</div>
 			<div class="pGroup">
 				<span class="pPageStat">
-					<?php $paging_starts_from = "<span id='page-starts-from'>1</span>"; ?>
-					<?php $paging_ends_to = "<span id='page-ends-to'>". ($total_results < $default_per_page ? $total_results : $default_per_page) ."</span>"; ?>
-					<?php $paging_total_results = "<span id='total_items'>$total_results</span>"?>
+					<?php $paging_starts_from = "<span id='page-starts-from' class='page-starts-from'>1</span>"; ?>
+					<?php $paging_ends_to = "<span id='page-ends-to' class='page-ends-to'>". ($total_results < $default_per_page ? $total_results : $default_per_page) ."</span>"; ?>
+					<?php $paging_total_results = "<span id='total_items' class='total_items'>$total_results</span>"?>
 					<?php echo str_replace( array('{start}','{end}','{results}'),
 											array($paging_starts_from, $paging_ends_to, $paging_total_results),
 											$this->l('list_displaying')
