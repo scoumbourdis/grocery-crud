@@ -44,6 +44,12 @@ $(function(){
 		$(this).ajaxSubmit({
 			 url: ajax_list_info_url,
 			 dataType: 'json',
+			 beforeSend: function(){
+				 this_form.closest('.flexigrid').find('.ajax_refresh_and_loading').addClass('loading');
+			 },
+			 complete: function(){
+				 this_form.closest('.flexigrid').find('.ajax_refresh_and_loading').removeClass('loading');
+			 },			 
 			 success:    function(data){
 				this_form.closest('.flexigrid').find('.total_items').html( data.total_results);
 				displaying_and_pages(this_form.closest('.flexigrid'));
@@ -58,12 +64,14 @@ $(function(){
 			 }
 		});
 		
-		createCookie('crud_page_'+unique_hash,crud_page,1);
-		createCookie('per_page_'+unique_hash,$('#per_page').val(),1);
-		createCookie('hidden_ordering_'+unique_hash,$('#hidden-ordering').val(),1);
-		createCookie('hidden_sorting_'+unique_hash,$('#hidden-sorting').val(),1);
-		createCookie('search_text_'+unique_hash,$(this).closest('.flexigrid').find('.search_text').val(),1);
-		createCookie('search_field_'+unique_hash,$('#search_field').val(),1);
+		if ($('.flexigrid').length == 1) { //disable cookie storing for multiple grids in one page
+			createCookie('crud_page_'+unique_hash,crud_page,1);
+			createCookie('per_page_'+unique_hash,$('#per_page').val(),1);
+			createCookie('hidden_ordering_'+unique_hash,$('#hidden-ordering').val(),1);
+			createCookie('hidden_sorting_'+unique_hash,$('#hidden-sorting').val(),1);
+			createCookie('search_text_'+unique_hash,$(this).closest('.flexigrid').find('.search_text').val(),1);
+			createCookie('search_field_'+unique_hash,$('#search_field').val(),1);
+		}
 		
 		return false;
 	});
@@ -82,14 +90,6 @@ $(function(){
 	$('.per_page').change(function(){
 		$(this).closest('.flexigrid').find('.crud_page').val('1');
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
-	});
-	
-	$('.filtering_form').ajaxStart(function(){
-		$(this).closest('.flexigrid').find('.ajax_refresh_and_loading').addClass('loading');
-	});
-	
-	$('.filtering_form').ajaxStop(function(){
-		$(this).closest('.flexigrid').find('.ajax_refresh_and_loading').removeClass('loading');
 	});
 	
 	$('.ajax_refresh_and_loading').click(function(){
@@ -124,12 +124,12 @@ $(function(){
 	});
 	
 	$('.ajax_list').on('click','.field-sorting', function(){
-		$('#hidden-sorting').val($(this).attr('rel'));
+		$(this).closest('.flexigrid').find('.hidden-sorting').val($(this).attr('rel'));
 		
 		if ($(this).hasClass('asc')) {
-			$('#hidden-ordering').val('desc');
+			$(this).closest('.flexigrid').find('.hidden-ordering').val('desc');
 		} else {
-			$('#hidden-ordering').val('asc');
+			$(this).closest('.flexigrid').find('.hidden-ordering').val('asc');
 		}
 		
 		$(this).closest('.flexigrid').find('.crud_page').val('1');
@@ -138,6 +138,8 @@ $(function(){
 	
 	$('.ajax_list').on('click','.delete-row', function(){
 		var delete_url = $(this).attr('href');
+		
+		var this_container = $(this).closest('.flexigrid');
 		
 		if( confirm( message_alert_delete ) )
 		{
@@ -148,7 +150,7 @@ $(function(){
 				{					
 					if(data.success)
 					{
-						$('#ajax_refresh_and_loading').trigger('click');
+						this_container.find('.ajax_refresh_and_loading').trigger('click');
 						
 						success_message(data.success_message);
 					}
@@ -211,8 +213,8 @@ $(function(){
 	
 	$('.crud_page').numeric();
 	
-	$('.flexigrid').each(function(){
-		
+	
+	if ($('.flexigrid').length == 1) {	 //disable cookie storing for multiple grids in one page
 		var cookie_crud_page = readCookie('crud_page_'+unique_hash);
 		var cookie_per_page  = readCookie('per_page_'+unique_hash);
 		var hidden_ordering  = readCookie('hidden_ordering_'+unique_hash);
@@ -234,8 +236,7 @@ $(function(){
 			
 			$('#filtering_form').trigger('submit');
 		}		
-		
-	});
+	}
 	
 });
 
