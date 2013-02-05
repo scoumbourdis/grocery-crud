@@ -35,7 +35,6 @@
 	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
 
 </script>
-<div id="hidden-operations"></div>
 <div id='report-error' class='report-div error'></div>
 <div id='report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>><?php 
 if($success_message !== null){?>
@@ -43,6 +42,7 @@ if($success_message !== null){?>
 <?php }
 ?></div>	
 <div class="flexigrid" style='width: 100%;'>
+	<div id="hidden-operations" class="hidden-operations"></div>
 	<div class="mDiv">
 		<div class="ftitle">
 			&nbsp;
@@ -110,7 +110,7 @@ if($success_message !== null){?>
             <input type="button" value="<?php echo $this->l('list_search');?>" class="crud_search" id='crud_search'> 
 		</div>
         <div class='search-div-clear-button'>
-        	<input type="button" value="<?php echo $this->l('list_clear_filtering');?>" id='search_clear'>
+        	<input type="button" value="<?php echo $this->l('list_clear_filtering');?>" id='search_clear' class="search_clear">
         </div>
 	</div>
 	<div class="pDiv">
