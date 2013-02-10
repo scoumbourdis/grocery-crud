@@ -4687,7 +4687,7 @@ class grocery_CRUD extends grocery_CRUD_States
 			'link_url'		=> $link_url,
 			'css_class' 	=> $css_class,
 			'url_callback' 	=> $url_callback,
-			'url_has_http'	=> substr($link_url,0,7) == 'http://' ? true : false
+			'url_has_http'	=> substr($link_url,0,7) == 'http://' || substr($link_url,0,8) == 'https://' ? true : false
 		);
 		
 		return $this;

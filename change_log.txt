@@ -1,5 +1,5 @@
-v 1.4
-	#148 - New theme twiiter-bootstrap
+v 1.4.0 BETA
+	#148 - New theme twitter-bootstrap
 	#150 - Optimizing the SELECT statement for counting rows.
 	#144 - Unique fields as new functionallity for unique fields in the database.
 	#129 - Small bug uploading images.
@@ -9,6 +9,7 @@ v 1.4
 	Noty Jquery Plugin to load when you delete a record.
 	Upgrading Jquery to Jquery 1.9
 	Multiple grids in one page.
+	Small code bug fixes: #165
 v 1.3.3
 	#102 - Unsigned field type bug.
 	#103 - Multiple columns search filtering at datatables.
