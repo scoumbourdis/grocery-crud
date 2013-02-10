@@ -9,7 +9,9 @@ v 1.4.0 BETA
 	Noty Jquery Plugin to load when you delete a record.
 	Upgrading Jquery to Jquery 1.9
 	Multiple grids in one page.
-	Small code bug fixes: #165
+	Small bug fixes: 
+		- #165 - add_action "url_has_http" issue
+		- #166 - Improved file upload error handling
 v 1.3.3
 	#102 - Unsigned field type bug.
 	#103 - Multiple columns search filtering at datatables.
