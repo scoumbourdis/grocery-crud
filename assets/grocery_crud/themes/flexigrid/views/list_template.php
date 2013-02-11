@@ -35,12 +35,12 @@
 	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
 
 </script>
-<div id='report-error' class='report-div error'></div>
-<div id='report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>><?php 
+<div id='list-report-error' class='report-div error'></div>
+<div id='list-report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>><?php 
 if($success_message !== null){?>
 	<p><?php echo $success_message; ?></p>
 <?php }
-?></div>	
+?></div>
 <div class="flexigrid" style='width: 100%;'>
 	<div id="hidden-operations" class="hidden-operations"></div>
 	<div class="mDiv">
