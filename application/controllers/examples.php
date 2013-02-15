@@ -156,19 +156,19 @@ class Examples extends CI_Controller {
 			show_error($e->getMessage().' --- '.$e->getTraceAsString());
 		}
 	}
-	
+
 	function multigrids()
 	{
 		$output1 = $this->offices_management2();
-	
+
 		$output2 = $this->employees_management2();
-	
+
 		$output3 = $this->customers_management2();
-	
+
 		$js_files = $output1->js_files + $output2->js_files + $output3->js_files;
 		$css_files = $output1->css_files + $output2->css_files + $output3->css_files;
 		$output = $output1->output.$output2->output.$output3->output;
-	
+
 		$this->_example_output((object)array(
 				'js_files' => $js_files,
 				'css_files' => $css_files,
@@ -181,46 +181,46 @@ class Examples extends CI_Controller {
 		$crud = new grocery_CRUD();
 		$crud->set_table('offices');
 		$crud->set_subject('Office');
-		
+
 		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/multigrids")));
-		
+
 		$output = $crud->render();
-	
-		if($crud->getState() != 'list') {
-			$this->_example_output($output);
-		} else {
-			return $output;
-		}
-	}	
-	
-	public function employees_management2()
-	{
-		$crud = new grocery_CRUD();
-	
-		$crud->set_theme('datatables');
-		$crud->set_table('employees');
-		//$crud->set_relation('officeCode','offices','city');
-		$crud->display_as('officeCode','Office City');
-		$crud->set_subject('Employee');
-	
-		$crud->required_fields('lastName');
-	
-		$crud->set_field_upload('file_url','assets/uploads/files');
-	
-		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/multigrids")));
-		
-		$output = $crud->render();
-	
+
 		if($crud->getState() != 'list') {
 			$this->_example_output($output);
 		} else {
 			return $output;
 		}
 	}
-	
+
+	public function employees_management2()
+	{
+		$crud = new grocery_CRUD();
+
+		$crud->set_theme('datatables');
+		$crud->set_table('employees');
+		$crud->set_relation('officeCode','offices','city');
+		$crud->display_as('officeCode','Office City');
+		$crud->set_subject('Employee');
+
+		$crud->required_fields('lastName');
+
+		$crud->set_field_upload('file_url','assets/uploads/files');
+
+		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/multigrids")));
+
+		$output = $crud->render();
+
+		if($crud->getState() != 'list') {
+			$this->_example_output($output);
+		} else {
+			return $output;
+		}
+	}
+
 	public function customers_management2()
 	{
-		
+
 		$crud = new grocery_CRUD();
 
 		$crud->set_table('customers');
@@ -230,16 +230,16 @@ class Examples extends CI_Controller {
 			 ->display_as('contactLastName','Last Name');
 		$crud->set_subject('Customer');
 		$crud->set_relation('salesRepEmployeeNumber','employees','lastName');
-		
+
 		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/multigrids")));
-		
+
 		$output = $crud->render();
-		
+
 		if($crud->getState() != 'list') {
 			$this->_example_output($output);
 		} else {
 			return $output;
 		}
-	}	
+	}
 
 }
