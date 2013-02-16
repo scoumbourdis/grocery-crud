@@ -159,6 +159,9 @@ class Examples extends CI_Controller {
 
 	function multigrids()
 	{
+		$this->config->load('grocery_crud');
+		$this->config->set_item('grocery_crud_dialog_forms',true);
+
 		$output1 = $this->offices_management2();
 
 		$output2 = $this->employees_management2();
