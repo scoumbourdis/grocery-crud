@@ -20,4 +20,4 @@
 	$config['grocery_crud_character_limiter'] 	= 30;
 
 	//All the forms are opening with dialog forms without refreshing the page once again.
-	$config['grocery_crud_dialog_forms'] = false;
+	$config['grocery_crud_dialog_forms'] = true;

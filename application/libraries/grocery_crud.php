@@ -1761,6 +1761,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->fields 			= $this->get_add_fields();
 		$data->hidden_fields	= $this->get_add_hidden_fields();
 		$data->unset_back_to_list	= $this->unset_back_to_list;
+		$data->unique_hash			= $this->get_method_hash();
 
 		$this->_theme_view('add.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
@@ -1783,6 +1784,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->update_url	= $this->getUpdateUrl($state_info);
 		$data->delete_url	= $this->getDeleteUrl($state_info);
 		$data->input_fields = $this->get_edit_input_fields($data->field_values);
+		$data->unique_hash			= $this->get_method_hash();
 
 		$data->fields 		= $this->get_edit_fields();
 		$data->hidden_fields	= $this->get_edit_hidden_fields();
@@ -4027,7 +4029,6 @@ class grocery_CRUD extends grocery_CRUD_States
 		$this->default_css_path						= $this->default_assets_path.'/css';
 		$this->default_texteditor_path 				= $this->default_assets_path.'/texteditor';
 		$this->default_theme_path					= $this->default_assets_path.'/themes';
-
 
 		$this->character_limiter = $this->config->character_limiter;
 
