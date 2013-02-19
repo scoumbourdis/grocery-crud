@@ -1762,6 +1762,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->hidden_fields	= $this->get_add_hidden_fields();
 		$data->unset_back_to_list	= $this->unset_back_to_list;
 		$data->unique_hash			= $this->get_method_hash();
+		$data->is_ajax 			= $this->_is_ajax();
 
 		$this->_theme_view('add.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
@@ -1791,6 +1792,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_back_to_list	= $this->unset_back_to_list;
 
 		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key);
+		$data->is_ajax 			= $this->_is_ajax();
 
 		$this->_theme_view('edit.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
@@ -2653,8 +2655,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function _get_ajax_results()
 	{
 		//This is a $_POST request rather that $_GET request , because
-		//Codeigniter doesn't like the $_GET requests!
-		if (array_key_exists('is_ajax', $_POST) && $_POST['is_ajax'] == 'true') {
+		//Codeigniter doesn't like the $_GET requests so much!
+		if ($this->_is_ajax()) {
 			@ob_end_clean();
 			$results= (object)array(
 					'output' => $this->views_as_string,
@@ -2668,6 +2670,11 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			die;
 		}
 		//else just continue
+	}
+
+	protected function _is_ajax()
+	{
+		return array_key_exists('is_ajax', $_POST) && $_POST['is_ajax'] == 'true' ? true: false;
 	}
 
 	protected function _theme_view($view, $vars = array(), $return = FALSE)

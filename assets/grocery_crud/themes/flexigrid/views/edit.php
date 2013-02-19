@@ -57,7 +57,7 @@
 		</div>
 <?php 	if(!$this->unset_back_to_list) { ?>
 		<div class='form-button-box'>
-			<input type='button' value='<?php echo $this->l('form_update_and_go_back'); ?>' id="save-and-go-back-button" class="btn btn-large"/>
+			<?php if (!$is_ajax) { ?><input type='button' value='<?php echo $this->l('form_update_and_go_back'); ?>' id="save-and-go-back-button" class="btn btn-large"/><?php }?>
 		</div>
 		<div class='form-button-box'>
 			<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick='javascript: return goToList()' class="btn btn-large" />
