@@ -1,15 +1,16 @@
 v 1.4.0 BETA
+	#170 - Problem with more than one date inputs at the dialog.
 	#148 - New theme twitter-bootstrap
 	#150 - Optimizing the SELECT statement for counting rows.
 	#144 - Unique fields as new functionallity for unique fields in the database.
 	#129 - Small bug uploading images.
 	#142 - Extras doesn't work properly when the field doesn't exist in the database
-	#158 - New method name set_crud_url_path. This method is useful when the path is not specified correctly.	
+	#158 - New method name set_crud_url_path. This method is useful when the path is not specified correctly.
 	#163 - Custom field type label for true_false. Like hidden, enum and set.
 	Noty Jquery Plugin to load when you delete a record.
-	Upgrading Jquery to Jquery 1.9
+	Upgrading Jquery to Jquery 1.9.1
 	Multiple grids in one page.
-	Small bug fixes: 
+	Small bug fixes:
 		- #165 - add_action "url_has_http" issue
 		- #166 - Improved file upload error handling
 v 1.3.3
@@ -40,7 +41,7 @@ v 1.3.2
 v 1.3.1
 	Updating "Export","Print" and "Minimize/Maximaze" lang strings
 	Renewing to the latest tinymce version
-	Jquery version 1.8.1 
+	Jquery version 1.8.1
 	Fixing small bugs
 v 1.3
 	#73 - Jquery version 1.8.0
@@ -73,12 +74,12 @@ v 1.2.3
 		#30 - Change field type doesn't work if the field is not at the table.
 		#38 - required_field doesn't work for relation_n_n fields.
 v 1.2.2
-	Adding Dutch language. 
+	Adding Dutch language.
 	Adding a new method "unset_back_to_list".  Unsets everything that has to do with buttons or links with go back to list message.
 	#23 - When we use $crud->where() method it doesn't work as expected with the search of flexigrid.
 	#28 - Change the hardcoded JavaScripts and CSS with variables.
 	#25 - Adding a new method "unset_list".  Unsets the first list and the ajax_list and gives an exception error for the user that tries to access it.
-	Adding a new button/feature "save and go back to list". When a user press the button "save and go back to list" it is automatically redirect you to the list page when a successful save is done. 
+	Adding a new button/feature "save and go back to list". When a user press the button "save and go back to list" it is automatically redirect you to the list page when a successful save is done.
 	Adding the default_per_page at the config file. This specifies the first visit per page that a user should see at the list page. For example 25 rows per page.
 	#13 - The list search and ordering is not working with the n-n relation columns.
 	Small bug fixes:
@@ -108,10 +109,10 @@ v.1.2
 	Adding order by clause at the 5th argument to the simple set_relation method.
 	Adding 3 new callbcaks, callback_upload, callback_before_upload, callback_after_upload.
 	BUG fix - unset_jquery function now works properly.
-	BUG fix #9 (The form's clear functionallity don't work properly after the insert). 
+	BUG fix #9 (The form's clear functionallity don't work properly after the insert).
 	RENAMING METHODS:
-		callback_escape_insert to callback_insert, 
-		callback_escape_update to callback_update, 
+		callback_escape_insert to callback_insert,
+		callback_escape_update to callback_update,
 		callback_escape_delete to callback_delete
 	RENAMING CLASSES:
 		grocery_Field_Types to grocery_CRUD_Field_Types
@@ -119,13 +120,13 @@ v.1.2
 		grocery_Form_validation to grocery_CRUD_Form_validation
 		grocery_Layout to grocery_CRUD_Layout
 		grocery_States to grocery_CRUD_States
-		grocery_Model to grocery_CRUD_Model	
+		grocery_Model to grocery_CRUD_Model
 v.1.1.8
 	Add new jquery version 1.7.1
 	Changing the drop-down list of the set_relation. Now the drop-down list has unique design for all the browsers, is searchable and also can be empty.
-	Changing the layout or relation n-n (only without the ordering field). The new one, is much more user friendly and easier to handle lot of data. 
+	Changing the layout or relation n-n (only without the ordering field). The new one, is much more user friendly and easier to handle lot of data.
 	Adding languages: Italian, Russian.
-	Small BUG fixes: 
+	Small BUG fixes:
 		- Auto-recognize enum fields for CI 2.1
 		- Don't print "&nbsp;" if a value is empty, is useless
 		- Smal but important CSS Fixes.
@@ -150,7 +151,7 @@ v.1.1.4
 	Bug Fix - When you have unset edit and unset delete in your actions and also you have insert one or more add_action, the column Actions disapeared.
 	Adding a new field type named "password". This is a simple transformation of the field input from text to password and it hides the password from the list grid.
 	Changing state name insert and update to... "insert" and "update" and not "add" and "edit" that was till this revision.
-	Fully compatible with codeigniter 2.1 - Changing the library of CI_Form_Validation and adding it into the library of grocery CRUD for stability. 
+	Fully compatible with codeigniter 2.1 - Changing the library of CI_Form_Validation and adding it into the library of grocery CRUD for stability.
 v.1.1.3
 	Changing the functionality of the private method _theme_view. Now it's not dependent with the Loader of codeigniter.
 		So every template controller, HMVC, e.t.c. can work well with grocery CRUD now.
