@@ -46,7 +46,7 @@
 					}
 				?>
 			<!-- End of hidden inputs -->
-
+			<?php if ($is_ajax) { ?><input type="hidden" name="is_ajax" value="true" /><?php }?>
 
 			<div id='report-error' class='report-div error'></div>
 			<div id='report-success' class='report-div success'></div>
@@ -57,7 +57,7 @@
 			</div>
 <?php 	if(!$this->unset_back_to_list) { ?>
 			<div class='form-button-box'>
-				<?php if (!$is_ajax) { ?><input type='button' value='<?php echo $this->l('form_save_and_go_back'); ?>' id="save-and-go-back-button"  class="btn btn-large"/><?php }?>
+				<input type='button' value='<?php echo $this->l('form_save_and_go_back'); ?>' id="save-and-go-back-button"  class="btn btn-large"/>
 			</div>
 			<div class='form-button-box'>
 				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick="javascript: goToList()"  class="btn btn-large" />

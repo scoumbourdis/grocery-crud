@@ -1850,10 +1850,14 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 			if(!$this->unset_back_to_list && !empty($insert_result) && !$this->unset_edit)
 			{
-				$success_message .= " <a href='".$this->getEditUrl($insert_result)."'>".$this->l('form_edit')." {$this->subject}</a> ".$this->l('form_or');
+				$success_message .= " <a href='".$this->getEditUrl($insert_result)."'>".$this->l('form_edit')." {$this->subject}</a> ";
+
+				if (!$this->_is_ajax()) {
+					$success_message .= $this->l('form_or');
+				}
 			}
 
-			if(!$this->unset_back_to_list)
+			if(!$this->unset_back_to_list && !$this->_is_ajax())
 			{
 				$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
 			}
@@ -2049,7 +2053,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		else
 		{
 			$success_message = '<p>'.$this->l('update_success_message');
-			if(!$this->unset_back_to_list)
+			if(!$this->unset_back_to_list && !$this->_is_ajax())
 			{
 				$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
 			}
