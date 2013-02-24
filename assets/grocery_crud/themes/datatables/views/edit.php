@@ -54,10 +54,10 @@
 			</div>
 			<?php 	if(!$this->unset_back_to_list) { ?>
 			<div class='form-button-box'>
-				<?php if (!$is_ajax) { ?><input type='button' value='<?php echo $this->l('form_update_and_go_back'); ?>' class='ui-input-button' id="save-and-go-back-button"/><?php }?>
+				<input type='button' value='<?php echo $this->l('form_update_and_go_back'); ?>' class='ui-input-button' id="save-and-go-back-button"/>
 			</div>
 			<div class='form-button-box'>
-				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick='javascript: return goToList()' class='ui-input-button' />
+				<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick='javascript: return goToList()' class='ui-input-button' id="cancel-button" />
 			</div>
 			<?php }?>
 			<div class='form-button-box loading-box'>

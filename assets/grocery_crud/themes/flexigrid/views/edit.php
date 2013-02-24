@@ -61,7 +61,7 @@
 			<input type='button' value='<?php echo $this->l('form_update_and_go_back'); ?>' id="save-and-go-back-button" class="btn btn-large"/>
 		</div>
 		<div class='form-button-box'>
-			<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick='javascript: return goToList()' class="btn btn-large" />
+			<input type='button' value='<?php echo $this->l('form_cancel'); ?>' onclick='javascript: return goToList()' class="btn btn-large" id="cancel-button" />
 		</div>
 <?php 	} ?>
 		<div class='form-button-box'>
