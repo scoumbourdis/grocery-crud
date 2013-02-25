@@ -82,14 +82,18 @@ $(function(){
         	}
 		});
 
-		$('#cancel-button').click(function(){
-			if( confirm( message_alert_add_form ) )
-			{
-				window.location = list_url;
-			}
+		if( $('#cancel-button').closest('.ui-dialog').length === 0 ) {
 
-			return false;
-		});
+			$('#cancel-button').click(function(){
+				if( confirm( message_alert_add_form ) )
+				{
+					window.location = list_url;
+				}
+
+				return false;
+			});
+
+		}
 	});
 
 	function clearForm()

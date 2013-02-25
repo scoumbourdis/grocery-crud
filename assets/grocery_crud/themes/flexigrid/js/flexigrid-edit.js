@@ -94,13 +94,16 @@ $(function(){
 		return false;
 	});
 
-	$('#cancel-button').click(function(){
+	if( $('#cancel-button').closest('.ui-dialog').length === 0 ) {
 
-		if( confirm( message_alert_edit_form ) )
-		{
-			window.location = list_url;
-		}
+		$('#cancel-button').click(function(){
+			if( confirm( message_alert_edit_form ) )
+			{
+				window.location = list_url;
+			}
 
-		return false;
-	});
+			return false;
+		});
+
+	}
 });
