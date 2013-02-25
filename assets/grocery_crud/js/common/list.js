@@ -39,11 +39,11 @@ var add_edit_button_listener = function () {
 						},
 						open: function(){
 							var this_dialog = $(this);
-							$(this).find('#cancel-button').off("click");
 
-							$(this).on("click","#cancel-button",function(){
+							$('#cancel-button').click(function(){
 								this_dialog.dialog("close");
 							});
+
 						}
 					});
 				}

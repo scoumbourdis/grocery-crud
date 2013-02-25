@@ -89,17 +89,17 @@ $(function(){
 			});
 			return false;
 		});
+
+		$('#cancel-button').click(function(){
+			if( confirm( message_alert_add_form ) )
+			{
+				window.location = list_url;
+			}
+
+			return false;
+		});
+
 	});
-
-	function goToList()
-	{
-		if( confirm( message_alert_add_form ) )
-		{
-			window.location = list_url;
-		}
-
-		return false;
-	}
 
 	function clearForm()
 	{
