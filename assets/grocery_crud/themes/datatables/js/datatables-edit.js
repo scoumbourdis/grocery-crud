@@ -33,7 +33,12 @@ $(function(){
 							{
 								if(save_and_close)
 								{
-									window.location = data.success_list_url;
+									if ($('#save-and-go-back-button').closest('.ui-dialog').length === 0) {
+										window.location = data.success_list_url;
+									} else {
+										$(".ui-dialog-content").dialog("close");
+									}
+
 									return true;
 								}
 

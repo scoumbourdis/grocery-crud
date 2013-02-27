@@ -47,15 +47,20 @@ $(function(){
 							data = $.parseJSON( result );
 							if(data.success)
 							{
-								if(save_and_close)
-								{
-									window.location = data.success_list_url;
-									return true;
-								}
-
 								var data_unique_hash = my_crud_form.closest(".flexigrid").attr("data-unique-hash");
 
 								$('.flexigrid[data-unique-hash='+data_unique_hash+']').find('.ajax_refresh_and_loading').trigger('click');
+
+								if(save_and_close)
+								{
+									if ($('#save-and-go-back-button').closest('.ui-dialog').length === 0) {
+										window.location = data.success_list_url;
+									} else {
+										$(".ui-dialog-content").dialog("close");
+									}
+
+									return true;
+								}
 
 								form_success_message(data.success_message);
 							}
