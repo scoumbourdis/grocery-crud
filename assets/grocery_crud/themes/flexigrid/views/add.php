@@ -53,7 +53,7 @@
 		</div>
 		<div class="pDiv">
 			<div class='form-button-box'>
-				<input type='submit' value='<?php echo $this->l('form_save'); ?>'  class="btn btn-large"/>
+				<input id="form-button-save" type='submit' value='<?php echo $this->l('form_save'); ?>'  class="btn btn-large"/>
 			</div>
 <?php 	if(!$this->unset_back_to_list) { ?>
 			<div class='form-button-box'>

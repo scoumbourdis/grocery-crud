@@ -50,7 +50,7 @@
 		</div>
 		<div class='buttons-box'>
 			<div class='form-button-box'>
-				<input type='submit' value='<?php echo $this->l('form_save'); ?>' class='ui-input-button'/>
+				<input id="form-button-save" type='submit' value='<?php echo $this->l('form_save'); ?>' class='ui-input-button'/>
 			</div>
 <?php 	if(!$this->unset_back_to_list) { ?>
 			<div class='form-button-box'>
