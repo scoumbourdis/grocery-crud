@@ -3193,10 +3193,11 @@ class grocery_CRUD extends grocery_CRUD_States
 	const	JQUERY_UI_JS 	= "jquery-ui-1.10.1.custom.min.js";
 	const	JQUERY_UI_CSS 	= "jquery-ui-1.10.1.custom.min.css";
 
-	private $state_code 			= null;
-	private $state_info 			= null;
+	protected $state_code 			= null;
+	protected $state_info 			= null;
+	protected $columns				= null;
+
 	private $basic_db_table_checked = false;
-	private $columns				= null;
 	private $columns_checked		= false;
 	private $add_fields_checked		= false;
 	private $edit_fields_checked	= false;
