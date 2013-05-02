@@ -4,21 +4,22 @@
  * - list_template.php
  * - list.php
  */
-$(function(){
 
-	//	Mensagens para a aplicação
-	var alert_message = function(type_message, text_message){
-		$('.alert-'+type_message).remove();
-		$('#message-box').prepend('<div class="alert alert-'+type_message+' fade in"><a class="close" data-dismiss="alert" href="#"> x </a>'+text_message+'</div>');
-		$('html, body').animate({
-			scrollTop:0
-		}, 600);
-		window.setTimeout( function(){
-	        $('.alert-'+type_message).slideUp();
-	    }, 7000);
-		$("#ajax-loading").addClass('hide');
-		return false;
-	};
+//	Mensagens para a aplicação
+var alert_message = function(type_message, text_message){
+	$('.alert-'+type_message).remove();
+	$('#message-box').prepend('<div class="alert alert-'+type_message+' fade in"><a class="close" data-dismiss="alert" href="#"> x </a>'+text_message+'</div>');
+	$('html, body').animate({
+		scrollTop:0
+	}, 600);
+	window.setTimeout( function(){
+        $('.alert-'+type_message).slideUp();
+    }, 7000);
+	$("#ajax-loading").addClass('hide');
+	return false;
+};
+
+$(function(){
 
 	var call_fancybox = function(){}
 	if($('.image-thumbnail')[0]){
@@ -88,7 +89,7 @@ $(function(){
 
 		$('#ajax-loading').addClass('hide');
 		return false;
-	});
+	}).trigger('submit');
 
 	//	Submete a busca com as informacoes a serem buscadas
 	$('#crud_search').click(function(){
@@ -165,35 +166,6 @@ $(function(){
 		$('#filtering_form').trigger('submit');
 	});
 
-	//	Chama o método para excluir o registro de informação do BD
-	$('.delete-row').live('click', function(){
-		var delete_url = $(this).attr('href');
-
-		if( confirm( message_alert_delete ) )
-		{
-			$('#ajax-loading').removeClass('hide');
-			$.ajax({
-				url: delete_url,
-				dataType: 'json',
-				success: function(data)
-				{
-					if(data.success)
-					{
-						$('#filtering_form').trigger('submit');
-						alert_message('sucess', data.success_message);
-					}
-					else
-					{
-						alert_message('sucess', data.error_message);
-					}
-				}
-			});
-			$('#ajax-loading').addClass('hide');
-		}
-
-		return false;
-	});
-
 	//	Exporta as importações da tabela para um arquivo .CSV
 	$('.export-anchor').click(function(){
 		var export_url = $(this).attr('data-url');
@@ -217,12 +189,13 @@ $(function(){
 	});
 	$('#crud_page').numeric();
 
-	var cookie_crud_page = readCookie('crud_page_'+unique_hash);
-	var cookie_per_page  = readCookie('per_page_'+unique_hash);
-	var hidden_ordering  = readCookie('hidden_ordering_'+unique_hash);
-	var hidden_sorting  = readCookie('hidden_sorting_'+unique_hash);
-	var cookie_search_text  = readCookie('search_text_'+unique_hash);
-	var cookie_search_field  = readCookie('search_field_'+unique_hash);
+	var cookie_crud_page = readCookie('crud_page_'+unique_hash),
+		cookie_per_page  = readCookie('per_page_'+unique_hash),
+		hidden_ordering  = readCookie('hidden_ordering_'+unique_hash),
+		hidden_sorting  = readCookie('hidden_sorting_'+unique_hash),
+		cookie_search_text  = readCookie('search_text_'+unique_hash),
+		cookie_search_field  = readCookie('search_field_'+unique_hash)
+	;
 
 	if(cookie_crud_page !== null && cookie_per_page !== null)
 	{
@@ -238,6 +211,12 @@ $(function(){
 
 		$('#filtering_form').trigger('submit');
 	}
+
+	$('.delete-row').live('click', function() {
+		confirmationModalDialog('Confirmation', message_alert_delete);
+		$('.ok-confirmation').data('target-url', $(this).data('target-url'));
+		return false;
+	});
 
 });
 
@@ -283,8 +262,9 @@ function printTable(class_name, filtering_form){
  */
 function displaying_and_pages()
 {
-	if($('#crud_page').val() == 0)
+	if($('#crud_page').val() == 0){
 		$('#crud_page').val('1');
+	}
 
 	var crud_page 		= parseInt( $('#crud_page').val()),
 		per_page	 	= parseInt( $('#per_page').val() ),
@@ -293,13 +273,68 @@ function displaying_and_pages()
 
 	$('#last-page-number').html( Math.ceil( total_items / per_page) );
 
-	if(total_items == 0)
+	if (total_items == 0) {
 		$('#page-starts-from').html( '0');
-	else
+	} else {
 		$('#page-starts-from').html( (crud_page - 1)*per_page + 1 );
-
-	if(crud_page*per_page > total_items)
+	}
+	if (crud_page*per_page > total_items) {
 		$('#page-ends-to').html( total_items );
-	else
+	} else {
 		$('#page-ends-to').html( crud_page*per_page );
+	}
+}
+
+//	Chama o método para excluir o registro de informação do BD
+function confirmationModalDialog(title_modal, message_text){
+
+	if ($('#dialog_modal_message')[0]){
+		$('#dialog_modal_message').remove();
+	}
+
+	var modal_content = '<div id="dialog_modal_message" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="dialog_modal_message_label" aria-hidden="true"><div class="modal-header">	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>	<h3 id="dialog_modal_message_label">' + title_modal + '</h3></div><div class="modal-body">	<p>'+ message_text + '</p></div><div class="modal-footer">	<button class="btn cancel-confirmation" data-dismiss="modal" aria-hidden="true">Cancel</button>	<button class="btn btn-primary ok-confirmation">Ok</button></div></div>';
+	$('#ajax_list').after(modal_content);
+
+	$('#dialog_modal_message')
+		.modal({ keyboard: false })
+		.on('shown', function(){
+			$(this).find('button.cancel-confirmation').click(function(){
+				$('button.close').trigger('click');
+			}).end().find('button.ok-confirmation').click(function(){
+				deteleGroceryCrudInformation($(this).data('target-url'));
+				$('button.close').trigger('click');
+			});
+		});
+
+}
+
+//	Chama o método para excluir o registro de informação do BD
+function deteleGroceryCrudInformation(delete_url){
+	$('#ajax-loading').removeClass('hide');
+	$.post(delete_url, function(data){
+		if(data.success) {
+			$('#filtering_form').trigger('submit');
+			alert_message('success', data.success_message.replace('<p>', '').replace('</p>', ''));
+		} else {
+			alert_message('success', data.error_message.replace('<p>', '').replace('</p>', ''));
+		}
+	}, 'json');
+	$('#ajax-loading').addClass('hide');
+	return true;
+	$.ajax({
+		url: delete_url,
+		dataType: 'json',
+		success: function(data)
+		{
+			if(data.success)
+			{
+				$('#filtering_form').trigger('submit');
+				alert_message('success', data.success_message.replace('<p>', '').replace('</p>', ''));
+			}
+			else
+			{
+				alert_message('success', data.error_message.replace('<p>', '').replace('</p>', ''));
+			}
+		}
+	});
 }
