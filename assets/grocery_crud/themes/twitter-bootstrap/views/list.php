@@ -48,7 +48,7 @@ if(!empty($list)){ ?>
 								}
 								if(!$unset_delete){?>
 									<li>
-										<a href="<?php echo $row->delete_url?>" title="<?php echo $this->l('list_delete')?> <?php echo $subject?>" class="delete-row" >
+										<a href="javascript:void(0);" data-target-url="<?php echo $row->delete_url?>" title="<?php echo $this->l('list_delete')?> <?php echo $subject?>" class="delete-row" >
 											<i class="icon-trash"></i>
 											<?php echo $this->l('list_delete') . ' ' . $subject; ?>
 										</a>
