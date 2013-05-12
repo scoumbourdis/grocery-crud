@@ -2013,8 +2013,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$js_files = $this->get_js_files();
 		$css_files =  $this->get_css_files();
 
-		$js_lib_files = array_values($this->get_js_lib_files());
-		$js_config_files = array_values($this->get_js_config_files());
+		$js_lib_files = $this->get_js_lib_files();
+		$js_config_files = $this->get_js_config_files();
 
 		if($this->unset_jquery)
 			unset($js_files[sha1($this->default_javascript_path.'/'.grocery_CRUD::JQUERY)]);
@@ -2036,9 +2036,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 					'base_url'				 	=> base_url()
 			);
 			$this->_add_js_vars($js_vars);
-
-			$js_files = array_values($js_files);
-			$css_files = array_values($css_files);
 
 			return (object)array(
 					'js_files' => $js_files,
