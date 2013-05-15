@@ -6,8 +6,6 @@ var fnOpenEditForm = function(this_element){
 
 	var dialog_height = $(window).height() - 80;
 
-	var loading_icon = $('<div/>').addClass('simple-loading');
-
 	//Close all
 	$(".ui-dialog-content").dialog("close");
 
@@ -19,12 +17,10 @@ var fnOpenEditForm = function(this_element){
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			this_element.after(loading_icon);
-			this_element.hide();
+			this_element.closest('.flexigrid').addClass('loading-opacity');
 		},
 		complete: function(){
-			this_element.show();
-			loading_icon.remove();
+			this_element.closest('.flexigrid').removeClass('loading-opacity');
 		},
 		success: function (data) {
 			if (typeof CKEDITOR !== 'undefined' && typeof CKEDITOR.instances !== 'undefined') {
