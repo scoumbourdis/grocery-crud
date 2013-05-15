@@ -1,7 +1,12 @@
 var js_libraries = [];
 
-var fnOpenEditForm = function(href_url){
+var fnOpenEditForm = function(this_element){
+
+	var href_url = this_element.attr("href");
+
 	var dialog_height = $(window).height() - 80;
+
+	var loading_icon = $('<div/>').addClass('simple-loading');
 
 	//Close all
 	$(".ui-dialog-content").dialog("close");
@@ -13,6 +18,14 @@ var fnOpenEditForm = function(href_url){
 		},
 		type: 'post',
 		dataType: 'json',
+		beforeSend: function() {
+			this_element.after(loading_icon);
+			this_element.hide();
+		},
+		complete: function(){
+			this_element.show();
+			loading_icon.remove();
+		},
 		success: function (data) {
 			if (typeof CKEDITOR !== 'undefined' && typeof CKEDITOR.instances !== 'undefined') {
 					$.each(CKEDITOR.instances,function(index){
@@ -55,7 +68,7 @@ var add_edit_button_listener = function () {
 		$('.edit_button,.add_button').unbind('click');
 		$('.edit_button,.add_button').click(function(){
 
-			fnOpenEditForm($(this).attr("href"));
+			fnOpenEditForm($(this));
 
 			return false;
 		});

@@ -629,6 +629,13 @@ div.pGroup {
 .flexigrid .pReload.loading,.flexigrid .fbutton.loading{
 	background:url(images/load.gif) no-repeat center;
 }
+.flexigrid .simple-loading{
+	background:url(images/load.gif) no-repeat center;
+	display:block;
+	float:left;
+	width: 16px;
+	height: 16px;
+}
 .flexigrid .search-div-clear-button
 {
 	float:right;

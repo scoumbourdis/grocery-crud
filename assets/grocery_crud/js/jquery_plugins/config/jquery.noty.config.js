@@ -34,7 +34,7 @@ function form_success_message(success_message)
 	if ($('#report-success').closest('.ui-dialog').length !== 0) {
 		$('.go-to-edit-form').click(function(){
 
-			fnOpenEditForm($(this).attr('href'));
+			fnOpenEditForm($(this));
 
 			return false;
 		});
