@@ -62,9 +62,10 @@ if(!empty($list)){ ?>
 										<li>
 											<a href="<?php echo $action_url; ?>" class="<?php echo $action->css_class; ?> crud-action" title="<?php echo $action->label?>"><?php
 											if(!empty($action->image_url)){ ?>
-												<img src="<?php echo $action->image_url; ?>" alt="<?php echo $action->label?>" />
+												<img src="<?php echo $action->image_url; ?>" alt="" />
 											<?php
 											}
+											echo ' '.$action->label;
 											?>
 											</a>
 										</li>
