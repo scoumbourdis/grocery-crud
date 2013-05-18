@@ -13,6 +13,7 @@ v 1.4.0 BETA
 	Small bug fixes:
 		- #165 - add_action "url_has_http" issue
 		- #166 - Improved file upload error handling
+		- #167 - add_action method in Twitter_Bootstrap theme, doesn't update the dropdown properly
 v 1.3.3
 	#102 - Unsigned field type bug.
 	#103 - Multiple columns search filtering at datatables.
