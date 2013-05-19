@@ -4766,11 +4766,12 @@ class grocery_CRUD extends grocery_CRUD_States
 	 * @param string $field_name
 	 * @param string $upload_path
 	 */
-	public function set_field_upload($field_name, $upload_dir = null)
+	public function set_field_upload($field_name, $upload_dir = '')
 	{
-		$upload_dir = substr($upload_dir,-1,1) == '/' ? substr($upload_dir,0,-1) : $upload_dir;
-		$this->upload_fields[$field_name] = (object)array( 'field_name' => $field_name , 'upload_path' => $upload_dir, 'encrypted_field_name' =>  $this->_unique_field_name($field_name));
-
+		$upload_dir = trim($upload_dir, ' ./');
+		$upl_dir = ( ! empty($upload_dir)) ? $upload_dir : 'assets/uploads/files';
+		is_dir(FCPATH.$upl_dir) || @mkdir(FCPATH.$upl_dir, 0755, TRUE);
+		$this->upload_fields[$field_name] = (object) array('field_name' => $field_name, 'upload_path' => $upl_dir, 'encrypted_field_name' => $this->_unique_field_name($field_name));
 		return $this;
 	}
 }
