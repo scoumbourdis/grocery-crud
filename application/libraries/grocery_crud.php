@@ -5110,7 +5110,7 @@ class UploadHandler
                 }
             } else if ($this->options['discard_aborted_uploads']) {
                 unlink($file_path);
-                $file->error = 'abort';
+                $file->error = "It seems that this user doesn't have permissions to upload to this folder";
             }
             $file->size = $file_size;
             $file->delete_url = $this->options['script_url']
