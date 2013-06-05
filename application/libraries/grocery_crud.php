@@ -2020,10 +2020,26 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			unset($js_files[sha1($this->default_javascript_path.'/'.grocery_CRUD::JQUERY)]);
 
 		if($this->unset_jquery_ui)
-		{
 			unset($css_files[sha1($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS)]);
 			unset($js_files[sha1($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS)]);
-		}
+
+		if($this->unset_bootstrap)
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-transition.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-alert.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-modal.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-dropdown.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-scrollspy.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-tab.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-tooltip.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-popover.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-button.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-collapse.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-carousel.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-typeahead.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-affix.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/application.js')]);
+			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap-responsive.min.css')]);
+			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap.min.css')]);
 
 		if($this->echo_and_die === false)
 		{
@@ -3257,6 +3273,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $unset_delete			= false;
 	protected $unset_jquery			= false;
 	protected $unset_jquery_ui		= false;
+	protected $unset_bootstrap 		= false;
 	protected $unset_list			= false;
 	protected $unset_export			= false;
 	protected $unset_print			= false;
@@ -3430,7 +3447,6 @@ class grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 
-
 	/**
 	 * Unsets the jquery UI Javascript and CSS. This function is really useful
 	 * when the jquery UI JavaScript and CSS are already included in the main template.
@@ -3441,6 +3457,19 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function unset_jquery_ui()
 	{
 		$this->unset_jquery_ui = true;
+
+		return $this;
+	}
+
+	/**
+	 * Unsets just the twitter bootstrap libraries from the js and css. This function can be used if there is already twitter bootstrap files included
+	 * in the main template. If you are already using a bootstrap template then it's not necessary to load the files again.
+	 *
+	 * @return	void
+	 */
+	public function unset_bootstrap()
+	{
+		$this->unset_bootstrap = true;
 
 		return $this;
 	}

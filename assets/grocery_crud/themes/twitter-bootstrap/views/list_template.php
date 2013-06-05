@@ -1,4 +1,6 @@
 <?php
+$this->set_css($this->default_theme_path.'/twitter-bootstrap/css/bootstrap.min.css');
+$this->set_css($this->default_theme_path.'/twitter-bootstrap/css/bootstrap-responsive.min.css');
 $this->set_css($this->default_theme_path.'/twitter-bootstrap/css/style.css');
 
 $this->set_css($this->default_theme_path.'/twitter-bootstrap/css/jquery-ui/flick/jquery-ui-1.9.2.custom.css');
