@@ -90,10 +90,13 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 	 			<?php
 	 			}
 	 		} ?>
- 			<a class="btn" data-toggle="modal" href="#filtering-form-search" >
- 				<i class="icon-search"></i>
- 				<?php echo $this->l('list_search');?>
- 			</a>
+
+			<?php if ( !$unset_search ){ ?>
+	 			<a class="btn" data-toggle="modal" href="#filtering-form-search" >
+	 				<i class="icon-search"></i>
+	 				<?php echo $this->l('list_search');?>
+	 			</a>
+ 			<?php } ?>
  		</div>
 		<br/>
 
@@ -142,7 +145,6 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 		</div>
 	</div>
 </div>
-
 
 <div class="modal hide" id="filtering-form-search">
     <div class="modal-header">

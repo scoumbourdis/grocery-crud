@@ -147,6 +147,7 @@ class Examples extends CI_Controller {
 			$crud->set_relation_n_n('category', 'film_category', 'category', 'film_id', 'category_id', 'name');
 			$crud->field_without_sorter('title');
 			$crud->unset_columns('special_features','description','actors');
+			$crud->unset_search();
 
 			$crud->fields('title', 'description', 'actors' ,  'category' ,'release_year', 'rental_duration', 'rental_rate', 'length', 'replacement_cost', 'rating', 'special_features');
 

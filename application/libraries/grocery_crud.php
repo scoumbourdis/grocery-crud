@@ -1520,6 +1520,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->field_without_sorter = $this->field_without_sorter;
 
 		$data->unset_add			= $this->unset_add;
+		$data->unset_search			= $this->unset_search;
 		$data->unset_edit			= $this->unset_edit;
 		$data->unset_delete			= $this->unset_delete;
 		$data->unset_export			= $this->unset_export;
@@ -3257,6 +3258,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	/* The unsetters */
 	protected $unset_texteditor		= array();
 	protected $unset_add			= false;
+	protected $unset_search			= false;
 	protected $unset_edit			= false;
 	protected $unset_delete			= false;
 	protected $unset_jquery			= false;
@@ -3457,6 +3459,18 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function unset_add()
 	{
 		$this->unset_add = true;
+
+		return $this;
+	}
+
+	/**
+	 * Unsets the seach list
+	 *
+	 * @return	void
+	 */
+	public function unset_search()
+	{
+		$this->unset_search = true;
 
 		return $this;
 	}
