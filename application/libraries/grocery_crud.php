@@ -1517,6 +1517,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unique_hash			= $this->get_method_hash();
 		$data->order_by				= $this->order_by;
 
+		$data->field_without_sorter = $this->field_without_sorter;
+
 		$data->unset_add			= $this->unset_add;
 		$data->unset_edit			= $this->unset_edit;
 		$data->unset_delete			= $this->unset_delete;
@@ -3244,6 +3246,8 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $upload_fields		= array();
 	protected $actions				= array();
 
+	protected $field_without_sorter	= array();
+
 	protected $form_validation		= null;
 	protected $change_field_type	= null;
 	protected $primary_keys			= array();
@@ -3600,6 +3604,26 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function unset_back_to_list()
 	{
 		$this->unset_back_to_list = true;
+
+		return $this;
+	}
+
+	/**
+	 * List of Files without sorter
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	array
+	 * @return	void
+	 */
+	public function field_without_sorter()
+	{
+		$args = func_get_args();
+		if(isset($args[0]) && is_array($args[0]))
+		{
+			$args = $args[0];
+		}
+		$this->field_without_sorter = $args;
 
 		return $this;
 	}

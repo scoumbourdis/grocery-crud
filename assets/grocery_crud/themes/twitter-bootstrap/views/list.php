@@ -6,7 +6,7 @@ if(!empty($list)){ ?>
 			<tr>
 				<?php foreach($columns as $column){?>
 				<th>
-					<div class="text-left field-sorting <?php if(isset($order_by[0]) &&  $column->field_name == $order_by[0]){?><?php echo $order_by[1]?><?php }?>"
+					<div class="text-left <?php echo (in_array($column->field_name, $field_without_sorter)) ? 'no-sorter' : 'field-sorting'; ?> <?php echo (isset($order_by[0]) &&  $column->field_name == $order_by[0]) ? $order_by[1] : ''; ?>"
 						rel="<?php echo $column->field_name?>">
 						<?php echo $column->display_as; ?>
 					</div>
@@ -23,7 +23,7 @@ if(!empty($list)){ ?>
 			<?php foreach($list as $num_row => $row){ ?>
 			<tr class="<?php echo ($num_row % 2 == 1) ? 'erow' : ''; ?>">
 				<?php foreach($columns as $column){?>
-					<td class="<?php if(isset($order_by[0]) &&  $column->field_name == $order_by[0]){?>sorted<?php }?>">
+					<td class="<?php echo (isset($order_by[0]) &&  $column->field_name == $order_by[0]) ? 'sorted' : ''; ?>">
 						<div class="text-left"><?php echo ($row->{$column->field_name} != '') ? $row->{$column->field_name} : '&nbsp;' ; ?></div>
 					</td>
 				<?php }?>
