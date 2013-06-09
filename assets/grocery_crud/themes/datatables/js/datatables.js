@@ -94,6 +94,11 @@ $(document).ready(function() {
 					'overlayShow'	:	false
 				});
 				add_edit_button_listener();
+
+				$('.refresh-data').click(function(){
+					//Ajax load of all the data.
+				});
+
 			},
 			"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
 		    "oTableTools": {
