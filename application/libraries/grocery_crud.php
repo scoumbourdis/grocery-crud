@@ -2016,14 +2016,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$js_lib_files = $this->get_js_lib_files();
 		$js_config_files = $this->get_js_config_files();
 
-		if($this->unset_jquery)
+		if ($this->unset_jquery) {
 			unset($js_files[sha1($this->default_javascript_path.'/'.grocery_CRUD::JQUERY)]);
+		}
 
-		if($this->unset_jquery_ui)
+		if ($this->unset_jquery_ui) {
 			unset($css_files[sha1($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS)]);
 			unset($js_files[sha1($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS)]);
+		}
 
-		if($this->unset_bootstrap)
+		if ($this->unset_bootstrap) {
 			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-transition.js')]);
 			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-alert.js')]);
 			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-modal.js')]);
@@ -2040,6 +2042,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/application.js')]);
 			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap-responsive.min.css')]);
 			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap.min.css')]);
+		}
 
 		if($this->echo_and_die === false)
 		{
@@ -2183,7 +2186,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery.ui.datetime.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery-ui-timepicker-addon.css');
 		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
-		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.min.js');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.js');
 
 		if($this->language !== 'english')
 		{
@@ -3215,7 +3218,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	const	VERSION = "1.3.3";
 
 	const	JQUERY 			= "jquery-1.9.1.min.js";
-	const	JQUERY_UI_JS 	= "jquery-ui-1.10.1.custom.min.js";
+	const	JQUERY_UI_JS 	= "jquery-ui-1.10.3.custom.min.js";
 	const	JQUERY_UI_CSS 	= "jquery-ui-1.10.1.custom.min.css";
 
 	protected $state_code 			= null;
