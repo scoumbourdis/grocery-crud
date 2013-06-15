@@ -1,76 +1,76 @@
-<?php  
-/* Translated by Hector Cyc */
-	$lang['list_add']				= 'Agregar';
-	$lang['list_actions']			= 'Acciones';
-	$lang['list_page']				= 'Pagina';  
-	$lang['list_paging_of']			= 'de';
+<?php
+	/** Translated by: Hector Cyc and neocastelli*/
+	$lang['list_add'] 				= 'Añadir';
+	$lang['list_actions'] 			= 'Acciones';
+	$lang['list_page'] 				= 'Pagina';
+	$lang['list_paging_of'] 		= 'de';
 	$lang['list_displaying']		= 'Mostrando {start} a {end} de {results} registros';
-	$lang['list_filtered_from']		= '(filtered de {total_results} total entradas)';
-	$lang['list_show_entries']		= 'Mostrar {paging} entradas';
+	$lang['list_filtered_from']		= '(filtrando de {total_results} total registros)';
+	$lang['list_show_entries']		= 'Mostrar {paging} registros';
 	$lang['list_no_items']			= 'No hay registros para mostrar';
 	$lang['list_zero_entries']		= 'Mostrando 0 a 0 de 0 registros';
-	$lang['list_search']			= 'Buscar';    
-	$lang['list_search_all']		= 'Buscar todos';
-	$lang['list_clear_filtering']   = 'Limpiar filtrados';
-	$lang['list_delete']			= 'Borrar';
-	$lang['list_edit']				= 'Editar';  
-	$lang['list_paging_first']		= 'Primero';
-	$lang['list_paging_previous']	= 'Anterior';
-	$lang['list_paging_next']		= 'Siguiente';
-	$lang['list_paging_last']		= 'Ultimo';
-	$lang['list_loading']			= 'Cargando...';          
+	$lang['list_search'] 			= 'Buscar';
+	$lang['list_search_all'] 		= 'Buscar todo';
+	$lang['list_clear_filtering'] 	= 'Resetear filtro';
+	$lang['list_delete'] 			= 'Eliminar';
+	$lang['list_edit'] 				= 'Editar';
+	$lang['list_paging_first'] 		= 'Primero';
+	$lang['list_paging_previous'] 	= 'Anterior';
+	$lang['list_paging_next'] 		= 'Siguiente';
+	$lang['list_paging_last'] 		= 'Ultimo';
+	$lang['list_loading'] 			= 'Cargando...';
 
-	$lang['form_edit']				= 'Editar';
-	$lang['form_back_to_list']		= 'Regresar a la lista';
-	$lang['form_update_changes']	= 'Actualizar cambios';
-	$lang['form_cancel']			= 'Cancelar';  
-	$lang['form_update_loading']	= 'Cargando, actualizando cambios...';
-	$lang['update_success_message']	= 'Los cambios fueron aplicados correctamente.';                
-	$lang['form_go_back_to_list']	= 'Regresar a la lista';
+	$lang['form_edit'] 				= 'Editar';
+	$lang['form_back_to_list'] 		= 'Volver a la lista';
+	$lang['form_update_changes'] 	= 'Actualizar cambios';
+	$lang['form_cancel'] 			= 'Cancelar';
+	$lang['form_update_loading'] 	= 'Cargando, actualizando cambios...';
+	$lang['update_success_message'] = 'Tus datos han sido actualizado correcatamente.';
+	$lang['form_go_back_to_list'] 	= 'Volver a la lista';
 
-	$lang['form_add']				= 'Agregar';
-	$lang['insert_success_message']	= 'Los datos fueron insertados correctamente en la Base de datos.';
+	$lang['form_add'] 				= 'Añadir';
+	$lang['insert_success_message'] = 'Sus datos han sido guardados correctamente.';
 	$lang['form_or']				= 'o';
-	$lang['form_save']				= 'Guardar';
-	$lang['form_insert_loading']	= 'Cargando, guardando...';
+	$lang['form_save'] 				= 'Guardar';
+	$lang['form_insert_loading'] 	= 'Cargando, guardando los datos...';
 
-	$lang['form_upload_a_file']		= 'subir un archivo';
-	$lang['form_upload_delete']		= 'borrar';
-	$lang['form_button_clear']		= 'Limpiar';  
+	$lang['form_upload_a_file'] 	= 'Subir un archivo';
+	$lang['form_upload_delete'] 	= 'eliminar';
+	$lang['form_button_clear'] 		= 'Resetear';
 
-	$lang['delete_success_message']	= 'Los datos fueron borrados correctamente en la Base de datos.';
-	$lang['delete_error_message']	= 'Los datos no pudieron ser borrados de la Base de datos.';
+	$lang['delete_success_message'] = 'Tus datos han sido eliminados correctamente de la base de datos.';
+	$lang['delete_error_message'] 	= 'Tus datos no han sido eliminados de la base de datos.';
 
 	/* Javascript messages */
-	$lang['alert_add_form']			= 'Los datos que insertaste no pueden ser guardados.\\nEstas seguro que quieres regresar a la lista?';
-	$lang['alert_edit_form']		= 'Los datos que insertaste no han sido guardados.\\nEstas seguro que quieres regresar a la lista?';
-	$lang['alert_delete']			= 'Seguro que quieres borrar este registro?';
+	$lang['alert_add_form']			= 'Los datos que intentas añadir no se han guardado.\\nEstas seguro que quieres volver a la lista?';
+	$lang['alert_edit_form']		= 'Los datos que intentas actualizar no se han guardado.\\nEstas seguro que quieres volver a la lista?';
+	$lang['alert_delete']			= 'Estas seguro que queres eliminar este registro?';
 
-	$lang['insert_error']			= 'Ocurrio un error durante la insercion.';
-	$lang['update_error']			= 'Ocurrio un error guardando.';
-	
+	$lang['insert_error']			= 'Ocurrio un error al añadir.';
+	$lang['update_error']			= 'Ocurrio un error al actualizar.';
+
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';	
-	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
-	
+	$lang['set_relation_title']		= 'Seleccionar {field_display_as}';
+	$lang['list_record']			= 'Registro';
+	$lang['form_inactive']			= 'inactivo';
+	$lang['form_active']			= 'activo';
+
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']	= 'Guardar y volver a la lista';
 	$lang['form_update_and_go_back']= 'Actualizar y volver a la lista';
 
 	/* Upload functionality */
-	$lang['string_delete_file'] 	= "Borrando archivo";
+	$lang['string_delete_file'] 	= "Eliminando archivo";
 	$lang['string_progress'] 		= "Progreso: ";
-	$lang['error_on_uploading'] 	= "Ocurrio un error al subir.";
-	$lang['message_prompt_delete_file'] 	= "Esta seguro de que desea borrar el archivo?";
-	
-	$lang['error_max_number_of_files'] 	= "Solo puede subir un archivo a la vez.";
-	$lang['error_accept_file_types'] 	= "No esta permitido subir archivos con esta extension.";
-	$lang['error_max_file_size'] 		= "El archivo subido excede el tamaño maximo permitido: {max_file_size}.";
-	$lang['error_min_file_size'] 		= "No puede subir un archivo vacio.";
+	$lang['error_on_uploading'] 	= "Ha ocurrido un error al intentar subir el archivo.";
+	$lang['message_prompt_delete_file'] 	= "Estas seguro que quieres eliminar este archivo?";
+
+	$lang['error_max_number_of_files'] 	= "Solo puedes subir un archivo a la vez.";
+	$lang['error_accept_file_types'] 	= "No se permite este tipo de extension.";
+	$lang['error_max_file_size'] 		= "El archivo excede el tamaño {max_file_size} que fue especificado.";
+	$lang['error_min_file_size'] 		= "No puedes subir un arvhivo vacio.";
 
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
-	$lang['minimize_maximize'] = 'Minimize/Maximize';
+	$lang['list_export'] 	= "Exportar";
+	$lang['list_print'] 	= "Imprimir";
+	$lang['minimize_maximize'] = 'Minimizar/Maximizar';

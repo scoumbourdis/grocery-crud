@@ -53,8 +53,8 @@
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= 'اختر {field_display_as}';
 	$lang['list_record']			= 'سجل';
-	$lang['form_inactive']			= 'لا';
-	$lang['form_active']			= 'نعم';
+	$lang['form_inactive']			= 'غير فعال';
+	$lang['form_active']			= 'فعال';
 
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']	= 'حفظ والعودة للقائمة الرئيسية';

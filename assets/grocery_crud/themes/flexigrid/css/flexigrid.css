@@ -2,7 +2,7 @@
 table th
 {
 	padding:0px;
-	margin:0px;	
+	margin:0px;
 }
 
 /* CSS Document */
@@ -20,7 +20,7 @@ table th
 }
 .flexigrid .field-sorting
 {
-	cursor: pointer;	
+	cursor: pointer;
 }
 .flexigrid.hideBody {
 	height:26px !important;
@@ -303,12 +303,12 @@ table th
 }
 .flexigrid div.form-div select option
 {
-	padding-right: 10px;	
+	padding-right: 10px;
 }
 .flexigrid div.form-div input[type=text], .flexigrid div.form-div input[type=password]
 {
 	font-size: 15px;
-	width: 500px;	
+	width: 500px;
 	height:20px;
 	border: 1px solid #AAA;
 	padding: 5px 5px 5px 5px;
@@ -332,25 +332,25 @@ table th
 .flexigrid div.form-div textarea:focus, .flexigrid div.form-div input[type=text]:focus, .flexigrid div.form-div select:focus
 {
 	border: 1px solid #444;
-	background: #fff;	
+	background: #fff;
 }
 div.form-div input.datepicker-input
 {
-	width: 100px !important;	
+	width: 100px !important;
 }
 div.form-div input.datetime-input
 {
-	width:150px !important;	
+	width:150px !important;
 }
 .form-field-box
 {
 	padding: 5px 10px;
-	margin: 0px 0px 5px 0px;	
+	margin: 0px 0px 5px 0px;
 	min-height: 30px;
 }
 .form-field-box.odd
 {
-	background: #fff;	
+	background: #fff;
 }
 .form-field-box.even
 {
@@ -629,36 +629,43 @@ div.pGroup {
 .flexigrid .pReload.loading,.flexigrid .fbutton.loading{
 	background:url(images/load.gif) no-repeat center;
 }
+.flexigrid .simple-loading{
+	background:url(images/load.gif) no-repeat center;
+	display:block;
+	float:left;
+	width: 16px;
+	height: 16px;
+}
 .flexigrid .search-div-clear-button
 {
-	float:right;	
+	float:right;
 	padding:5px;
 }
 .flexigrid .edit-icon
 {
 	background:url(images/edit.png) no-repeat;
-	cursor: pointer;	
+	cursor: pointer;
 	width: 16px;
 	height:16px;
-	float:right;	
+	float:right;
 	border: none !important;
-	padding:0px !important;	
-	padding-bottom:0px !important;		
+	padding:0px !important;
+	padding-bottom:0px !important;
 	margin-left:5px;
 	display: block;
 }
 .flexigrid .delete-icon
 {
 	background:url(images/close.png) no-repeat;
-	cursor: pointer;	
+	cursor: pointer;
 	width: 16px;
 	height:16px;
 	float:right;
 	border: none !important;
-	padding:0px !important;	
-	padding-bottom:0px !important;			
+	padding:0px !important;
+	padding-bottom:0px !important;
 	margin-left:5px;
-	display: block;	
+	display: block;
 }
 .flexigrid .tools
 {
@@ -671,31 +678,31 @@ div.pGroup {
 
 .text-center
 {
-	text-align: center;	
+	text-align: center;
 }
 .text-left
 {
-	text-align: left;	
+	text-align: left;
 }
 .text-right
 {
-	text-align: right;	
+	text-align: right;
 }
 .add-anchor, .delete-anchor, .export-anchor, .print-anchor
 {
-	color: #000;	
+	color: #000;
 }
 .floatL
 {
-	float:left;	
+	float:left;
 }
 .floatR
 {
-	float:right;	
+	float:right;
 }
 .clear
 {
-	clear: both !important;	
+	clear: both !important;
 	border: none !important;
 	padding: 0px !important;
 	margin: 0px !important;
@@ -704,12 +711,12 @@ div.pGroup {
 }
 .flexigrid a img
 {
-	border: none;	
+	border: none;
 }
 .flexigrid textarea
 {
 	width:500px;
-	height: 80px;	
+	height: 80px;
 }
 /* ie adjustments */
 .flexigrid.ie div.hDiv th div,.flexigrid.ie div.bDiv td div,div.colCopy.ie div/* common inner cell properties*/ {
@@ -747,7 +754,7 @@ div.pGroup {
 }
 input.field_error
 {
-	border: 1px solid red !important;	
+	border: 1px solid red !important;
 }
 .flexigrid  .ftitle-left
 {
@@ -759,25 +766,25 @@ input.field_error
 {
 	float: right;
 	margin:0px;
-	padding:0px 25px 0px 0px !important;		
+	padding:0px 25px 0px 0px !important;
 }
-.flexigrid .ftitle a
+div.flexigrid .ftitle a
 {
 	color: blue;
-	text-decoration: none;	
+	text-decoration: none;
 }
-.flexigrid .ftitle a:hover
+div.flexigrid .ftitle a:hover
 {
-	text-decoration: underline;	
+	text-decoration: underline;
 }
-.flexigrid a
+div.flexigrid a
 {
 	color: blue;
-	text-decoration: none;	
+	text-decoration: none;
 }
-.flexigrid a:hover
+div.flexigrid a:hover
 {
-	text-decoration: underline;	
+	text-decoration: underline;
 }
 .small-loading
 {
@@ -793,7 +800,7 @@ input.field_error
 	float:right;
 	margin-left:5px;
 	padding:0px;
-	margin-right: 3px;	
+	margin-right: 3px;
 }
 .readonly_label
 {
@@ -1409,4 +1416,22 @@ input[type="submit"].btn.btn-mini {
 .ui-widget
 {
 	font-size: 12px !important;
+}
+
+
+/** Common CSS */
+.loading-opacity
+{
+	opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+}
+
+.loading-opacity:before {
+	font-size: 26px;
+	position:absolute;
+	color: #000;
+	content: "Loading...";
+	margin-left: 550px;
+	z-index: 1000;
 }

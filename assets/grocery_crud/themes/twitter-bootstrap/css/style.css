@@ -1,0 +1,13 @@
+@import 'tablesorter.css';
+@import '../../../css/jquery_plugins/fancybox/jquery.fancybox.css';
+@import '../../../css/ui/simple/jquery-ui-1.10.1.custom.min.css';
+#options-content{
+	margin-bottom: 20px;
+}
+/*.row { 
+	margin-top: 70px;
+}*/
+.loading{
+	background:url('images/loading.gif') left top no-repeat;
+	padding-left: 30px;
+}
