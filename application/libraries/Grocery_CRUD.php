@@ -3208,7 +3208,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @license     https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
  * @link		http://www.grocerycrud.com/documentation
  */
-class grocery_CRUD extends grocery_CRUD_States
+class Grocery_CRUD extends grocery_CRUD_States
 {
 	/**
 	 * Grocery CRUD version

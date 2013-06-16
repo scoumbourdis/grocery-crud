@@ -431,10 +431,21 @@ class grocery_CRUD_Model  extends CI_Model  {
     function get_field_types_basic_table()
     {
     	$db_field_types = array();
+    	/*ORIGINAL SCRIPT :
     	foreach($this->db->query("SHOW COLUMNS FROM `{$this->table_name}`")->result() as $db_field_type)
+    	*/
+        foreach($this->db->field_data($this->table_name) as $db_field_type)
     	{
-    		$type = explode("(",$db_field_type->Type);
+    	    $db_type = $db_field_type->type;
+            $length = $db_field_type->max_length;
+            $db_field_types[$db_field_type->name]['db_max_length'] = $length;
+            $db_field_types[$db_field_type->name]['db_type'] = $db_type;
+            $db_field_types[$db_field_type->name]['db_null'] = true;
+            $db_field_types[$db_field_type->name]['db_extra'] = '';
+    		/*ORIGINAL SCRIPT :
+            $type = explode("(",$db_field_type->Type);
     		$db_type = $type[0];
+
 
     		if(isset($type[1]))
     		{
@@ -456,6 +467,7 @@ class grocery_CRUD_Model  extends CI_Model  {
     		$db_field_types[$db_field_type->Field]['db_type'] = $db_type;
     		$db_field_types[$db_field_type->Field]['db_null'] = $db_field_type->Null == 'YES' ? true : false;
     		$db_field_types[$db_field_type->Field]['db_extra'] = $db_field_type->Extra;
+             */
     	}
 
     	$results = $this->db->field_data($this->table_name);
@@ -498,7 +510,8 @@ class grocery_CRUD_Model  extends CI_Model  {
     	if($primary_key_field === false)
     		return false;
 
-    	$this->db->limit(1);
+        //IN SQLITE this produce error
+    	//$this->db->limit(1);
     	$this->db->delete($this->table_name,array( $primary_key_field => $primary_key_value));
     	if( $this->db->affected_rows() != 1)
     		return false;
@@ -524,7 +537,15 @@ class grocery_CRUD_Model  extends CI_Model  {
     	{
     		$table_name = $this->table_name;
     	}
-    	return $this->db->field_exists($field,$table_name);
+    	/*ORIGINAL SCRIPT
+         return $this->db->field_exists($field,$table_name);
+         */
+        // sqlite doesn't support this
+        $field_data_list = $this->db->field_data($table_name);
+        foreach($field_data_list as $field_data){
+            if($field_data->name == $field) return TRUE;
+        }
+        return FALSE;
     }
 
     function get_primary_key($table_name = null)
