@@ -20,12 +20,13 @@ class Generic_Examples extends CI_Controller {
 
 	public function _example_output($output = null)
 	{
-		$this->load->view('example.php',$output);
+		$this->load->view('generic_example.php',$output);
 	}
 
 	public function offices()
 	{
 	    $crud = $this->new_crud();
+        $crud->set_primary_key('officeCode','offices');
 		$output = $crud->render();
 
 		$this->_example_output($output);
@@ -43,6 +44,7 @@ class Generic_Examples extends CI_Controller {
 
 			$crud->set_theme('datatables');
 			$crud->set_table('offices');
+            $crud->set_primary_key('officeCode','offices');
 			$crud->set_subject('Office');
 			$crud->required_fields('city');
 			$crud->columns('city','country','phone','addressLine1','postalCode');
@@ -62,6 +64,7 @@ class Generic_Examples extends CI_Controller {
 
 			$crud->set_theme('datatables');
 			$crud->set_table('employees');
+            $crud->set_primary_key('employeeNumber','employees');
 			$crud->set_relation('officeCode','offices','city');
 			$crud->display_as('officeCode','Office City');
 			$crud->set_subject('Employee');
@@ -80,6 +83,8 @@ class Generic_Examples extends CI_Controller {
 			$crud = $this->new_crud();
 
 			$crud->set_table('customers');
+            $crud->set_primary_key('customerNumber','customers');
+            $crud->set_primary_key('employeeNumber','employees');
 			$crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit');
 			$crud->display_as('salesRepEmployeeNumber','from Employeer')
 				 ->display_as('customerName','Name')
@@ -189,7 +194,7 @@ class Generic_Examples extends CI_Controller {
 
 	public function offices_management2()
 	{
-		$crud = new grocery_CRUD();
+		$crud = $this->new_crud();
 		$crud->set_table('offices');
 		$crud->set_subject('Office');
 

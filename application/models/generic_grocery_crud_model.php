@@ -1,11 +1,30 @@
 <?php
 /**
- * Generic Grocery CRUD Model
+ * PHP grocery CRUD
+ *
+ * LICENSE
+ *
+ * Grocery CRUD is released with dual licensing, using the GPL v3 (license-gpl3.txt) and the MIT license (license-mit.txt).
+ * You don't have to do anything special to choose one license or the other and you don't have to notify anyone which license you are using.
+ * Please see the corresponding license file for details of these licenses.
+ * You are free to use, modify and distribute this software, but all copyright information must remain.
+ *
+ * @package    	grocery CRUD
+ * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
+ * @version    	1.2
+ * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Grocery CRUD Model
  *
  *
  * @package    	grocery CRUD
- * @author     	Go Frendi Gunawan <gofrendiasgard@gmail.com>
- * @version    	test
+ * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
+ * @version    	1.2
  * @link		http://www.grocerycrud.com/documentation
  */
 class generic_grocery_CRUD_Model  extends CI_Model  {
@@ -53,7 +72,7 @@ class generic_grocery_CRUD_Model  extends CI_Model  {
     			}
 
     			if($this->field_exists($related_field_title))
-    				$select .= ", `{$this->table_name}`.$related_field_title AS '{$this->table_name}.$related_field_title'";
+    				$select .= ', '.$this->db->protect_identifiers($this->table_name).'.'.$this->db->protect_identifiers($related_field_title).' AS '.$this->db->protect_identifiers($this->table_name).'.'.$this->db->protect_identifiers($related_field_title);
     		}
     	}
 
@@ -412,9 +431,6 @@ class generic_grocery_CRUD_Model  extends CI_Model  {
     function get_field_types_basic_table()
     {
     	$db_field_types = array();
-    	/*ORIGINAL SCRIPT :
-    	foreach($this->db->query("SHOW COLUMNS FROM `{$this->table_name}`")->result() as $db_field_type)
-    	*/
         foreach($this->db->field_data($this->table_name) as $db_field_type)
     	{
     	    $db_type = $db_field_type->type;
@@ -423,32 +439,6 @@ class generic_grocery_CRUD_Model  extends CI_Model  {
             $db_field_types[$db_field_type->name]['db_type'] = $db_type;
             $db_field_types[$db_field_type->name]['db_null'] = true;
             $db_field_types[$db_field_type->name]['db_extra'] = '';
-    		/*ORIGINAL SCRIPT :
-            $type = explode("(",$db_field_type->Type);
-    		$db_type = $type[0];
-
-
-    		if(isset($type[1]))
-    		{
-    			if(substr($type[1],-1) == ')')
-    			{
-    				$length = substr($type[1],0,-1);
-    			}
-    			else
-    			{
-    				list($length) = explode(" ",$type[1]);
-    				$length = substr($length,0,-1);
-    			}
-    		}
-    		else
-    		{
-    			$length = '';
-    		}
-    		$db_field_types[$db_field_type->Field]['db_max_length'] = $length;
-    		$db_field_types[$db_field_type->Field]['db_type'] = $db_type;
-    		$db_field_types[$db_field_type->Field]['db_null'] = $db_field_type->Null == 'YES' ? true : false;
-    		$db_field_types[$db_field_type->Field]['db_extra'] = $db_field_type->Extra;
-             */
     	}
 
     	$results = $this->db->field_data($this->table_name);
@@ -457,6 +447,7 @@ class generic_grocery_CRUD_Model  extends CI_Model  {
     		$row = (array)$row;
     		$results[$num] = (object)( array_merge($row, $db_field_types[$row['name']])  );
     	}
+    	return $results;
     }
 
     function get_field_types($table_name)
@@ -515,10 +506,8 @@ class generic_grocery_CRUD_Model  extends CI_Model  {
     	{
     		$table_name = $this->table_name;
     	}
-    	/*ORIGINAL SCRIPT
-         return $this->db->field_exists($field,$table_name);
-         */
-        // sqlite doesn't support this
+
+        // sqlite doesn't support this $this->db->field_exists($field,$table_name)
         $field_data_list = $this->db->field_data($table_name);
         foreach($field_data_list as $field_data){
             if($field_data->name == $field) return TRUE;
@@ -539,17 +528,6 @@ class generic_grocery_CRUD_Model  extends CI_Model  {
 	    	{
 		    	$fields = $this->get_field_types_basic_table();
 
-                /*ORIGINAL SCRIPT
-		    	foreach($fields as $field)
-		    	{
-		    		if($field->primary_key == 1)
-		    		{
-		    			return $field->name;
-		    		}
-		    	}
-
-		    	return false;
-                 */
                 $primary_key = FALSE;
                 foreach($fields as $field)
                 {
@@ -580,16 +558,6 @@ class generic_grocery_CRUD_Model  extends CI_Model  {
 
 	    	$fields = $this->get_field_types($table_name);
 
-            /*ORIGINAL SCRIPT
-            foreach($fields as $field)
-            {
-                if($field->primary_key == 1)
-                {
-                    return $field->name;
-                }
-            }
-            return FALSE;
-             */
             $primary_key = FALSE;
 	    	foreach($fields as $field)
 	    	{
