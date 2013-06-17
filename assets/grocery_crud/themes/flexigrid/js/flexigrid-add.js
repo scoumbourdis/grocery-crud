@@ -3,12 +3,12 @@ $(function(){
 			if($(this).hasClass('vsble'))
 			{
 				$(this).removeClass('vsble');
-				$('#main-table-box').slideDown("slow");
+				$('#main-table-box #crudForm').slideDown("slow");
 			}
 			else
 			{
 				$(this).addClass('vsble');
-				$('#main-table-box').slideUp("slow");
+				$('#main-table-box #crudForm').slideUp("slow");
 			}
 		});
 
