@@ -39,7 +39,7 @@ var fnOpenEditForm = function(this_element){
 			$("<div/>").html(data.output).dialog({
 				width: 910,
 				modal: true,
-				height: 'auto',
+				height: dialog_height,
 				close: function(){
 					$(this).remove();
 				},
