@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	//For view all the languages go to the folder assets/grocery_crud/languages/
-	$config['grocery_crud_default_language']	= 'chinese-trad';
+	$config['grocery_crud_default_language']	= 'english';
 
 	// There are only three choices: "uk-date" (dd/mm/yyyy), "us-date" (mm/dd/yyyy) or "sql-date" (yyyy-mm-dd)
 	$config['grocery_crud_date_format']			= 'sql-date';
