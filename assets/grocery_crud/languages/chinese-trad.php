@@ -9,8 +9,8 @@
 	$lang['list_show_entries']		= '顯示 {paging} 頁記錄';
 	$lang['list_no_items']			= '沒有記錄';
 	$lang['list_zero_entries']		= '顯示 0 - 0 / 0 條記錄';
-	$lang['list_search'] 			= '查詢';
-	$lang['list_search_all'] 		= '查詢所有';
+	$lang['list_search'] 			= '搜尋';
+	$lang['list_search_all'] 		= '搜尋全部';
 	$lang['list_clear_filtering'] 	= '刪除篩選條件';
 	$lang['list_delete'] 			= '刪除';
 	$lang['list_edit'] 				= '編輯';
