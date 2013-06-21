@@ -6,6 +6,7 @@ $language_alias = array(
     'bengali'           => 'bn', // Timepicker is not avaliable yet
     'bulgarian'         => 'bg',
     'chinese'           => 'zh-cn',
+    'taiwanese'           => 'zh-tw',
     'czech'             => 'cs',
     'danish'            => 'da', // Timepicker is not avaliable yet
     'dutch'             => 'nl',
