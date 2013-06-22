@@ -21,3 +21,6 @@
 
 	//All the forms are opening with dialog forms without refreshing the page once again.
 	$config['grocery_crud_dialog_forms'] = true;
+	
+	//All the forms are opening with dialog forms without refreshing the page once again.
+	$config['grocery_crud_paging_options'] = array('10','25','50','100');;
