@@ -1524,7 +1524,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_print			= $this->unset_print;
 
 		$default_per_page = $this->config->default_per_page;
-		$data->paging_options = array('10','25','50','100');
+		$data->paging_options = $this->config->paging_options;
 		$data->default_per_page		= is_numeric($default_per_page) && $default_per_page >1 && in_array($default_per_page,$data->paging_options)? $default_per_page : 25;
 
 		if($data->list === false)
@@ -4076,6 +4076,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->config->text_editor_type		= $ci->config->item('grocery_crud_text_editor_type');
 		$this->config->character_limiter	= $ci->config->item('grocery_crud_character_limiter');
 		$this->config->dialog_forms			= $ci->config->item('grocery_crud_dialog_forms');
+		$this->config->paging_options		= $ci->config->item('grocery_crud_paging_options');
 
 		/** Initialize default paths */
 		$this->default_javascript_path				= $this->default_assets_path.'/js';
