@@ -15,8 +15,10 @@ function supports_html5_storage()
 
 var use_storage = supports_html5_storage();
 
+var aButtons = [];
+var mColumns = [];
+
 $(document).ready(function() {
-	var mColumns = [];
 
 	$('table.groceryCrudTable thead tr th').each(function(index){
 		if(!$(this).hasClass('actions'))
@@ -24,8 +26,6 @@ $(document).ready(function() {
 			mColumns[index] = index;
 		}
 	});
-
-	var aButtons = [];
 
 	if(!unset_export)
 	{
@@ -57,50 +57,7 @@ $(document).ready(function() {
 
 		oTableMapping[$(this).attr('id')] = index;
 
-		oTableArray[index] = $(this).dataTable({
-			"bJQueryUI": true,
-			"sPaginationType": "full_numbers",
-			"bStateSave": use_storage,
-	        "fnStateSave": function (oSettings, oData) {
-	            localStorage.setItem( 'DataTables_' + unique_hash, JSON.stringify(oData) );
-	        },
-	    	"fnStateLoad": function (oSettings) {
-	            return JSON.parse( localStorage.getItem('DataTables_'+unique_hash) );
-	    	},
-			"iDisplayLength": default_per_page,
-			"aaSorting": datatables_aaSorting,
-			"oLanguage":{
-			    "sProcessing":   list_loading,
-			    "sLengthMenu":   show_entries_string,
-			    "sZeroRecords":  list_no_items,
-			    "sInfo":         displaying_paging_string,
-			    "sInfoEmpty":   list_zero_entries,
-			    "sInfoFiltered": filtered_from_string,
-			    "sSearch":       search_string+":",
-			    "oPaginate": {
-			        "sFirst":    paging_first,
-			        "sPrevious": paging_previous,
-			        "sNext":     paging_next,
-			        "sLast":     paging_last
-			    }
-			},
-			"bDestory": true,
-			"fnDrawCallback": function() {
-				$('.image-thumbnail').fancybox({
-					'transitionIn'	:	'elastic',
-					'transitionOut'	:	'elastic',
-					'speedIn'		:	600,
-					'speedOut'		:	200,
-					'overlayShow'	:	false
-				});
-				add_edit_button_listener();
-			},
-			"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
-		    "oTableTools": {
-		    	"aButtons": aButtons,
-		        "sSwfPath": base_url+"assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
-		    }
-		});
+		oTableArray[index] = loadDataTable(this);
 	});
 
 	$(".groceryCrudTable tfoot input").keyup( function () {
@@ -143,6 +100,24 @@ $(document).ready(function() {
 		$(this).closest('.groceryCrudTable').find("tfoot tr th input").val("");
 	});
 
+	$('.refresh-data').click(function(){
+		var this_container = $(this).closest('.dataTablesContainer');
+
+		var new_container = $("<div/>");
+
+		this_container.after(new_container);
+		this_container.remove();
+
+		$.ajax({
+			url: $(this).attr('data-url'),
+			success: function(my_output){
+				new_container.html(my_output);
+
+				loadDataTable(new_container.find('.groceryCrudTable'));
+			}
+		});
+	});
+
 	$('a[role=button],button[role=button]').live("mouseover mouseout", function(event) {
 		  if ( event.type == "mouseover" ) {
 			  $(this).addClass('ui-state-hover');
@@ -155,6 +130,54 @@ $(document).ready(function() {
 	$('th.actions>div .DataTables_sort_icon').remove();
 
 } );
+
+function loadDataTable(this_datatables) {
+	return $(this_datatables).dataTable({
+		"bJQueryUI": true,
+		"sPaginationType": "full_numbers",
+		"bStateSave": use_storage,
+        "fnStateSave": function (oSettings, oData) {
+            localStorage.setItem( 'DataTables_' + unique_hash, JSON.stringify(oData) );
+        },
+    	"fnStateLoad": function (oSettings) {
+            return JSON.parse( localStorage.getItem('DataTables_'+unique_hash) );
+    	},
+		"iDisplayLength": default_per_page,
+		"aaSorting": datatables_aaSorting,
+		"oLanguage":{
+		    "sProcessing":   list_loading,
+		    "sLengthMenu":   show_entries_string,
+		    "sZeroRecords":  list_no_items,
+		    "sInfo":         displaying_paging_string,
+		    "sInfoEmpty":   list_zero_entries,
+		    "sInfoFiltered": filtered_from_string,
+		    "sSearch":       search_string+":",
+		    "oPaginate": {
+		        "sFirst":    paging_first,
+		        "sPrevious": paging_previous,
+		        "sNext":     paging_next,
+		        "sLast":     paging_last
+		    }
+		},
+		"bDestory": true,
+		"bRetrieve": true,
+		"fnDrawCallback": function() {
+			$('.image-thumbnail').fancybox({
+				'transitionIn'	:	'elastic',
+				'transitionOut'	:	'elastic',
+				'speedIn'		:	600,
+				'speedOut'		:	200,
+				'overlayShow'	:	false
+			});
+			add_edit_button_listener();
+		},
+		"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
+	    "oTableTools": {
+	    	"aButtons": aButtons,
+	        "sSwfPath": base_url+"assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
+	    }
+	});
+}
 
 function datatables_get_chosen_table(table_as_object)
 {

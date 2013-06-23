@@ -117,4 +117,6 @@
 </div>
 <?php }?>
 <div style='height:10px;'></div>
-<?php echo $list_view?>
+<div class="dataTablesContainer">
+	<?php echo $list_view?>
+</div>
