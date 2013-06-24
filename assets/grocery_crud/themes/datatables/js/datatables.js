@@ -100,23 +100,7 @@ $(document).ready(function() {
 		$(this).closest('.groceryCrudTable').find("tfoot tr th input").val("");
 	});
 
-	$('.refresh-data').click(function(){
-		var this_container = $(this).closest('.dataTablesContainer');
-
-		var new_container = $("<div/>");
-
-		this_container.after(new_container);
-		this_container.remove();
-
-		$.ajax({
-			url: $(this).attr('data-url'),
-			success: function(my_output){
-				new_container.html(my_output);
-
-				loadDataTable(new_container.find('.groceryCrudTable'));
-			}
-		});
-	});
+	loadListenersForDatatables();
 
 	$('a[role=button],button[role=button]').live("mouseover mouseout", function(event) {
 		  if ( event.type == "mouseover" ) {
@@ -130,6 +114,29 @@ $(document).ready(function() {
 	$('th.actions>div .DataTables_sort_icon').remove();
 
 } );
+
+function loadListenersForDatatables() {
+
+	$('.refresh-data').click(function(){
+		var this_container = $(this).closest('.dataTablesContainer');
+
+		var new_container = $("<div/>").addClass('dataTablesContainer');
+
+		this_container.after(new_container);
+		this_container.remove();
+
+		$.ajax({
+			url: $(this).attr('data-url'),
+			success: function(my_output){
+				new_container.html(my_output);
+
+				loadDataTable(new_container.find('.groceryCrudTable'));
+
+				loadListenersForDatatables();
+			}
+		});
+	});
+}
 
 function loadDataTable(this_datatables) {
 	return $(this_datatables).dataTable({
