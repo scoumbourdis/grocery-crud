@@ -1,14 +1,12 @@
-@import 'bootstrap.min.css';
-@import 'bootstrap-responsive.min.css';
 @import 'tablesorter.css';
 @import '../../../css/jquery_plugins/fancybox/jquery.fancybox.css';
-@import '../../../css/ui/simple/jquery-ui-1.9.1.custom.min.css';
+@import '../../../css/ui/simple/jquery-ui-1.10.1.custom.min.css';
 #options-content{
 	margin-bottom: 20px;
 }
-.row{
+/*.row { 
 	margin-top: 70px;
-}
+}*/
 .loading{
 	background:url('images/loading.gif') left top no-repeat;
 	padding-left: 30px;

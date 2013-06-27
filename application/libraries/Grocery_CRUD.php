@@ -1524,7 +1524,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_print			= $this->unset_print;
 
 		$default_per_page = $this->config->default_per_page;
-		$data->paging_options = array('10','25','50','100');
+		$data->paging_options = $this->config->paging_options;
 		$data->default_per_page		= is_numeric($default_per_page) && $default_per_page >1 && in_array($default_per_page,$data->paging_options)? $default_per_page : 25;
 
 		if($data->list === false)
@@ -2013,13 +2013,35 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$js_files = $this->get_js_files();
 		$css_files =  $this->get_css_files();
 
-		if($this->unset_jquery)
-			unset($js_files[sha1($this->default_javascript_path.'/'.grocery_CRUD::JQUERY)]);
+		$js_lib_files = $this->get_js_lib_files();
+		$js_config_files = $this->get_js_config_files();
 
-		if($this->unset_jquery_ui)
-		{
+		if ($this->unset_jquery) {
+			unset($js_files[sha1($this->default_javascript_path.'/'.grocery_CRUD::JQUERY)]);
+		}
+
+		if ($this->unset_jquery_ui) {
 			unset($css_files[sha1($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS)]);
 			unset($js_files[sha1($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS)]);
+		}
+
+		if ($this->unset_bootstrap) {
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-transition.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-alert.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-modal.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-dropdown.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-scrollspy.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-tab.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-tooltip.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-popover.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-button.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-collapse.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-carousel.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-typeahead.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-affix.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/application.js')]);
+			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap-responsive.min.css')]);
+			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap.min.css')]);
 		}
 
 		if($this->echo_and_die === false)
@@ -2034,7 +2056,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			);
 			$this->_add_js_vars($js_vars);
 
-			return (object)array('output' => $this->views_as_string, 'js_files' => $js_files, 'css_files' => $css_files);
+			return (object)array(
+					'js_files' => $js_files,
+					'js_lib_files' => $js_lib_files,
+					'js_config_files' => $js_config_files,
+					'css_files' => $css_files,
+					'output' => $this->views_as_string,
+			);
 		}
 		elseif($this->echo_and_die === true)
 		{
@@ -2158,7 +2186,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery.ui.datetime.css');
 		$this->set_css($this->default_css_path.'/jquery_plugins/jquery-ui-timepicker-addon.css');
 		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
-		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.min.js');
+		$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery-ui-timepicker-addon.js');
 
 		if($this->language !== 'english')
 		{
@@ -3180,7 +3208,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @license     https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
  * @link		http://www.grocerycrud.com/documentation
  */
-class grocery_CRUD extends grocery_CRUD_States
+class Grocery_CRUD extends grocery_CRUD_States
 {
 	/**
 	 * Grocery CRUD version
@@ -3190,13 +3218,14 @@ class grocery_CRUD extends grocery_CRUD_States
 	const	VERSION = "1.3.3";
 
 	const	JQUERY 			= "jquery-1.9.1.min.js";
-	const	JQUERY_UI_JS 	= "jquery-ui-1.10.1.custom.min.js";
+	const	JQUERY_UI_JS 	= "jquery-ui-1.10.3.custom.min.js";
 	const	JQUERY_UI_CSS 	= "jquery-ui-1.10.1.custom.min.css";
 
-	private $state_code 			= null;
-	private $state_info 			= null;
+	protected $state_code 			= null;
+	protected $state_info 			= null;
+	protected $columns				= null;
+
 	private $basic_db_table_checked = false;
-	private $columns				= null;
 	private $columns_checked		= false;
 	private $add_fields_checked		= false;
 	private $edit_fields_checked	= false;
@@ -3247,6 +3276,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $unset_delete			= false;
 	protected $unset_jquery			= false;
 	protected $unset_jquery_ui		= false;
+	protected $unset_bootstrap 		= false;
 	protected $unset_list			= false;
 	protected $unset_export			= false;
 	protected $unset_print			= false;
@@ -3420,7 +3450,6 @@ class grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 
-
 	/**
 	 * Unsets the jquery UI Javascript and CSS. This function is really useful
 	 * when the jquery UI JavaScript and CSS are already included in the main template.
@@ -3431,6 +3460,19 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function unset_jquery_ui()
 	{
 		$this->unset_jquery_ui = true;
+
+		return $this;
+	}
+
+	/**
+	 * Unsets just the twitter bootstrap libraries from the js and css. This function can be used if there is already twitter bootstrap files included
+	 * in the main template. If you are already using a bootstrap template then it's not necessary to load the files again.
+	 *
+	 * @return	void
+	 */
+	public function unset_bootstrap()
+	{
+		$this->unset_bootstrap = true;
 
 		return $this;
 	}
@@ -4034,6 +4076,7 @@ class grocery_CRUD extends grocery_CRUD_States
 		$this->config->text_editor_type		= $ci->config->item('grocery_crud_text_editor_type');
 		$this->config->character_limiter	= $ci->config->item('grocery_crud_character_limiter');
 		$this->config->dialog_forms			= $ci->config->item('grocery_crud_dialog_forms');
+		$this->config->paging_options		= $ci->config->item('grocery_crud_paging_options');
 
 		/** Initialize default paths */
 		$this->default_javascript_path				= $this->default_assets_path.'/js';
@@ -4756,11 +4799,23 @@ class grocery_CRUD extends grocery_CRUD_States
 	 * @param string $field_name
 	 * @param string $upload_path
 	 */
-	public function set_field_upload($field_name, $upload_dir = null)
+	public function set_field_upload($field_name, $upload_dir = '')
 	{
-		$upload_dir = substr($upload_dir,-1,1) == '/' ? substr($upload_dir,0,-1) : $upload_dir;
-		$this->upload_fields[$field_name] = (object)array( 'field_name' => $field_name , 'upload_path' => $upload_dir, 'encrypted_field_name' =>  $this->_unique_field_name($field_name));
+		$upload_dir = !empty($upload_dir) && substr($upload_dir,-1,1) == '/'
+						? substr($upload_dir,0,-1)
+						: $upload_dir;
+		$upload_dir = !empty($upload_dir) ? $upload_dir : 'assets/uploads/files';
 
+		/** Check if the upload Url folder exists. If not then throw an exception **/
+		if (!is_dir(FCPATH.$upload_dir)) {
+			throw new Exception("It seems that the folder \"".FCPATH.$upload_dir."\" for the field name
+					\"".$field_name."\" doesn't exists. Please create the folder and try again.");
+		}
+
+		$this->upload_fields[$field_name] = (object) array(
+				'field_name' => $field_name,
+				'upload_path' => $upload_dir,
+				'encrypted_field_name' => $this->_unique_field_name($field_name));
 		return $this;
 	}
 }
@@ -5088,7 +5143,7 @@ class UploadHandler
                 }
             } else if ($this->options['discard_aborted_uploads']) {
                 unlink($file_path);
-                $file->error = 'abort';
+                $file->error = "It seems that this user doesn't have permissions to upload to this folder";
             }
             $file->size = $file_size;
             $file->delete_url = $this->options['script_url']

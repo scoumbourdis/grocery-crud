@@ -48,6 +48,7 @@ $(function(){
 											window.location = data.success_list_url;
 										} else {
 											$(".ui-dialog-content").dialog("close");
+											success_message(data.success_message);
 										}
 
 										return true;

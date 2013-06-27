@@ -29,7 +29,7 @@
 	$lang['form_go_back_to_list'] 	= 'Volver a la lista';
 
 	$lang['form_add'] 				= 'Añadir';
-	$lang['insert_success_message'] = 'Your data has been successfully stored into the database.';
+	$lang['insert_success_message'] = 'Sus datos han sido guardados correctamente.';
 	$lang['form_or']				= 'o';
 	$lang['form_save'] 				= 'Guardar';
 	$lang['form_insert_loading'] 	= 'Cargando, guardando los datos...';

@@ -1,5 +1,6 @@
 <?php
-
+$this->set_css($this->default_theme_path.'/twitter-bootstrap/css/bootstrap.min.css');
+$this->set_css($this->default_theme_path.'/twitter-bootstrap/css/bootstrap-responsive.min.css');
 $this->set_css($this->default_theme_path.'/twitter-bootstrap/css/style.css');
 $this->set_css($this->default_theme_path.'/twitter-bootstrap/css/jquery-ui/flick/jquery-ui-1.9.2.custom.css');
 
@@ -80,10 +81,10 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 			}
 			?>
 
-			<input type="submit" value="<?php echo $this->l('form_save'); ?>"  class="btn btn-large btn-primary"/>
+			<input type="button" value="<?php echo $this->l('form_save'); ?>"  class="btn btn-large btn-primary submit-form"/>
 			<?php 	if(!$this->unset_back_to_list) { ?>
 				<input type="button" value="<?php echo $this->l('form_save_and_go_back'); ?>" id="save-and-go-back-button"  class="btn btn-large btn-primary"/>
-				<input type="button" value="<?php echo $this->l('form_cancel'); ?>" onclick="javascript: goToList()"  class="btn btn-large" />
+				<input type="button" value="<?php echo $this->l('form_cancel'); ?>" class="btn btn-large return-to-list" />
 			<?php 	} ?>
 
 			<div class="hide loading" id="ajax-loading"><?php echo $this->l('form_update_loading'); ?></div>

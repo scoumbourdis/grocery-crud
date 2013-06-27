@@ -629,6 +629,13 @@ div.pGroup {
 .flexigrid .pReload.loading,.flexigrid .fbutton.loading{
 	background:url(images/load.gif) no-repeat center;
 }
+.flexigrid .simple-loading{
+	background:url(images/load.gif) no-repeat center;
+	display:block;
+	float:left;
+	width: 16px;
+	height: 16px;
+}
 .flexigrid .search-div-clear-button
 {
 	float:right;
@@ -1409,4 +1416,22 @@ input[type="submit"].btn.btn-mini {
 .ui-widget
 {
 	font-size: 12px !important;
+}
+
+
+/** Common CSS */
+.loading-opacity
+{
+	opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+}
+
+.loading-opacity:before {
+	font-size: 26px;
+	position:absolute;
+	color: #000;
+	content: "Loading...";
+	margin-left: 550px;
+	z-index: 1000;
 }

@@ -48,7 +48,7 @@ if(!empty($list)){ ?>
 								}
 								if(!$unset_delete){?>
 									<li>
-										<a href="<?php echo $row->delete_url?>" title="<?php echo $this->l('list_delete')?> <?php echo $subject?>" class="delete-row" >
+										<a href="javascript:void(0);" data-target-url="<?php echo $row->delete_url?>" title="<?php echo $this->l('list_delete')?> <?php echo $subject?>" class="delete-row" >
 											<i class="icon-trash"></i>
 											<?php echo $this->l('list_delete') . ' ' . $subject; ?>
 										</a>
@@ -62,9 +62,10 @@ if(!empty($list)){ ?>
 										<li>
 											<a href="<?php echo $action_url; ?>" class="<?php echo $action->css_class; ?> crud-action" title="<?php echo $action->label?>"><?php
 											if(!empty($action->image_url)){ ?>
-												<img src="<?php echo $action->image_url; ?>" alt="<?php echo $action->label?>" />
+												<img src="<?php echo $action->image_url; ?>" alt="" />
 											<?php
 											}
+											echo ' '.$action->label;
 											?>
 											</a>
 										</li>
