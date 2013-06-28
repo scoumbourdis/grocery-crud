@@ -1,4 +1,4 @@
-Grocery CRUD - A CodeIgniter library that creates a CRUD automatically with just few lines of code.
+Grocery CRUD - A CodeIgniter library that creates a CRUD automatically with just a few lines of code.
 
 Copyright (C) 2010 - 2012  John Skoumbourdis. 
 
