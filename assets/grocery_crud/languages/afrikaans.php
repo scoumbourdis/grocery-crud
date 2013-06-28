@@ -48,5 +48,5 @@
 	$lang['alert_edit_form']		= 'Die data wat jy verander het kan nie gestoor word nie.\\nIs jy seker jy wil terug gaan na die lys toe?';
 	$lang['alert_delete']			= 'Is jy seker jy wil hierdie rekord uitvee?';
 
-	$lang['insert_error']			= 'Iets het fout geloop met die byvoeging.';
-	$lang['update_error']			= 'Iets het fout geloop met die opdatering.';
+	$lang['insert_error']			= 'Iets het fout gegaan met die byvoeging.';
+	$lang['update_error']			= 'Iets het fout gegaan met die opdatering.';
