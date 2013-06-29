@@ -1,15 +1,9 @@
 var js_libraries = [];
 
-<<<<<<< HEAD
-var fnOpenEditForm = function(href_url){
-	var maxdialog_height = $(window).height() - 80;
-=======
 var fnOpenEditForm = function(this_element){
 
 	var href_url = this_element.attr("href");
-
-	var dialog_height = $(window).height() - 80;
->>>>>>> grocery-crud/master
+	var maxdialog_height = $(window).height() - 80;
 
 	//Close all
 	$(".ui-dialog-content").dialog("close");
@@ -44,12 +38,8 @@ var fnOpenEditForm = function(this_element){
 			$("<div/>").html(data.output).dialog({
 				width: 910,
 				modal: true,
-<<<<<<< HEAD
 				height: 'auto',
 				maxHeight: maxdialog_height,
-=======
-				height: dialog_height,
->>>>>>> grocery-crud/master
 				close: function(){
 					$(this).remove();
 				},
