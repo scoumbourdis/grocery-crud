@@ -47,7 +47,23 @@ var fnOpenEditForm = function(this_element){
 					var this_dialog = $(this);
 
 					$('#cancel-button').click(function(){
-						this_dialog.dialog("close");
+						noty({
+							text: message_alert_add_form,
+							type: 'warning',
+						  dismissQueue: true,
+						  modal: true,
+						  buttons: [
+							{addClass: 'btn btn-primary', text: 'Ok', onClick: function($noty) {
+								$noty.close();
+								this_dialog.dialog("close");
+							  }
+							},
+							{addClass: 'btn btn-danger', text: 'Cancel', onClick: function($noty) {
+								$noty.close();								
+							  }
+							}
+						  ]
+						});
 					});
 
 				}
