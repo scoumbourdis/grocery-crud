@@ -48,7 +48,7 @@ var fnOpenEditForm = function(this_element){
 
 					$('#cancel-button').click(function(){
 						noty({
-							text: message_alert_add_form,
+							text: (typeof(message_alert_add_form) == 'undefined'?message_alert_edit_form:message_alert_add_form),
 							type: 'warning',
 						  dismissQueue: true,
 						  modal: true,
