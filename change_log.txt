@@ -10,6 +10,7 @@ v 1.4.0 BETA
 	Noty Jquery Plugin to load when you delete a record.
 	Upgrading Jquery to Jquery 1.9.1
 	Multiple grids in one page.
+	New language: Catalan.
 	Small bug fixes:
 		- #165 - add_action "url_has_http" issue
 		- #166 - Improved file upload error handling
