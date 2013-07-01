@@ -2682,6 +2682,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	public function set_theme($theme = null)
 	{
 		$this->theme = $theme;
+
+		return $this;
 	}
 
 	protected function _get_ajax_results()
