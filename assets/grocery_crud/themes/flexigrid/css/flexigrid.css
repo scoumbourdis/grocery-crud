@@ -667,6 +667,19 @@ div.pGroup {
 	margin-left:5px;
 	display: block;
 }
+.flexigrid .read-icon
+{
+	background:url(images/magnifier.png) no-repeat center;
+	cursor: pointer;
+	width: 16px;
+	height:16px;
+	float:right;
+	border: none !important;
+	padding:0px !important;
+	padding-bottom:0px !important;
+	margin-left:5px;
+	display: block;
+}
 .flexigrid .tools
 {
 	white-space: nowrap;

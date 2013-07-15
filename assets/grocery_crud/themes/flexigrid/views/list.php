@@ -43,6 +43,9 @@
                     <?php if(!$unset_edit){?>
 						<a href='<?php echo $row->edit_url?>' title='<?php echo $this->l('list_edit')?> <?php echo $subject?>' class="edit_button"><span class='edit-icon'></span></a>
 					<?php }?>
+					<?php if(!$unset_read){?>
+						<a href='<?php echo $row->read_url?>' title='<?php echo $this->l('list_record')?> <?php echo $subject?>' class="edit_button"><span class='read-icon'></span></a>
+					<?php }?>
 					<?php 
 					if(!empty($row->action_urls)){
 						foreach($row->action_urls as $action_unique_id => $action_url){ 
