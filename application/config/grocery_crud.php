@@ -20,7 +20,7 @@
 	$config['grocery_crud_character_limiter'] 	= 30;
 
 	//All the forms are opening with dialog forms without refreshing the page once again.
-	$config['grocery_crud_dialog_forms'] = true;
+	//$config['grocery_crud_dialog_forms'] = true;
 
 	//Having some options at the list paging. This is the default one that all the websites are using.
 	//Make sure that the number of grocery_crud_default_per_page variable is included to this array.
