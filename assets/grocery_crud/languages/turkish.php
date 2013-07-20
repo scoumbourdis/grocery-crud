@@ -82,3 +82,7 @@
 	$lang['list_export'] 	= "Dışarı Aktar";
 	$lang['list_print'] 	= "Yazdır";
 	$lang['minimize_maximize'] = 'Küçült/Büyüt';
+
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';

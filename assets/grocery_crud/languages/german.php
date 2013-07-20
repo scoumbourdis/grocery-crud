@@ -73,3 +73,7 @@
 	$lang['list_export'] 	= "Export";
 	$lang['list_print'] 	= "Druck";
 	$lang['minimize_maximize'] = 'Minimieren/Maximieren';
+
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';

@@ -31,7 +31,7 @@
 				<?php if(!$unset_read){?>
 					<a href="<?php echo $row->read_url?>" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
 						<span class="ui-button-icon-primary ui-icon ui-icon-document"></span>
-						<span class="ui-button-text">&nbsp;<?php echo $this->l('list_record'); ?></span>
+						<span class="ui-button-text">&nbsp;<?php echo $this->l('list_view'); ?></span>
 					</a>
 				<?php }?>
 

@@ -75,3 +75,7 @@
 	$lang['list_export'] 	= "استخراج";
 	$lang['list_print'] 	= "اطبع";
 	$lang['minimize_maximize'] = 'تكبير\تصغير';
+
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';

@@ -73,3 +73,6 @@
 	$lang['list_export'] 	= "다운받기";
 	$lang['list_print'] 	= "프린트";
 	$lang['minimize_maximize'] = '최대/최소';
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';

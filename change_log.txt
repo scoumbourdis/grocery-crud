@@ -11,6 +11,7 @@ v 1.4.0 BETA
 	Upgrading Jquery to Jquery 1.9.1
 	Multiple grids in one page.
 	New language: Catalan.
+	Add "view" as new action.
 	Small bug fixes:
 		- #165 - add_action "url_has_http" issue
 		- #166 - Improved file upload error handling

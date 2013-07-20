@@ -73,3 +73,6 @@
 	$lang['list_export'] 	= 'Exportovať';
 	$lang['list_print'] 	= 'Tlačiť';
 	$lang['minimize_maximize'] = 'Minimalizovať/Maximalizovať';	
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';

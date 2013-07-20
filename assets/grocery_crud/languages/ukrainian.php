@@ -74,3 +74,6 @@
 	$lang['list_export'] = 'Експорт';
 	$lang['list_print'] = 'Друк';
 	$lang['minimize_maximize'] = 'Згорнути/розгорнути';
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';
