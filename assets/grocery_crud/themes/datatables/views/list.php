@@ -15,7 +15,7 @@
 			<?php foreach($columns as $column){?>
 				<td><?php echo $row->{$column->field_name}?></td>
 			<?php }?>
-			<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
+			<?php if(!$unset_delete || !$unset_edit || !$unset_read || !empty($actions)){?>
 			<td class='actions'>
 				<?php
 				if(!empty($row->action_urls)){
@@ -28,6 +28,13 @@
 				<?php }
 				}
 				?>
+				<?php if(!$unset_read){?>
+					<a href="<?php echo $row->read_url?>" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
+						<span class="ui-button-icon-primary ui-icon ui-icon-document"></span>
+						<span class="ui-button-text">&nbsp;<?php echo $this->l('list_record'); ?></span>
+					</a>
+				<?php }?>
+
 				<?php if(!$unset_edit){?>
 					<a href="<?php echo $row->edit_url?>" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
 						<span class="ui-button-icon-primary ui-icon ui-icon-pencil"></span>
@@ -51,7 +58,7 @@
 			<?php foreach($columns as $column){?>
 				<th><input type="text" name="<?php echo $column->field_name; ?>" placeholder="<?php echo $this->l('list_search').' '.$column->display_as; ?>" class="search_<?php echo $column->field_name; ?>" /></th>
 			<?php }?>
-			<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
+			<?php if(!$unset_delete || !$unset_edit || !$unset_read || !empty($actions)){?>
 				<th>
 					<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only floatR refresh-data" role="button" data-url="<?php echo $ajax_list_url; ?>">
 						<span class="ui-button-icon-primary ui-icon ui-icon-refresh"></span><span class="ui-button-text">&nbsp;</span>
