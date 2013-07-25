@@ -3296,7 +3296,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 */
 	const	VERSION = "1.3.3";
 
-	const	JQUERY 			= "jquery-1.9.1.min.js";
+	const	JQUERY 			= "jquery-1.10.2.min.js";
 	const	JQUERY_UI_JS 	= "jquery-ui-1.10.3.custom.min.js";
 	const	JQUERY_UI_CSS 	= "jquery-ui-1.10.1.custom.min.css";
 

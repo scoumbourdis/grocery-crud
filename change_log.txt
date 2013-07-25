@@ -1,4 +1,4 @@
-v 1.4.0 BETA
+v 1.4.0
 	#170 - Problem with more than one date inputs at the dialog.
 	#148 - New theme twitter-bootstrap
 	#150 - Optimizing the SELECT statement for counting rows.
@@ -8,7 +8,7 @@ v 1.4.0 BETA
 	#158 - New method name set_crud_url_path. This method is useful when the path is not specified correctly.
 	#163 - Custom field type label for true_false. Like hidden, enum and set.
 	Noty Jquery Plugin to load when you delete a record.
-	Upgrading Jquery to Jquery 1.9.1
+	Upgrading Jquery to Jquery 1.10.2
 	Multiple grids in one page.
 	New language: Catalan.
 	Add "view" as new action.
