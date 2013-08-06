@@ -4,7 +4,7 @@
 			<?php foreach($columns as $column){?>
 				<th><?php echo $column->display_as; ?></th>
 			<?php }?>
-			<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
+			<?php if(!$unset_delete || !$unset_edit || !$unset_read || !empty($actions)){?>
 			<th class='actions'><?php echo $this->l('list_actions'); ?></th>
 			<?php }?>
 		</tr>

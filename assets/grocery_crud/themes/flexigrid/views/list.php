@@ -15,7 +15,7 @@
 					</div>
 				</th>
 				<?php }?>
-				<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
+				<?php if(!$unset_delete || !$unset_edit || !$unset_read || !empty($actions)){?>
 				<th align="left" abbr="tools" axis="col1" class="" width='20%'>
 					<div class="text-right">
 						<?php echo $this->l('list_actions'); ?>
@@ -32,7 +32,7 @@
 				<div class='text-left'><?php echo $row->{$column->field_name} != '' ? $row->{$column->field_name} : '&nbsp;' ; ?></div>
 			</td>
 			<?php }?>
-			<?php if(!$unset_delete || !$unset_edit || !empty($actions)){?>
+			<?php if(!$unset_delete || !$unset_edit || !$unset_read || !empty($actions)){?>
 			<td align="left" width='20%'>
 				<div class='tools'>				
 					<?php if(!$unset_delete){?>
