@@ -36,7 +36,7 @@
 	$lang['form_insert_loading']	= 'Carregant, guardant...';
 
 	$lang['form_upload_a_file']		= 'Pujar un arxiu';
-	$lang['form_upload_delete']		= 'esborrar';
+	$lang['form_upload_delete']		= 'Esborrar';
 	$lang['form_button_clear']		= 'Netejar';
 
 	$lang['delete_success_message']	= 'Les dades han estat esborrades correctament de la base de dades.';
@@ -51,7 +51,7 @@
 	$lang['update_error']			= 'Error al guardar.';
 
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';
+	$lang['set_relation_title']		= 'Seleccionar {field_display_as}';
 	$lang['list_record']			= 'Registe';
 	$lang['form_inactive']			= 'Inactiu';
 	$lang['form_active']			= 'Actiu';
@@ -78,4 +78,4 @@
 	$lang['minimize_maximize'] = 'Minimitzar / Maximitzar';
 
 	/* Added in version 1.4 */
-	$lang['list_view'] = 'View';
+	$lang['list_view'] = 'Veure';
