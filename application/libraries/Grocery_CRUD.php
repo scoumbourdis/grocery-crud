@@ -2343,7 +2343,17 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 	protected function get_readonly_input($field_info,$value)
 	{
-		return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$value.'</div>';
+	    if (isset($value) && !is_array($value))
+	    {
+	    	return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$value.'</div>';
+    	}
+        reset($value);
+        $key = key($value);
+        if (isset($value[$key]))
+        {
+        	return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$value[$key].'</div>';
+        }
+        return;
 	}
 
 	protected function get_set_input($field_info,$value)
