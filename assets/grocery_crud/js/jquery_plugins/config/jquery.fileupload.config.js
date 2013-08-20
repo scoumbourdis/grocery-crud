@@ -29,6 +29,7 @@ $(function(){
 		
 	    $(this).fileupload({
 	        dataType: 'json',
+	        dropZone: $(this).parents('.form-field-box'),
 	        url: uploader_url,
 	        cache: false,
 	        acceptFileTypes:  file_upload_info.accepted_file_types,
