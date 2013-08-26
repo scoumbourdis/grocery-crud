@@ -40,8 +40,9 @@ class grocery_CRUD_Field_Types
 	 */
 	public function get_field_types()
 	{
-		if($this->field_types !== null)
+		if ($this->field_types !== null) {
 			return $this->field_types;
+		}
 
 		$types	= array();
 		foreach($this->basic_model->get_field_types_basic_table() as $field_info)
@@ -107,9 +108,13 @@ class grocery_CRUD_Field_Types
 		{
 			foreach($this->relation_n_n as $field_name => $field_extras)
 			{
+				$is_read_only = $this->change_field_type !== null
+								&& isset($this->change_field_type[$field_name])
+								&& $this->change_field_type[$field_name]->type == 'readonly'
+									? true : false;
 				$field_info = (object)array();
 				$field_info->name		= $field_name;
-				$field_info->crud_type 	= 'relation_n_n';
+				$field_info->crud_type 	= $is_read_only ? 'readonly' : 'relation_n_n';
 				$field_info->extras 	= $field_extras;
 				$field_info->required	= !empty($this->required_fields) && in_array($field_name,$this->required_fields) ? true : false;;
 				$field_info->display_as =
@@ -2343,17 +2348,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 	protected function get_readonly_input($field_info,$value)
 	{
-	    if (isset($value) && !is_array($value))
-	    {
-	    	return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$value.'</div>';
+		$read_only_value = "&nbsp;";
+
+	    if (isset($value) && !is_array($value)) {
+	    	$read_only_value = $value;
+    	} else {
+    		$all_values = array_values($value);
+    		$read_only_value = implode(", ",$all_values);
     	}
-        reset($value);
-        $key = key($value);
-        if (isset($value[$key]))
-        {
-        	return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$value[$key].'</div>';
-        }
-        return;
+
+        return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$read_only_value.'</div>';
 	}
 
 	protected function get_set_input($field_info,$value)
@@ -2703,6 +2707,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 	protected function get_read_input_fields($field_values = null)
 	{
+		$fields = $this->get_edit_fields();
+		$this->field_types = null;
+		$this->required_fields = null;
+
+		foreach ($fields as $field) {
+			$this->field_type($field->field_name, 'readonly');
+		}
+
+		return $this->get_edit_input_fields($field_values);
+
 		$fields = $this->get_edit_fields();
 		$types 	= $this->get_field_types();
 
