@@ -58,8 +58,15 @@ class grocery_CRUD_Field_Types
 			{
 				$field_type 			= $this->change_field_type[$field_info->name];
 
-				$field_info->crud_type 	= $field_type->type;
-				$field_info->extras 	=  $field_type->extras;
+				if (isset($this->relation[$field_info->name])) {
+					$field_info->crud_type = "relation_".$field_type->type;
+				}
+				elseif (isset($this->upload_fields[$field_info->name])) {
+					$field_info->crud_type = "upload_file_".$field_type->type;
+				} else {
+					$field_info->crud_type 	= $field_type->type;
+					$field_info->extras 	=  $field_type->extras;
+				}
 
 				$real_type				= $field_info->crud_type;
 			}
@@ -88,10 +95,12 @@ class grocery_CRUD_Field_Types
 				break;
 
 				case 'relation':
+				case 'relation_readonly':
 					$field_info->extras 	= $this->relation[$field_info->name];
 				break;
 
 				case 'upload_file':
+				case 'upload_file_readonly':
 					$field_info->extras 	= $this->upload_fields[$field_info->name];
 				break;
 
@@ -218,8 +227,10 @@ class grocery_CRUD_Field_Types
 					'enum',
 					'set',
 					'relation',
+					'relation_readonly',
 					'relation_n_n',
 					'upload_file',
+					'upload_file_readonly',
 					'hidden',
 					'password',
 					'readonly',
@@ -2448,6 +2459,24 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$input .= "</select>";
 		return $input;
+	}
+
+	protected function get_relation_readonly_input($field_info,$value)
+	{
+		$options_array = $this->get_relation_array($field_info->extras);
+
+		$value = isset($options_array[$value]) ? $options_array[$value] : '';
+
+		return $this->get_readonly_input($field_info, $value);
+	}
+
+	protected function get_upload_file_readonly_input($field_info,$value)
+	{
+		$file = $file_url = base_url().$field_info->extras->upload_path.'/'.$value;
+
+		$value = !empty($value) ? '<a href="'.$file.'" target="_blank">'.$value.'</a>' : '';
+
+		return $this->get_readonly_input($field_info, $value);
 	}
 
 	protected function get_relation_n_n_input($field_info_type, $selected_values)
