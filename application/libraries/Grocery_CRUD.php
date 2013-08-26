@@ -2346,13 +2346,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		return $input;
 	}
 
-	protected function get_readonly_input($field_info,$value)
+	protected function get_readonly_input($field_info, $value)
 	{
 		$read_only_value = "&nbsp;";
 
-	    if (isset($value) && !is_array($value)) {
+	    if (!empty($value) && !is_array($value)) {
 	    	$read_only_value = $value;
-    	} else {
+    	} elseif (is_array($value)) {
     		$all_values = array_values($value);
     		$read_only_value = implode(", ",$all_values);
     	}
