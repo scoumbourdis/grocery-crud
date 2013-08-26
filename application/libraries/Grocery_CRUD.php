@@ -2741,6 +2741,11 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->required_fields = null;
 
 		foreach ($fields as $field) {
+			if (!empty($this->change_field_type)
+					&& isset($this->change_field_type[$field->field_name])
+					&& $this->change_field_type[$field->field_name]->type == 'hidden') {
+				continue;
+			}
 			$this->field_type($field->field_name, 'readonly');
 		}
 
