@@ -2716,47 +2716,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 
 		return $this->get_edit_input_fields($field_values);
-
-		$fields = $this->get_edit_fields();
-		$types 	= $this->get_field_types();
-
-		$input_fields = array();
-
-		foreach($fields as $field_num => $field)
-		{
-			$field_info = $types[$field->field_name];
-			$field_info->crud_type = 'readonly'; #force readonly
-
-			$field_value = !empty($field_values) && isset($field_values->{$field->field_name}) ? $field_values->{$field->field_name} : null;
-			if(!isset($this->callback_edit_field[$field->field_name]))
-			{
-				$field_input = $this->get_field_input($field_info, $field_value);
-			}
-			else
-			{
-				$primary_key = $this->getStateInfo()->primary_key;
-				$field_input = $field_info;
-				$field_input->input = call_user_func($this->callback_edit_field[$field->field_name], $field_value, $primary_key, $field_info, $field_values);
-			}
-
-			switch ($field_info->crud_type) {
-				case 'invisible':
-					unset($this->edit_fields[$field_num]);
-					unset($fields[$field_num]);
-					continue;
-				break;
-				case 'hidden':
-					$this->edit_hidden_fields[] = $field_input;
-					unset($this->edit_fields[$field_num]);
-					unset($fields[$field_num]);
-					continue;
-				break;
-			}
-
-			$input_fields[$field->field_name] = $field_input;
-		}
-
-		return $input_fields;
 	}
 
 	protected function setThemeBasics()
