@@ -2571,7 +2571,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.fancybox.config.js');
 
-		$unique = uniqid();
+		$unique = mt_rand();
 
 		$allowed_files = $this->config->file_upload_allow_file_types;
 		$allowed_files_ui = '.'.str_replace('|',',.',$allowed_files);
