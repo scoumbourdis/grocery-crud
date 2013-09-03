@@ -52,7 +52,7 @@
 
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= 'Select {field_display_as}';
-	$lang['list_record']			= 'Registe';
+	$lang['list_record']			= 'Registre';
 	$lang['form_inactive']			= 'Inactiu';
 	$lang['form_active']			= 'Actiu';
 
@@ -76,6 +76,12 @@
 	$lang['list_export'] 	= "Exportar";
 	$lang['list_print'] 	= "Imprimir";
 	$lang['minimize_maximize'] = 'Minimitzar / Maximitzar';
-
+	
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
+	
+	/*TODO: Sergi Tur Patch*/
+	$lang['Add'] = 'Afegir';
+	$lang['Details'] = 'Detalls';
+	$lang['Reload'] = 'Actualitzar';
+	$lang['Default value'] = 'Valor per defecte';

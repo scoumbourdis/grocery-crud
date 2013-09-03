@@ -27,3 +27,6 @@
 	//Having some options at the list paging. This is the default one that all the websites are using.
 	//Make sure that the number of grocery_crud_default_per_page variable is included to this array.
 	$config['grocery_crud_paging_options'] = array('10','25','50','100');
+	
+	//Show Add | Details | Reload | Default Value in relation fields
+	$config['grocery_crud_details_relation'] = true;

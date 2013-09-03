@@ -1,26 +1,27 @@
 $(function(){
+		
 		$('.ptogtitle').click(function(){
 			if($(this).hasClass('vsble'))
 			{
 				$(this).removeClass('vsble');
-				$('#main-table-box #crudForm').slideDown("slow");
+				$('#main-table-box #crudForm_' + table_name).slideDown("slow");
 			}
 			else
 			{
 				$(this).addClass('vsble');
-				$('#main-table-box #crudForm').slideUp("slow");
+				$('#main-table-box #crudForm_' + table_name).slideUp("slow");
 			}
 		});
 
 		var save_and_close = false;
 
-		$('#save-and-go-back-button').click(function(){
+		$('#'+table_name+'_save-and-go-back-button').click(function(){
 			save_and_close = true;
-
-			$('#crudForm').trigger('submit');
+			$('#crudForm_' + table_name).trigger('submit');
 		});
 
-		$('#crudForm').submit(function(){
+		$('#crudForm_' + table_name).submit(function(e){
+			e.preventDefault();
 			var my_crud_form = $(this);
 
 			$(this).ajaxSubmit({
@@ -34,7 +35,7 @@ $(function(){
 					$("#FormLoading").hide();
 					if(data.success)
 					{
-						$('#crudForm').ajaxSubmit({
+						$('#crudForm_' + table_name).ajaxSubmit({
 							dataType: 'text',
 							cache: 'false',
 							beforeSend: function(){
@@ -46,26 +47,25 @@ $(function(){
 								if(data.success)
 								{
 									var data_unique_hash = my_crud_form.closest(".flexigrid").attr("data-unique-hash");
-
+																	
 									$('.flexigrid[data-unique-hash='+data_unique_hash+']').find('.ajax_refresh_and_loading').trigger('click');
 
 									if(save_and_close)
 									{
-										if ($('#save-and-go-back-button').closest('.ui-dialog').length === 0) {
+										if ($('#'+table_name+'_save-and-go-back-button').closest('.ui-dialog').length === 0) {
 											window.location = data.success_list_url;
 										} else {
 											$(".ui-dialog-content").dialog("close");
-											success_message(data.success_message);
+											success_message(data.success_message);	
 										}
-
 										return true;
 									}
 
 									$('.field_error').each(function(){
 										$(this).removeClass('field_error');
 									});
-									clearForm();
-									form_success_message(data.success_message);
+									//clearForm();
+									form_success_message_table(data.success_message,table_name);
 								}
 								else
 								{
@@ -81,9 +81,9 @@ $(function(){
 					else
 					{
 						$('.field_error').removeClass('field_error');
-						form_error_message(data.error_message);
+						form_error_message_table(data.error_message,table_name);
 						$.each(data.error_fields, function(index,value){
-							$('input[name='+index+']').addClass('field_error');
+							$('input[id=field-'+ table_name + '-' +index+']').addClass('field_error');
 						});
 
 					}
@@ -96,9 +96,9 @@ $(function(){
 			return false;
 		});
 
-		if( $('#cancel-button').closest('.ui-dialog').length === 0 ) {
+		if( $('#'+table_name+'_cancel-button').closest('.ui-dialog').length === 0 ) {
 
-			$('#cancel-button').click(function(){
+			$('#'+table_name+'_cancel-button').click(function(){
 				if( confirm( message_alert_add_form ) )
 				{
 					window.location = list_url;
@@ -112,7 +112,7 @@ $(function(){
 
 	function clearForm()
 	{
-		$('#crudForm').find(':input').each(function() {
+		$('#crudForm_' + table_name).find(':input').each(function() {
 	        switch(this.type) {
 	            case 'password':
 	            case 'select-multiple':
