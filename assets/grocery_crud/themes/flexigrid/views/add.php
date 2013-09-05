@@ -262,7 +262,42 @@ $('#<?php echo $field_prefix . $key ;?>').chosen().change(function(event) {
 			
 			<div class="pGroup">
 				
-				&nbsp;<a href="#" id="express_<?php echo $table_name;?>"><?php echo lang("show_express_form");?></a>
+				&nbsp;<a href="#" id="express_<?php echo $table_name;?>" onclick="event.preventDefault();
+				$('#express_<?php echo $table_name;?>').toggle();
+				$('#noexpress_<?php echo $table_name;?>').toggle();
+				
+	$('#externalID_<?php echo $table_name?>_field_box').toggle();
+	$('#externalIDType_<?php echo $table_name?>_field_box').toggle();
+	$('#description_<?php echo $table_name?>_field_box').toggle();
+	$('#materialId_<?php echo $table_name?>_field_box').toggle();
+	$('#brandId_<?php echo $table_name?>_field_box').toggle();
+	$('#modelId_<?php echo $table_name?>_field_box').toggle();
+	$('#entryDate_<?php echo $table_name?>_field_box').toggle();
+	$('#manualEntryDate_<?php echo $table_name?>_field_box').toggle();
+	$('#creationUserId_<?php echo $table_name?>_field_box').toggle();
+	$('#lastupdateUserId_<?php echo $table_name?>_field_box').toggle();
+	$('#location_<?php echo $table_name?>_field_box').toggle();
+	$('#quantityInStock_<?php echo $table_name?>_field_box').toggle();
+	$('#price_<?php echo $table_name?>_field_box').toggle();
+	$('#moneySourceId_<?php echo $table_name?>_field_box').toggle();
+	$('#providerId_<?php echo $table_name?>_field_box').toggle();
+	$('#preservationState_<?php echo $table_name?>_field_box').toggle();
+	$('#markedForDeletion_<?php echo $table_name?>_field_box').toggle();
+	$('#markedForDeletionDate_<?php echo $table_name?>_field_box').toggle();
+	$('#file_url_<?php echo $table_name?>_field_box').toggle();
+	$('#mainOrganizationaUnitId_<?php echo $table_name?>_field_box').toggle();
+	$('#OwnerOrganizationalUnit_<?php echo $table_name?>_field_box').toggle();
+	
+				<?php
+					foreach($fields as $field)	{
+						if (!$input_fields[$field->field_name]->required) {
+							echo $field->field_name;
+						}
+					}
+				?>
+				return false;">
+						<?php echo lang("show_express_form");?>
+					  </a>
 			          <a href="#" id="noexpress_<?php echo $table_name;?>" style="display:none;"><?php echo lang("hide_express_form");?></a>
 			    </span>  
 			</div>
