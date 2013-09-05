@@ -48,6 +48,7 @@ class grocery_CRUD_Field_Types
 		foreach($this->basic_model->get_field_types_basic_table() as $field_info)
 		{
 			$field_info->required = !empty($this->required_fields) && in_array($field_info->name,$this->required_fields) ? true : false;
+			$field_info->express = !empty($this->express_fields) && in_array($field_info->name,$this->express_fields) ? true : false;
 
 			$field_info->display_as =
 				isset($this->display_as[$field_info->name]) ?
@@ -126,6 +127,7 @@ class grocery_CRUD_Field_Types
 				$field_info->crud_type 	= $is_read_only ? 'readonly' : 'relation_n_n';
 				$field_info->extras 	= $field_extras;
 				$field_info->required	= !empty($this->required_fields) && in_array($field_name,$this->required_fields) ? true : false;;
+				$field_info->express	= !empty($this->express_fields) && in_array($field_name,$this->express_fields) ? true : false;;
 				$field_info->display_as =
 					isset($this->display_as[$field_name]) ?
 						$this->display_as[$field_name] :
@@ -158,6 +160,7 @@ class grocery_CRUD_Field_Types
 												$this->display_as[$field_name] :
 												ucfirst(str_replace("_"," ",$field_name)),
 						'required'	=> in_array($field_name,$this->required_fields) ? true : false,
+						'express'	=> in_array($field_name,$this->express_fields) ? true : false,
 						'extras'	=> $extras
 					);
 
@@ -188,6 +191,7 @@ class grocery_CRUD_Field_Types
 												$this->display_as[$field_name] :
 												ucfirst(str_replace("_"," ",$field_name)),
 						'required'	=> in_array($field_name,$this->required_fields) ? true : false,
+						'express'	=> in_array($field_name,$this->express_fields) ? true : false,
 						'extras'	=> $extras
 					);
 
@@ -3424,6 +3428,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $or_having 			= array();
 	protected $limit 				= null;
 	protected $required_fields		= array();
+	protected $express_fields		= array();
 	protected $_unique_fields 			= array();
 	protected $validation_rules		= array();
 	protected $relation				= array();
@@ -4833,6 +4838,24 @@ class Grocery_CRUD extends grocery_CRUD_States
 		}
 
 		$this->required_fields = $args;
+
+		return $this;
+	}
+	
+	/**
+	 *
+	 * The field names of the express fields
+	 */
+	public function express_fields()
+	{
+		$args = func_get_args();
+
+		if(isset($args[0]) && is_array($args[0]))
+		{
+			$args = $args[0];
+		}
+
+		$this->express_fields = $args;
 
 		return $this;
 	}

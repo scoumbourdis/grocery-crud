@@ -262,7 +262,8 @@ $('#<?php echo $field_prefix . $key ;?>').chosen().change(function(event) {
 			
 			<div class="pGroup">
 				
-				&nbsp;<a href="#" id="express_<?php echo $table_name;?>"><?php echo lang("show_express_form");?></a>
+				&nbsp;<a href="#" id="express_<?php echo $table_name;?>" onclick="event.preventDefault();return false();">
+				        <?php echo lang("show_express_form");?></a>
 			          <a href="#" id="noexpress_<?php echo $table_name;?>" style="display:none;"><?php echo lang("hide_express_form");?></a>
 			    </span>  
 			</div>
