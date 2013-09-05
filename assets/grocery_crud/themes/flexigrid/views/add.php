@@ -225,6 +225,65 @@ $('#<?php echo $field_prefix . $key ;?>').chosen().change(function(event) {
 	
 });
 
+
+/** INIT EXPRESS IMPLEMENTATION *********/
+//Check if express is requested by anchor #express_form
+//By default forms are normal (not express)
+express_form=false;
+
+//Express form could be forced by view variable 
+<?php if (isset($express_form)): ?>
+  express_form=<?php echo $express_form;?>;
+<?php endif; ?>
+
+//Express form could be forced by anchor
+if(window.location.hash) {
+	var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+	if (hash == "express_form") {
+		express_form=true;
+	}
+} 
+	/*	
+$('#express_<?php echo $table_name;?>,#noexpress_<?php echo $table_name;?>').click(function(){
+	
+	
+
+	$('#publicId_<?php echo $table_name?>_field_box').toggle();
+	$('#externalID_<?php echo $table_name?>_field_box').toggle();
+	$('#externalIDType_<?php echo $table_name?>_field_box').toggle();
+	$('#description_<?php echo $table_name?>_field_box').toggle();
+	$('#materialId_<?php echo $table_name?>_field_box').toggle();
+	$('#brandId_<?php echo $table_name?>_field_box').toggle();
+	$('#modelId_<?php echo $table_name?>_field_box').toggle();
+	$('#entryDate_<?php echo $table_name?>_field_box').toggle();
+	$('#manualEntryDate_<?php echo $table_name?>_field_box').toggle();
+	$('#creationUserId_<?php echo $table_name?>_field_box').toggle();
+	$('#lastupdateUserId_<?php echo $table_name?>_field_box').toggle();
+	$('#location_<?php echo $table_name?>_field_box').toggle();
+	$('#quantityInStock_<?php echo $table_name?>_field_box').toggle();
+	$('#price_<?php echo $table_name?>_field_box').toggle();
+	$('#moneySourceId_<?php echo $table_name?>_field_box').toggle();
+	$('#providerId_<?php echo $table_name?>_field_box').toggle();
+	$('#preservationState_<?php echo $table_name?>_field_box').toggle();
+	$('#markedForDeletion_<?php echo $table_name?>_field_box').toggle();
+	$('#markedForDeletionDate_<?php echo $table_name?>_field_box').toggle();
+	$('#file_url_<?php echo $table_name?>_field_box').toggle();
+	$('#mainOrganizationaUnitId_<?php echo $table_name?>_field_box').toggle();
+	$('#OwnerOrganizationalUnit_<?php echo $table_name?>_field_box').toggle();
+
+	
+	
+ });
+ */
+
+ if (express_form) {
+ 	$('#express_<?php echo $table_name;?>').trigger('click');
+ }
+
+ /** END EXPRESS IMPLEMENTATION *********/
+
+
+
 </script>
 
 <?php
@@ -235,6 +294,17 @@ $('#<?php echo $field_prefix . $key ;?>').chosen().change(function(event) {
 
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
+
+//echo $input_fields;
+//print_r($input_fields);
+
+function check_if_express($input_fields) {
+	foreach ($input_fields as $key => $value) {
+		if ($value->express)
+			return true;
+	}
+    return false;
+}
 ?>
 
 <div class="flexigrid crud-form" style='width: 100%;' data-unique-hash="<?php echo $unique_hash; ?>">
@@ -260,15 +330,38 @@ $('#<?php echo $field_prefix . $key ;?>').chosen().change(function(event) {
 			
 			<div class="btnseparator"> </div>
 			
+			
+			<?php if (check_if_express($input_fields)): ?>
+			
 			<div class="pGroup">
 				
-				&nbsp;<a href="#" id="express_<?php echo $table_name;?>" onclick="event.preventDefault();return false();">
-				        <?php echo lang("show_express_form");?></a>
-			          <a href="#" id="noexpress_<?php echo $table_name;?>" style="display:none;"><?php echo lang("hide_express_form");?></a>
+				&nbsp;<a href="#" id="express_<?php echo $table_name;?>" onclick="event.preventDefault();
+					$('#express_<?php echo $table_name;?>').toggle();
+					$('#noexpress_<?php echo $table_name;?>').toggle();
+					
+					<?php 
+						foreach ($input_fields as $key => $value) {
+							if (!$value->express) 
+								echo "$('#" . $key . "_" . $table_name . "_field_box').toggle();";
+							}
+					?>
+					
+					return false();"><?php echo lang("show_express_form");?></a>
+			          <a href="#" id="noexpress_<?php echo $table_name;?>" style="display:none;" onclick="
+			          $('#express_<?php echo $table_name;?>').toggle();
+					  $('#noexpress_<?php echo $table_name;?>').toggle();
+					  <?php 
+						foreach ($input_fields as $key => $value) {
+							if (!$value->express) 
+								echo "$('#" . $key . "_" . $table_name . "_field_box').toggle();";
+							}
+					  ?>
+			          return false();"><?php echo lang("hide_express_form");?></a>
 			    </span>  
 			</div>
 			
-			      
+			<?php endif; ?>
+
 		</div>
 	<div class="clear"></div>		
 
@@ -284,6 +377,7 @@ $('#<?php echo $field_prefix . $key ;?>').chosen().change(function(event) {
 					$even_odd = $counter % 2 == 0 ? 'odd' : 'even';
 					$counter++;
 			?>
+			
 			<div class='form-field-box <?php echo $even_odd?>' id="<?php echo $field->field_name; ?>_<?php echo $table_name;?>_field_box">
 				<div class='form-display-as-box' id="<?php echo $field->field_name; ?>_<?php echo $table_name;?>_display_as_box">
 					<?php echo $input_fields[$field->field_name]->display_as; ?><?php echo ($input_fields[$field->field_name]->required)? "<span class='required'>*</span> " : ""; ?> :
