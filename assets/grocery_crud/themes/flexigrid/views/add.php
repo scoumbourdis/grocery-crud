@@ -243,44 +243,8 @@ if(window.location.hash) {
 		express_form=true;
 	}
 } 
-	/*	
-$('#express_<?php echo $table_name;?>,#noexpress_<?php echo $table_name;?>').click(function(){
-	
-	
 
-	$('#publicId_<?php echo $table_name?>_field_box').toggle();
-	$('#externalID_<?php echo $table_name?>_field_box').toggle();
-	$('#externalIDType_<?php echo $table_name?>_field_box').toggle();
-	$('#description_<?php echo $table_name?>_field_box').toggle();
-	$('#materialId_<?php echo $table_name?>_field_box').toggle();
-	$('#brandId_<?php echo $table_name?>_field_box').toggle();
-	$('#modelId_<?php echo $table_name?>_field_box').toggle();
-	$('#entryDate_<?php echo $table_name?>_field_box').toggle();
-	$('#manualEntryDate_<?php echo $table_name?>_field_box').toggle();
-	$('#creationUserId_<?php echo $table_name?>_field_box').toggle();
-	$('#lastupdateUserId_<?php echo $table_name?>_field_box').toggle();
-	$('#location_<?php echo $table_name?>_field_box').toggle();
-	$('#quantityInStock_<?php echo $table_name?>_field_box').toggle();
-	$('#price_<?php echo $table_name?>_field_box').toggle();
-	$('#moneySourceId_<?php echo $table_name?>_field_box').toggle();
-	$('#providerId_<?php echo $table_name?>_field_box').toggle();
-	$('#preservationState_<?php echo $table_name?>_field_box').toggle();
-	$('#markedForDeletion_<?php echo $table_name?>_field_box').toggle();
-	$('#markedForDeletionDate_<?php echo $table_name?>_field_box').toggle();
-	$('#file_url_<?php echo $table_name?>_field_box').toggle();
-	$('#mainOrganizationaUnitId_<?php echo $table_name?>_field_box').toggle();
-	$('#OwnerOrganizationalUnit_<?php echo $table_name?>_field_box').toggle();
-
-	
-	
- });
- */
-
- if (express_form) {
- 	$('#express_<?php echo $table_name;?>').trigger('click');
- }
-
- /** END EXPRESS IMPLEMENTATION *********/
+/** END EXPRESS IMPLEMENTATION *********/
 
 
 
@@ -346,7 +310,7 @@ function check_if_express($input_fields) {
 							}
 					?>
 					
-					return false();"><?php echo lang("show_express_form");?></a>
+					return false;"><?php echo lang("show_express_form");?></a>
 			          <a href="#" id="noexpress_<?php echo $table_name;?>" style="display:none;" onclick="
 			          $('#express_<?php echo $table_name;?>').toggle();
 					  $('#noexpress_<?php echo $table_name;?>').toggle();
@@ -356,7 +320,7 @@ function check_if_express($input_fields) {
 								echo "$('#" . $key . "_" . $table_name . "_field_box').toggle();";
 							}
 					  ?>
-			          return false();"><?php echo lang("hide_express_form");?></a>
+			          return false;"><?php echo lang("hide_express_form");?></a>
 			    </span>  
 			</div>
 			
@@ -386,7 +350,11 @@ function check_if_express($input_fields) {
 					<?php echo $input_fields[$field->field_name]->input?> 
 				</div>
 					<?php if ($grocery_crud_details_relation): ?>
-						<?php if ($input_fields[$field->field_name]->crud_type == "relation"): ?>
+					
+						<?php if ($is_ajax) { ?><input type="hidden" name="is_ajax" value="true" /><?php }?>
+
+					
+						<?php if (($input_fields[$field->field_name]->crud_type == "relation" ) && !$is_ajax): ?>
 							<?php
 								$relation_table =  trim($input_fields[$field->field_name]->extras["1"]); 
 								$fielname_in_extras =  $input_fields[$field->field_name]->extras["2"];
@@ -450,4 +418,8 @@ function check_if_express($input_fields) {
 	var message_insert_error = "<?php echo $this->l('insert_error')?>";
 	
 	var table_name = "<?php echo $table_name;?>";
+	
+	if (express_form) {
+		$('#express_<?php echo $table_name;?>').trigger('click');
+	}
 </script>
