@@ -98,6 +98,10 @@ class grocery_CRUD_Field_Types
 				case 'relation':
 				case 'relation_readonly':
 					$field_info->extras 	= $this->relation[$field_info->name];
+					if(!empty($this->unset_dropdowndetails) && in_array($field_info->name,$this->unset_dropdowndetails)) {
+						$field_info->extras[] = 'unset_dropdowndetails';
+					}
+					//	
 				break;
 
 				case 'upload_file':
@@ -1544,6 +1548,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_delete			= $this->unset_delete;
 		$data->unset_export			= $this->unset_export;
 		$data->unset_print			= $this->unset_print;
+		
 
 		$default_per_page = $this->config->default_per_page;
 		$data->paging_options = $this->config->paging_options;
@@ -3458,6 +3463,8 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $unset_columns		= null;
 	protected $unset_add_fields 	= null;
 	protected $unset_edit_fields	= null;
+	
+	protected $unset_dropdowndetails	= array();
 
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
@@ -3612,6 +3619,30 @@ class Grocery_CRUD extends grocery_CRUD_States
 
 		return $this;
 	}
+	
+	/**
+	 * Unsets the dropdown details of the selected fields
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	array
+	 * @return	void
+	 */
+	public function unset_dropdowndetails()
+	{
+		$args = func_get_args();
+		if(isset($args[0]) && is_array($args[0]))
+		{
+			$args = $args[0];
+		}
+		foreach($args as $arg)
+		{
+			$this->unset_dropdowndetails[] = $arg;
+		}
+		return $this;
+	}
+	
+	
 
 	/**
 	 * Unsets just the jquery library from the js. This function can be used if there is already a jquery included

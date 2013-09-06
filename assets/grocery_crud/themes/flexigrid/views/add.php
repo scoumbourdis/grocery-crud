@@ -340,6 +340,7 @@ function check_if_express($input_fields) {
 				{
 					$even_odd = $counter % 2 == 0 ? 'odd' : 'even';
 					$counter++;
+					print_r($input_fields[$field->field_name]->extras);
 			?>
 			
 			<div class='form-field-box <?php echo $even_odd?>' id="<?php echo $field->field_name; ?>_<?php echo $table_name;?>_field_box">
@@ -350,9 +351,6 @@ function check_if_express($input_fields) {
 					<?php echo $input_fields[$field->field_name]->input?> 
 				</div>
 					<?php if ($grocery_crud_details_relation): ?>
-					
-						<?php if ($is_ajax) { ?><input type="hidden" name="is_ajax" value="true" /><?php }?>
-
 					
 						<?php if (($input_fields[$field->field_name]->crud_type == "relation" ) && !$is_ajax): ?>
 							<?php
