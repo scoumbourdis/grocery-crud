@@ -14,6 +14,10 @@ $(function(){
 		});
 
 		var save_and_close = false;
+		
+		$('#'+table_name+'_form-button-save').click(function(){
+			$('#crudForm_' + table_name).trigger('submit');
+		});
 
 		$('#'+table_name+'_save-and-go-back-button').click(function(){
 			save_and_close = true;

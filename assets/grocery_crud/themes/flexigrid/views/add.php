@@ -4,8 +4,14 @@ $field_prefix="field-" . $table_name . "-";
 
 <script id="add_php_script" type="text/javascript">
 	
-var ei_table_fnOpenEditForm = function(this_element,table_name,reload_after){
+var load_css_file = function(css_file) {
+	if ($('head').find('link[href="'+css_file+'"]').length == 0) {
+		$('head').append($('<link/>').attr("type","text/css")
+				.attr("rel","stylesheet").attr("href",css_file));
+	}
+};
 	
+var ei_table_fnOpenEditForm = function(this_element,table_name,reload_after,express_form){
 	var href_url = this_element.attr("href");
 	var dialog_height = $(window).height() - 80;
 	//Close all
@@ -32,7 +38,8 @@ var ei_table_fnOpenEditForm = function(this_element,table_name,reload_after){
 	$.ajax({
 		url: href_url,
 		data: {
-			is_ajax: 'true'
+			is_ajax: 'true',
+			express_form: express_form
 		},
 		type: 'post',
 		dataType: 'json',
@@ -65,6 +72,7 @@ var ei_table_fnOpenEditForm = function(this_element,table_name,reload_after){
 					if (reload_after)	{
 						$('#' + table_name + '_link_reload').trigger('click');
 					}
+					
 					$(this).remove();
 				},
 				open: function(){
@@ -78,6 +86,7 @@ var ei_table_fnOpenEditForm = function(this_element,table_name,reload_after){
 			});
 		}
 	});
+	
 };	
 
 var set_default_dropdown_field_value = function(table_name,field_name,default_field_value) {
@@ -92,6 +101,33 @@ var set_default_dropdown_field_value = function(table_name,field_name,default_fi
 		$(field_jquery_selector).trigger('change');
 		return;
 	}
+}
+
+var set_last_dropdown_field_value = function(table_name,field_name,chosen_table_name) {
+	//Execute ajax to get last added value
+	
+	get_last_added_value_base_url='<?php echo base_url('index.php/main/get_last_added_value/');?>';
+	ajax_url= get_last_added_value_base_url + "/" + chosen_table_name;
+	get_last_added_value="";
+
+	field_prefix = "field-" + table_name + "-";
+	field_jquery_selector = '#' + field_prefix + field_name;
+	console.log("field_jquery_selector:" . field_jquery_selector);
+	$.ajax({
+		url: ajax_url,
+		data: {
+			is_ajax: 'true'
+		},
+		type: 'post',
+		dataType: 'json',
+		success: function (data) {
+			get_last_added_value=data.output;
+			//Update chosen and set again default value
+			$(field_jquery_selector + ' option[value="' + data.output  + '"]' ).attr('selected', 'selected');
+			$(field_jquery_selector).trigger('liszt:updated');
+			$(field_jquery_selector).chosen().trigger('change');
+		}
+	});
 }
 
 var refresh_chosen = function(table_name,field_name,chosen_table_name,chosen_field_name,default_value)	{
@@ -233,7 +269,7 @@ express_form=false;
 
 //Express form could be forced by view variable 
 <?php if (isset($express_form)): ?>
-  express_form=<?php echo $express_form;?>;
+  express_form=<?php echo $express_form ? 'true' : 'false';?>;
 <?php endif; ?>
 
 //Express form could be forced by anchor
@@ -340,7 +376,6 @@ function check_if_express($input_fields) {
 				{
 					$even_odd = $counter % 2 == 0 ? 'odd' : 'even';
 					$counter++;
-					print_r($input_fields[$field->field_name]->extras);
 			?>
 			
 			<div class='form-field-box <?php echo $even_odd?>' id="<?php echo $field->field_name; ?>_<?php echo $table_name;?>_field_box">
@@ -356,14 +391,21 @@ function check_if_express($input_fields) {
 							<?php
 								$relation_table =  trim($input_fields[$field->field_name]->extras["1"]); 
 								$fielname_in_extras =  $input_fields[$field->field_name]->extras["2"];
+								$unset_dropdowndetails="";
+								if ( array_key_exists ( "5" , $input_fields[$field->field_name]->extras ))
+									$unset_dropdowndetails = $input_fields[$field->field_name]->extras["5"];
 								$fielname_in_extras =  str_replace("}","",str_replace("{","",$fielname_in_extras));
-							;?>
-							&nbsp;<a id="<?php echo $field->field_name;?>_link_add" href="<?php echo base_url('index.php/main/'. $relation_table . '/add#express_form');?>" style="font-size:75%;" onclick="event.preventDefault();ei_table_fnOpenEditForm($(this),'<?php echo $field->field_name;?>',true);return false;"><?php echo $this->l("Add");?></a> | 
-							<a id="<?php echo $field->field_name;?>_link_read" href="<?php echo base_url('index.php/main/'. $relation_table . '/read');?>/<?php echo $field_values->{$field->field_name};?>" style="font-size:75%;" onclick="event.preventDefault();ei_table_fnOpenEditForm($(this),'<?php echo $field->field_name;?>',false);return false;"> <?php echo $this->l("Details");?> </a> | 
-							<a id="<?php echo $field->field_name;?>_link_reload" href="#" style="font-size:75%;" onclick="event.preventDefault();refresh_chosen('<?php echo $table_name;?>','<?php echo $field->field_name;?>','<?php echo $relation_table;?>','<?php echo $fielname_in_extras;?>','<?php echo $field_values->{$field->field_name};?>');return false;"><?php echo $this->l("Reload");?></a> 
-							
-							<?php if ($field_values->{$field->field_name} != ""): ?>
-							| <a id="<?php echo $field->field_name;?>_link_default" href="#" style="font-size:75%;" onclick="set_default_dropdown_field_value('<?php echo $table_name;?>','<?php echo $field->field_name;?>','<?php echo $field_values->{$field->field_name};?>');return false;" ><?php echo $this->l("Default value");?></a>
+							?>
+							<?php if($unset_dropdowndetails==""): ?>	
+								&nbsp;<a id="<?php echo $field->field_name;?>_link_add" href="<?php echo base_url('index.php/main/'. $relation_table . '/add');?>" style="font-size:75%;" onclick="event.preventDefault();ei_table_fnOpenEditForm($(this),'<?php echo $relation_table;?>',true,true);return false;"><?php echo $this->l("Add");?></a> | 
+								<a id="<?php echo $field->field_name;?>_link_last_added_value" href="#" style="font-size:75%;" onclick="set_last_dropdown_field_value('<?php echo $table_name;?>','<?php echo $field->field_name;?>','<?php echo $relation_table;?>');return false;"><?php echo $this->l("Last Added Value");?></a> | 
+								<a id="<?php echo $field->field_name;?>_link_read" href="<?php echo base_url('index.php/main/'. $relation_table . '/read');?>/<?php echo $field_values->{$field->field_name};?>" style="font-size:75%;" onclick="event.preventDefault();ei_table_fnOpenEditForm($(this),'<?php echo $field->field_name;?>',false);return false;"> <?php echo $this->l("Details");?> </a> | 
+								<a id="<?php echo $field->field_name;?>_link_reload" href="#" style="font-size:75%;" onclick="event.preventDefault();refresh_chosen('<?php echo $table_name;?>','<?php echo $field->field_name;?>','<?php echo $relation_table;?>','<?php echo $fielname_in_extras;?>','<?php echo $field_values->{$field->field_name};?>');return false;"><?php echo $this->l("Reload");?></a> 
+								
+								<?php if ($field_values->{$field->field_name} != ""): ?>
+								| <a id="<?php echo $field->field_name;?>_link_default" href="#" style="font-size:75%;" onclick="set_default_dropdown_field_value('<?php echo $table_name;?>','<?php echo $field->field_name;?>','<?php echo $field_values->{$field->field_name};?>');return false;" ><?php echo $this->l("Default value");?></a>
+								<?php endif; ?>
+								
 							<?php endif; ?>
 						<?php endif; ?>
 					<?php endif; ?>
@@ -385,7 +427,7 @@ function check_if_express($input_fields) {
 		
 		<div class="pDiv">
 			<div class='form-button-box'>
-				<input id="form-button-save" type='submit' value='<?php echo $this->l('form_save'); ?>'  class="btn btn-large"/>
+				<input id="<?php echo $table_name;?>_form-button-save" type='button' value='<?php echo $this->l('form_save'); ?>'  class="btn btn-large"/>
 			</div>
 <?php 	if(!$this->unset_back_to_list) { ?>
 			<div class='form-button-box'>

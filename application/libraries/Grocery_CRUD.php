@@ -1847,6 +1847,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_back_to_list	= $this->unset_back_to_list;
 		$data->unique_hash			= $this->get_method_hash();
 		$data->is_ajax 			= $this->_is_ajax();
+		$data->express_form     = $this->_is_express();;
 		
 		$data->table_name 			= $this->get_table();
 		$data->grocery_crud_details_relation	= 
@@ -2874,7 +2875,12 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	{
 		return array_key_exists('is_ajax', $_POST) && $_POST['is_ajax'] == 'true' ? true: false;
 	}
-
+	
+	protected function _is_express()
+	{
+		return array_key_exists('express_form', $_POST) && $_POST['express_form'] == 'true' ? true: false;
+	}
+	
 	protected function _theme_view($view, $vars = array(), $return = FALSE)
 	{
 		$vars = (is_object($vars)) ? get_object_vars($vars) : $vars;
@@ -3465,6 +3471,8 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $unset_edit_fields	= null;
 	
 	protected $unset_dropdowndetails	= array();
+	
+	protected $unset_dialogforms = false;
 
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
@@ -3642,6 +3650,10 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 	
+	public function unset_dialogforms()
+	{
+		$this->unset_dialogforms=true;
+	}
 	
 
 	/**
@@ -4295,7 +4307,13 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->config->default_text_editor	= $ci->config->item('grocery_crud_default_text_editor');
 		$this->config->text_editor_type		= $ci->config->item('grocery_crud_text_editor_type');
 		$this->config->character_limiter	= $ci->config->item('grocery_crud_character_limiter');
-		$this->config->dialog_forms			= $ci->config->item('grocery_crud_dialog_forms');
+		
+		if ($this->unset_dialogforms)
+			$this->config->dialog_forms			= false;
+		else
+			$this->config->dialog_forms			= $ci->config->item('grocery_crud_dialog_forms');
+		
+		
 		$this->config->paging_options		= $ci->config->item('grocery_crud_paging_options');
 		$this->config->grocery_crud_details_relation		= $ci->config->item('grocery_crud_details_relation');
 

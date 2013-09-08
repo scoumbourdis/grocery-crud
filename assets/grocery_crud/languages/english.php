@@ -80,3 +80,10 @@
 	
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
+	
+	/*TODO: Sergi Tur Patch. Added in version x*/
+	$lang['Add'] = 'Add';
+	$lang['Details'] = 'Details';
+	$lang['Reload'] = 'Refresh';
+	$lang['Default value'] = 'Default value';
+	$lang['Last Added Value'] = 'Last added value';
