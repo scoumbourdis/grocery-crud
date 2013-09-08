@@ -1850,8 +1850,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->express_form     = $this->_is_express();;
 		
 		$data->table_name 			= $this->get_table();
+		
 		$data->grocery_crud_details_relation	= 
 									  $this->config->grocery_crud_details_relation;
+		//"index.php/main/defaultvalues_view"
+		$data->defaultvalues_view_url	= 
+									  $this->config->defaultvalues_view_url;
+		//"index.php/main/get_last_added_value/"
+		$data->get_last_added_value_url	= 
+									  $this->config->get_last_added_value_url;
+									  
 		
 		$this->_theme_view('add.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
@@ -4316,6 +4324,8 @@ class Grocery_CRUD extends grocery_CRUD_States
 		
 		$this->config->paging_options		= $ci->config->item('grocery_crud_paging_options');
 		$this->config->grocery_crud_details_relation		= $ci->config->item('grocery_crud_details_relation');
+		$this->config->defaultvalues_view_url = $ci->config->item('grocery_crud_defaultvalues_view_url');;
+		$this->config->get_last_added_value_url = $ci->config->item('grocery_crud_get_last_added_value_url');;
 
 		/** Initialize default paths */
 		$this->default_javascript_path				= $this->default_assets_path.'/js';

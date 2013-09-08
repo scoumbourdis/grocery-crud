@@ -21,7 +21,7 @@ var ei_table_fnOpenEditForm = function(this_element,table_name,reload_after,expr
 	var default_values_view = "";
 	
 	//http://localhost/ebre-inventory/index.php/main/defaultvalues_view/{table_name}
-	var defaultvalues_view_url="<?php echo base_url('index.php/main/defaultvalues_view');?>" + "/" + table_name;
+	var defaultvalues_view_url="<?php echo base_url($defaultvalues_view_url);?>" + "/" + table_name;
 	//$.getScript(defaultvalues_view_url);
 	$.ajax({
 		url: defaultvalues_view_url,
@@ -106,7 +106,7 @@ var set_default_dropdown_field_value = function(table_name,field_name,default_fi
 var set_last_dropdown_field_value = function(table_name,field_name,chosen_table_name) {
 	//Execute ajax to get last added value
 	
-	get_last_added_value_base_url='<?php echo base_url('index.php/main/get_last_added_value/');?>';
+	get_last_added_value_base_url='<?php echo base_url($get_last_added_value_url);?>';
 	ajax_url= get_last_added_value_base_url + "/" + chosen_table_name;
 	get_last_added_value="";
 
@@ -226,7 +226,7 @@ $('#<?php echo $field_prefix . $key ;?>').chosen().change(function(event) {
 	};
 	
 	$(".ajax_refresh_and_loading").on("click", function(event){
-		//alert ("TODO");
+		$( "a[id$='_reload']" ).trigger('click');
 	})
 	
 	$("#<?php echo $table_name;?>_reset-button").on("click", function(event){
@@ -323,7 +323,7 @@ function check_if_express($input_fields) {
 	<div class="pDiv">
 		<div class="pDiv2">
 			<div class="pGroup">
-				<div class="pReload pButton ajax_refresh_and_loading" id='ajax_refresh_and_loading' title="Actualitza els camps dropdown i multiselect">
+				<div class="pReload pButton ajax_refresh_and_loading" id='ajax_refresh_and_loading' title="<?php echo lang("Reload");?>">
 					<span></span>
 				</div>
 			</div>

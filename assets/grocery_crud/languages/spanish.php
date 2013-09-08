@@ -85,3 +85,5 @@
 	$lang['Reload'] = 'Refrescar';
 	$lang['Default value'] = 'Valor por defecto';
 	$lang['Last Added Value'] = 'Último valor añadido';
+	$lang['refresh_dropdown_fields'] = 'Actualiza los campos dropdown';
+

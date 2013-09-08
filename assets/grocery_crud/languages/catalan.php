@@ -85,4 +85,4 @@
 	$lang['Details'] = 'Detalls';
 	$lang['Reload'] = 'Actualitzar';
 	$lang['Default value'] = 'Valor per defecte';
-	$lang['Last Added Value'] = 'Últim valor afegit';
+	$lang['Last Added Value'] = "Últim valor afegit";	
