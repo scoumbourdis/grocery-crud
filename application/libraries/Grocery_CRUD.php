@@ -157,7 +157,7 @@ class grocery_CRUD_Field_Types
 						'display_as' => isset($this->display_as[$field_name]) ?
 												$this->display_as[$field_name] :
 												ucfirst(str_replace("_"," ",$field_name)),
-						'required'	=> in_array($field_name,$this->required_fields) ? true : false,
+						'required'	=> !empty($this->required_fields) && in_array($field_name,$this->required_fields) ? true : false,
 						'extras'	=> $extras
 					);
 
