@@ -163,8 +163,10 @@ class grocery_CRUD_Field_Types
 						'display_as' => isset($this->display_as[$field_name]) ?
 												$this->display_as[$field_name] :
 												ucfirst(str_replace("_"," ",$field_name)),
-						'required'	=> in_array($field_name,$this->required_fields) ? true : false,
-						'express'	=> in_array($field_name,$this->express_fields) ? true : false,
+
+						'required'	=> !empty($this->required_fields) && in_array($field_name,$this->required_fields) ? true : false,
+						'express'	=> !empty($this->express_fields) && in_array($field_name,$this->express_fields) ? true : false,
+
 						'extras'	=> $extras
 					);
 
@@ -3750,6 +3752,16 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->unset_read = true;
 
 		return $this;
+	}
+	
+	/**
+	 * Just an alias to unset_read
+	 * 
+	 * @return	void
+	 * */
+	public function unset_view()
+	{
+		return unset_read();
 	}
 
 	/**

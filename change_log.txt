@@ -1,3 +1,5 @@
+v 1.4.2
+	Add a new method unset_view that is just an alias to unset_read method
 v 1.4.1
 	#231 - Read page not showing relations.
 	#233 - File upload uniqueid not unique.
