@@ -16,7 +16,7 @@
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.3
+ * @version    	1.4.1
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -157,7 +157,7 @@ class grocery_CRUD_Field_Types
 						'display_as' => isset($this->display_as[$field_name]) ?
 												$this->display_as[$field_name] :
 												ucfirst(str_replace("_"," ",$field_name)),
-						'required'	=> in_array($field_name,$this->required_fields) ? true : false,
+						'required'	=> !empty($this->required_fields) && in_array($field_name,$this->required_fields) ? true : false,
 						'extras'	=> $extras
 					);
 
@@ -468,7 +468,7 @@ class grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.3
+ * @version    	1.4.1
  * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
@@ -1479,7 +1479,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.3
+ * @version    	1.4.1
  */
 class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 {
@@ -2571,7 +2571,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.fancybox.config.js');
 
-		$unique = uniqid();
+		$unique = mt_rand();
 
 		$allowed_files = $this->config->file_upload_allow_file_types;
 		$allowed_files_ui = '.'.str_replace('|',',.',$allowed_files);
@@ -2926,7 +2926,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.3
+ * @version    	1.4.1
  */
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
@@ -3328,7 +3328,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.3.3
+ * @version    	1.4.1
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -3351,7 +3351,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 *
 	 * @var	string
 	 */
-	const	VERSION = "1.3.3";
+	const	VERSION = "1.4.1";
 
 	const	JQUERY 			= "jquery-1.10.2.min.js";
 	const	JQUERY_UI_JS 	= "jquery-ui-1.10.3.custom.min.js";
@@ -3663,6 +3663,16 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->unset_read = true;
 
 		return $this;
+	}
+	
+	/**
+	 * Just an alias to unset_read
+	 * 
+	 * @return	void
+	 * */
+	public function unset_view()
+	{
+		return unset_read();
 	}
 
 	/**
