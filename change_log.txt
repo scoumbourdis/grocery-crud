@@ -1,5 +1,8 @@
 v 1.4.1
 	#231 - Read page not showing relations.
+	Add new functions:
+	- unset_read_fields
+	- set_read_fields
 v 1.4.0
 	#170 - Problem with more than one date inputs at the dialog.
 	#148 - New theme twitter-bootstrap
