@@ -4,7 +4,7 @@
  *
  * A Codeigniter library that creates a CRUD automatically with just few lines of code.
  *
- * Copyright (C) 2010 - 2012  John Skoumbourdis.
+ * Copyright (C) 2010 - 2013  John Skoumbourdis.
  *
  * LICENSE
  *
@@ -14,7 +14,7 @@
  * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
- * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @copyright  	Copyright (c) 2010 through 2013, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
  * @version    	1.4.1
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
@@ -1465,7 +1465,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
  * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
- * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @copyright  	Copyright (c) 2010 through 2013, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
@@ -2912,7 +2912,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
- * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @copyright  	Copyright (c) 2010 through 2013, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
@@ -3326,7 +3326,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
- * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @copyright  	Copyright (c) 2010 through 2013, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
  * @version    	1.4.1
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
