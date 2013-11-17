@@ -5,7 +5,7 @@
 	$lang['list_page'] 				= 'Page';
 	$lang['list_paging_of'] 		= 'de';
 	$lang['list_displaying']		= 'Affichage de {start} à {end} de {results} enregistrements';
-	$lang['list_filtered_from']		= '(filtré de {total_results} entrées au total )';
+	$lang['list_filtered_from']		= '(filtré de {total_results} entrées au total)';
 	$lang['list_show_entries']		= 'Afficher {paging} entrées';
 	$lang['list_no_items']			= 'Aucun enregistrement à afficher';
 	$lang['list_zero_entries']		= 'Affichage de 0 à 0 de 0 enregistrement';
@@ -42,15 +42,15 @@
 	$lang['delete_error_message'] 	= 'Vos données ne sont pas supprimées de la base de données.';
 
 	/* Javascript messages */
-	$lang['alert_add_form']			= 'Les données que vous avez inserées ne sont pas enregistées.\\nÊtes vous sûr de vouloir retourner à la liste ?';
-	$lang['alert_edit_form']		= 'Les données que vous avez modifiées ne sont pas enregistées.\\nÊtes vous sûr de vouloir retourner à la liste ?';
+	$lang['alert_add_form']			= 'Les données que vous avez insérées ne sont pas enregistrées.\\nÊtes-vous sûr de vouloir retourner à la liste ?';
+	$lang['alert_edit_form']		= 'Les données que vous avez modifiées ne sont pas enregistrées.\\nÊtes-vous sûr de vouloir retourner à la liste ?';
 	$lang['alert_delete']			= 'Êtes-vous sûr de vouloir supprimer cet enregistrement ?';
 
 	$lang['insert_error']			= 'Une erreur est survenue lors de l\'opération d\'insertion.';
 	$lang['update_error']			= 'Une erreur est survenue lors de l\'opération d\'enregistrement.';
 
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Selectionner {field_display_as}';
+	$lang['set_relation_title']		= 'Sélectionner {field_display_as}';
 	$lang['list_record']			= 'Enregistrement';
 	$lang['form_inactive']			= 'inactif';
 	$lang['form_active']			= 'actif';
