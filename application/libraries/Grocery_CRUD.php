@@ -4,7 +4,7 @@
  *
  * A Codeigniter library that creates a CRUD automatically with just few lines of code.
  *
- * Copyright (C) 2010 - 2012  John Skoumbourdis.
+ * Copyright (C) 2010 - 2013  John Skoumbourdis.
  *
  * LICENSE
  *
@@ -14,9 +14,9 @@
  * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
- * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @copyright  	Copyright (c) 2010 through 2013, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.3
+ * @version    	1.4.1
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -40,8 +40,9 @@ class grocery_CRUD_Field_Types
 	 */
 	public function get_field_types()
 	{
-		if($this->field_types !== null)
+		if ($this->field_types !== null) {
 			return $this->field_types;
+		}
 
 		$types	= array();
 		foreach($this->basic_model->get_field_types_basic_table() as $field_info)
@@ -57,8 +58,15 @@ class grocery_CRUD_Field_Types
 			{
 				$field_type 			= $this->change_field_type[$field_info->name];
 
-				$field_info->crud_type 	= $field_type->type;
-				$field_info->extras 	=  $field_type->extras;
+				if (isset($this->relation[$field_info->name])) {
+					$field_info->crud_type = "relation_".$field_type->type;
+				}
+				elseif (isset($this->upload_fields[$field_info->name])) {
+					$field_info->crud_type = "upload_file_".$field_type->type;
+				} else {
+					$field_info->crud_type 	= $field_type->type;
+					$field_info->extras 	=  $field_type->extras;
+				}
 
 				$real_type				= $field_info->crud_type;
 			}
@@ -87,10 +95,12 @@ class grocery_CRUD_Field_Types
 				break;
 
 				case 'relation':
+				case 'relation_readonly':
 					$field_info->extras 	= $this->relation[$field_info->name];
 				break;
 
 				case 'upload_file':
+				case 'upload_file_readonly':
 					$field_info->extras 	= $this->upload_fields[$field_info->name];
 				break;
 
@@ -107,9 +117,13 @@ class grocery_CRUD_Field_Types
 		{
 			foreach($this->relation_n_n as $field_name => $field_extras)
 			{
+				$is_read_only = $this->change_field_type !== null
+								&& isset($this->change_field_type[$field_name])
+								&& $this->change_field_type[$field_name]->type == 'readonly'
+									? true : false;
 				$field_info = (object)array();
 				$field_info->name		= $field_name;
-				$field_info->crud_type 	= 'relation_n_n';
+				$field_info->crud_type 	= $is_read_only ? 'readonly' : 'relation_n_n';
 				$field_info->extras 	= $field_extras;
 				$field_info->required	= !empty($this->required_fields) && in_array($field_name,$this->required_fields) ? true : false;;
 				$field_info->display_as =
@@ -143,7 +157,7 @@ class grocery_CRUD_Field_Types
 						'display_as' => isset($this->display_as[$field_name]) ?
 												$this->display_as[$field_name] :
 												ucfirst(str_replace("_"," ",$field_name)),
-						'required'	=> in_array($field_name,$this->required_fields) ? true : false,
+						'required'	=> !empty($this->required_fields) && in_array($field_name,$this->required_fields) ? true : false,
 						'extras'	=> $extras
 					);
 
@@ -213,8 +227,10 @@ class grocery_CRUD_Field_Types
 					'enum',
 					'set',
 					'relation',
+					'relation_readonly',
 					'relation_n_n',
 					'upload_file',
+					'upload_file_readonly',
 					'hidden',
 					'password',
 					'readonly',
@@ -452,7 +468,7 @@ class grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.3
+ * @version    	1.4.1
  * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
@@ -1449,7 +1465,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
  * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
- * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @copyright  	Copyright (c) 2010 through 2013, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
@@ -1463,7 +1479,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.3
+ * @version    	1.4.1
  */
 class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 {
@@ -1509,6 +1525,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->add_url				= $this->getAddUrl();
 		$data->edit_url				= $this->getEditUrl();
 		$data->delete_url			= $this->getDeleteUrl();
+		$data->read_url				= $this->getReadUrl();
 		$data->ajax_list_url		= $this->getAjaxListUrl();
 		$data->ajax_list_info_url	= $this->getAjaxListInfoUrl();
 		$data->export_url			= $this->getExportToExcelUrl();
@@ -1519,6 +1536,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$data->unset_add			= $this->unset_add;
 		$data->unset_edit			= $this->unset_edit;
+		$data->unset_read			= $this->unset_read;
 		$data->unset_delete			= $this->unset_delete;
 		$data->unset_export			= $this->unset_export;
 		$data->unset_print			= $this->unset_print;
@@ -1537,6 +1555,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		{
 			$data->list[$num_row]->edit_url = $data->edit_url.'/'.$row->{$data->primary_key};
 			$data->list[$num_row]->delete_url = $data->delete_url.'/'.$row->{$data->primary_key};
+			$data->list[$num_row]->read_url = $data->read_url.'/'.$row->{$data->primary_key};
 		}
 
 		if(!$ajax)
@@ -1784,6 +1803,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->list_url 	= $this->getListUrl();
 		$data->update_url	= $this->getUpdateUrl($state_info);
 		$data->delete_url	= $this->getDeleteUrl($state_info);
+		$data->read_url		= $this->getReadUrl($state_info->primary_key);
 		$data->input_fields = $this->get_edit_input_fields($data->field_values);
 		$data->unique_hash			= $this->get_method_hash();
 
@@ -1795,6 +1815,37 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->is_ajax 			= $this->_is_ajax();
 
 		$this->_theme_view('edit.php',$data);
+		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
+
+		$this->_get_ajax_results();
+	}
+
+	protected function showReadForm($state_info)
+	{
+		$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
+
+		$data 				= $this->get_common_data();
+		$data->types 		= $this->get_field_types();
+
+		$data->field_values = $this->get_edit_values($state_info->primary_key);
+
+		$data->add_url		= $this->getAddUrl();
+
+		$data->list_url 	= $this->getListUrl();
+		$data->update_url	= $this->getUpdateUrl($state_info);
+		$data->delete_url	= $this->getDeleteUrl($state_info);
+		$data->read_url		= $this->getReadUrl($state_info->primary_key);
+		$data->input_fields = $this->get_read_input_fields($data->field_values);
+		$data->unique_hash			= $this->get_method_hash();
+
+		$data->fields 		= $this->get_read_fields();
+		$data->hidden_fields	= $this->get_edit_hidden_fields();
+		$data->unset_back_to_list	= $this->unset_back_to_list;
+
+		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key);
+		$data->is_ajax 			= $this->_is_ajax();
+
+		$this->_theme_view('read.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
 
 		$this->_get_ajax_results();
@@ -2026,19 +2077,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 
 		if ($this->unset_bootstrap) {
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-transition.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-alert.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-modal.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-dropdown.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-scrollspy.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-tab.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-tooltip.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-popover.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-button.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-collapse.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-carousel.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-typeahead.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap-affix.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap.min.js')]);
 			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/application.js')]);
 			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap-responsive.min.css')]);
 			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap.min.css')]);
@@ -2318,9 +2357,18 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		return $input;
 	}
 
-	protected function get_readonly_input($field_info,$value)
+	protected function get_readonly_input($field_info, $value)
 	{
-		return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$value.'</div>';
+		$read_only_value = "&nbsp;";
+
+	    if (!empty($value) && !is_array($value)) {
+	    	$read_only_value = $value;
+    	} elseif (is_array($value)) {
+    		$all_values = array_values($value);
+    		$read_only_value = implode(", ",$all_values);
+    	}
+
+        return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$read_only_value.'</div>';
 	}
 
 	protected function get_set_input($field_info,$value)
@@ -2411,6 +2459,24 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$input .= "</select>";
 		return $input;
+	}
+
+	protected function get_relation_readonly_input($field_info,$value)
+	{
+		$options_array = $this->get_relation_array($field_info->extras);
+
+		$value = isset($options_array[$value]) ? $options_array[$value] : '';
+
+		return $this->get_readonly_input($field_info, $value);
+	}
+
+	protected function get_upload_file_readonly_input($field_info,$value)
+	{
+		$file = $file_url = base_url().$field_info->extras->upload_path.'/'.$value;
+
+		$value = !empty($value) ? '<a href="'.$file.'" target="_blank">'.$value.'</a>' : '';
+
+		return $this->get_readonly_input($field_info, $value);
 	}
 
 	protected function get_relation_n_n_input($field_info_type, $selected_values)
@@ -2505,7 +2571,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.fancybox.config.js');
 
-		$unique = uniqid();
+		$unique = mt_rand();
 
 		$allowed_files = $this->config->file_upload_allow_file_types;
 		$allowed_files_ui = '.'.str_replace('|',',.',$allowed_files);
@@ -2668,6 +2734,64 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		return $input_fields;
 	}
 
+	protected function get_read_input_fields($field_values = null)
+	{
+		$read_fields = $this->get_read_fields();
+
+		$this->field_types = null;
+		$this->required_fields = null;
+
+		$read_inputs = array();
+		foreach ($read_fields as $field) {
+			if (!empty($this->change_field_type)
+					&& isset($this->change_field_type[$field->field_name])
+					&& $this->change_field_type[$field->field_name]->type == 'hidden') {
+				continue;
+			}
+			$this->field_type($field->field_name, 'readonly');
+		}
+
+		$fields = $this->get_read_fields();
+		$types 	= $this->get_field_types();
+
+		$input_fields = array();
+
+		foreach($fields as $field_num => $field)
+		{
+			$field_info = $types[$field->field_name];
+
+			$field_value = !empty($field_values) && isset($field_values->{$field->field_name}) ? $field_values->{$field->field_name} : null;
+			if(!isset($this->callback_read_field[$field->field_name]))
+			{
+				$field_input = $this->get_field_input($field_info, $field_value);
+			}
+			else
+			{
+				$primary_key = $this->getStateInfo()->primary_key;
+				$field_input = $field_info;
+				$field_input->input = call_user_func($this->callback_read_field[$field->field_name], $field_value, $primary_key, $field_info, $field_values);
+			}
+
+			switch ($field_info->crud_type) {
+			    case 'invisible':
+			    	unset($this->read_fields[$field_num]);
+			    	unset($fields[$field_num]);
+			    	continue;
+			    	break;
+			    case 'hidden':
+			    	$this->read_hidden_fields[] = $field_input;
+			    	unset($this->read_fields[$field_num]);
+			    	unset($fields[$field_num]);
+			    	continue;
+			    	break;
+			}
+
+			$input_fields[$field->field_name] = $field_input;
+		}
+
+		return $input_fields;
+	}
+
 	protected function setThemeBasics()
 	{
 		$this->theme_path = $this->default_theme_path;
@@ -2682,6 +2806,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	public function set_theme($theme = null)
 	{
 		$this->theme = $theme;
+
+		return $this;
 	}
 
 	protected function _get_ajax_results()
@@ -2786,7 +2912,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
- * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @copyright  	Copyright (c) 2010 through 2013, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
@@ -2800,7 +2926,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.3
+ * @version    	1.4.1
  */
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
@@ -2822,7 +2948,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		14	=> 'ajax_relation_n_n',
 		15	=> 'success',
 		16  => 'export',
-		17  => 'print'
+		17  => 'print',
+		18  => 'read'
 	);
 
 	protected function getStateCode()
@@ -2986,6 +3113,14 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			return $this->state_url('edit/'.$primary_key);
 	}
 
+	protected function getReadUrl($primary_key = null)
+	{
+		if($primary_key === null)
+			return $this->state_url('read');
+		else
+			return $this->state_url('read/'.$primary_key);
+	}
+
 	protected function getUpdateUrl($state_info)
 	{
 		return $this->state_url('update/'.$state_info->primary_key);
@@ -3044,6 +3179,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			break;
 
 			case 3:
+			case 18: // read
 				if($first_parameter !== null)
 				{
 					$state_info = (object)array('primary_key' => $first_parameter);
@@ -3190,9 +3326,9 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * You are free to use, modify and distribute this software, but all copyright information must remain.
  *
  * @package    	grocery CRUD
- * @copyright  	Copyright (c) 2010 through 2012, John Skoumbourdis
+ * @copyright  	Copyright (c) 2010 through 2013, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.3.3
+ * @version    	1.4.1
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -3215,9 +3351,9 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 *
 	 * @var	string
 	 */
-	const	VERSION = "1.3.3";
+	const	VERSION = "1.4.1";
 
-	const	JQUERY 			= "jquery-1.9.1.min.js";
+	const	JQUERY 			= "jquery-1.10.2.min.js";
 	const	JQUERY_UI_JS 	= "jquery-ui-1.10.3.custom.min.js";
 	const	JQUERY_UI_CSS 	= "jquery-ui-1.10.1.custom.min.css";
 
@@ -3229,6 +3365,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	private $columns_checked		= false;
 	private $add_fields_checked		= false;
 	private $edit_fields_checked	= false;
+	private $read_fields_checked	= false;
 
 	protected $default_theme		= 'flexigrid';
 	protected $language				= null;
@@ -3241,6 +3378,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 
 	protected $add_fields			= null;
 	protected $edit_fields			= null;
+	protected $read_fields			= null;
 	protected $add_hidden_fields 	= array();
 	protected $edit_hidden_fields 	= array();
 	protected $field_types 			= null;
@@ -3274,6 +3412,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $unset_add			= false;
 	protected $unset_edit			= false;
 	protected $unset_delete			= false;
+	protected $unset_read			= false;
 	protected $unset_jquery			= false;
 	protected $unset_jquery_ui		= false;
 	protected $unset_bootstrap 		= false;
@@ -3284,6 +3423,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $unset_columns		= null;
 	protected $unset_add_fields 	= null;
 	protected $unset_edit_fields	= null;
+	protected $unset_read_fields	= null;
 
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
@@ -3514,6 +3654,28 @@ class Grocery_CRUD extends grocery_CRUD_States
 	}
 
 	/**
+	 * Unsets the read operation from the list
+	 *
+	 * @return	void
+	 */
+	public function unset_read()
+	{
+		$this->unset_read = true;
+
+		return $this;
+	}
+	
+	/**
+	 * Just an alias to unset_read
+	 * 
+	 * @return	void
+	 * */
+	public function unset_view()
+	{
+		return unset_read();
+	}
+
+	/**
 	 * Unsets the export button and functionality from the list
 	 *
 	 * @return	void
@@ -3548,6 +3710,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->unset_add 	= true;
 		$this->unset_edit 	= true;
 		$this->unset_delete = true;
+		$this->unset_read	= true;
 		$this->unset_export = true;
 		$this->unset_print  = true;
 
@@ -3591,6 +3754,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 
 		$this->unset_add_fields = $args;
 		$this->unset_edit_fields = $args;
+		$this->unset_read_fields = $args;
 
 		return $this;
 	}
@@ -3619,6 +3783,20 @@ class Grocery_CRUD extends grocery_CRUD_States
 		}
 
 		$this->unset_edit_fields = $args;
+
+		return $this;
+	}
+
+	public function unset_read_fields()
+	{
+		$args = func_get_args();
+
+		if(isset($args[0]) && is_array($args[0]))
+		{
+			$args = $args[0];
+		}
+
+		$this->unset_read_fields = $args;
 
 		return $this;
 	}
@@ -3692,6 +3870,19 @@ class Grocery_CRUD extends grocery_CRUD_States
 		}
 
 		$this->edit_fields = $args;
+
+		return $this;
+	}
+
+	public function set_read_fields()
+	{
+		$args = func_get_args();
+
+		if(isset($args[0]) && is_array($args[0])) {
+			$args = $args[0];
+		}
+
+		$this->read_fields = $args;
 
 		return $this;
 	}
@@ -3993,6 +4184,49 @@ class Grocery_CRUD extends grocery_CRUD_States
 			$this->edit_fields_checked = true;
 		}
 		return $this->edit_fields;
+	}
+
+	/**
+	 *
+	 * Enter description here ...
+	 */
+	protected function get_read_fields()
+	{
+		if($this->read_fields_checked === false)
+		{
+			$field_types = $this->get_field_types();
+			if(!empty($this->read_fields))
+			{
+				foreach($this->read_fields as $field_num => $field)
+				{
+					if(isset($this->display_as[$field]))
+						$this->read_fields[$field_num] = (object)array('field_name' => $field, 'display_as' => $this->display_as[$field]);
+					else
+						$this->read_fields[$field_num] = (object)array('field_name' => $field, 'display_as' => $field_types[$field]->display_as);
+				}
+			}
+			else
+			{
+				$this->read_fields = array();
+				foreach($field_types as $field)
+				{
+					//Check if an unset_read_field is initialize for this field name
+					if($this->unset_read_fields !== null && is_array($this->unset_read_fields) && in_array($field->name,$this->unset_read_fields))
+						continue;
+
+					if(!isset($field->db_extra) || $field->db_extra != 'auto_increment')
+					{
+						if(isset($this->display_as[$field->name]))
+							$this->read_fields[] = (object)array('field_name' => $field->name, 'display_as' => $this->display_as[$field->name]);
+						else
+							$this->read_fields[] = (object)array('field_name' => $field->name, 'display_as' => $field->display_as);
+					}
+				}
+			}
+
+			$this->read_fields_checked = true;
+		}
+		return $this->read_fields;
 	}
 
 	public function order_by($order_by, $direction = 'asc')
@@ -4366,6 +4600,24 @@ class Grocery_CRUD extends grocery_CRUD_States
 				$state_info = $this->getStateInfo();
 				$this->set_ajax_list_queries($state_info);
 				$this->print_webpage($state_info);
+				break;
+
+			case 18: //read
+				if($this->unset_read)
+				{
+					throw new Exception('You don\'t have permissions for this operation', 14);
+					die();
+				}
+
+				if($this->theme === null)
+					$this->set_theme($this->default_theme);
+				$this->setThemeBasics();
+
+				$this->set_basic_Layout();
+
+				$state_info = $this->getStateInfo();
+
+				$this->showReadForm($state_info);
 			break;
 
 		}
@@ -5065,12 +5317,15 @@ class UploadHandler
     private function _transliterate_characters($file_name)
 	{
 		include($this->default_config_path.'/translit_chars.php');
-		if ( ! isset($translit_characters))
+		if ( isset($translit_characters))
 		{
-			return preg_replace("/([^a-zA-Z0-9\.\-\_]+?){1}/i", '-', $file_name);
+			$file_name = preg_replace(array_keys($translit_characters), array_values($translit_characters), $file_name);
 		}
-		$transformed_file_name = preg_replace(array_keys($translit_characters), array_values($translit_characters), $file_name);
-		return str_replace(" ", "-", $transformed_file_name);
+
+		$file_name = preg_replace("/([^a-zA-Z0-9\.\-\_]+?){1}/i", '-', $file_name);
+		$file_name = str_replace(" ", "-", $file_name);
+
+		return preg_replace('/\-+/', '-', trim($file_name, '-'));
 	}
 
     private function orient_image($file_path) {

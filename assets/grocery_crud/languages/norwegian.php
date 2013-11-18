@@ -76,3 +76,7 @@
         $lang['list_print']     = "Utskrift";
         $lang['minimize_maximize'] = 'Minimer/Maksimer';
 
+
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';

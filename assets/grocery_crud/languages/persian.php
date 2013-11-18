@@ -74,3 +74,6 @@
 	$lang['list_export'] 				= "خروجی اکسل";
 	$lang['list_print'] 				= "نسخه چاپی";
 	$lang['minimize_maximize'] 			= 'نمایش/عدم نمایش';
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';

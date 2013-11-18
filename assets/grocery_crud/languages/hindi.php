@@ -77,3 +77,7 @@
 	$lang['list_export'] 	= "निर्यात ";
 	$lang['list_print'] 	= "मुद्रण ";
 	$lang['minimize_maximize'] = 'न्यूनतम/अधिकतम';
+
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';

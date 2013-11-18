@@ -73,3 +73,6 @@
 	$lang['list_export'] 	= "Εξαγωγή";
 	$lang['list_print'] 	= "Εκτύπωση";
 	$lang['minimize_maximize'] = 'Ελαχιστοποίηση / Μεγιστοποίηση';
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'Εμφάνιση';

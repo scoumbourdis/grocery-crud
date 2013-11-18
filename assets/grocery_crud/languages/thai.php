@@ -74,3 +74,6 @@
 	$lang['list_export'] 	= "ส่งออก";
 	$lang['list_print'] 	= "พิมพ์";
 	$lang['minimize_maximize'] = 'ย่อ/ขยาย';
+
+	/* Added in version 1.4 */
+	$lang['list_view'] = 'View';

@@ -1,4 +1,15 @@
-v 1.4.0 BETA
+v 1.4.2
+	#211 - Bug if use where clause
+	#197 - Properly sanitize filenames for uploads
+	#237 - Set Timepicker to 24 hour format
+	Add a new method unset_view that is just an alias to unset_read method
+	Add 2 new functions:
+		- unset_read_fields
+		- set_read_fields
+v 1.4.1
+	#231 - Read page not showing relations.
+	#233 - File upload uniqueid not unique.
+v 1.4.0
 	#170 - Problem with more than one date inputs at the dialog.
 	#148 - New theme twitter-bootstrap
 	#150 - Optimizing the SELECT statement for counting rows.
@@ -8,8 +19,10 @@ v 1.4.0 BETA
 	#158 - New method name set_crud_url_path. This method is useful when the path is not specified correctly.
 	#163 - Custom field type label for true_false. Like hidden, enum and set.
 	Noty Jquery Plugin to load when you delete a record.
-	Upgrading Jquery to Jquery 1.9.1
+	Upgrading Jquery to Jquery 1.10.2
 	Multiple grids in one page.
+	New language: Catalan.
+	Add "view" as new action.
 	Small bug fixes:
 		- #165 - add_action "url_has_http" issue
 		- #166 - Improved file upload error handling
