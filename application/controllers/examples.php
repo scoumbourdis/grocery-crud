@@ -84,7 +84,7 @@ class Examples extends CI_Controller {
 
 			$this->_example_output($output);
 	}
-
+	
 	public function orders_management()
 	{
 			$crud = new grocery_CRUD();
@@ -245,5 +245,78 @@ class Examples extends CI_Controller {
 			return $output;
 		}
 	}
+	
+	public function column_align_right()
+	{
+			$crud = new grocery_CRUD();
 
+			$crud->set_table('customers');
+			$crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit');
+			$crud->columns_align(array('customerName' => 'right','contactLastName' => 'right','phone' => 'right','city' => 'right','country' => 'right','salesRepEmployeeNumber' => 'right','creditLimit' => 'right'));
+			$crud->display_as('salesRepEmployeeNumber','from Employeer')
+				 ->display_as('customerName','Name')
+				 ->display_as('contactLastName','Last Name');
+			$crud->set_subject('Customer');
+			$crud->set_relation('salesRepEmployeeNumber','employees','lastName');
+
+			$output = $crud->render();
+
+			$this->_example_output($output);
+	}
+	
+	public function column_align_center()
+	{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('customers');
+			$crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit');
+			$crud->columns_align(array('customerName' => 'center','contactLastName' => 'center','phone' => 'center','city' => 'center','country' => 'center','salesRepEmployeeNumber' => 'center','creditLimit' => 'center'));
+			$crud->display_as('salesRepEmployeeNumber','from Employeer')
+				 ->display_as('customerName','Name')
+				 ->display_as('contactLastName','Last Name');
+			$crud->set_subject('Customer');
+			$crud->set_relation('salesRepEmployeeNumber','employees','lastName');
+
+			$output = $crud->render();
+
+			$this->_example_output($output);
+	}
+
+	public function column_align_right2()
+	{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('customers');
+			$crud->set_theme('datatables');
+			$crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit');
+			$crud->columns_align(array('customerName' => 'right','contactLastName' => 'right','phone' => 'right','city' => 'right','country' => 'right','salesRepEmployeeNumber' => 'right','creditLimit' => 'right'));
+			$crud->display_as('salesRepEmployeeNumber','from Employeer')
+				 ->display_as('customerName','Name')
+				 ->display_as('contactLastName','Last Name');
+			$crud->set_subject('Customer');
+			$crud->set_relation('salesRepEmployeeNumber','employees','lastName');
+
+			$output = $crud->render();
+
+			$this->_example_output($output);
+	}
+	
+	public function column_align_center2()
+	{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('customers');
+			$crud->set_theme('datatables');
+			$crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit');
+			$crud->columns_align(array('customerName' => 'center','contactLastName' => 'center','phone' => 'center','city' => 'center','country' => 'center','salesRepEmployeeNumber' => 'center','creditLimit' => 'center'));
+			$crud->display_as('salesRepEmployeeNumber','from Employeer')
+				 ->display_as('customerName','Name')
+				 ->display_as('contactLastName','Last Name');
+			$crud->set_subject('Customer');
+			$crud->set_relation('salesRepEmployeeNumber','employees','lastName');
+
+			$output = $crud->render();
+
+			$this->_example_output($output);
+	}
 }
