@@ -35,8 +35,13 @@ a:hover
 		<a href='<?php echo site_url('examples/employees_management')?>'>Employees</a> |		 
 		<a href='<?php echo site_url('examples/film_management')?>'>Films</a> | 
 		<a href='<?php echo site_url('examples/film_management_twitter_bootstrap')?>'>Twitter Bootstrap Theme [BETA]</a> | 
-		<a href='<?php echo site_url('examples/multigrids')?>'>Multigrid [BETA]</a>
-		
+		<a href='<?php echo site_url('examples/multigrids')?>'>Multigrid [BETA]</a>	
+	</div>
+	<div>
+		<a href='<?php echo site_url('examples/column_align_right')?>'>Flexigrid - Column Align Right</a> |
+		<a href='<?php echo site_url('examples/column_align_center')?>'>Flexigrid - Column Align Center</a> |
+		<a href='<?php echo site_url('examples/column_align_right2')?>'>Datatables - Column Align Right</a> |
+		<a href='<?php echo site_url('examples/column_align_center2')?>'>Datatables - Column Align Center</a> |
 	</div>
 	<div style='height:20px;'></div>  
     <div>

@@ -2,7 +2,8 @@
 	<thead>
 		<tr>
 			<?php foreach($columns as $column){?>
-				<th><?php echo $column->display_as; ?></th>
+				<?php $text_align = (empty($column->align) ? '' : ('style="text-align:'.$column->align.'"')); ?>
+				<th <?php echo $text_align;?>><?php echo $column->display_as; ?></th>
 			<?php }?>
 			<?php if(!$unset_delete || !$unset_edit || !$unset_read || !empty($actions)){?>
 			<th class='actions'><?php echo $this->l('list_actions'); ?></th>
@@ -13,7 +14,8 @@
 		<?php foreach($list as $num_row => $row){ ?>
 		<tr id='row-<?php echo $num_row?>'>
 			<?php foreach($columns as $column){?>
-				<td><?php echo $row->{$column->field_name}?></td>
+				<?php $text_align = (empty($column->align) ? '' : ('align="'.$column->align.'"')); ?>
+				<td <?php echo $text_align;?>><?php echo $row->{$column->field_name}?></td>
 			<?php }?>
 			<?php if(!$unset_delete || !$unset_edit || !$unset_read || !empty($actions)){?>
 			<td class='actions'>
