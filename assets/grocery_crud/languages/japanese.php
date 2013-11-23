@@ -51,13 +51,13 @@
 
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= '選択 {field_display_as}';
-	$lang['list_record']			= 'レコード';
+	$lang['list_record']			= 'Record';
 	$lang['form_inactive']			= '非アクティブ';
 	$lang['form_active']			= 'アクティブ';
 
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= '保存して一覧に戻る';
-	$lang['form_update_and_go_back']= '更新して一覧に戻る';
+	$lang['form_save_and_go_back']	= '挿入して一覧に戻る';
+	$lang['form_update_and_go_back']= '変更して一覧に戻る';
 
 	/* Upload functionality */
 	$lang['string_delete_file'] 	= "ファイルを削除";
