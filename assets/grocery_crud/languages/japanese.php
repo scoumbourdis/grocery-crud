@@ -50,7 +50,7 @@
 	$lang['update_error']			= '変更の保存でエラーが発生しました。';
 
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= '選択 {field_display_as}';
+	$lang['set_relation_title']		= '{field_display_as} から選択';
 	$lang['list_record']			= 'Record';
 	$lang['form_inactive']			= '非アクティブ';
 	$lang['form_active']			= 'アクティブ';
