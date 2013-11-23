@@ -76,8 +76,7 @@
 	$lang['minimize_maximize'] = 'Minimizar/Maximizar';
 
 
-	/* Added in version 1.4 */
-	$lang['list_view'] = 'View';
+	$lang['list_view'] = 'Ver';
 	
 	/*TODO: Sergi Tur Patch. Added in version x*/
 	$lang['Add'] = 'Añadir';
@@ -86,4 +85,3 @@
 	$lang['Default value'] = 'Valor por defecto';
 	$lang['Last Added Value'] = 'Último valor añadido';
 	$lang['refresh_dropdown_fields'] = 'Actualiza los campos dropdown';
-
