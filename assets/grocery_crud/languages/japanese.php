@@ -52,8 +52,8 @@
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= '{field_display_as} から選択';
 	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= '非アクティブ';
-	$lang['form_active']			= 'アクティブ';
+	$lang['form_inactive']			= 'いいえ';
+	$lang['form_active']			= 'はい';
 
 	/* Added in version 1.2.2 */
 	$lang['form_save_and_go_back']	= '挿入して一覧に戻る';
