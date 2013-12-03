@@ -51,29 +51,29 @@
 	
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= 'Select {field_display_as}';	
-	$lang['list_record']			= 'Record';
+	$lang['list_record']			= 'Bản ghi';
 	$lang['form_inactive']			= 'inactive';
 	$lang['form_active']			= 'active';
 	
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
+	$lang['form_save_and_go_back']	= 'Lưu và trở lại danh sách';
+	$lang['form_update_and_go_back']= 'Cập nhật và trở lại danh sách';
 
 	/* Upload functionality */
-	$lang['string_delete_file'] 	= "Deleting file";
+	$lang['string_delete_file'] 	= "Đang xóa tập tin";
 	$lang['string_progress'] 		= "Progress: ";
-	$lang['error_on_uploading'] 	= "An error has occurred on uploading.";
-	$lang['message_prompt_delete_file'] 	= "Are you sure that you want to delete this file?";
+	$lang['error_on_uploading'] 	= "Một lỗi đã xảy ra khi tải lên.";
+	$lang['message_prompt_delete_file'] 	= "Bạn có chắc chắn muốn xóa tập tin này?";
 	
-	$lang['error_max_number_of_files'] 	= "You can only upload one file each time.";
-	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
-	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
-	$lang['error_min_file_size'] 		= "You cannot upload an empty file.";
+	$lang['error_max_number_of_files'] 	= "Chỉ có thể tải lên một tập tin mỗi lần.";
+	$lang['error_accept_file_types'] 	= "Không được phép để tải lên loại file có phần mở rộng này.";
+	$lang['error_max_file_size'] 		= "Tập tin tải lên vượt quá dung lượng cho phép ({max_file_size}).";
+	$lang['error_min_file_size'] 		= "Không thể tải lên tập tin rỗng.";
 
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
+	$lang['list_export'] 	= "Xuất file XLS";
+	$lang['list_print'] 	= "In";
 	$lang['minimize_maximize'] = 'Minimize/Maximize';
 
 	/* Added in version 1.4 */
-	$lang['list_view'] = 'View';
+	$lang['list_view'] = 'Chi tiết';
