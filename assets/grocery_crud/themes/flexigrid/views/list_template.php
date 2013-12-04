@@ -104,8 +104,11 @@ if($success_message !== null){?>
 			<select name="search_field" id="search_field">
 				<option value=""><?php echo $this->l('list_search_all');?></option>
 				<?php foreach($columns as $column){?>
-				<option value="<?php echo $column->field_name?>"><?php echo $column->display_as?>&nbsp;&nbsp;</option>
-				<?php }?>
+				<?php if (in_array($column->field_name, $real_fields))
+					{ ?>
+						<option value="<?php echo $column->field_name?>"><?php echo $column->display_as?>&nbsp;&nbsp;</option>
+					<?php }
+				}?>
 			</select>
             <input type="button" value="<?php echo $this->l('list_search');?>" class="crud_search" id='crud_search'>
 		</div>

@@ -477,7 +477,8 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 	 * @var grocery_CRUD_Model
 	 */
 	public $basic_model = null;
-
+	public $real_fields = array();
+	
 	protected function set_default_Model()
 	{
 		$ci = &get_instance();
@@ -551,6 +552,24 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		$this->basic_model = $ci->$real_model_name;
 	}
 
+	/** ------------------------------
+	 * Get Real Fields Exists in table
+	 * -------------------------------
+	 */
+	protected function get_real_fields()
+	{
+		$field_types = $this->get_field_types();
+
+		$this->real_fields = array();
+		
+		foreach($field_types as $field)
+		{
+			if( ! isset($field->db_extra) || $field->db_extra != 'auto_increment' )
+			$this->real_fields[] = $field->name;
+		}
+		return $this->real_fields;
+	}
+	
 	protected function set_ajax_list_queries($state_info = null)
 	{
 		if(!empty($state_info->per_page))
@@ -563,8 +582,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$this->limit($state_info->per_page, $limit_page);
 			}
 		}
-
-		if(!empty($state_info->order_by))
+		
+		$this->get_real_fields();
+		
+		if(!empty($state_info->order_by) && in_array($state_info->order_by, $this->real_fields))
 		{
 			$this->order_by($state_info->order_by[0],$state_info->order_by[1]);
 		}
@@ -581,17 +602,25 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				{
 					if(is_array($temp_relation[$state_info->search->field]))
 						foreach($temp_relation[$state_info->search->field] as $search_field)
+						{
+							if (in_array($search_field, $this->real_fields))
 							$this->or_like($search_field , $state_info->search->text);
+						}
 					else
+					{
+						if (in_array($temp_relation[$state_info->search->field], $this->real_fields))
 						$this->like($temp_relation[$state_info->search->field] , $state_info->search->text);
+					}
 				}
 				elseif(isset($this->relation_n_n[$state_info->search->field]))
 				{
 					$escaped_text = $this->basic_model->escape_str($state_info->search->text);
+					if (in_array($state_info->search->field, $this->real_fields))
 					$this->having($state_info->search->field." LIKE '%".$escaped_text."%'");
 				}
 				else
 				{
+					if (in_array($state_info->search->field, $this->real_fields))
 					$this->like($state_info->search->field , $state_info->search->text);
 				}
 			}
@@ -607,17 +636,20 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 				foreach($columns as $column)
 				{
+				
 					if(isset($temp_relation[$column->field_name]))
 					{
 						if(is_array($temp_relation[$column->field_name]))
 						{
 							foreach($temp_relation[$column->field_name] as $search_field)
 							{
+								if (in_array($search_field, $this->real_fields))
 								$this->or_like($search_field, $search_text);
 							}
 						}
 						else
 						{
+							if (in_array($temp_relation[$column->field_name], $this->real_fields))
 							$this->or_like($temp_relation[$column->field_name], $search_text);
 						}
 					}
@@ -627,6 +659,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					}
 					else
 					{
+						if (in_array($column->field_name, $this->real_fields))
 						$this->or_like($column->field_name, $search_text);
 					}
 				}
@@ -1518,7 +1551,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->total_results = $this->get_total_results();
 
 		$data->columns 				= $this->get_columns();
-
+		$data->real_fields			= $this->get_real_fields();
+		
 		$data->success_message		= $this->get_success_message_at_list($state_info);
 
 		$data->primary_key 			= $this->get_primary_key();
