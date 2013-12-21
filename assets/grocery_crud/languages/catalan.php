@@ -86,3 +86,9 @@
 	$lang['Reload'] = 'Actualitzar';
 	$lang['Default value'] = 'Valor per defecte';
 	$lang['Last Added Value'] = "Últim valor afegit";	
+
+	$lang['save_without_validation'] = "Desar sense validacions";
+	$lang['save_without_comeback_validation'] = "Desar i tornar sense validacions";
+
+	$lang['alert_save_without_validation'] = "Esteu segurs que voleu desar sense validar? És possible que la operació no es realitzi correctament";
+	

@@ -85,3 +85,8 @@
 	$lang['Default value'] = 'Valor por defecto';
 	$lang['Last Added Value'] = 'Último valor añadido';
 	$lang['refresh_dropdown_fields'] = 'Actualiza los campos dropdown';
+
+	$lang['save_without_validation'] = "Guardar sin validar";
+	$lang['save_without_comeback_validation'] = "Guardar i volver sin validar";
+
+	$lang['alert_save_without_validation'] = "Seguro que quereis guardar sin validar? Es posible que la operación no se realize correctamente";

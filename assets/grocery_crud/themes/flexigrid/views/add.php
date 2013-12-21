@@ -438,6 +438,15 @@ function check_if_express($input_fields) {
 			</div>
 <?php 	} ?>
 
+<?php 	if($this->allow_save_without_validation) { ?>
+			<div class='form-button-box'>
+				<input type='button' value='<?php echo $this->l('save_without_validation'); ?>' id="<?php echo $table_name;?>_save-without-validation"  class="btn btn-large"/>
+			</div>
+			<div class='form-button-box'>
+				<input type='button' value='<?php echo $this->l('save_without_comeback_validation'); ?>' id="<?php echo $table_name;?>_save-and-go-back-without-validation"  class="btn btn-large"/>
+			</div>
+<?php 	} ?>
+
 			<div class='form-button-box'>
 				<input type='button' value='<?php echo "Reset"; ?>' class="btn btn-large" id="<?php echo $table_name;?>_reset-button" />
 			</div>
@@ -452,9 +461,11 @@ function check_if_express($input_fields) {
 </div>
 <script>
 	var validation_url = '<?php echo $validation_url?>';
+	var skip_validation_url = '<?php echo $skip_validation_url?>';
 	var list_url = '<?php echo $list_url?>';
 
 	var message_alert_add_form = "<?php echo $this->l('alert_add_form')?>";
+	var message_alert_save_without_validation = "<?php echo $this->l('alert_save_without_validation')?>";
 	var message_insert_error = "<?php echo $this->l('insert_error')?>";
 	
 	var table_name = "<?php echo $table_name;?>";

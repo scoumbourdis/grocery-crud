@@ -677,6 +677,12 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		return $relation_array;
 	}
 
+	protected function skip_validation() {
+		$validation_result = (object)array('success'=>true);
+
+		return $validation_result;
+	}
+
 	protected function db_insert_validation()
 	{
 		$validation_result = (object)array('success'=>false);
@@ -875,7 +881,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 	protected function db_insert($state_info)
 	{
-		$validation_result = $this->db_insert_validation();
+		if ($this->allow_save_without_validation) {
+			$validation_result->success=true;
+		}	else {
+			$validation_result = $this->db_insert_validation();
+		}
 
 		if($validation_result->success)
 		{
@@ -1837,6 +1847,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->list_url 		= $this->getListUrl();
 		$data->insert_url		= $this->getInsertUrl();
 		$data->validation_url	= $this->getValidationInsertUrl();
+
+		$data->skip_validation_url	= $this->getSkipValidationUrl();
 		
 		$data->fields 			= $this->get_add_fields();
 		
@@ -1866,6 +1878,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->_theme_view('add.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
 
+		//Sergi Tur 21/12/2013
+		$data->allow_save_without_validation	= $this->allow_save_without_validation;
+
 		$this->_get_ajax_results();
 	}
 
@@ -1892,12 +1907,17 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_back_to_list	= $this->unset_back_to_list;
 
 		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key);
+
+		$data->skip_validation_url	= $this->getSkipValidationUrl();
+
 		$data->is_ajax 			= $this->_is_ajax();
 		
 		$data->table_name 			= $this->get_table();
 
 		$this->_theme_view('edit.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
+
+		$data->allow_save_without_validation	= $this->allow_save_without_validation;		
 
 		$this->_get_ajax_results();
 	}
@@ -1925,12 +1945,17 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_back_to_list	= $this->unset_back_to_list;
 
 		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key);
+
+		$data->skip_validation_url	= $this->getSkipValidationUrl();
+
 		$data->is_ajax 			= $this->_is_ajax();
 		
 		$data->table_name 			= $this->get_table();
 
 		$this->_theme_view('read.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
+
+		$data->allow_save_without_validation	= $this->allow_save_without_validation;
 
 		$this->_get_ajax_results();
 	}
@@ -3045,7 +3070,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		15	=> 'success',
 		16  => 'export',
 		17  => 'print',
-		18  => 'read'
+		18  => 'read',
+		30	=> 'skip_validation',
 	);
 
 	protected function getStateCode()
@@ -3193,6 +3219,13 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 	{
 		return $this->state_url('insert_validation');
 	}
+
+	protected function getSkipValidationUrl()
+	{
+		return $this->state_url('skip_validation');
+	}
+
+	
 
 	protected function getValidationUpdateUrl($primary_key = null)
 	{
@@ -3526,6 +3559,8 @@ class Grocery_CRUD extends grocery_CRUD_States
 	
 	protected $unset_dropdowndetails	= array();
 	protected $unset_dialogforms = false;
+
+	protected $allow_save_without_validation	= false;	
 
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
@@ -3942,6 +3977,18 @@ class Grocery_CRUD extends grocery_CRUD_States
 	public function unset_back_to_list()
 	{
 		$this->unset_back_to_list = true;
+
+		return $this;
+	}
+
+	/**
+	 * Allow saving without validation
+	 * @access	public
+	 * @return	void
+	 */
+	public function allow_save_without_validation()
+	{
+		$this->allow_save_without_validation = true;
 
 		return $this;
 	}
@@ -4759,6 +4806,13 @@ class Grocery_CRUD extends grocery_CRUD_States
 				$state_info = $this->getStateInfo();
 
 				$this->showReadForm($state_info);
+			break;
+
+			case 30://skip_validation
+
+				$validation_result = $this->skip_validation();
+
+				$this->validation_layout($validation_result);
 			break;
 
 		}

@@ -14,22 +14,52 @@ $(function(){
 		});
 
 		var save_and_close = false;
+
+		var skip_validation = false;
+
+		var definitive_validation_url = validation_url;
+
+
 		
 		$('#'+table_name+'_form-button-save').click(function(){
+			skip_validation = false;
+			definitive_validation_url = validation_url;
 			$('#crudForm_' + table_name).trigger('submit');
 		});
 
 		$('#'+table_name+'_save-and-go-back-button').click(function(){
+			skip_validation = false;
+			definitive_validation_url = validation_url;
 			save_and_close = true;
 			$('#crudForm_' + table_name).trigger('submit');
+		});
+
+		$('#'+table_name+'_save-without-validation').click(function(){
+			if( confirm( message_alert_save_without_validation ) )
+				{
+					skip_validation = true;
+					$('#crudForm_' + table_name).trigger('submit');
+				}
+		});
+
+		$('#'+table_name+'_save-and-go-back-without-validation').click(function(){
+			save_and_close = true;
+			if( confirm( message_alert_save_without_validation ) )
+				{
+					skip_validation = true;
+					$('#crudForm_' + table_name).trigger('submit');
+				}
 		});
 
 		$('#crudForm_' + table_name).submit(function(e){
 			e.preventDefault();
 			var my_crud_form = $(this);
+			if(skip_validation)	{
+				definitive_validation_url = skip_validation_url;
+			}
 
 			$(this).ajaxSubmit({
-				url: validation_url,
+				url: definitive_validation_url,
 				dataType: 'json',
 				cache: 'false',
 				beforeSend: function(){
