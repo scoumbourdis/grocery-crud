@@ -50,30 +50,30 @@
 	$lang['update_error']			= '変更の保存でエラーが発生しました。';
 
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';
+	$lang['set_relation_title']		= '{field_display_as} から選択';
 	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
+	$lang['form_inactive']			= 'いいえ';
+	$lang['form_active']			= 'はい';
 
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
+	$lang['form_save_and_go_back']	= '挿入して一覧に戻る';
+	$lang['form_update_and_go_back']= '変更して一覧に戻る';
 
 	/* Upload functionality */
-	$lang['string_delete_file'] 	= "Deleting file";
-	$lang['string_progress'] 		= "Progress: ";
-	$lang['error_on_uploading'] 	= "An error has occurred on uploading.";
-	$lang['message_prompt_delete_file'] 	= "Are you sure that you want to delete this file?";
+	$lang['string_delete_file'] 	= "ファイルを削除";
+	$lang['string_progress'] 		= "進捗状況: ";
+	$lang['error_on_uploading'] 	= "アップロード中にエラーが発生しました。";
+	$lang['message_prompt_delete_file'] 	= "本当に削除しますか?";
 
-	$lang['error_max_number_of_files'] 	= "You can only upload one file each time.";
-	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
-	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
-	$lang['error_min_file_size'] 		= "You cannot upload an empty file.";
+	$lang['error_max_number_of_files'] 	= "1回につき1ファイルのみアップロード可能です。";
+	$lang['error_accept_file_types'] 	= "この拡張子のアップロードは許可されていません。";
+	$lang['error_max_file_size'] 		= "ファイルは {max_file_size} までアップロード可能です。";
+	$lang['error_min_file_size'] 		= "空のファイルはアップロードできません";
 
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
-	$lang['minimize_maximize'] = 'Minimize/Maximize';
+	$lang['list_export'] 	= "エクスポート";
+	$lang['list_print'] 	= "印刷";
+	$lang['minimize_maximize'] = '最小化/最大化';
 
 	/* Added in version 1.4 */
-	$lang['list_view'] = 'View';
+	$lang['list_view'] = 'ビュー';
