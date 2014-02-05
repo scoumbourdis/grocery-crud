@@ -73,18 +73,31 @@ class Examples extends CI_Controller {
 			$crud = new grocery_CRUD();
 
 			$crud->set_table('customers');
-			$crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit');
+			$crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit','CreditCategory');
 			$crud->display_as('salesRepEmployeeNumber','from Employeer')
 				 ->display_as('customerName','Name')
 				 ->display_as('contactLastName','Last Name');
 			$crud->set_subject('Customer');
 			$crud->set_relation('salesRepEmployeeNumber','employees','lastName');
+			$crud->callback_column('CreditCategory',array($this,'getCreditCategory'));
 
 			$output = $crud->render();
 
 			$this->_example_output($output);
 	}
 
+	public function getCreditCategory($value, $row)
+	{
+		if ($row->creditLimit>100000)
+			return 'High';
+		
+		if ($row->creditLimit>=50000 && $row->creditLimit<=100000)
+			return 'Medium';
+		
+		if ($row->creditLimit<50000)
+			return 'Low';
+	}
+	
 	public function orders_management()
 	{
 			$crud = new grocery_CRUD();
