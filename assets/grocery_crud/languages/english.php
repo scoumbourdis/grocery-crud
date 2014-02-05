@@ -80,3 +80,18 @@
 	
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
+	
+	/*TODO: Sergi Tur Patch. Added in version x*/
+	$lang['Add'] = 'Add';
+	$lang['Details'] = 'Details';
+	$lang['Reload'] = 'Refresh';
+	$lang['Default value'] = 'Default value';
+	$lang['Last Added Value'] = 'Last added value';
+	$lang['refresh_dropdown_fields'] = 'Reload dropdown fields';
+
+	$lang['save_without_validation'] = 'Save without validation';
+	$lang['save_without_comeback_validation'] = "Save and go back without validation";
+
+
+	$lang['alert_save_without_validation'] = "Are you sure you want to save withou validation? There is a possibility that operation will NOT be commited";
+

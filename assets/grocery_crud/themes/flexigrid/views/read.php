@@ -29,7 +29,7 @@
 				$even_odd = $counter % 2 == 0 ? 'odd' : 'even';
 				$counter++;
 		?>
-			<div class='form-field-box <?php echo $even_odd?>' id="<?php echo $field->field_name; ?>_field_box">
+			<div class='form-field-box <?php echo $even_odd?>' id="<?php echo $field->field_name; ?>_<?php echo $table_name;?>_field_box">
 				<div class='form-display-as-box' id="<?php echo $field->field_name; ?>_display_as_box">
 					<?php echo $input_fields[$field->field_name]->display_as?><?php echo ($input_fields[$field->field_name]->required)? "<span class='required'>*</span> " : ""?> :
 				</div>
@@ -54,7 +54,7 @@
 	</div>
 	<div class="pDiv">
 		<div class='form-button-box'>
-			<input type='button' value='<?php echo $this->l('form_back_to_list'); ?>' class="btn btn-large back-to-list" id="cancel-button" />
+			<input type='button' value='<?php echo $this->l('form_back_to_list'); ?>' class="btn btn-large back-to-list" id="<?php echo $table_name;?>_cancel-button" />
 		</div>
 		<div class='form-button-box'>
 			<div class='small-loading' id='FormLoading'><?php echo $this->l('form_update_loading'); ?></div>

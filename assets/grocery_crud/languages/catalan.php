@@ -52,7 +52,7 @@
 
 	/* Added in version 1.2.1 */
 	$lang['set_relation_title']		= 'Seleccionar {field_display_as}';
-	$lang['list_record']			= 'Registe';
+	$lang['list_record']			= 'Registre';
 	$lang['form_inactive']			= 'Inactiu';
 	$lang['form_active']			= 'Actiu';
 
@@ -76,6 +76,19 @@
 	$lang['list_export'] 	= "Exportar";
 	$lang['list_print'] 	= "Imprimir";
 	$lang['minimize_maximize'] = 'Minimitzar / Maximitzar';
-
+	
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'Veure';
+	
+	/*TODO: Sergi Tur Patch. Added in version x*/
+	$lang['Add'] = 'Afegir';
+	$lang['Details'] = 'Detalls';
+	$lang['Reload'] = 'Actualitzar';
+	$lang['Default value'] = 'Valor per defecte';
+	$lang['Last Added Value'] = "Últim valor afegit";	
+
+	$lang['save_without_validation'] = "Desar sense validacions";
+	$lang['save_without_comeback_validation'] = "Desar i tornar sense validacions";
+
+	$lang['alert_save_without_validation'] = "Esteu segurs que voleu desar sense validar? És possible que la operació no es realitzi correctament";
+	

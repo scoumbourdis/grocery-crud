@@ -830,6 +830,13 @@ ul.chzn-choices li.search-field input
 	padding-bottom:10px;
 	border-radius: 0px 0px 5px 5px;
 }
+form.crudForm
+{
+	background: #FFF !important;
+	padding-top:10px;
+	padding-bottom:10px;
+	border-radius: 0px 0px 5px 5px;
+}
 textarea.texteditor, textarea.mini-texteditor
 {
 	width:750px;
