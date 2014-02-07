@@ -47,7 +47,7 @@ $this->set_js($this->default_theme_path.'/twitter-bootstrap/js/jquery.functions.
 	<div id="message-box" class="span12"></div>
 	<div id="main-table-box span12">
 		<?php
-		echo form_open( $insert_url, 'method="post" id="crudForm" class="form-div span12" autocomplete="off" enctype="multipart/form-data"');
+		echo form_open( $insert_url, 'method="post" id="crudForm" class="form-div span12"  enctype="multipart/form-data"');
 			foreach($fields as $field)
 			{
 				?>

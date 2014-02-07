@@ -20,7 +20,7 @@
 		</div>
 	</div>
 <div id='main-table-box'>
-	<?php echo form_open( $read_url, 'method="post" id="crudForm" autocomplete="off" enctype="multipart/form-data"'); ?>
+	<?php echo form_open( $read_url, 'method="post" id="crudForm"  enctype="multipart/form-data"'); ?>
 	<div class='form-div'>
 		<?php
 		$counter = 0;
