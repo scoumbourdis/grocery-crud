@@ -166,7 +166,7 @@ function loadDataTable(this_datatables) {
 		        "sLast":     paging_last
 		    }
 		},
-		"bDestory": true,
+		"bDestroy": true,
 		"bRetrieve": true,
 		"fnDrawCallback": function() {
 			$('.image-thumbnail').fancybox({
@@ -178,11 +178,16 @@ function loadDataTable(this_datatables) {
 			});
 			add_edit_button_listener();
 		},
-		"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
+		"sDom": 'RCT<"clear"><"H"lfr>t<"F"ip>',
 	    "oTableTools": {
 	    	"aButtons": aButtons,
 	        "sSwfPath": base_url+"assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
-	    }
+	    },
+	    "oColVis": {
+            "bRestore": true,
+            "sRestore": "Reset",
+            "buttonText": "Mostra/Ocultar camps"
+        }
 	});
 }
 

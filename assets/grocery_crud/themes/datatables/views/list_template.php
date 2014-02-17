@@ -5,6 +5,8 @@
 	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');
 	$this->set_css($this->default_theme_path.'/datatables/css/jquery.dataTables.css');
 	$this->set_css($this->default_theme_path.'/datatables/extras/TableTools/media/css/TableTools.css');
+	$this->set_css($this->default_theme_path.'/datatables/extras/ColVis/media/css/ColVis.css');
+	$this->set_css($this->default_theme_path.'/datatables/extras/ColReorder/media/css/ColReorder.css');
 	$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
@@ -21,6 +23,9 @@
 	$this->set_js($this->default_theme_path.'/datatables/js/datatables.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/ZeroClipboard.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/TableTools.min.js');
+	$this->set_js($this->default_theme_path.'/datatables/extras/ColVis/media/js/ColVis.min.js');
+	$this->set_js($this->default_theme_path.'/datatables/extras/ColReorder/media/js/ColReorder.min.js');
+
 
 	/** Fancybox */
 	$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
