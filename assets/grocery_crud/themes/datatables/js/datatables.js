@@ -139,16 +139,23 @@ function loadListenersForDatatables() {
 }
 
 function loadDataTable(this_datatables) {
-	return $(this_datatables).dataTable({
+
+	var oTable = $(this_datatables).dataTable({
+		"sScrollX": "100%",
+        "bScrollCollapse": true,
+        "bPaginate": true,
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
-		"bStateSave": use_storage,
-        "fnStateSave": function (oSettings, oData) {
-            localStorage.setItem( 'DataTables_' + unique_hash, JSON.stringify(oData) );
-        },
-    	"fnStateLoad": function (oSettings) {
-            return JSON.parse( localStorage.getItem('DataTables_'+unique_hash) );
-    	},
+
+		//sergi Tur Badenas: not works ok with fixedColumns!!!! is i active action column not show!
+		//"bStateSave": use_storage,
+        //"fnStateSave": function (oSettings, oData) {
+        //    localStorage.setItem( 'DataTables_' + unique_hash, JSON.stringify(oData) );
+        //},
+    	//"fnStateLoad": function (oSettings) {
+        //    return JSON.parse( localStorage.getItem('DataTables_'+unique_hash) );
+    	//},
+
 		"iDisplayLength": default_per_page,
 		"aaSorting": datatables_aaSorting,
 		"oLanguage":{
@@ -186,9 +193,17 @@ function loadDataTable(this_datatables) {
 	    "oColVis": {
             "bRestore": true,
             "sRestore": "Reset",
-            "buttonText": "Mostra/Ocultar camps"
-        }
+            "buttonText": "Mostra/Ocultar camps",
+            "aiExclude": [ $('#' + this_datatables.id + ' thead th').length -1 ]
+        },
 	});
+
+	var oTable = new FixedColumns( oTable, {
+		"iLeftColumns": 0,
+		"iRightColumns": 1
+ 	} );
+
+	return oTable;
 }
 
 function datatables_get_chosen_table(table_as_object)

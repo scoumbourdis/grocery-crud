@@ -25,7 +25,7 @@
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/TableTools.min.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/ColVis/media/js/ColVis.min.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/ColReorder/media/js/ColReorder.min.js');
-
+	$this->set_js($this->default_theme_path.'/datatables/extras/FixedColumns/media/js/FixedColumns.min.js');
 
 	/** Fancybox */
 	$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
