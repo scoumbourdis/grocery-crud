@@ -58,10 +58,6 @@
 	$lang['form_save_and_go_back']	= 'सहेंजे और सूची में वापस जाएँ';
 	$lang['form_update_and_go_back']= 'अद्यतन और सूची में वापस जाएँ';
 
-	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'सहेंजे और सूची में वापस जाएँ';
-	$lang['form_update_and_go_back']= 'अद्यतन और सूची में वापस जाएँ';
-
 	/* Upload functionality */
 	$lang['string_delete_file'] 	   = "फ़ाइल  हट रहा";
 	$lang['string_progress'] 		= "प्रगति: ";
@@ -77,7 +73,6 @@
 	$lang['list_export'] 	= "निर्यात ";
 	$lang['list_print'] 	= "मुद्रण ";
 	$lang['minimize_maximize'] = 'न्यूनतम/अधिकतम';
-
 
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';

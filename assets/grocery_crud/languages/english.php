@@ -58,10 +58,6 @@
 	$lang['form_save_and_go_back']	= 'Save and go back to list';
 	$lang['form_update_and_go_back']= 'Update and go back to list';
 
-	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
-
 	/* Upload functionality */
 	$lang['string_delete_file'] 	= "Deleting file";
 	$lang['string_progress'] 		= "Progress: ";
@@ -77,6 +73,6 @@
 	$lang['list_export'] 	= "Export";
 	$lang['list_print'] 	= "Print";
 	$lang['minimize_maximize'] = 'Minimize/Maximize';
-	
+
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
