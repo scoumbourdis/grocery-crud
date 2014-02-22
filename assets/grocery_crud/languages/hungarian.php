@@ -58,9 +58,6 @@
     $lang['form_save_and_go_back']  = 'Mentés és vissza a listához';
     $lang['form_update_and_go_back']= 'Felülír és vissza a listához';
 
-	/* Added in version 1.2.2 */
-    $lang['form_save_and_go_back']  = 'Mentés és vissza a listához';
-    $lang['form_update_and_go_back']= 'Felülír és vissza a listához';
 	/* Upload functionality */
     $lang['string_delete_file']     = "Fájl törlése";
     $lang['string_progress']        = "Állapot: ";
