@@ -3,6 +3,7 @@
 .settings/
 .project
 system/
+themes/bootstrap/
 application/.htaccess
 application/cache/
 application/config/migration.php

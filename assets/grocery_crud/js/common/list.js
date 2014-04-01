@@ -18,9 +18,11 @@ var fnOpenEditForm = function(this_element){
 		dataType: 'json',
 		beforeSend: function() {
 			this_element.closest('.flexigrid').addClass('loading-opacity');
+			this_element.closest('.dataTablesContainer').addClass('loading-opacity');
 		},
 		complete: function(){
 			this_element.closest('.flexigrid').removeClass('loading-opacity');
+			this_element.closest('.dataTablesContainer').removeClass('loading-opacity');
 		},
 		success: function (data) {
 			if (typeof CKEDITOR !== 'undefined' && typeof CKEDITOR.instances !== 'undefined') {
