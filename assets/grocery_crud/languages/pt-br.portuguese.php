@@ -4,7 +4,7 @@
 	$lang['list_actions'] 			= 'Ações';
 	$lang['list_page'] 			= 'Página';	
 	$lang['list_paging_of'] 		= 'de';
-	$lang['list_displaying']		= 'Registros de {start} a {end} total de {results} registros';
+	$lang['list_displaying']		= 'Registros de {start} à {end}, num total de {results} registros';
 	$lang['list_filtered_from']		= '(filtrado de {total_results} de entradas no total)';
 	$lang['list_show_entries']		= 'Exibir {paging} entradas';
 	$lang['list_no_items']			= 'Nenhum registro a ser exibido';
@@ -17,7 +17,7 @@
 	$lang['list_paging_first'] 		= 'Primeiro';
 	$lang['list_paging_previous'] 		= 'Anterior';
 	$lang['list_paging_next'] 		= 'Próximo';
-	$lang['list_paging_last'] 		= 'Úlitmo';
+	$lang['list_paging_last'] 		= 'Último';
 	$lang['list_loading'] 			= 'Carregando...';	
 
 	$lang['form_edit'] 			= 'Alterar';
@@ -63,7 +63,7 @@
 	/* Upload functionality */
 	$lang['string_delete_file'] 		= "Excluindo arquivo";
 	$lang['string_progress'] 		= "Progresso: ";
-	$lang['error_on_uploading'] 		= "Um erro foi encontrado ao enviar.";
+	$lang['error_on_uploading'] 		= "Um erro foi encontrado ao tentar enviar o arquivo.";
 	$lang['message_prompt_delete_file'] 	= "Você tem certeza que deseja exluir esse arquivo?";
 	
 	$lang['error_max_number_of_files'] 	= "Você pode enviar apenas um arquivo por vez.";
@@ -77,4 +77,4 @@
 	$lang['minimize_maximize'] 		= 'Minimizar/Maximizar';
 
 	/* Added in version 1.4 */
-	$lang['list_view'] 			= 'Vizualizar';
+	$lang['list_view'] 			= 'Visualizar';
