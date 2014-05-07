@@ -575,23 +575,23 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				foreach($this->relation as $relation_name => $relation_values)
 					$temp_relation[$this->_unique_field_name($relation_name)] = $this->_get_field_names_to_search($relation_values);
 
-			if($state_info->search->field !== null)
-			{
-				if(isset($temp_relation[$state_info->search->field]))
-				{
-					if(is_array($temp_relation[$state_info->search->field]))
-						foreach($temp_relation[$state_info->search->field] as $search_field)
+            if (is_array($state_info->search)) {
+                foreach ($state_info->search as $search_field => $search_text) {
+                    $this->like($search_field, $search_text);
+                }
+            } elseif($state_info->search->field !== null) {
+				if (isset($temp_relation[$state_info->search->field])) {
+					if (is_array($temp_relation[$state_info->search->field])) {
+						foreach ($temp_relation[$state_info->search->field] as $search_field) {
 							$this->or_like($search_field , $state_info->search->text);
-					else
+                        }
+                    } else {
 						$this->like($temp_relation[$state_info->search->field] , $state_info->search->text);
-				}
-				elseif(isset($this->relation_n_n[$state_info->search->field]))
-				{
+                    }
+				} elseif(isset($this->relation_n_n[$state_info->search->field])) {
 					$escaped_text = $this->basic_model->escape_str($state_info->search->text);
 					$this->having($state_info->search->field." LIKE '%".$escaped_text."%'");
-				}
-				else
-				{
+				} else {
 					$this->like($state_info->search->field , $state_info->search->text);
 				}
 			}
@@ -2930,6 +2930,10 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  */
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
+    const STATE_UNKNOWN = 0;
+    const STATE_LIST = 1;
+    const STATE_ADD = 2;
+
 	protected $states = array(
 		0	=> 'unknown',
 		1	=> 'list',
@@ -3173,9 +3177,9 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		$state_info = (object)array();
 
 		switch ($state_code) {
-			case 1:
-			case 2:
-
+            case self::STATE_LIST:
+            case self::STATE_ADD:
+                //for now... do nothing! Keeping this switch here in case we need any information at the future.
 			break;
 
 			case 3:
@@ -3249,7 +3253,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 				if($state_code === 16 || $state_code === 17)
 				{
 					$state_info->page = 1;
-					$state_info->per_page = 1000000; //a big number
+					$state_info->per_page = 1000000; //a very big number!
 				}
 				if(!empty($_POST['order_by'][0]))
 				{
@@ -3259,15 +3263,22 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 				{
 					if(empty($_POST['search_field']))
 					{
-
 						$search_text = strip_tags($_POST['search_field']);
-
-						$state_info->search = (object)array( 'field' => null , 'text' => $_POST['search_text'] );
-
+						$state_info->search = (object)array('field' => null , 'text' => $_POST['search_text']);
 					}
 					else
 					{
-						$state_info->search	= (object)array( 'field' => strip_tags($_POST['search_field']) , 'text' => $_POST['search_text'] );
+                        if (is_array($_POST['search_field'])) {
+                            $search_array = array();
+                            foreach ($_POST['search_field'] as $search_key => $search_field_name) {
+                                $search_array[$search_field_name] = !empty($_POST['search_text'][$search_key]) ? $_POST['search_text'][$search_key] : '';
+                            }
+                            $state_info->search	= $search_array;
+                        } else {
+                            $state_info->search	= (object)array(
+                                'field' => strip_tags($_POST['search_field']) ,
+                                'text' => $_POST['search_text'] );
+                        }
 					}
 				}
 			break;
