@@ -3,6 +3,7 @@ v 1.4.2
 	#197 - Properly sanitize filenames for uploads
 	#237 - Set Timepicker to 24 hour format
 	Add a new method unset_view that is just an alias to unset_read method
+	Multiple search fields for flexibility for future themes.
 	Add 2 new functions:
 		- unset_read_fields
 		- set_read_fields
