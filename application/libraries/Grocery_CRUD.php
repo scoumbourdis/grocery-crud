@@ -16,7 +16,7 @@
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2013, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.4.1
+ * @version    	1.4.2
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
