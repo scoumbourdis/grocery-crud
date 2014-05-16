@@ -4980,11 +4980,27 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 */
 	public function set_subject( $subject )
 	{
-		$this->subject 			= $subject;
-		$this->subject_plural 	= $subject;
+		$this->subject = $subject;
+
+        if ($this->subject_plural === null) {
+		    $this->subject_plural 	= $subject;
+        }
 
 		return $this;
 	}
+
+    /**
+     * Sets the subject to its plural form. For example the plural
+     * of "Customer" is "Customers", "Product" is "Products"... e.t.c.
+     *
+     * @param string $subject_plural
+     * @return grocery_CRUD
+     */
+    public function set_subject_plural($subject_plural)
+    {
+        $this->subject_plural = $subject_plural;
+        return $this;
+    }
 
 	/**
 	 *
