@@ -4973,34 +4973,22 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 *
 	 * Set a subject to understand what type of CRUD you use.
+     * ----------------------------------------------------------------------------------------------
+     * Subject_plural: Sets the subject to its plural form. For example the plural
+     * of "Customer" is "Customers", "Product" is "Products"... e.t.c.
 	 * @example In this CRUD we work with the table db_categories. The $subject will be the 'Category'
+     * and the $subject_plural will be 'Categories'
 	 * @param string $subject
-	 * @param bool $has_plural
+	 * @param string $subject_plural
 	 * @return grocery_CRUD
 	 */
-	public function set_subject( $subject )
+	public function set_subject($subject, $subject_plural = null)
 	{
 		$this->subject = $subject;
-
-        if ($this->subject_plural === null) {
-		    $this->subject_plural 	= $subject;
-        }
+        $this->subject_plural 	= $subject_plural === null ? $subject : $subject_plural;
 
 		return $this;
 	}
-
-    /**
-     * Sets the subject to its plural form. For example the plural
-     * of "Customer" is "Customers", "Product" is "Products"... e.t.c.
-     *
-     * @param string $subject_plural
-     * @return grocery_CRUD
-     */
-    public function set_subject_plural($subject_plural)
-    {
-        $this->subject_plural = $subject_plural;
-        return $this;
-    }
 
 	/**
 	 *

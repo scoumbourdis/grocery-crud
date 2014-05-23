@@ -1,13 +1,13 @@
 v 1.4.2
-	#211 - Bug if use where clause
-	#197 - Properly sanitize filenames for uploads
-	#237 - Set Timepicker to 24 hour format
-	Add a new method unset_view that is just an alias to unset_read method
+	#211 - Bug if use where clause.
+	#197 - Properly sanitize filenames for uploads.
+	#237 - Set Timepicker to 24 hour format.
+	Add a new method unset_view that is just an alias to unset_read method.
 	Multiple search fields for flexibility for future themes.
-	Add 3 new functions:
+	Add $subject_plural as a second parameter to the set_subject method.
+	Add 2 new functions:
 		- unset_read_fields
 		- set_read_fields
-		- set_subject_plural
 v 1.4.1
 	#231 - Read page not showing relations.
 	#233 - File upload uniqueid not unique.
