@@ -2933,6 +2933,12 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
     const STATE_UNKNOWN = 0;
     const STATE_LIST = 1;
     const STATE_ADD = 2;
+    const STATE_EDIT = 3;
+    const STATE_DELETE = 4;
+    const STATE_INSERT = 5;
+
+    const STATE_READ = 18;
+    const STATE_DELETE_MULTIPLE = '19';
 
 	protected $states = array(
 		0	=> 'unknown',
@@ -2953,8 +2959,170 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		15	=> 'success',
 		16  => 'export',
 		17  => 'print',
-		18  => 'read'
+		18  => 'read',
+        19  => 'delete_multiple'
 	);
+
+    public function getStateInfo()
+    {
+        $state_code = $this->getStateCode();
+        $segment_object = $this->get_state_info_from_url();
+
+        $first_parameter = $segment_object->first_parameter;
+        $second_parameter = $segment_object->second_parameter;
+
+        $state_info = (object)array();
+
+        switch ($state_code) {
+            case self::STATE_LIST:
+            case self::STATE_ADD:
+                //for now... do nothing! Keeping this switch here in case we need any information at the future.
+                break;
+
+            case self::STATE_EDIT:
+            case self::STATE_READ:
+                if ($first_parameter !== null) {
+                    $state_info = (object) array('primary_key' => $first_parameter);
+                } else {
+                    throw new Exception('On the state "edit" the Primary key cannot be null', 6);
+                    die();
+                }
+                break;
+
+            case self::STATE_DELETE:
+                if ($first_parameter !== null) {
+                    $state_info = (object) array('primary_key' => $first_parameter);
+                } else {
+                    throw new Exception('On the state "delete" the Primary key cannot be null',7);
+                    die();
+                }
+                break;
+
+            case self::STATE_DELETE_MULTIPLE:
+                if (!empty($_POST) && !empty($_POST['ids']) && is_array($_POST['ids'])) {
+                    $state_info = (object) array('ids' => $_POST['ids']);
+                } else {
+                    throw new Exception('On the state "Delete Multiple" you need send the ids as a post array.');
+                    die();
+                }
+                break;
+
+            case self::STATE_INSERT:
+                if(!empty($_POST))
+                {
+                    $state_info = (object)array('unwrapped_data' => $_POST);
+                }
+                else
+                {
+                    throw new Exception('On the state "insert" you must have post data',8);
+                    die();
+                }
+                break;
+
+            case 6:
+                if(!empty($_POST) && $first_parameter !== null)
+                {
+                    $state_info = (object)array('primary_key' => $first_parameter,'unwrapped_data' => $_POST);
+                }
+                elseif(empty($_POST))
+                {
+                    throw new Exception('On the state "update" you must have post data',9);
+                    die();
+                }
+                else
+                {
+                    throw new Exception('On the state "update" the Primary key cannot be null',10);
+                    die();
+                }
+                break;
+
+            case 7:
+            case 8:
+            case 16: //export to excel
+            case 17: //print
+                $state_info = (object)array();
+                if(!empty($_POST['per_page']))
+                {
+                    $state_info->per_page = is_numeric($_POST['per_page']) ? $_POST['per_page'] : null;
+                }
+                if(!empty($_POST['page']))
+                {
+                    $state_info->page = is_numeric($_POST['page']) ? $_POST['page'] : null;
+                }
+                //If we request an export or a print we don't care about what page we are
+                if($state_code === 16 || $state_code === 17)
+                {
+                    $state_info->page = 1;
+                    $state_info->per_page = 1000000; //a very big number!
+                }
+                if(!empty($_POST['order_by'][0]))
+                {
+                    $state_info->order_by = $_POST['order_by'];
+                }
+                if(!empty($_POST['search_text']))
+                {
+                    if(empty($_POST['search_field']))
+                    {
+                        $search_text = strip_tags($_POST['search_field']);
+                        $state_info->search = (object)array('field' => null , 'text' => $_POST['search_text']);
+                    }
+                    else
+                    {
+                        if (is_array($_POST['search_field'])) {
+                            $search_array = array();
+                            foreach ($_POST['search_field'] as $search_key => $search_field_name) {
+                                $search_array[$search_field_name] = !empty($_POST['search_text'][$search_key]) ? $_POST['search_text'][$search_key] : '';
+                            }
+                            $state_info->search	= $search_array;
+                        } else {
+                            $state_info->search	= (object)array(
+                                'field' => strip_tags($_POST['search_field']) ,
+                                'text' => $_POST['search_text'] );
+                        }
+                    }
+                }
+                break;
+
+            case 9:
+
+                break;
+
+            case 10:
+                if($first_parameter !== null)
+                {
+                    $state_info = (object)array('primary_key' => $first_parameter);
+                }
+                break;
+
+            case 11:
+                $state_info->field_name = $first_parameter;
+                break;
+
+            case 12:
+                $state_info->field_name = $first_parameter;
+                $state_info->file_name = $second_parameter;
+                break;
+
+            case 13:
+                $state_info->field_name = $_POST['field_name'];
+                $state_info->search 	= $_POST['term'];
+                break;
+
+            case 14:
+                $state_info->field_name = $_POST['field_name'];
+                $state_info->search 	= $_POST['term'];
+                break;
+
+            case 15:
+                $state_info = (object)array(
+                    'primary_key' 		=> $first_parameter,
+                    'success_message'	=> true
+                );
+                break;
+        }
+
+        return $state_info;
+    }
 
 	protected function getStateCode()
 	{
@@ -3132,11 +3300,17 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 
 	protected function getDeleteUrl($state_info = null)
 	{
-		if(empty($state_info))
-			return $this->state_url('delete');
-		else
+		if (empty($state_info)) {
+            return $this->state_url('delete');
+        } else {
 			return $this->state_url('delete/'.$state_info->primary_key);
+        }
 	}
+
+    protected function getDeleteMultipleUrl()
+    {
+        return $this->state_url('delete_multiple');
+    }
 
 	protected function getListSuccessUrl($primary_key = null)
 	{
@@ -3164,164 +3338,6 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 	protected function getAjaxRelationManytoManyUrl()
 	{
 		return $this->state_url('ajax_relation_n_n');
-	}
-
-	public function getStateInfo()
-	{
-		$state_code = $this->getStateCode();
-		$segment_object = $this->get_state_info_from_url();
-
-		$first_parameter = $segment_object->first_parameter;
-		$second_parameter = $segment_object->second_parameter;
-
-		$state_info = (object)array();
-
-		switch ($state_code) {
-            case self::STATE_LIST:
-            case self::STATE_ADD:
-                //for now... do nothing! Keeping this switch here in case we need any information at the future.
-			break;
-
-			case 3:
-			case 18: // read
-				if($first_parameter !== null)
-				{
-					$state_info = (object)array('primary_key' => $first_parameter);
-				}
-				else
-				{
-					throw new Exception('On the state "edit" the Primary key cannot be null', 6);
-					die();
-				}
-			break;
-
-			case 4:
-				if($first_parameter !== null)
-				{
-					$state_info = (object)array('primary_key' => $first_parameter);
-				}
-				else
-				{
-					throw new Exception('On the state "delete" the Primary key cannot be null',7);
-					die();
-				}
-			break;
-
-			case 5:
-				if(!empty($_POST))
-				{
-					$state_info = (object)array('unwrapped_data' => $_POST);
-				}
-				else
-				{
-					throw new Exception('On the state "insert" you must have post data',8);
-					die();
-				}
-			break;
-
-			case 6:
-				if(!empty($_POST) && $first_parameter !== null)
-				{
-					$state_info = (object)array('primary_key' => $first_parameter,'unwrapped_data' => $_POST);
-				}
-				elseif(empty($_POST))
-				{
-					throw new Exception('On the state "update" you must have post data',9);
-					die();
-				}
-				else
-				{
-					throw new Exception('On the state "update" the Primary key cannot be null',10);
-					die();
-				}
-			break;
-
-			case 7:
-			case 8:
-			case 16: //export to excel
-			case 17: //print
-				$state_info = (object)array();
-				if(!empty($_POST['per_page']))
-				{
-					$state_info->per_page = is_numeric($_POST['per_page']) ? $_POST['per_page'] : null;
-				}
-				if(!empty($_POST['page']))
-				{
-					$state_info->page = is_numeric($_POST['page']) ? $_POST['page'] : null;
-				}
-				//If we request an export or a print we don't care about what page we are
-				if($state_code === 16 || $state_code === 17)
-				{
-					$state_info->page = 1;
-					$state_info->per_page = 1000000; //a very big number!
-				}
-				if(!empty($_POST['order_by'][0]))
-				{
-					$state_info->order_by = $_POST['order_by'];
-				}
-				if(!empty($_POST['search_text']))
-				{
-					if(empty($_POST['search_field']))
-					{
-						$search_text = strip_tags($_POST['search_field']);
-						$state_info->search = (object)array('field' => null , 'text' => $_POST['search_text']);
-					}
-					else
-					{
-                        if (is_array($_POST['search_field'])) {
-                            $search_array = array();
-                            foreach ($_POST['search_field'] as $search_key => $search_field_name) {
-                                $search_array[$search_field_name] = !empty($_POST['search_text'][$search_key]) ? $_POST['search_text'][$search_key] : '';
-                            }
-                            $state_info->search	= $search_array;
-                        } else {
-                            $state_info->search	= (object)array(
-                                'field' => strip_tags($_POST['search_field']) ,
-                                'text' => $_POST['search_text'] );
-                        }
-					}
-				}
-			break;
-
-			case 9:
-
-			break;
-
-			case 10:
-				if($first_parameter !== null)
-				{
-					$state_info = (object)array('primary_key' => $first_parameter);
-				}
-			break;
-
-			case 11:
-				$state_info->field_name = $first_parameter;
-			break;
-
-			case 12:
-				$state_info->field_name = $first_parameter;
-				$state_info->file_name = $second_parameter;
-			break;
-
-			case 13:
-				$state_info->field_name = $_POST['field_name'];
-				$state_info->search 	= $_POST['term'];
-			break;
-
-			case 14:
-				$state_info->field_name = $_POST['field_name'];
-				$state_info->search 	= $_POST['term'];
-			break;
-
-			case 15:
-				$state_info = (object)array(
-					'primary_key' 		=> $first_parameter,
-					'success_message'	=> true
-				);
-			break;
-		}
-
-		return $state_info;
 	}
 }
 
@@ -5023,6 +5039,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @param string $related_title_field
 	 * @param mixed $where_clause
 	 * @param string $order_by
+     * @return Grocery_CRUD
 	 */
 	public function set_relation($field_name , $related_table, $related_title_field, $where_clause = null, $order_by = null)
 	{
@@ -5041,6 +5058,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @param string $title_field_selection_table
 	 * @param string $priority_field_relation_table
 	 * @param mixed $where_clause
+     * @return Grocery_CRUD
 	 */
 	public function set_relation_n_n($field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table, $primary_key_alias_to_selection_table , $title_field_selection_table , $priority_field_relation_table = null, $where_clause = null)
 	{
@@ -5065,6 +5083,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 *
 	 * @param string $field_name
 	 * @param string $upload_path
+     * @return Grocery_CRUD
 	 */
 	public function set_field_upload($field_name, $upload_dir = '')
 	{
