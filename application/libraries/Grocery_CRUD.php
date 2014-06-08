@@ -1525,6 +1525,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->add_url				= $this->getAddUrl();
 		$data->edit_url				= $this->getEditUrl();
 		$data->delete_url			= $this->getDeleteUrl();
+        $data->delete_multiple_url	= $this->getDeleteMultipleUrl();
 		$data->read_url				= $this->getReadUrl();
 		$data->ajax_list_url		= $this->getAjaxListUrl();
 		$data->ajax_list_info_url	= $this->getAjaxListInfoUrl();
@@ -1553,6 +1554,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		foreach($data->list as $num_row => $row)
 		{
+            $data->list[$num_row]->primary_key_value = $row->{$data->primary_key};
 			$data->list[$num_row]->edit_url = $data->edit_url.'/'.$row->{$data->primary_key};
 			$data->list[$num_row]->delete_url = $data->delete_url.'/'.$row->{$data->primary_key};
 			$data->list[$num_row]->read_url = $data->read_url.'/'.$row->{$data->primary_key};
@@ -4629,7 +4631,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 				$this->print_webpage($state_info);
 				break;
 
-			case 18: //read
+			case grocery_CRUD_States::STATE_READ:
 				if($this->unset_read)
 				{
 					throw new Exception('You don\'t have permissions for this operation', 14);
@@ -4645,7 +4647,15 @@ class Grocery_CRUD extends grocery_CRUD_States
 				$state_info = $this->getStateInfo();
 
 				$this->showReadForm($state_info);
-			break;
+
+    			break;
+
+            case grocery_CRUD_States::STATE_DELETE_MULTIPLE:
+
+                echo json_encode(array('response' => 'I am doing nothing for now!'));
+                $this->set_echo_and_die();
+
+                break;
 
 		}
 
