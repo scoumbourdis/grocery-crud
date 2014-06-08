@@ -1156,15 +1156,27 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
     	return 's'.substr(md5($field_name),0,8); //This s is because is better for a string to begin with a letter and not a number
     }
 
+    protected function db_multiple_delete($state_info)
+    {
+        foreach ($state_info->ids as $delete_id) {
+            $result = $this->db_delete((object)array('primary_key' => $delete_id));
+            if (!$result) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 	protected function db_delete($state_info)
 	{
-		$primary_key 	= $state_info->primary_key;
+		$primary_key_value 	= $state_info->primary_key;
 
 		if($this->callback_delete === null)
 		{
 			if($this->callback_before_delete !== null)
 			{
-				$callback_return = call_user_func($this->callback_before_delete, $primary_key);
+				$callback_return = call_user_func($this->callback_before_delete, $primary_key_value);
 
 				if($callback_return === false)
 				{
@@ -1177,11 +1189,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			{
 				foreach($this->relation_n_n as $field_name => $field_info)
 				{
-					$this->db_relation_n_n_delete( $field_info, $primary_key );
+					$this->db_relation_n_n_delete( $field_info, $primary_key_value );
 				}
 			}
 
-			$delete_result = $this->basic_model->db_delete($primary_key);
+			$delete_result = $this->basic_model->db_delete($primary_key_value);
 
 			if($delete_result === false)
 			{
@@ -1190,7 +1202,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 			if($this->callback_after_delete !== null)
 			{
-				$callback_return = call_user_func($this->callback_after_delete, $primary_key);
+				$callback_return = call_user_func($this->callback_after_delete, $primary_key_value);
 
 				if($callback_return === false)
 				{
@@ -1201,7 +1213,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		}
 		else
 		{
-			$callback_return = call_user_func($this->callback_delete, $primary_key);
+			$callback_return = call_user_func($this->callback_delete, $primary_key_value);
 
 			if($callback_return === false)
 			{
@@ -4652,8 +4664,16 @@ class Grocery_CRUD extends grocery_CRUD_States
 
             case grocery_CRUD_States::STATE_DELETE_MULTIPLE:
 
-                echo json_encode(array('response' => 'I am doing nothing for now!'));
-                $this->set_echo_and_die();
+				if($this->unset_delete)
+                {
+                    throw new Exception('This user is not allowed to do this operation');
+                    die();
+                }
+
+				$state_info = $this->getStateInfo();
+				$delete_result = $this->db_multiple_delete($state_info);
+
+				$this->delete_layout($delete_result);
 
                 break;
 
