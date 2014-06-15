@@ -12,7 +12,9 @@
 
 	$this->set_js($this->default_theme_path.'/flexigrid/js/cookies.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/flexigrid.js');
-	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');
+
+    $this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.form.min.js');
+
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.numeric.min.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.printElement.min.js');
 

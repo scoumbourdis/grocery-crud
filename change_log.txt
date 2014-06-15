@@ -5,7 +5,7 @@ v 1.4.2
 	Add a new method unset_view that is just an alias to unset_read method.
 	Multiple search fields for flexibility for future themes.
 	Multiple delete fields for flexibility for future themes.
-	This version is Bootstrap 3 theme ready.
+	Fixing the bug of jquery form plugin with returning the textarea as required.
 	Add $subject_plural as a second parameter to the set_subject method.
 	Add 2 new functions:
 		- unset_read_fields

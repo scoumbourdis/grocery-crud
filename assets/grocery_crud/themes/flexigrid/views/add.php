@@ -2,6 +2,7 @@
 
 	$this->set_css($this->default_theme_path.'/flexigrid/css/flexigrid.css');
 	$this->set_js_lib($this->default_theme_path.'/flexigrid/js/jquery.form.js');
+    $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.form.min.js');
 	$this->set_js_config($this->default_theme_path.'/flexigrid/js/flexigrid-add.js');
 
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');

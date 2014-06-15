@@ -1929,12 +1929,12 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 			$success_message .= '</p>';
 
-			echo "<textarea>".json_encode(array(
+			echo json_encode(array(
 					'success' => true ,
 					'insert_primary_key' => $insert_result,
 					'success_message' => $success_message,
 					'success_list_url'	=> $this->getListSuccessUrl($insert_result)
-			))."</textarea>";
+			));
 		}
 		$this->set_echo_and_die();
 	}
@@ -1942,7 +1942,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function validation_layout($validation_result)
 	{
 		@ob_end_clean();
-		echo "<textarea>".json_encode($validation_result)."</textarea>";
+		echo json_encode($validation_result);
 		$this->set_echo_and_die();
 	}
 
@@ -2140,13 +2140,12 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			}
 			$success_message .= '</p>';
 
-			/* The textarea is only because of a BUG of the jquery form plugin with the combination of multipart forms */
-			echo "<textarea>".json_encode(array(
+			echo json_encode(array(
 					'success' => true ,
 					'insert_primary_key' => $update_result,
 					'success_message' => $success_message,
 					'success_list_url'	=> $this->getListSuccessUrl($state_info->primary_key)
-			))."</textarea>";
+			));
 		}
 		$this->set_echo_and_die();
 	}
