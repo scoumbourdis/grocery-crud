@@ -304,7 +304,7 @@ table th
 {
 	padding-right: 10px;
 }
-.flexigrid div.form-div input[type=text], .flexigrid div.form-div input[type=password]
+.flexigrid div.form-div input[type=text], .flexigrid div.form-div input[type=password], .flexigrid div.form-div input[type=number]
 {
 	font-size: 15px;
 	width: 500px;
@@ -328,7 +328,7 @@ table th
 	border: 1px solid #555;
 	background: #fff;
 }
-.flexigrid div.form-div textarea:focus, .flexigrid div.form-div input[type=text]:focus, .flexigrid div.form-div select:focus
+.flexigrid div.form-div textarea:focus, .flexigrid div.form-div input[type=text]:focus, .flexigrid div.form-div select:focus, .flexigrid div.form-div input[type=number]:focus
 {
 	border: 1px solid #444;
 	background: #fff;
@@ -841,12 +841,12 @@ textarea.texteditor, textarea.mini-texteditor
 	height: 200px;
 }
 .flexigrid div.form-div{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color: #444;}
-.flexigrid div.form-div input[type=text],.flexigrid div.form-div textarea,.flexigrid div.form-div select{display:inline-block;line-height:18px;color:#444;border:1px solid #ccc;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
-.flexigrid div.form-div input[type=text],.flexigrid div.form-div select,.flexigrid div.form-div textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}
-.flexigrid div.form-div input[type=text]{line-height:normal;*overflow:visible;}
-.flexigrid div.form-div input[type=text],.flexigrid div.form-div select,.flexigrid div.form-div textarea{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:normal;line-height:normal;}
-.flexigrid div.form-div input[type=text],.flexigrid div.form-div textarea{-webkit-transition:border linear 0.2s,box-shadow linear 0.2s;-moz-transition:border linear 0.2s,box-shadow linear 0.2s;-ms-transition:border linear 0.2s,box-shadow linear 0.2s;-o-transition:border linear 0.2s,box-shadow linear 0.2s;transition:border linear 0.2s,box-shadow linear 0.2s;-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);}
-.flexigrid div.form-div input[type=text]:focus,.flexigrid div.form-div textarea:focus{outline:0;border-color:rgba(82, 168, 236, 0.8);-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);}
+.flexigrid div.form-div input[type=text],.flexigrid div.form-div input[type=number],.flexigrid div.form-div textarea,.flexigrid div.form-div select{display:inline-block;line-height:18px;color:#444;border:1px solid #ccc;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+.flexigrid div.form-div input[type=text],.flexigrid div.form-div input[type=number],.flexigrid div.form-div select,.flexigrid div.form-div textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}
+.flexigrid div.form-div input[type=text],.flexigrid div.form-div input[type=number]{line-height:normal;*overflow:visible;}
+.flexigrid div.form-div input[type=text],.flexigrid div.form-div input[type=number],.flexigrid div.form-div select,.flexigrid div.form-div textarea{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:normal;line-height:normal;}
+.flexigrid div.form-div input[type=text],.flexigrid div.form-div input[type=number],.flexigrid div.form-div textarea{-webkit-transition:border linear 0.2s,box-shadow linear 0.2s;-moz-transition:border linear 0.2s,box-shadow linear 0.2s;-ms-transition:border linear 0.2s,box-shadow linear 0.2s;-o-transition:border linear 0.2s,box-shadow linear 0.2s;transition:border linear 0.2s,box-shadow linear 0.2s;-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);}
+.flexigrid div.form-div input[type=text]:focus,.flexigrid div.form-div input[type=number]:focus,.flexigrid div.form-div textarea:focus{outline:0;border-color:rgba(82, 168, 236, 0.8);-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);}
 
 /* Some beautiful twitter bootstrap buttons */
 .btn {
