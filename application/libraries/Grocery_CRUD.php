@@ -492,6 +492,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($this->where as $where)
 				$this->basic_model->where($where[0],$where[1],$where[2]);
 
+		if(!empty($this->join))
+			foreach($this->join as $join)
+				$this->basic_model->join($join[0],$join[1],$join[2]);
+
 		if(!empty($this->or_where))
 			foreach($this->or_where as $or_where)
 				$this->basic_model->or_where($or_where[0],$or_where[1],$or_where[2]);
@@ -625,7 +629,32 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					}
 					elseif(isset($this->relation_n_n[$column->field_name]))
 					{
-						//@todo have a where for the relation_n_n statement
+						$temp_relation_n_n = $this->relation_n_n[$column->field_name];
+
+						$join_where = $temp_relation_n_n->relation_table . '.' .$temp_relation_n_n->primary_key_alias_to_this_table . '=' . $this->basic_model->get_table_name() . '.' . $this->basic_model->get_primary_key();
+
+						$this->join($temp_relation_n_n->relation_table, $join_where, 'left');
+
+						$join_where = $temp_relation_n_n->selection_table . '.' . $this->basic_model->get_primary_key($temp_relation_n_n->selection_table) . ' =' . $temp_relation_n_n->relation_table . '.' . $temp_relation_n_n->primary_key_alias_to_selection_table;
+
+						if (is_array($temp_relation_n_n->where_clause))
+						{
+							foreach ($temp_relation_n_n->where_clause as $where_field => $where_value)
+							{
+								if ($where_value === NULL)
+								{
+									$join_where .= ' AND `' . $temp_relation_n_n->selection_table . '`.`' . $where_field . '` IS NULL';
+								}
+								else
+								{
+									$join_where .= ' AND `' . $temp_relation_n_n->selection_table . '`.`' . $where_field . '` = ' . $ci->db->escape($where_value);
+								}
+							}
+						}
+
+						$this->join($temp_relation_n_n->selection_table, $join_where, 'left');
+
+						$where .= ' OR ' . $temp_relation_n_n->selection_table . '.' . $temp_relation_n_n->title_field_selection_table . ' LIKE \'%' . $ci->db->escape_like_str($search_text) . '%\'';
 					}
 					else
 					{
@@ -1271,6 +1300,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->where))
 			foreach($this->where as $where)
 				$this->basic_model->where($where[0],$where[1],$where[2]);
+
+		if(!empty($this->join))
+			foreach($this->join as $join)
+				$this->basic_model->join($join[0],$join[1],$join[2]);
 
 		if(!empty($this->or_where))
 			foreach($this->or_where as $or_where)
@@ -4309,6 +4342,12 @@ class Grocery_CRUD extends grocery_CRUD_States
 	{
 		$this->where[] = array($key,$value,$escape);
 
+		return $this;
+	}
+
+	public function join($table, $condition, $left_or_right_or_inner = 'inner')
+	{
+		$this->join[] = array($table, $condition, $left_or_right_or_inner);
 		return $this;
 	}
 
