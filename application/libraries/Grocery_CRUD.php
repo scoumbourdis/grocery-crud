@@ -553,6 +553,8 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 	protected function set_ajax_list_queries($state_info = null)
 	{
+		$ci =& get_instance();
+
 		if(!empty($state_info->per_page))
 		{
 			if(empty($state_info->page) || !is_numeric($state_info->page) )
@@ -601,9 +603,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 				$search_text = $state_info->search->text;
 
-				if(!empty($this->where))
-					foreach($this->where as $where)
-						$this->basic_model->having($where[0],$where[1],$where[2]);
+				$where = '';
 
 				foreach($columns as $column)
 				{
@@ -613,12 +613,14 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						{
 							foreach($temp_relation[$column->field_name] as $search_field)
 							{
-								$this->or_like($search_field, $search_text);
+								$search_field = str_replace('.', '`.`', $search_field);
+								$where .= ' OR `' . $search_field . '` LIKE \'%' . $ci->db->escape_like_str($search_text) . '%\'';
 							}
 						}
 						else
 						{
-							$this->or_like($temp_relation[$column->field_name], $search_text);
+							$new_column = str_replace('.', '`.`', $temp_relation[$column->field_name]);
+							$where .= ' OR `' . $new_column . '` LIKE \'%' . $ci->db->escape_like_str($search_text) . '%\'';
 						}
 					}
 					elseif(isset($this->relation_n_n[$column->field_name]))
@@ -627,10 +629,37 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					}
 					else
 					{
-						$this->or_like($column->field_name, $search_text);
+						$new_column = $this->repair_column_name($column->field_name, $this->basic_model->get_table_name(), TRUE);
+						$where .= ' OR ' . $new_column . ' LIKE \'%' . $ci->db->escape_like_str($search_text) . '%\'';
 					}
 				}
+
+				if (!empty($where))
+				{
+					$where = '('.substr($where, 4).')';
+					$this->where($where, NULL, FALSE);
+				}
 			}
+		}
+	}
+
+	protected function repair_column_name($column, $table_name, $add_quotes)
+	{
+		if (!strstr($column, $table_name))
+		{
+			$new_column = $table_name . '.' . $column;
+		}
+		else
+		{
+			$new_column = $column;
+		}
+		if ($add_quotes)
+		{
+			return '`' . str_replace('.', '`.`', $new_column) . '`';
+		}
+		else
+		{
+			return $new_column;
 		}
 	}
 

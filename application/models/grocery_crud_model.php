@@ -89,6 +89,11 @@ class grocery_CRUD_Model  extends CI_Model  {
     	return $results;
     }
 
+    public function get_table_name()
+    {
+        return $this->table_name;
+    }
+
     public function get_row($table_name = null)
     {
     	$table_name = $table_name === null ? $this->table_name : $table_name;
