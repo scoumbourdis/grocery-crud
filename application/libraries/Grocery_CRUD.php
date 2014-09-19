@@ -4351,6 +4351,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->config->character_limiter	= $ci->config->item('grocery_crud_character_limiter');
 		$this->config->dialog_forms			= $ci->config->item('grocery_crud_dialog_forms');
 		$this->config->paging_options		= $ci->config->item('grocery_crud_paging_options');
+        $this->config->environment          = $ci->config->item('grocery_crud_environment');
 
 		/** Initialize default paths */
 		$this->default_javascript_path				= $this->default_assets_path.'/js';
