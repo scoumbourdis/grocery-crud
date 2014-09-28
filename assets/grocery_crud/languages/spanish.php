@@ -17,7 +17,7 @@
 	$lang['list_paging_first'] 		= 'Primero';
 	$lang['list_paging_previous'] 	= 'Anterior';
 	$lang['list_paging_next'] 		= 'Siguiente';
-	$lang['list_paging_last'] 		= 'Ultimo';
+	$lang['list_paging_last'] 		= 'Último';
 	$lang['list_loading'] 			= 'Cargando...';
 
 	$lang['form_edit'] 				= 'Editar';
@@ -25,7 +25,7 @@
 	$lang['form_update_changes'] 	= 'Actualizar cambios';
 	$lang['form_cancel'] 			= 'Cancelar';
 	$lang['form_update_loading'] 	= 'Cargando, actualizando cambios...';
-	$lang['update_success_message'] = 'Tus datos han sido actualizado correcatamente.';
+	$lang['update_success_message'] = 'Sus datos han sido actualizados correctamente.';
 	$lang['form_go_back_to_list'] 	= 'Volver a la lista';
 
 	$lang['form_add'] 				= 'Añadir';
@@ -38,13 +38,13 @@
 	$lang['form_upload_delete'] 	= 'eliminar';
 	$lang['form_button_clear'] 		= 'Resetear';
 
-	$lang['delete_success_message'] = 'Tus datos han sido eliminados correctamente de la base de datos.';
-	$lang['delete_error_message'] 	= 'Tus datos no han sido eliminados de la base de datos.';
+	$lang['delete_success_message'] = 'Sus datos han sido eliminados correctamente de la base de datos.';
+	$lang['delete_error_message'] 	= 'Sus datos no han sido eliminados de la base de datos.';
 
 	/* Javascript messages */
-	$lang['alert_add_form']			= 'Los datos que intentas añadir no se han guardado.\\nEstas seguro que quieres volver a la lista?';
-	$lang['alert_edit_form']		= 'Los datos que intentas actualizar no se han guardado.\\nEstas seguro que quieres volver a la lista?';
-	$lang['alert_delete']			= 'Estas seguro que queres eliminar este registro?';
+	$lang['alert_add_form']			= 'Los datos que intenta añadir no se han guardado.\\n¿Esta seguro que quiere volver a la lista?';
+	$lang['alert_edit_form']		= 'Los datos que intenta actualizar no se han guardado.\\n¿Esta seguro que quiere volver a la lista?';
+	$lang['alert_delete']			= '¿Esta seguro que quiere eliminar este registro?';
 
 	$lang['insert_error']			= 'Ocurrio un error al añadir.';
 	$lang['update_error']			= 'Ocurrio un error al actualizar.';
@@ -63,12 +63,12 @@
 	$lang['string_delete_file'] 	= "Eliminando archivo";
 	$lang['string_progress'] 		= "Progreso: ";
 	$lang['error_on_uploading'] 	= "Ha ocurrido un error al intentar subir el archivo.";
-	$lang['message_prompt_delete_file'] 	= "Estas seguro que quieres eliminar este archivo?";
+	$lang['message_prompt_delete_file'] 	= "¿Esta seguro que quiere eliminar este archivo?";
 
-	$lang['error_max_number_of_files'] 	= "Solo puedes subir un archivo a la vez.";
+	$lang['error_max_number_of_files'] 	= "Solo puede subir un archivo a la vez.";
 	$lang['error_accept_file_types'] 	= "No se permite este tipo de extension.";
 	$lang['error_max_file_size'] 		= "El archivo excede el tamaño {max_file_size} que fue especificado.";
-	$lang['error_min_file_size'] 		= "No puedes subir un arvhivo vacio.";
+	$lang['error_min_file_size'] 		= "No puede subir un archivo vacío.";
 
 	/* Added in version 1.3.1 */
 	$lang['list_export'] 	= "Exportar";
