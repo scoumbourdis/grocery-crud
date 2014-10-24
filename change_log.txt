@@ -1,9 +1,12 @@
-v 1.4.2
+v 1.5.0
 	#211 - Bug if use where clause.
 	#197 - Properly sanitize filenames for uploads.
 	#237 - Set Timepicker to 24 hour format.
 	Add a new method unset_view that is just an alias to unset_read method.
 	Multiple search fields for flexibility for future themes.
+	     - Multiple simple search
+	     - Multiple relation search
+	     - Multiple relation_n_n search
 	Multiple delete fields for flexibility for future themes.
 	Fixing the bug of jquery form plugin with returning the textarea as required.
 	Add $subject_plural as a second parameter to the set_subject method.

@@ -16,7 +16,7 @@
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2014, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.4.2
+ * @version    	1.5.0
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -468,7 +468,7 @@ class grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.4.2
+ * @version    	1.5.0
  * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
@@ -1511,7 +1511,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.4.2
+ * @version    	1.5.0
  */
 class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 {
@@ -2959,7 +2959,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.4.2
+ * @version    	1.5.0
  */
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
@@ -3388,7 +3388,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2014, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.4.2
+ * @version    	1.5.0
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -3411,7 +3411,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 *
 	 * @var	string
 	 */
-	const	VERSION = "1.4.2";
+	const	VERSION = "1.5.0";
 
 	const	JQUERY 			= "jquery-1.11.1.min.js";
 	const	JQUERY_UI_JS 	= "jquery-ui-1.10.3.custom.min.js";
