@@ -571,15 +571,35 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 		if(!empty($state_info->search))
 		{
-			if(!empty($this->relation))
-				foreach($this->relation as $relation_name => $relation_values)
+			if (!empty($this->relation)) {
+				foreach ($this->relation as $relation_name => $relation_values) {
 					$temp_relation[$this->_unique_field_name($relation_name)] = $this->_get_field_names_to_search($relation_values);
+                }
+            }
 
             if (is_array($state_info->search)) {
                 foreach ($state_info->search as $search_field => $search_text) {
-                    $this->like($search_field, $search_text);
+
+
+                    if (isset($temp_relation[$search_field])) {
+                        if (is_array($temp_relation[$search_field])) {
+                            foreach ($temp_relation[$search_field] as $relation_field) {
+                                $this->or_like($relation_field , $search_text);
+                            }
+                        } else {
+                            $this->like($temp_relation[$search_field] , $search_text);
+                        }
+                    } elseif(isset($this->relation_n_n[$search_field])) {
+                        $escaped_text = $this->basic_model->escape_str($search_text);
+                        $this->having($search_field." LIKE '%".$escaped_text."%'");
+                    } else {
+                        $this->like($search_field, $search_text);
+                    }
+
+
+
                 }
-            } elseif($state_info->search->field !== null) {
+            } elseif ($state_info->search->field !== null) {
 				if (isset($temp_relation[$state_info->search->field])) {
 					if (is_array($temp_relation[$state_info->search->field])) {
 						foreach ($temp_relation[$state_info->search->field] as $search_field) {
