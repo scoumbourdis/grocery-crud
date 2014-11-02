@@ -4371,6 +4371,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->config->character_limiter	= $ci->config->item('grocery_crud_character_limiter');
 		$this->config->dialog_forms			= $ci->config->item('grocery_crud_dialog_forms');
 		$this->config->paging_options		= $ci->config->item('grocery_crud_paging_options');
+        $this->config->default_theme        = $ci->config->item('grocery_crud_default_theme');
         $this->config->environment          = $ci->config->item('grocery_crud_environment');
 
 		/** Initialize default paths */
@@ -4381,14 +4382,15 @@ class Grocery_CRUD extends grocery_CRUD_States
 
 		$this->character_limiter = $this->config->character_limiter;
 
-		if($this->character_limiter === 0 || $this->character_limiter === '0')
-		{
-			$this->character_limiter = 1000000; //a big number
-		}
-		elseif($this->character_limiter === null || $this->character_limiter === false)
-		{
+		if ($this->character_limiter === 0 || $this->character_limiter === '0') {
+			$this->character_limiter = 1000000; //a very big number
+		} elseif($this->character_limiter === null || $this->character_limiter === false) {
 			$this->character_limiter = 30; //is better to have the number 30 rather than the 0 value
 		}
+
+        if ($this->theme === null && !empty($this->config->default_theme)) {
+            $this->set_theme($this->config->default_theme);
+        }
 	}
 
 	protected function _set_primary_keys_to_model()

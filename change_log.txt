@@ -10,6 +10,9 @@ v 1.5.0
 	Multiple delete fields for flexibility for future themes.
 	Fixing the bug of jquery form plugin with returning the textarea as required.
 	Add $subject_plural as a second parameter to the set_subject method.
+	More configuration preferences
+	    - Setting environment (e.g. production)
+	    - Setting default theme (e.g. datatables)
 	Add 2 new functions:
 		- unset_read_fields
 		- set_read_fields
