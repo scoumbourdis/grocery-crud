@@ -30,7 +30,7 @@
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
 
-	var subject = '<?php echo $subject?>';
+	var subject = '<?php echo addslashes($subject); ?>';
 	var ajax_list_info_url = '<?php echo $ajax_list_info_url; ?>';
 	var unique_hash = '<?php echo $unique_hash; ?>';
 

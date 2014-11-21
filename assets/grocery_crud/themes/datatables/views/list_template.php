@@ -29,7 +29,7 @@
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
-	var subject = '<?php echo $subject?>';
+	var subject = '<?php echo addslashes($subject); ?>';
 
 	var unique_hash = '<?php echo $unique_hash; ?>';
 
