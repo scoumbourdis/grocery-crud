@@ -2,6 +2,7 @@ v 1.5.0
 	#211 - Bug if use where clause.
 	#197 - Properly sanitize filenames for uploads.
 	#237 - Set Timepicker to 24 hour format.
+    #294 - Javascript bug with set_subject().
 	Add a new method unset_view that is just an alias to unset_read method.
 	Multiple search fields for flexibility for future themes.
 	     - Multiple simple search
