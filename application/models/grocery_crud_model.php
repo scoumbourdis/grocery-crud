@@ -149,7 +149,12 @@ class grocery_CRUD_Model  extends CI_Model  {
     {
     	$this->db->or_where( $key, $value, $escape);
     }
-
+    
+    function where_in($key, $values = array())
+    {
+    	$this->db->where_in( $key, $values);
+    }
+    
     function having($key, $value = NULL, $escape = TRUE)
     {
     	$this->db->having( $key, $value, $escape);
