@@ -1,3 +1,5 @@
+v 1.5.1
+	#290 - Added functionality to define upload file types per field (pull request from syrys)
 v 1.5.0
 	#211 - Bug if use where clause.
 	#197 - Properly sanitize filenames for uploads.
