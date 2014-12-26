@@ -454,8 +454,8 @@ class grocery_CRUD_Model  extends CI_Model  {
     		$db_field_types[$db_field_type->Field]['db_null'] = $db_field_type->Null == 'YES' ? true : false;
     		$db_field_types[$db_field_type->Field]['db_extra'] = $db_field_type->Extra;
     	}
-
-    	$results = $this->db->field_data($this->table_name);
+    	
+		$results = $this->get_field_types($this->table_name);
     	foreach($results as $num => $row)
     	{
     		$row = (array)$row;
