@@ -185,8 +185,7 @@ class grocery_CRUD_Model  extends CI_Model  {
 
     		$this->db->select($select,false);
     	}
-		
-		return $this->db->count_all($this->table_name);
+		return $this->db->count_all_results($this->table_name);		
     }
 
     function set_basic_table($table_name = null)
