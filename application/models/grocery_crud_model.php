@@ -84,21 +84,24 @@ class grocery_CRUD_Model  extends CI_Model  {
 
     	$this->db->select($select, false);
 
+    	$real_db_prefix = $this->db->dbprefix;
+        $this->db->set_dbprefix('');
     	$results = $this->db->get($this->table_name)->result();
+        $this->db->set_dbprefix($real_db_prefix);
 
     	return $results;
     }
 
     public function get_row($table_name = null)
     {
-    	$table_name = $table_name === null ? $this->table_name : $table_name;
+    	$table_name = $table_name === null ? $this->table_name : $this->db->dbprefix($table_name);
 
     	return $this->db->get($table_name)->row();
     }
 
     public function set_primary_key($field_name, $table_name = null)
     {
-    	$table_name = $table_name === null ? $this->table_name : $table_name;
+    	$table_name = $table_name === null ? $this->table_name : $this->db->dbprefix($table_name);
 
     	$this->primary_keys[$table_name] = $field_name;
     }
@@ -111,6 +114,9 @@ class grocery_CRUD_Model  extends CI_Model  {
     		list($field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table,
     					$primary_key_alias_to_selection_table, $title_field_selection_table, $priority_field_relation_table) = array_values((array)$relation_n_n);
 
+                $relation_table = $this->db->dbprefix($relation_table);
+                $selection_table = $this->db->dbprefix($selection_table);
+                
     		$primary_key_selection_table = $this->get_primary_key($selection_table);
 
 	    	$field = "";
@@ -191,7 +197,8 @@ class grocery_CRUD_Model  extends CI_Model  {
 
     function set_basic_table($table_name = null)
     {
-    	if( !($this->db->table_exists($table_name)) )
+        $table_name = $this->db->dbprefix($table_name);
+        if( !($this->db->table_exists($table_name)) )
     		return false;
 
     	$this->table_name = $table_name;
