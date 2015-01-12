@@ -4295,7 +4295,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this->read_fields;
 	}
 
-	public function order_by($order_by, $direction = 'asc')
+	public function order_by($order_by, $direction = '')
 	{
 		$this->order_by = array($order_by,$direction);
 
