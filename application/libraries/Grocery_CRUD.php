@@ -2117,10 +2117,12 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 
 		if ($this->unset_bootstrap) {
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap.min.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/application.js')]);
-			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap-responsive.min.css')]);
-			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap.min.css')]);
+			unset($js_files[sha1($this->default_theme_path.'/bootstrap/js/bootstrap/dropdown.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/bootstrap/js/bootstrap/modal.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/bootstrap/js/bootstrap/dropdown.min.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/bootstrap/js/bootstrap/modal.min.js')]);
+			unset($css_files[sha1($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.css')]);
+			unset($css_files[sha1($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.min.css')]);
 		}
 
 		if($this->echo_and_die === false)
