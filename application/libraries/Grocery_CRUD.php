@@ -4003,8 +4003,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	{
 		list($php_day, $php_month, $php_year) = array('d','m','Y');
 		list($js_day, $js_month, $js_year) = array('dd','mm','yy');
-		list($ui_day, $ui_month, $ui_year) = array('dd','mm','yyyy');
-//@todo ui_day, ui_month, ui_year has to be lang strings
+		list($ui_day, $ui_month, $ui_year) = array($this->l('ui_day'), $this->l('ui_month'), $this->l('ui_year'));
 
 		$date_format = $this->config->date_format;
 		switch ($date_format) {
