@@ -28,7 +28,7 @@
 	//Make sure that the number of grocery_crud_default_per_page variable is included to this array.
 	$config['grocery_crud_paging_options'] = array('10','25','50','100');
 
-    //The environment is important so we can have specific configurations for specific environments
+    //Default theme for grocery CRUD
     $config['grocery_crud_default_theme'] = 'flexigrid';
 
     //The environment is important so we can have specific configurations for specific environments
