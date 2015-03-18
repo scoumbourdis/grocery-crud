@@ -71,9 +71,14 @@
 	$lang['error_min_file_size'] = "Het uploaden van een leeg bestand is niet mogelijk.";
 
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
-	$lang['minimize_maximize'] = 'Minimize/Maximize';
+	$lang['list_export'] 	= "Exporteren";
+	$lang['list_print'] 	= "Afdrukken";
+	$lang['minimize_maximize'] = 'Minimaliseren/Maximaliseren';
 
 	/* Added in version 1.4 */
-	$lang['list_view'] = 'View';
+	$lang['list_view'] = 'Bekijk';
+
+	/* Added in version 1.5.1 */
+	$lang['ui_day'] = 'dd';
+	$lang['ui_month'] = 'mm';
+	$lang['ui_year'] = 'yyyy';

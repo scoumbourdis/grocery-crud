@@ -29,7 +29,7 @@
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
-	var subject = '<?php echo $subject?>';
+	var subject = '<?php echo addslashes($subject); ?>';
 
 	var unique_hash = '<?php echo $unique_hash; ?>';
 
@@ -108,15 +108,17 @@
 	<p><?php echo $success_message; ?></p>
 <?php }
 ?></div>
-<?php if(!$unset_add){?>
-<div class="datatables-add-button">
-<a role="button" class="add_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="<?php echo $add_url?>">
-	<span class="ui-button-icon-primary ui-icon ui-icon-circle-plus"></span>
-	<span class="ui-button-text"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
-</a>
-</div>
-<?php }?>
-<div style='height:10px;'></div>
 <div class="dataTablesContainer">
+	<?php if(!$unset_add){?>
+		<div class="datatables-add-button">
+		<a role="button" class="add_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="<?php echo $add_url?>">
+			<span class="ui-button-icon-primary ui-icon ui-icon-circle-plus"></span>
+			<span class="ui-button-text"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
+		</a>
+		</div>
+	<?php }?>
+	
+	<div style='height:10px;'></div>
+
 	<?php echo $list_view?>
 </div>

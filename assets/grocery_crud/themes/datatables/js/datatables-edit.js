@@ -2,6 +2,10 @@ $(function(){
 
 	var save_and_close = false;
 
+	var reload_datagrid = function () {
+		$('.refresh-data').trigger('click');
+	};
+
 	$('#save-and-go-back-button').click(function(){
 		save_and_close = true;
 
@@ -38,6 +42,7 @@ $(function(){
 									} else {
 										$(".ui-dialog-content").dialog("close");
 										success_message(data.success_message);
+										reload_datagrid();
 									}
 
 									return true;
@@ -46,7 +51,7 @@ $(function(){
 								$('.field_error').removeClass('field_error');
 
 								form_success_message(data.success_message);
-
+								reload_datagrid();
 							}
 							else
 							{

@@ -260,3 +260,20 @@ table.dataTable thead tr th.actions
 {
 	font-size: 12px !important;
 }
+
+/** Common CSS */
+.loading-opacity
+{
+	opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+}
+
+.loading-opacity:before {
+	font-size: 26px;
+	position:absolute;
+	color: #000;
+	content: "Loading...";
+	margin-left: 550px;
+	z-index: 1000;
+}

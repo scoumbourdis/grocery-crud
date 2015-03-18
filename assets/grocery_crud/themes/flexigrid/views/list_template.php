@@ -12,7 +12,9 @@
 
 	$this->set_js($this->default_theme_path.'/flexigrid/js/cookies.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/flexigrid.js');
-	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.form.js');
+
+    $this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.form.min.js');
+
 	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.numeric.min.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/jquery.printElement.min.js');
 
@@ -28,7 +30,7 @@
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';
 
-	var subject = '<?php echo $subject?>';
+	var subject = '<?php echo addslashes($subject); ?>';
 	var ajax_list_info_url = '<?php echo $ajax_list_info_url; ?>';
 	var unique_hash = '<?php echo $unique_hash; ?>';
 
@@ -116,20 +118,18 @@ if($success_message !== null){?>
 	<div class="pDiv">
 		<div class="pDiv2">
 			<div class="pGroup">
-				<div class="pSearch pButton quickSearchButton" id='quickSearchButton' title="<?php echo $this->l('list_search');?>">
-					<span></span>
-				</div>
-			</div>
-			<div class="btnseparator">
-			</div>
-			<div class="pGroup">
-				<select name="per_page" id='per_page' class="per_page">
-					<?php foreach($paging_options as $option){?>
-						<option value="<?php echo $option; ?>" <?php if($option == $default_per_page){?>selected="selected"<?php }?>><?php echo $option; ?>&nbsp;&nbsp;</option>
-					<?php }?>
-				</select>
-				<input type='hidden' name='order_by[0]' id='hidden-sorting' class='hidden-sorting' value='<?php if(!empty($order_by[0])){?><?php echo $order_by[0]?><?php }?>' />
-				<input type='hidden' name='order_by[1]' id='hidden-ordering' class='hidden-ordering'  value='<?php if(!empty($order_by[1])){?><?php echo $order_by[1]?><?php }?>'/>
+				<span class="pcontrol">
+					<?php list($show_lang_string, $entries_lang_string) = explode('{paging}', $this->l('list_show_entries')); ?>
+					<?php echo $show_lang_string; ?>
+					<select name="per_page" id='per_page' class="per_page">
+						<?php foreach($paging_options as $option){?>
+							<option value="<?php echo $option; ?>" <?php if($option == $default_per_page){?>selected="selected"<?php }?>><?php echo $option; ?>&nbsp;&nbsp;</option>
+						<?php }?>
+					</select>
+					<?php echo $entries_lang_string; ?>
+					<input type='hidden' name='order_by[0]' id='hidden-sorting' class='hidden-sorting' value='<?php if(!empty($order_by[0])){?><?php echo $order_by[0]?><?php }?>' />
+					<input type='hidden' name='order_by[1]' id='hidden-ordering' class='hidden-ordering'  value='<?php if(!empty($order_by[1])){?><?php echo $order_by[1]?><?php }?>'/>
+				</span>
 			</div>
 			<div class="btnseparator">
 			</div>

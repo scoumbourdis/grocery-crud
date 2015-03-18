@@ -1,7 +1,7 @@
 <?php
 
 	$this->set_css($this->default_theme_path.'/datatables/css/datatables.css');
-	$this->set_js_lib($this->default_theme_path.'/flexigrid/js/jquery.form.js');
+    $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.form.min.js');
 	$this->set_js_config($this->default_theme_path.'/datatables/js/datatables-add.js');
 	$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
@@ -17,7 +17,7 @@
 		<div class='clear'></div>
 	</h3>
 <div class='form-content form-div'>
-	<?php echo form_open( $insert_url, 'method="post" id="crudForm" autocomplete="off" enctype="multipart/form-data"'); ?>
+	<?php echo form_open( $insert_url, 'method="post" id="crudForm" enctype="multipart/form-data"'); ?>
 		<div>
 			<?php
 			$counter = 0;
