@@ -292,9 +292,9 @@ class grocery_CRUD_Field_Types
 				if(!empty($value) && $value != '0000-00-00 00:00:00' && $value != '1970-01-01 00:00:00')
 				{
 					list($year,$month,$day) = explode("-",$value);
-					list($hours,$minutes) = explode(":",substr($value,11));
+					list($hours,$minutes,$seconds) = explode(":",substr($value,11));
 
-					$value = date($this->php_date_format." - H:i", mktime ((int)$hours , (int)$minutes , 0, (int)$month , (int)$day ,(int)$year));
+					$value = date($this->php_datetime_format, mktime ((int)$hours , (int)$minutes , (int)$seconds, (int)$month , (int)$day ,(int)$year));
 				}
 				else
 				{
@@ -1383,13 +1383,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
 				$allowed_files = $this->config->file_upload_allow_file_types;
-				
-		                $reg_exp = '';
-		                if(!empty($upload_info->allowed_file_types)){
-		                    $reg_exp = '/(\\.|\\/)('.$upload_info->allowed_file_types.')$/i';
-		                }else{
-		                    $reg_exp = '/(\\.|\\/)('.$allowed_files.')$/i';
-		                }
+				$reg_exp = '/(\\.|\\/)('.$allowed_files.')$/i';
 
 				$max_file_size_ui = $this->config->file_upload_max_file_size;
 				$max_file_size_bytes = $this->_convert_bytes_ui_to_bytes($max_file_size_ui);
@@ -2117,12 +2111,10 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 
 		if ($this->unset_bootstrap) {
-			unset($js_files[sha1($this->default_theme_path.'/bootstrap/js/bootstrap/dropdown.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/bootstrap/js/bootstrap/modal.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/bootstrap/js/bootstrap/dropdown.min.js')]);
-			unset($js_files[sha1($this->default_theme_path.'/bootstrap/js/bootstrap/modal.min.js')]);
-			unset($css_files[sha1($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.css')]);
-			unset($css_files[sha1($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.min.css')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/bootstrap.min.js')]);
+			unset($js_files[sha1($this->default_theme_path.'/twitter-bootstrap/js/libs/bootstrap/application.js')]);
+			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap-responsive.min.css')]);
+			unset($css_files[sha1($this->default_theme_path.'/twitter-bootstrap/css/bootstrap.min.css')]);
 		}
 
 		if($this->echo_and_die === false)
@@ -3439,6 +3431,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $language				= null;
 	protected $lang_strings			= array();
 	protected $php_date_format		= null;
+	protected $php_datetime_format	= null;
 	protected $js_date_format		= null;
 	protected $ui_date_format		= null;
 	protected $character_limiter    = null;
@@ -4003,18 +3996,21 @@ class Grocery_CRUD extends grocery_CRUD_States
 	{
 		list($php_day, $php_month, $php_year) = array('d','m','Y');
 		list($js_day, $js_month, $js_year) = array('dd','mm','yy');
-		list($ui_day, $ui_month, $ui_year) = array($this->l('ui_day'), $this->l('ui_month'), $this->l('ui_year'));
+		list($ui_day, $ui_month, $ui_year) = array('dd','mm','yyyy');
+//@todo ui_day, ui_month, ui_year has to be lang strings
 
 		$date_format = $this->config->date_format;
 		switch ($date_format) {
 			case 'uk-date':
 				$this->php_date_format 		= "$php_day/$php_month/$php_year";
+				$this->php_datetime_format 	= "$php_day/$php_month/$php_year" . $this->config->time_format;
 				$this->js_date_format		= "$js_day/$js_month/$js_year";
 				$this->ui_date_format		= "$ui_day/$ui_month/$ui_year";
 			break;
 
 			case 'us-date':
 				$this->php_date_format 		= "$php_month/$php_day/$php_year";
+				$this->php_datetime_format 	= "$php_month/$php_day/$php_year" . $this->config->time_format;
 				$this->js_date_format		= "$js_month/$js_day/$js_year";
 				$this->ui_date_format		= "$ui_month/$ui_day/$ui_year";
 			break;
@@ -4022,6 +4018,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 			case 'sql-date':
 			default:
 				$this->php_date_format 		= "$php_year-$php_month-$php_day";
+				$this->php_datetime_format 	= "$php_year-$php_month-$php_day" . $this->config->time_format;
 				$this->js_date_format		= "$js_year-$js_month-$js_day";
 				$this->ui_date_format		= "$ui_year-$ui_month-$ui_day";
 			break;
@@ -4370,6 +4367,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 		/** Initialize all the config variables into this object */
 		$this->config->default_language 	= $ci->config->item('grocery_crud_default_language');
 		$this->config->date_format 			= $ci->config->item('grocery_crud_date_format');
+		$this->config->time_format 			= $ci->config->item('grocery_crud_time_format');
 		$this->config->default_per_page		= $ci->config->item('grocery_crud_default_per_page');
 		$this->config->file_upload_allow_file_types	= $ci->config->item('grocery_crud_file_upload_allow_file_types');
 		$this->config->file_upload_max_file_size	= $ci->config->item('grocery_crud_file_upload_max_file_size');
@@ -5144,7 +5142,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @param string $upload_path
      * @return Grocery_CRUD
 	 */
-	public function set_field_upload($field_name, $upload_dir = '', $allowed_file_types = '')
+	public function set_field_upload($field_name, $upload_dir = '')
 	{
 		$upload_dir = !empty($upload_dir) && substr($upload_dir,-1,1) == '/'
 						? substr($upload_dir,0,-1)
@@ -5160,7 +5158,6 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->upload_fields[$field_name] = (object) array(
 				'field_name' => $field_name,
 				'upload_path' => $upload_dir,
-				'allowed_file_types' => $allowed_file_types,
 				'encrypted_field_name' => $this->_unique_field_name($field_name));
 		return $this;
 	}
