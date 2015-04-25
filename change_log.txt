@@ -1,3 +1,5 @@
+v 1.5.2
+   Add lithuanian language - translated by alex@gnosi.lt
 v 1.5.1
 	#290 - Added functionality to define upload file types per field (pull request from @syrys)
 	#305 - Update french.php and add translation for date format (pull request from @bvrignaud)
