@@ -78,6 +78,6 @@
 	$lang['list_view'] = 'Εμφάνιση';
 
 	/* Added in version 1.5.1 */
-	$lang['ui_day'] = 'dd';
-	$lang['ui_month'] = 'mm';
-	$lang['ui_year'] = 'yyyy';
+	$lang['ui_day'] = 'ηη';
+	$lang['ui_month'] = 'μμ';
+	$lang['ui_year'] = 'χχχχ';
