@@ -432,10 +432,12 @@ class grocery_CRUD_Model  extends CI_Model  {
     	{
     		$type = explode("(",$db_field_type->Type);
     		$db_type = $type[0];
-
     		if(isset($type[1]))
     		{
-    			if(substr($type[1],-1) == ')')
+    		    if($db_type == "set"){
+    		        $length = substr($db_field_type->Type,4,-1);
+    		    }
+    			else if(substr($type[1],-1) == ')')
     			{
     				$length = substr($type[1],0,-1);
     			}
