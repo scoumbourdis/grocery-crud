@@ -3428,7 +3428,11 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $state_code 			= null;
 	protected $state_info 			= null;
 	protected $columns				= null;
-
+	
+	// for column align's feature purpose
+	protected $columns_aligned 		= false;
+	protected $columns_align 		= null;
+	
 	private $basic_db_table_checked = false;
 	private $columns_checked		= false;
 	private $add_fields_checked		= false;
@@ -3551,6 +3555,27 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 
+	/** ------------------------------------------
+	 * User can change the displayed columns align
+	 * -------------------------------------------
+	 * @access	public	 
+	 * @param	array
+	 * @return	void
+	 */
+	public function columns_align($columns_align = array())
+	{		
+		if( ! empty($columns_align) && is_array($columns_align))
+		{
+			foreach($columns_align as $col => $align)
+			{				
+				$this->columns_align[$col] = $align;
+			}
+
+			$this->columns_aligned = TRUE;
+		}
+		
+		return $this;
+	}
 
 	/**
 	 * Set Validation Rules
@@ -4101,6 +4126,12 @@ class Grocery_CRUD extends grocery_CRUD_States
 					$new_column = $this->_unique_field_name($this->relation[$column][0]);
 					$this->columns[$col_num] = $new_column;
 
+					if ($this->columns_aligned && is_array($this->columns_align) && array_key_exists($column, $this->columns_align))
+					{
+						$align = $this->columns_align[$column];
+						$this->columns_align[$new_column] = $align;
+					}
+					
 					if(isset($this->display_as[$column]))
 					{
 						$display_as = $this->display_as[$column];
@@ -4125,6 +4156,13 @@ class Grocery_CRUD extends grocery_CRUD_States
 							if( $relation[2] == $column )
 							{
 								$new_column = $table_name.'.'.$column;
+								
+								if ($this->columns_aligned && is_array($this->columns_align) && array_key_exists($column, $this->columns_align))
+								{
+									$align = $this->columns_align[$column];
+									$this->columns_align[$new_column] = $align;
+								}
+								
 								if(isset($this->display_as[$column]))
 								{
 									$display_as = $this->display_as[$column];
@@ -4145,12 +4183,14 @@ class Grocery_CRUD extends grocery_CRUD_States
 				}
 
 				if(isset($this->display_as[$column]))
-					$this->columns[$col_num] = (object)array('field_name' => $column, 'display_as' => $this->display_as[$column]);
+					$this->columns[$col_num] = (object)array('field_name' => $column, 'display_as' => $this->display_as[$column],
+						'align' => isset($this->columns_align[$column]) ? $this->columns_align[$column] : '');
 				elseif(isset($field_types[$column]))
-					$this->columns[$col_num] = (object)array('field_name' => $column, 'display_as' => $field_types[$column]->display_as);
+					$this->columns[$col_num] = (object)array('field_name' => $column, 'display_as' => $field_types[$column]->display_as,
+						'align' => isset($this->columns_align[$column]) ? $this->columns_align[$column] : '');
 				else
 					$this->columns[$col_num] = (object)array('field_name' => $column, 'display_as' =>
-						ucfirst(str_replace('_',' ',$column)));
+						ucfirst(str_replace('_',' ',$column)), 'align' => isset($this->columns_align[$column]) ? $this->columns_align[$column] : '');
 
 				if(!empty($this->unset_columns) && in_array($column,$this->unset_columns))
 				{

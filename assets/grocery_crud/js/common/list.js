@@ -3,8 +3,7 @@ var js_libraries = [];
 var fnOpenEditForm = function(this_element){
 
 	var href_url = this_element.attr("href");
-
-	var dialog_height = $(window).height() - 80;
+	var maxdialog_height = $(window).height() - 80;
 
 	//Close all
 	$(".ui-dialog-content").dialog("close");
@@ -41,7 +40,8 @@ var fnOpenEditForm = function(this_element){
 			$("<div/>").html(data.output).dialog({
 				width: 910,
 				modal: true,
-				height: dialog_height,
+				height: 'auto',
+				maxHeight: maxdialog_height,
 				close: function(){
 					$(this).remove();
 				},
@@ -49,7 +49,23 @@ var fnOpenEditForm = function(this_element){
 					var this_dialog = $(this);
 
 					$('#cancel-button').click(function(){
-						this_dialog.dialog("close");
+						noty({
+							text: (typeof(message_alert_add_form) == 'undefined'?message_alert_edit_form:message_alert_add_form),
+							type: 'warning',
+						  dismissQueue: true,
+						  modal: true,
+						  buttons: [
+							{addClass: 'btn btn-primary', text: 'Ok', onClick: function($noty) {
+								$noty.close();
+								this_dialog.dialog("close");
+							  }
+							},
+							{addClass: 'btn btn-danger', text: 'Cancel', onClick: function($noty) {
+								$noty.close();								
+							  }
+							}
+						  ]
+						});
 					});
 
 				}

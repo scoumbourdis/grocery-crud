@@ -144,28 +144,40 @@ $(function(){
 
 		var this_container = $(this).closest('.flexigrid');
 
-		if( confirm( message_alert_delete ) )
-		{
-			$.ajax({
-				url: delete_url,
-				dataType: 'json',
-				success: function(data)
-				{
-					if(data.success)
-					{
-						this_container.find('.ajax_refresh_and_loading').trigger('click');
-
-						success_message(data.success_message);
-					}
-					else
-					{
-						error_message(data.error_message);
-
-					}
+		noty({
+			text: message_alert_delete,
+			type: 'warning',
+			dismissQueue: true,
+			 modal: true,
+			buttons: [
+				{addClass: 'btn btn-primary', text: 'Ok', onClick: function($noty) {
+					$noty.close();
+					$.ajax({
+						url: delete_url,
+						dataType: 'json',
+						success: function(data)
+						{					
+							if(data.success)
+							{
+								this_container.find('.ajax_refresh_and_loading').trigger('click');
+								
+								success_message(data.success_message);
+							}
+							else
+							{
+								error_message(data.error_message);							
+								
+							}
+						}
+					});
+				  }
+				},
+				{addClass: 'btn btn-danger', text: 'Cancel', onClick: function($noty) {
+					$noty.close();								
+				  }
 				}
-			});
-		}
-
+			  ]
+		});
 		return false;
 	});
 
