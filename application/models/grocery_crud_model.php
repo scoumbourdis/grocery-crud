@@ -311,7 +311,7 @@ class grocery_CRUD_Model  extends CI_Model  {
     	}
     	else
     	{
-    		$select .= "$related_field_title as $field_name_hash";
+    		$select .= "{$field_info->selection_table}.{$field_info->title_field_selection_table} as $field_name_hash";
     	}
     	$this->db->select('*, '.$select,false);
 
