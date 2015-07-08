@@ -185,13 +185,12 @@ class grocery_CRUD_Model  extends CI_Model  {
 
     		$this->db->select($select,false);
     	}
-
-		return $this->db->get($this->table_name)->num_rows();
+		return $this->db->count_all_results($this->table_name);		
     }
 
     function set_basic_table($table_name = null)
     {
-    	if( !($this->db->table_exists($table_name)) )
+    	if( !($this->db_table_exists($table_name)) )
     		return false;
 
     	$this->table_name = $table_name;
@@ -454,8 +453,8 @@ class grocery_CRUD_Model  extends CI_Model  {
     		$db_field_types[$db_field_type->Field]['db_null'] = $db_field_type->Null == 'YES' ? true : false;
     		$db_field_types[$db_field_type->Field]['db_extra'] = $db_field_type->Extra;
     	}
-
-    	$results = $this->db->field_data($this->table_name);
+    	
+		$results = $this->get_field_types($this->table_name);
     	foreach($results as $num => $row)
     	{
     		$row = (array)$row;
