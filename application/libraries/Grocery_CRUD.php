@@ -495,7 +495,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->or_where))
 			foreach($this->or_where as $or_where)
 				$this->basic_model->or_where($or_where[0],$or_where[1],$or_where[2]);
-
+    
+    if(!empty($this->where_in))
+			foreach($this->where_in as $where_in)
+				$this->basic_model->where_in($where_in[0],$where_in[1]);
+				
 		if(!empty($this->like))
 			foreach($this->like as $like)
 				$this->basic_model->like($like[0],$like[1],$like[2]);
@@ -1266,7 +1270,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->or_where))
 			foreach($this->or_where as $or_where)
 				$this->basic_model->or_where($or_where[0],$or_where[1],$or_where[2]);
-
+    
+    if(!empty($this->where_in))
+			foreach($this->where_in as $where_in)
+				$this->basic_model->where_in($where_in[0],$where_in[1]);	
+				
 		if(!empty($this->like))
 			foreach($this->like as $like)
 				$this->basic_model->like($like[0],$like[1],$like[2]);
@@ -4316,7 +4324,14 @@ class Grocery_CRUD extends grocery_CRUD_States
 
 		return $this;
 	}
-
+  
+  public function where_in($key, $values = array() )
+  {
+    $this->where_in = array($key, $values);
+    
+    return $this;
+  }
+  
 	public function like($field, $match = '', $side = 'both')
 	{
 		$this->like[] = array($field, $match, $side);
