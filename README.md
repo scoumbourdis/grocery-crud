@@ -4,6 +4,8 @@
  
 **This have the advantage to do upload a file one time and use in many registes
 
+NOTE: This Have the firts step to apply bootrap theme!
+
 Grocery CRUD
 =============
 Grocery CRUD is a PHP and Codeigniter Framework library that creates a full functional CRUD system without the need to customise JavaScript or CSS.
