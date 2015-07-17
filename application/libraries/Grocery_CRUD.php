@@ -75,6 +75,11 @@ class grocery_CRUD_Field_Types
 				$real_type				= 'relation';
 				$field_info->crud_type 	= 'relation';
 			}
+			elseif(isset($this->upload_fields_disk[$field_info->name]))
+			{
+				$real_type				= 'upload_file_disk';
+				$field_info->crud_type 	= 'upload_file_disk';
+			}
 			elseif(isset($this->upload_fields[$field_info->name]))
 			{
 				$real_type				= 'upload_file';
@@ -98,7 +103,9 @@ class grocery_CRUD_Field_Types
 				case 'relation_readonly':
 					$field_info->extras 	= $this->relation[$field_info->name];
 				break;
-
+				case 'upload_file_disk':
+					$field_info->extras 	= $this->upload_fields_disk[$field_info->name];
+					break;
 				case 'upload_file':
 				case 'upload_file_readonly':
 					$field_info->extras 	= $this->upload_fields[$field_info->name];
@@ -230,6 +237,7 @@ class grocery_CRUD_Field_Types
 					'relation_readonly',
 					'relation_n_n',
 					'upload_file',
+					'upload_file_disk',
 					'upload_file_readonly',
 					'hidden',
 					'password',
@@ -357,7 +365,9 @@ class grocery_CRUD_Field_Types
 					$value = $file_url_anchor;
 				}
 			break;
-
+			case 'upload_file_disk':
+				$field_info->extras 	= $this->upload_fields_disk[$field_info->name];
+				break;
 			default:
 				$value = $this->character_limiter($value,$this->character_limiter,"...");
 			break;
@@ -2679,6 +2689,46 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		return $input;
 	}
 
+	protected function get_upload_file_disk_input($field_info, $value)
+	{
+	
+		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/file-uploader.css');
+		$this->set_css($this->default_css_path.'/jquery_plugins/file_upload/jquery.fileupload-ui.css');
+	
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/tmpl.min.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/load-image.min.js');
+	
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.iframe-transport.js');
+		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.fileupload.config.js');
+		$this->_inline_js("function open_elfinderxx(){ $('#elf').show();
+	
+    var f = $('#elf').elfinder({
+        url:'".base_url()."examples/elfinder_init',
+        height: 490,
+        docked: false,
+        dialog: { width: 400, modal: true },
+        closeOnEditorCallback: true,
+		getFileCallback:function(url){
+	
+			    var url_c = url.replace('".base_url()."assets/uploads/files/', '');
+				 $('#fileurl').val(url_c);
+	
+				 $('#elf').hide();
+			},
+		editorCallback: function(url) {
+	
+        }
+  }).elfinder('instance');
+	
+		}");
+	
+		$input='<div class="btn btn-success" id="select-button" onClick="open_elfinderxx()">select file</div>
+		<input type="text" id="fileurl" readonly name="'.$field_info->name.'" value="'.$value.'"/>
+	
+		';
+		return $input;
+	}
+	
 	protected function get_add_hidden_fields()
 	{
 		return $this->add_hidden_fields;
@@ -3467,6 +3517,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $relation				= array();
 	protected $relation_n_n			= array();
 	protected $upload_fields		= array();
+	protected $upload_fields_disk   = array();
 	protected $actions				= array();
 
 	protected $form_validation		= null;
@@ -5163,6 +5214,12 @@ class Grocery_CRUD extends grocery_CRUD_States
 				'allowed_file_types' => $allowed_file_types,
 				'encrypted_field_name' => $this->_unique_field_name($field_name));
 		return $this;
+	}
+	
+	public function set_field_upload_disk($field_name, $upload_dir = null)
+	{
+	
+		$this->upload_fields_disk[$field_name] = (object)array( 'field_name' => $field_name , 'upload_path' => $upload_dir, 'encrypted_field_name' =>  $this->_unique_field_name($field_name));
 	}
 }
 

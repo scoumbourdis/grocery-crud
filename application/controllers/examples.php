@@ -245,5 +245,79 @@ class Examples extends CI_Controller {
 			return $output;
 		}
 	}
+	
+	/**
+	 * Example for Elfinder
+	 *
+	 */
+	
+	public function employees_disk_management()
+	{
+		$crud = new grocery_CRUD();
+	
+		$crud->set_theme('datatables');
+		$crud->set_table('employees');
+		$crud->set_relation('officeCode','offices','city');
+		$crud->display_as('officeCode','Office City');
+		$crud->set_subject('Employee');
+	
+		$crud->required_fields('lastName');
+	
+		////$crud->set_field_upload('file_url','assets/uploads/files');
+		/**
+		 * Change In core Grocery Crud To Upload File Via Elfinder
+		 */
+		$crud->set_field_upload_disk('file_url','myuploads');
+	
+		////////////////////////////////
+		$output = $crud->render();
+	
+		$this->_example_output($output);
+	}
+	
+	/* Standalone Elfinder */
+	public function elfinder_files()
+	{
+		$this->load->view('elfinder_view');
+	
+	
+	}
+	
+	
+	
+	/* Popup Elfinder in TinyMCE */
+	public function elfinder_popup()
+	{
+		$this->load->view('elfinder_popup_view');
+	}
+	
+	/* Elfinder initialization */
+	public function elfinder_init()
+	{
+		$opts = array(
+				'debug' => true,
+					
+				'roots' => array(
+						array(
+								'driver' => 'LocalFileSystem',
+								'path' =>  'assets/uploads/files',
+								'URL' => base_url('assets/uploads/files'),
+								'alias' => 'My Uploads',
+								'uploadMaxSize' => '2M',
+								'attributes' => array(
+										array(
+												'pattern' => '/\.tmb$/',
+												'read' => false,
+												'write' => false,
+												'locked' => true,
+												'hidden' => true
+										)
+								),
+						)
+				)
+		);
+		$this->load->library('elfinder_lib/Elfinder_lib', $opts);
+	
+	}
 
 }

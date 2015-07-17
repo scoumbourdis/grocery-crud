@@ -9,6 +9,17 @@
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
 ?>
+<?php 
+//*JS PLUGIN ELFINDER*//
+$this->set_js('assets/elfinder/js/elfinder.min.js');
+$this->set_css('assets/elfinder/css/elfinder.min.css');
+?>
+<script type='text/javascript'>
+	var base_url = '<?php echo base_url();?>';
+	var upload_a_file_string = '<?php echo $this->l('form_upload_a_file');?>';
+</script>
+<div id="elf"></div>
+<!-- End OF ALteration -->
 <div class='ui-widget-content ui-corner-all datatables'>
 	<h3 class="ui-accordion-header ui-helper-reset ui-state-default form-title">
 		<div class='floatL form-title-left'>

@@ -33,7 +33,11 @@ a:hover
 		<a href='<?php echo site_url('examples/orders_management')?>'>Orders</a> |
 		<a href='<?php echo site_url('examples/products_management')?>'>Products</a> |
 		<a href='<?php echo site_url('examples/offices_management')?>'>Offices</a> | 
-		<a href='<?php echo site_url('examples/employees_management')?>'>Employees</a> |		 
+		<a href='<?php echo site_url('examples/employees_management')?>'>Employees</a> |		
+		<!-- Examples Elfinder-->
+		<a href='<?php echo site_url('examples/employees_disk_management')?>'>Employees <i>*new</i></i></a> |			
+		<a href='<?php echo site_url('examples/elfinder_files')?>'>FILES<i>*new</i></i></a> |
+		<!--- /Elfinder-->				 
 		<a href='<?php echo site_url('examples/film_management')?>'>Films</a> |
 		<a href='<?php echo site_url('examples/multigrids')?>'>Multigrid [BETA]</a>
 		
