@@ -85,8 +85,13 @@ class grocery_CRUD_Model  extends CI_Model  {
     	$this->db->select($select, false);
 
     	$results = $this->db->get($this->table_name)->result();
-
+        
     	return $results;
+    }
+
+    public function get_table_name()
+    {
+        return $this->table_name;
     }
 
     public function get_row($table_name = null)
@@ -143,6 +148,11 @@ class grocery_CRUD_Model  extends CI_Model  {
     function where($key, $value = NULL, $escape = TRUE)
     {
     	$this->db->where( $key, $value, $escape);
+    }
+
+    function join($table, $condition, $left_or_right_or_maybe_it_is_inner)
+    {
+        $this->db->join( $table, $condition, $left_or_right_or_maybe_it_is_inner);
     }
 
     function or_where($key, $value = NULL, $escape = TRUE)
