@@ -224,7 +224,6 @@ class Examples extends CI_Controller {
 
 	public function customers_management2()
 	{
-
 		$crud = new grocery_CRUD();
 
 		$crud->set_table('customers');
