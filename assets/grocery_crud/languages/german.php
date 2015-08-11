@@ -76,7 +76,7 @@
 
 
 	/* Added in version 1.4 */
-	$lang['list_view'] = 'View';
+	$lang['list_view'] = 'Anzeigen';
 
 	/* Added in version 1.5.1 */
 	$lang['ui_day'] = 'dd';
