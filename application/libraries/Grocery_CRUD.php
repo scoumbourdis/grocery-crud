@@ -105,7 +105,7 @@ class grocery_CRUD_Field_Types
 				break;
 
 				default:
-					if(empty($field_info->extras))
+					if(is_null($field_info->extras))
 						$field_info->extras = false;
 				break;
 			}
