@@ -82,3 +82,7 @@
 	$lang['ui_day'] = 'jj';
 	$lang['ui_month'] = 'mm';
 	$lang['ui_year'] = 'aaaa';
+
+	/* Added in version 1.5.2 */
+	$lang['list_more'] = 'More';
+
