@@ -1,3 +1,5 @@
+v 1.5.3
+   #141 - Max length for decimal numbers (pull request from @dodge107)
 v 1.5.2
    Add lithuanian language - translated by alex@gnosi.lt
    Fix compatibility issues with Codeigniter 3

@@ -2217,8 +2217,18 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$value = !is_string($value) ? '' : str_replace('"',"&quot;",$value);
 
 		$extra_attributes = '';
-		if(!empty($field_info->db_max_length))
-			$extra_attributes .= "maxlength='{$field_info->db_max_length}'";
+		if (!empty($field_info->db_max_length)) {
+
+            if (in_array($field_info->type, array("decimal", "float"))) {
+                $decimal_lentgh = explode(",", $field_info->db_max_length);
+                $decimal_lentgh = ((int)$decimal_lentgh[0]) + 1;
+
+                $extra_attributes .= "maxlength='" . $decimal_lentgh . "'";
+            } else {
+                $extra_attributes .= "maxlength='{$field_info->db_max_length}'";
+            }
+
+        }
 		$input = "<input id='field-{$field_info->name}' class='form-control' name='{$field_info->name}' type='text' value=\"$value\" $extra_attributes />";
 		return $input;
 	}
