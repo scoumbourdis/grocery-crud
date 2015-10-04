@@ -33,3 +33,13 @@
 
     //The environment is important so we can have specific configurations for specific environments
     $config['grocery_crud_environment'] = 'production';
+
+	// *** Export options ***
+	// Separator between columns
+	$config['grocery_crud_export_sep'] = '|';
+	// End of Lines (windows style = \r\n
+	$config['grocery_crud_export_eol'] = "\r\n";
+	// File extension
+	$config['grocery_crud_export_ext'] = '.csv';
+	// File Name Prefix
+	$config['grocery_crud_export_fname_prefix'] = 'listExport';
