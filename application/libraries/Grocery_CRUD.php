@@ -16,7 +16,7 @@
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2014, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.5.0
+ * @version    	1.5.2
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -468,7 +468,7 @@ class grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.0
+ * @version    	1.5.2
  * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
@@ -1517,7 +1517,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.0
+ * @version    	1.5.2
  */
 class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 {
@@ -1641,21 +1641,21 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$string_to_export = "";
 		foreach($data->columns as $column){
-			$string_to_export .= $column->display_as."\t";
+			$string_to_export .= $column->display_as.$this->config->export_sep;
 		}
-		$string_to_export .= "\n";
+		$string_to_export .= $this->config->export_eol;
 
 		foreach($data->list as $num_row => $row){
 			foreach($data->columns as $column){
-				$string_to_export .= $this->_trim_export_string($row->{$column->field_name})."\t";
+				$string_to_export .= $this->_trim_export_string($row->{$column->field_name}).$this->config->export_sep;
 			}
-			$string_to_export .= "\n";
+			$string_to_export .= $this->config->export_eol;
 		}
 
 		// Convert to UTF-16LE and Prepend BOM
 		$string_to_export = "\xFF\xFE" .mb_convert_encoding($string_to_export, 'UTF-16LE', 'UTF-8');
 
-		$filename = "export-".date("Y-m-d_H:i:s").".xls";
+		$filename = $this->config->export_fname_prefix.date("Y-m-d_H:i:s").$this->config->export_ext;
 
 		header('Content-type: application/vnd.ms-excel;charset=UTF-16LE');
 		header('Content-Disposition: attachment; filename='.$filename);
@@ -2967,7 +2967,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.0
+ * @version    	1.5.2
  */
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
@@ -3396,7 +3396,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2014, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.5.0
+ * @version    	1.5.2
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -3419,7 +3419,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 *
 	 * @var	string
 	 */
-	const	VERSION = "1.5.0";
+	const	VERSION = "1.5.2";
 
 	const	JQUERY 			= "jquery-1.11.1.min.js";
 	const	JQUERY_UI_JS 	= "jquery-ui-1.10.3.custom.min.js";
@@ -4380,6 +4380,10 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->config->paging_options		= $ci->config->item('grocery_crud_paging_options');
         $this->config->default_theme        = $ci->config->item('grocery_crud_default_theme');
         $this->config->environment          = $ci->config->item('grocery_crud_environment');
+		$this->config->export_eol			= $ci->config->item('grocery_crud_export_eol');
+		$this->config->export_sep			= $ci->config->item('grocery_crud_export_sep');
+		$this->config->export_ext			= $ci->config->item('grocery_crud_export_ext');
+		$this->config->export_fname_prefix = $ci->config->item('grocery_crud_export_fname_prefix');
 
 		/** Initialize default paths */
 		$this->default_javascript_path				= $this->default_assets_path.'/js';
