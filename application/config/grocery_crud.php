@@ -4,6 +4,10 @@
 
 	// There are only three choices: "uk-date" (dd/mm/yyyy), "us-date" (mm/dd/yyyy) or "sql-date" (yyyy-mm-dd)
 	$config['grocery_crud_date_format']			= 'uk-date';
+	
+	// The time format in PHP fashion usually along the lines of ' H:i' or ' - h:i:s A' or any variation like that
+	// Concatenated to the date: so add any space or dash you want
+	$config['grocery_crud_time_format']			= ' H:i:s';
 
 	// The default per page when a user firstly see a list page
 	$config['grocery_crud_default_per_page']	= 10;
@@ -28,7 +32,7 @@
 	//Make sure that the number of grocery_crud_default_per_page variable is included to this array.
 	$config['grocery_crud_paging_options'] = array('10','25','50','100');
 
-    //Default theme for grocery CRUD
+    //The environment is important so we can have specific configurations for specific environments
     $config['grocery_crud_default_theme'] = 'flexigrid';
 
     //The environment is important so we can have specific configurations for specific environments
