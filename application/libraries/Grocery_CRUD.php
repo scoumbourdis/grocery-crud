@@ -883,6 +883,16 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		return $validation_result;
 	}
 
+    protected function filter_data_from_xss($post_data) {
+        foreach ($post_data as $field_name => $rawData) {
+            if (!is_array($rawData)) {
+                $post_data[$field_name] = filter_var(strip_tags($rawData));
+            }
+        }
+
+        return $post_data;
+    }
+
 	protected function db_insert($state_info)
 	{
 		$validation_result = $this->db_insert_validation();
@@ -890,6 +900,8 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if($validation_result->success)
 		{
 			$post_data = $state_info->unwrapped_data;
+
+            $post_data = $this->filter_data_from_xss($post_data);
 
 			$add_fields = $this->get_add_fields();
 
@@ -1008,6 +1020,8 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		{
 			$post_data 		= $state_info->unwrapped_data;
 			$primary_key 	= $state_info->primary_key;
+
+            $post_data      = $this->filter_data_from_xss($post_data);
 
 			if($this->callback_update === null)
 			{
