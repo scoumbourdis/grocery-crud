@@ -22,7 +22,7 @@ $(function(){
 				'speedIn'		:	600,
 				'speedOut'		:	200,
 				'overlayShow'	:	false
-			});			
+			});
 		}
 	};
 
@@ -56,14 +56,14 @@ $(function(){
 			 success:    function(data){
 				this_form.closest('.flexigrid').find('.total_items').html( data.total_results);
 				displaying_and_pages(this_form.closest('.flexigrid'));
+			 }
+		});
 
-				this_form.ajaxSubmit({
-					 success:    function(data){
-						this_form.closest('.flexigrid').find('.ajax_list').html(data);
-						call_fancybox();
-						add_edit_button_listener();
-					 }
-				});
+		$(this).ajaxSubmit({
+			 success:    function(data){
+				this_form.closest('.flexigrid').find('.ajax_list').html(data);
+				call_fancybox();
+				add_edit_button_listener();
 			 }
 		});
 
