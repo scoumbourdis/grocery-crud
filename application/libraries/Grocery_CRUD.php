@@ -474,16 +474,16 @@ class grocery_CRUD_Field_Types
 class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 {
 	/**
-	 * @var grocery_CRUD_Model
+	 * @var Grocery_crud_model
 	 */
 	public $basic_model = null;
 
 	protected function set_default_Model()
 	{
 		$ci = &get_instance();
-		$ci->load->model('grocery_CRUD_Model');
+		$ci->load->model('Grocery_crud_model');
 
-		$this->basic_model = new grocery_CRUD_Model();
+		$this->basic_model = new Grocery_crud_model();
 	}
 
 	protected function get_total_results()
@@ -536,7 +536,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 	public function set_model($model_name)
 	{
 		$ci = &get_instance();
-		$ci->load->model('grocery_CRUD_Model');
+		$ci->load->model('Grocery_crud_model');
 
 		$ci->load->model($model_name);
 
@@ -1383,7 +1383,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
 				$allowed_files = $this->config->file_upload_allow_file_types;
-				
+
 		                $reg_exp = '';
 		                if(!empty($upload_info->allowed_file_types)){
 		                    $reg_exp = '/(\\.|\\/)('.$upload_info->allowed_file_types.')$/i';
@@ -3742,10 +3742,10 @@ class Grocery_CRUD extends grocery_CRUD_States
 
 		return $this;
 	}
-	
+
 	/**
 	 * Just an alias to unset_read
-	 * 
+	 *
 	 * @return	void
 	 * */
 	public function unset_view()

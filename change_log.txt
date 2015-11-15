@@ -1,5 +1,6 @@
 v 1.5.3
    #141 - Max length for decimal numbers (pull request from @dodge107)
+   #335 - Unable to locate the model you have specified: grocery_crud_model (pull request: #336 from @P8H)
 v 1.5.2
    Add lithuanian language - translated by alex@gnosi.lt
    Fix compatibility issues with Codeigniter 3
