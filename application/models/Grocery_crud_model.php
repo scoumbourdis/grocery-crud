@@ -300,6 +300,7 @@ class Grocery_crud_model  extends CI_Model  {
 
     function get_relation_n_n_selection_array($primary_key_value, $field_info)
     {
+		$use_order_by = !empty($field_info->order_by);
     	$select = "";
     	$related_field_title = $field_info->title_field_selection_table;
     	$use_template = strpos($related_field_title,'{') !== false;;
@@ -320,7 +321,10 @@ class Grocery_crud_model  extends CI_Model  {
     	if(empty($field_info->priority_field_relation_table))
     	{
     		if(!$use_template){
-    			$this->db->order_by("{$field_info->selection_table}.{$field_info->title_field_selection_table}");
+				if($use_order_by)
+    				$this->db->order_by("{$field_info->selection_table}.{$field_info->order_by}");
+    			else
+    				$this->db->order_by("{$field_info->selection_table}.{$field_info->title_field_selection_table}");
     		}
     	}
     	else
@@ -346,6 +350,7 @@ class Grocery_crud_model  extends CI_Model  {
     function get_relation_n_n_unselected_array($field_info, $selected_values)
     {
     	$use_where_clause = !empty($field_info->where_clause);
+		$use_order_by = !empty($field_info->order_by);
 
     	$select = "";
     	$related_field_title = $field_info->title_field_selection_table;
@@ -368,9 +373,13 @@ class Grocery_crud_model  extends CI_Model  {
     	}
 
     	$selection_primary_key = $this->get_primary_key($field_info->selection_table);
-        if(!$use_template)
-        	$this->db->order_by("{$field_info->selection_table}.{$field_info->title_field_selection_table}");
+		if(!$use_template){
+        	if($use_order_by)
+        		$this->db->order_by("{$field_info->selection_table}.{$field_info->order_by}");
+        	else
+        		$this->db->order_by("{$field_info->selection_table}.{$field_info->title_field_selection_table}");
         $results = $this->db->get($field_info->selection_table)->result();
+        }
 
         $results_array = array();
         foreach($results as $row)
