@@ -207,6 +207,16 @@ class Grocery_crud_model  extends CI_Model  {
     	return $result;
     }
 
+	function get_extra_edit_values($table, $where)
+	{
+		$result = $this->db->from($table)
+			->where($where)
+			->get()
+			->row();
+			
+		return $result;
+	}
+
     function join_relation($field_name , $related_table , $related_field_title)
     {
 		$related_primary_key = $this->get_primary_key($related_table);
@@ -382,7 +392,7 @@ class Grocery_crud_model  extends CI_Model  {
         return $results_array;
     }
 
-    function db_relation_n_n_update($field_info, $post_data ,$main_primary_key)
+    function db_relation_n_n_update($field_info, $post_data ,$main_primary_key, $extra_data = array())
     {
     	$this->db->where($field_info->primary_key_alias_to_this_table, $main_primary_key);
     	if(!empty($post_data))
@@ -407,11 +417,14 @@ class Grocery_crud_model  extends CI_Model  {
 					if(!empty($field_info->priority_field_relation_table))
 						$where_array[$field_info->priority_field_relation_table] = $counter;
 
-					$this->db->insert($field_info->relation_table, $where_array);
+					$this->db->insert($field_info->relation_table, array_merge($where_array, isset($extra_data[$primary_key_value]) ? $extra_data[$primary_key_value] : array()));
 
 				}elseif($count >= 1 && !empty($field_info->priority_field_relation_table))
 				{
-					$this->db->update( $field_info->relation_table, array($field_info->priority_field_relation_table => $counter) , $where_array);
+					$this->db->update($field_info->relation_table, array_merge(array($field_info->priority_field_relation_table => $counter), isset($extra_data[$primary_key_value]) ? $extra_data[$primary_key_value] : array()) , $where_array);
+				}
+				elseif($count >= 1 && isset($extra_data[$primary_key_value])) {
+					$this->db->update($field_info->relation_table, $extra_data[$primary_key_value], $where_array);
 				}
 
 				$counter++;
@@ -471,6 +484,20 @@ class Grocery_crud_model  extends CI_Model  {
 
     	return $results;
     }
+
+	function enum_select( $table , $field )
+	{
+		$row = $this->db->query("SHOW COLUMNS FROM ".$table." LIKE '$field'")->row()->Type;
+		$regex = "/'(.*?)'/";
+		preg_match_all( $regex , $row, $enum_array );
+		$enum_fields = $enum_array[1];
+		foreach ($enum_fields as $key=>$value)
+		{
+			$enums[$value] = $value;
+		}
+
+		return $enums;
+	}
 
     function db_update($post_array, $primary_key_value)
     {

@@ -42,6 +42,8 @@ div.button span {
   padding: 0;
 }
 
+.radio{display:inline-block !important;}
+
 /* INPUT & TEXTAREA */
 
 input.text,
