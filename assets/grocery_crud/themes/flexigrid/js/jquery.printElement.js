@@ -25,12 +25,7 @@
     var $ = window["jQuery"];
     $.fn["printElement"] = function (options) {
         var mainOptions = $.extend({}, $.fn["printElement"]["defaults"], options);
-        //iframe mode is not supported for opera and chrome 3.0 (it prints the entire page).
-        //http://www.google.com/support/forum/p/Webmasters/thread?tid=2cb0f08dce8821c3&hl=en
-        if (mainOptions["printMode"] == 'iframe') {
-            if ($.browser.opera || (/chrome/.test(navigator.userAgent.toLowerCase())))
-                mainOptions["printMode"] = 'popup';
-        }
+
         //Remove previously printed iframe if exists
         $("[id^='printElement_']").remove();
 
@@ -173,7 +168,7 @@
         html.push('<base href="' + _getBaseHref() + '" />');
         html.push('</head><body style="' + opts["printBodyOptions"]["styleToAdd"] + '" class="' + opts["printBodyOptions"]["classNameToAdd"] + '">');
         html.push('<div class="' + $element.attr('class') + '">' + elementHtml + '</div>');
-        html.push('<script type="text/javascript">function printPage(){focus();print();' + ((!$.browser.opera && !opts["leaveOpen"] && opts["printMode"].toLowerCase() == 'popup') ? 'close();' : '') + '}</script>');
+        html.push('<script type="text/javascript">function printPage(){focus();print();' + ((!opts["leaveOpen"] && opts["printMode"].toLowerCase() == 'popup') ? 'close();' : '') + '}</script>');
         html.push('</body></html>');
 
         return html.join('');
