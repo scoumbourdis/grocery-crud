@@ -24,7 +24,7 @@
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.2
+ * @version    	1.5.4
  * @link		http://www.grocerycrud.com/documentation
  */
 class Grocery_crud_model  extends CI_Model  {
