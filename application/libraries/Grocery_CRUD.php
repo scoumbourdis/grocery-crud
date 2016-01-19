@@ -986,7 +986,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 								elseif ($column_type == 'set' || $column_type == 'multiselect') {
 									$extra_data[$key][$key2] = !empty($extra_data[$key][$key2]) ? implode(',',$extra_data[$key][$key2]) : '';
 								}
-						
+
 							}
 						}
 						$this->db_relation_n_n_update($field_info, $relation_data, $insert_primary_key, $extra_data);
@@ -2247,9 +2247,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$value_is_null = empty($value) && $value !== '0' && $value !== 0 ? true : false;
 
 		$input = "<div class='pretty-radio-buttons'>";
-// 		echo '<pre>';
-// 		var_dump($field_info);
-// 		echo '</pre>';
 		$default = isset($field_info->default)?$field_info->default:'1';
 		$true_string = is_array($field_info->extras) && array_key_exists(1,$field_info->extras) ? $field_info->extras[1] : $this->default_true_false_text[1];
 		$checked = $value === '1' || ($value_is_null && $default === '1') ? "checked = 'checked'" : "";
@@ -2323,16 +2320,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 					$this->set_js($this->default_texteditor_path.'/ckeditor/adapters/jquery.js');
 					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.ckeditor.config.js');
 					break;
-		
+
 				case 'tinymce':
 					$this->set_js($this->default_texteditor_path.'/tiny_mce/jquery.tinymce.js');
 					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.tine_mce.config.js');
 					break;
-		
+
 				case 'markitup':
 					$this->set_css($this->default_texteditor_path.'/markitup/skins/markitup/style.css');
 					$this->set_css($this->default_texteditor_path.'/markitup/sets/default/style.css');
-		
+
 					$this->set_js($this->default_texteditor_path.'/markitup/jquery.markitup.js');
 					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.markitup.config.js');
 					break;
@@ -2660,48 +2657,48 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		else
 		{
 			if ($has_extra_fields) {
-			
+
 				$select_title = str_replace('{field_display_as}',$field_info_type->display_as,$this->l('set_relation_title'));
 				$input = "<select id='field-{$field_info_type->name}' name='{$field_info_type->name}[]' multiple='multiple' size='8' data-placeholder='$select_title' style='display:none;' >";
-			
+
 				if(!empty($unselected_values))
 				foreach($unselected_values as $id => $name){
 					$input .= "<option value='$id'>$name</option>";
 				}
-			
+
 				if(!empty($selected_values))
 				foreach($selected_values as $id => $name){
 					$input .= "<option value='$id' selected='selected'>$name</option>";
 				}
-			
+
 				$input .= "</select>";
-			
+
 				$input .= "<select class='relation_table_value_selector chosen-select' data-field='{$field_info_type->name}' data-placeholder='$select_title'>";
-			
+
 				$input .= "<option value=''></option>";
-			
+
 				if(!empty($unselected_values))
 				foreach($unselected_values as $id => $name){
 					$input .= "<option value='$id'>$name</option>";
 				}
-			
+
 				if(!empty($selected_values))
 				foreach($selected_values as $id => $name){
 					$input .= "<option value='$id'>$name</option>";
 				}
-			
+
 				$input .= "</select>";
-			
+
 				$extra_fields = $this->basic_model->get_field_types($field_info_type->extras->relation_table);
 				$extra_state_info = $this->getStateInfo();
-			
+
 				$input .= "<div id='{$field_info_type->name}Tabs' class='tabs'>";
 				$input .= " <ul>";
 				if(!empty($selected_values))
 				foreach($selected_values as $id => $name){
 					$input .= "<li><a href='#{$field_info_type->name}-relation-$id'>$name</a><span class='ui-icon ui-icon-close' data-value='$id' data-field='{$field_info_type->name}' role='presentation'>Remove Tab</span></li>";
 				}
-			
+
 				$input .= " </ul>";
 				if(!empty($selected_values))
 				foreach($selected_values as $id => $name){
@@ -2710,7 +2707,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 					$values = $this->basic_model->get_extra_edit_values($field_info_type->extras->relation_table, $extra_where);
 
 					$input .= "<div id='{$field_info_type->name}-relation-$id'><p></p>";
-			
+
 					foreach ($extra_fields as $extra_field){
 						if ( $this->unset_edit_fields !== null
 						&& is_array($this->unset_edit_fields)
@@ -2720,13 +2717,14 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 						}
 						if( $extra_field->name != $field_info_type->extras->primary_key_alias_to_this_table
 						&& $extra_field->name != $field_info_type->extras->primary_key_alias_to_selection_table){
-			
+
 							$extra_field->db_type = $extra_field->type;
 							$extra_field->db_max_length = $extra_field->max_length;
-			
+
 							$extra_field_info = (object)array();
 							$extra_field_info->name		= $field_info_type->name.'Extras['.$id.']['.$extra_field->name.']';
 							$extra_field_info->crud_type 	= $this->get_type($extra_field);
+							$extra_field_info->type = $extra_field->type;
 							if($extra_field_info->crud_type== 'text'){
 								$extra_field_info->extras = 'text_editor';
 							}
@@ -2747,7 +2745,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				$input .= "</div>";
 
 				$input .= "<div id='{$field_info_type->name}Template' style='display:none'>";
-			
+
 				foreach ($extra_fields as $extra_field) {
 					if ( $this->unset_edit_fields !== null
 					&& is_array($this->unset_edit_fields)
@@ -2757,13 +2755,14 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 					}
 					if( $extra_field->name != $field_info_type->extras->primary_key_alias_to_this_table
 					&& $extra_field->name != $field_info_type->extras->primary_key_alias_to_selection_table){
-			
+
 						$extra_field->db_type = $extra_field->type;
 						$extra_field->db_max_length = $extra_field->max_length;
-			
+
 						$extra_field_info = (object)array();
 						$extra_field_info->name		= $field_info_type->name.'Extras[{primary_key_value}]['.$extra_field->name.']';
 						$extra_field_info->crud_type 	= $this->get_type($extra_field);
+						$extra_field_info->type = $extra_field->type;
 						if($extra_field_info->crud_type == 'text'){
 							$extra_field_info->extras = 'text_editor_to_be';
 						}
@@ -2783,22 +2782,22 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			} else {
 				$css_class = $has_priority_field || $is_ie_7 ? 'multiselect': 'chosen-multiple-select';
 				$width_style = $has_priority_field || $is_ie_7 ? '' : 'width:510px;';
-	
+
 				$select_title = str_replace('{field_display_as}',$field_info_type->display_as,$this->l('set_relation_title'));
 				$input = "<select id='field-{$field_info_type->name}' name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='$select_title' style='$width_style' >";
-	
+
 				if(!empty($unselected_values))
 					foreach($unselected_values as $id => $name)
 					{
 						$input .= "<option value='$id'>$name</option>";
 					}
-	
+
 				if(!empty($selected_values))
 					foreach($selected_values as $id => $name)
 					{
 						$input .= "<option value='$id' selected='selected'>$name</option>";
 					}
-	
+
 				$input .= "</select>";
 			}
 		}
@@ -5335,6 +5334,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @param string $title_field_selection_table
 	 * @param string $priority_field_relation_table
 	 * @param mixed $where_clause
+	 * @param boolean $extra_fields
      * @return Grocery_CRUD
 	 */
 	public function set_relation_n_n($field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table, $primary_key_alias_to_selection_table , $title_field_selection_table , $priority_field_relation_table = null, $where_clause = null, $extra_fields = null)
