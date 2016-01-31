@@ -1,3 +1,5 @@
+v 1.5.5
+   Add Croatian language - translated by: Siniša Dragičević Martinčić
 v 1.5.4
    Changes for compatibility without jQuery Migrate
 v 1.5.3
