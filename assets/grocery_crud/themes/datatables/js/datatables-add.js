@@ -117,6 +117,7 @@ $(function(){
 	            case 'text':
 	            case 'textarea':
 	                $(this).val('');
+	                $(this).trigger('change');
 	                break;
 	            case 'checkbox':
 	            case 'radio':

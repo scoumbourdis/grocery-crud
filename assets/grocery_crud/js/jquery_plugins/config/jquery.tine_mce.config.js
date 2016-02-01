@@ -1,7 +1,8 @@
+var tinymce_options;
 	$(function() {
 		var tinymce_path = default_texteditor_path+'/tiny_mce/';
 	
-		var tinymce_options = {
+		tinymce_options = {
 
 				// Location of TinyMCE script
 				script_url : tinymce_path +"tiny_mce.js",

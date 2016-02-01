@@ -964,7 +964,32 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					foreach($this->relation_n_n as $field_name => $field_info)
 					{
 						$relation_data = isset( $post_data[$field_name] ) ? $post_data[$field_name] : array() ;
-						$this->db_relation_n_n_update($field_info, $relation_data  ,$insert_primary_key);
+						$extra_data = isset($post_data[$field_name.'Extras'])?$post_data[$field_name.'Extras']:array();
+						$extra_fields_types = $this->basic_model->get_field_types($field_info->relation_table);
+						foreach ($extra_data as $key=>$extra_field) {
+							foreach ($extra_field as $key2=>$column) {
+								foreach ($extra_fields_types as $extra_fields_type) {
+									if ($extra_fields_type->name == $key2) {
+										$extra_fields_type->db_type = $extra_fields_type->type;
+										$extra_fields_type->db_max_length = $extra_fields_type->max_length;
+										$column_type = $this->get_type($extra_fields_type);
+										break;
+									}
+								}
+								if ($column_type == 'datetime') {
+									$extra_data[$key][$key2] = $this->_convert_date_to_sql_date(substr($column,0,10)).
+									substr($column,10);
+								}
+								elseif ($column_type == 'date') {
+									$extra_data[$key][$key2] = $this->_convert_date_to_sql_date($column);
+								}
+								elseif ($column_type == 'set' || $column_type == 'multiselect') {
+									$extra_data[$key][$key2] = !empty($extra_data[$key][$key2]) ? implode(',',$extra_data[$key][$key2]) : '';
+								}
+
+							}
+						}
+						$this->db_relation_n_n_update($field_info, $relation_data, $insert_primary_key, $extra_data);
 					}
 				}
 
@@ -1086,7 +1111,30 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						}
 
 						$relation_data = isset( $post_data[$field_name] ) ? $post_data[$field_name] : array() ;
-						$this->db_relation_n_n_update($field_info, $relation_data ,$primary_key);
+						$extra_data = isset($post_data[$field_name.'Extras'])?$post_data[$field_name.'Extras']:array();
+						$extra_fields_types = $this->basic_model->get_field_types($field_info->relation_table);
+						foreach ($extra_data as $key=>$extra_field) {
+							foreach ($extra_field as $key2=>$column) {
+								foreach ($extra_fields_types as $extra_fields_type) {
+									if($extra_fields_type->name == $key2){
+										$extra_fields_type->db_type = $extra_fields_type->type;
+										$extra_fields_type->db_max_length = $extra_fields_type->max_length;
+										$column_type = $this->get_type($extra_fields_type);
+										break;
+									}
+								}
+								if ($column_type == 'datetime') {
+									$extra_data[$key][$key2] = $this->_convert_date_to_sql_date(substr($column,0,10)) + substr($column,10);
+								}
+								elseif ($column_type == 'date') {
+									$extra_data[$key][$key2] = $this->_convert_date_to_sql_date($column);
+								}
+								elseif ($column_type == 'set' || $column_type == 'multiselect') {
+									$extra_data[$key][$key2] = !empty($extra_data[$key][$key2]) ? implode(',',$extra_data[$key][$key2]) : '';
+								}
+							}
+						}
+						$this->db_relation_n_n_update($field_info, $relation_data, $primary_key, $extra_data);
 					}
 				}
 
@@ -1244,9 +1292,9 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		return true;
 	}
 
-	protected function db_relation_n_n_update($field_info, $post_data , $primary_key_value)
+	protected function db_relation_n_n_update($field_info, $post_data , $primary_key_value, $extra_data = array())
 	{
-		$this->basic_model->db_relation_n_n_update($field_info, $post_data , $primary_key_value);
+		$this->basic_model->db_relation_n_n_update($field_info, $post_data , $primary_key_value, $extra_data);
 	}
 
 	protected function db_relation_n_n_delete($field_info, $primary_key_value)
@@ -1596,6 +1644,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$data->list[$num_row]->edit_url = $data->edit_url.'/'.$row->{$data->primary_key};
 			$data->list[$num_row]->delete_url = $data->delete_url.'/'.$row->{$data->primary_key};
 			$data->list[$num_row]->read_url = $data->read_url.'/'.$row->{$data->primary_key};
+			$data->list[$num_row]->primary_key = $row->{$data->primary_key};
 		}
 
 		if(!$ajax)
@@ -2198,13 +2247,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$value_is_null = empty($value) && $value !== '0' && $value !== 0 ? true : false;
 
 		$input = "<div class='pretty-radio-buttons'>";
-
+		$default = isset($field_info->default)?$field_info->default:'1';
 		$true_string = is_array($field_info->extras) && array_key_exists(1,$field_info->extras) ? $field_info->extras[1] : $this->default_true_false_text[1];
-		$checked = $value === '1' || ($value_is_null && $field_info->default === '1') ? "checked = 'checked'" : "";
+		$checked = $value === '1' || ($value_is_null && $default === '1') ? "checked = 'checked'" : "";
 		$input .= "<label><input id='field-{$field_info->name}-true' class='radio-uniform'  type='radio' name='{$field_info->name}' value='1' $checked /> ".$true_string."</label> ";
 
 		$false_string =  is_array($field_info->extras) && array_key_exists(0,$field_info->extras) ? $field_info->extras[0] : $this->default_true_false_text[0];
-		$checked = $value === '0' || ($value_is_null && $field_info->default === '0') ? "checked = 'checked'" : "";
+		$checked = $value === '0' || ($value_is_null && $default === '0') ? "checked = 'checked'" : "";
 		$input .= "<label><input id='field-{$field_info->name}-false' class='radio-uniform' type='radio' name='{$field_info->name}' value='0' $checked /> ".$false_string."</label>";
 
 		$input .= "</div>";
@@ -2262,6 +2311,30 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$class_name = $this->config->text_editor_type == 'minimal' ? 'mini-texteditor' : 'texteditor';
 
 			$input = "<textarea id='field-{$field_info->name}' name='{$field_info->name}' class='$class_name' >$value</textarea>";
+		}
+		elseif($field_info->extras == 'text_editor_to_be'){
+			$editor = $this->config->default_text_editor;
+			switch ($editor) {
+				case 'ckeditor':
+					$this->set_js($this->default_texteditor_path.'/ckeditor/ckeditor.js');
+					$this->set_js($this->default_texteditor_path.'/ckeditor/adapters/jquery.js');
+					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.ckeditor.config.js');
+					break;
+
+				case 'tinymce':
+					$this->set_js($this->default_texteditor_path.'/tiny_mce/jquery.tinymce.js');
+					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.tine_mce.config.js');
+					break;
+
+				case 'markitup':
+					$this->set_css($this->default_texteditor_path.'/markitup/skins/markitup/style.css');
+					$this->set_css($this->default_texteditor_path.'/markitup/sets/default/style.css');
+
+					$this->set_js($this->default_texteditor_path.'/markitup/jquery.markitup.js');
+					$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.markitup.config.js');
+					break;
+			}
+			$input = "<textarea id='field-{$field_info->name}' name='{$field_info->name}'>$value</textarea>";
 		}
 		else
 		{
@@ -2533,6 +2606,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function get_relation_n_n_input($field_info_type, $selected_values)
 	{
 		$has_priority_field = !empty($field_info_type->extras->priority_field_relation_table) ? true : false;
+		$has_extra_fields = !empty($field_info_type->extras->extra_fields) ? true : false;
 		$is_ie_7 = isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7') !== false) ? true : false;
 
 		if($has_priority_field || $is_ie_7)
@@ -2556,6 +2630,14 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				}
 			}
 		}
+		elseif($has_extra_fields) {
+			$this->set_css($this->default_css_path.'/ui/simple/'.grocery_CRUD::JQUERY_UI_CSS);
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.tab.config.js');
+			$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.chosen.min.js');
+			$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
+		}
 		else
 		{
 			$this->set_css($this->default_css_path.'/jquery_plugins/chosen/chosen.css');
@@ -2574,25 +2656,150 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		else
 		{
-			$css_class = $has_priority_field || $is_ie_7 ? 'multiselect': 'chosen-multiple-select';
-			$width_style = $has_priority_field || $is_ie_7 ? '' : 'width:510px;';
+			if ($has_extra_fields) {
 
-			$select_title = str_replace('{field_display_as}',$field_info_type->display_as,$this->l('set_relation_title'));
-			$input = "<select id='field-{$field_info_type->name}' name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='$select_title' style='$width_style' >";
+				$select_title = str_replace('{field_display_as}',$field_info_type->display_as,$this->l('set_relation_title'));
+				$input = "<select id='field-{$field_info_type->name}' name='{$field_info_type->name}[]' multiple='multiple' size='8' data-placeholder='$select_title' style='display:none;' >";
 
-			if(!empty($unselected_values))
-				foreach($unselected_values as $id => $name)
-				{
+				if(!empty($unselected_values))
+				foreach($unselected_values as $id => $name){
 					$input .= "<option value='$id'>$name</option>";
 				}
 
-			if(!empty($selected_values))
-				foreach($selected_values as $id => $name)
-				{
+				if(!empty($selected_values))
+				foreach($selected_values as $id => $name){
 					$input .= "<option value='$id' selected='selected'>$name</option>";
 				}
 
-			$input .= "</select>";
+				$input .= "</select>";
+
+				$input .= "<select class='relation_table_value_selector chosen-select' data-field='{$field_info_type->name}' data-placeholder='$select_title'>";
+
+				$input .= "<option value=''></option>";
+
+				if(!empty($unselected_values))
+				foreach($unselected_values as $id => $name){
+					$input .= "<option value='$id'>$name</option>";
+				}
+
+				if(!empty($selected_values))
+				foreach($selected_values as $id => $name){
+					$input .= "<option value='$id'>$name</option>";
+				}
+
+				$input .= "</select>";
+
+				$extra_fields = $this->basic_model->get_field_types($field_info_type->extras->relation_table);
+				$extra_state_info = $this->getStateInfo();
+
+				$input .= "<div id='{$field_info_type->name}Tabs' class='tabs'>";
+				$input .= " <ul>";
+				if(!empty($selected_values))
+				foreach($selected_values as $id => $name){
+					$input .= "<li><a href='#{$field_info_type->name}-relation-$id'>$name</a><span class='ui-icon ui-icon-close' data-value='$id' data-field='{$field_info_type->name}' role='presentation'>Remove Tab</span></li>";
+				}
+
+				$input .= " </ul>";
+				if(!empty($selected_values))
+				foreach($selected_values as $id => $name){
+					$extra_where = array($field_info_type->extras->primary_key_alias_to_this_table => $extra_state_info->primary_key ,
+							$field_info_type->extras->primary_key_alias_to_selection_table => $id);
+					$values = $this->basic_model->get_extra_edit_values($field_info_type->extras->relation_table, $extra_where);
+
+					$input .= "<div id='{$field_info_type->name}-relation-$id'><p></p>";
+
+					foreach ($extra_fields as $extra_field){
+						if ( $this->unset_edit_fields !== null
+						&& is_array($this->unset_edit_fields)
+						&& in_array(('extra_field_'.$extra_field->name),$this->unset_edit_fields)
+						) {
+							continue;
+						}
+						if( $extra_field->name != $field_info_type->extras->primary_key_alias_to_this_table
+						&& $extra_field->name != $field_info_type->extras->primary_key_alias_to_selection_table){
+
+							$extra_field->db_type = $extra_field->type;
+							$extra_field->db_max_length = $extra_field->max_length;
+
+							$extra_field_info = (object)array();
+							$extra_field_info->name		= $field_info_type->name.'Extras['.$id.']['.$extra_field->name.']';
+							$extra_field_info->crud_type 	= $this->get_type($extra_field);
+							$extra_field_info->type = $extra_field->type;
+							if($extra_field_info->crud_type== 'text'){
+								$extra_field_info->extras = 'text_editor';
+							}
+							elseif($extra_field_info->crud_type == 'set' || $extra_field_info->crud_type == 'enum'){
+								$extra_field_info->extras = $this->basic_model->enum_select($field_info_type->extras->relation_table, $extra_field->name);
+							}
+							else{
+								$extra_field_info->extras = null;
+							}
+							$extra_field_info->db_max_length = $extra_field->db_max_length;
+							$extra_field_info->required	= false;
+							$extra_field_info->display_as = ucfirst(str_replace("_"," ",$extra_field->name));
+							$input .= "<div>".$extra_field_info->display_as."</div><div>".$this->get_field_input($extra_field_info, $values->{$extra_field->name})->input."</div>";
+						}
+					}
+					$input .= "<p></p></div>";
+				}
+				$input .= "</div>";
+
+				$input .= "<div id='{$field_info_type->name}Template' style='display:none'>";
+
+				foreach ($extra_fields as $extra_field) {
+					if ( $this->unset_edit_fields !== null
+					&& is_array($this->unset_edit_fields)
+					&& in_array(('extra_field_'.$extra_field->name),$this->unset_edit_fields)
+					) {
+						continue;
+					}
+					if( $extra_field->name != $field_info_type->extras->primary_key_alias_to_this_table
+					&& $extra_field->name != $field_info_type->extras->primary_key_alias_to_selection_table){
+
+						$extra_field->db_type = $extra_field->type;
+						$extra_field->db_max_length = $extra_field->max_length;
+
+						$extra_field_info = (object)array();
+						$extra_field_info->name		= $field_info_type->name.'Extras[{primary_key_value}]['.$extra_field->name.']';
+						$extra_field_info->crud_type 	= $this->get_type($extra_field);
+						$extra_field_info->type = $extra_field->type;
+						if($extra_field_info->crud_type == 'text'){
+							$extra_field_info->extras = 'text_editor_to_be';
+						}
+						elseif($extra_field_info->crud_type == 'set' || $extra_field_info->crud_type == 'enum'){
+							$extra_field_info->extras = $this->basic_model->enum_select($field_info_type->extras->relation_table, $extra_field->name);
+						}
+						else{
+							$extra_field_info->extras = null;
+						}
+						$extra_field_info->db_max_length = $extra_field->db_max_length;
+						$extra_field_info->required	= false;
+						$extra_field_info->display_as = ucfirst(str_replace("_"," ",$extra_field->name));
+						$input .= "<div>".$extra_field_info->display_as."</div><div>".$this->get_field_input($extra_field_info)->input."</div>";
+					}
+				}
+				$input .= "</div>";
+			} else {
+				$css_class = $has_priority_field || $is_ie_7 ? 'multiselect': 'chosen-multiple-select';
+				$width_style = $has_priority_field || $is_ie_7 ? '' : 'width:510px;';
+
+				$select_title = str_replace('{field_display_as}',$field_info_type->display_as,$this->l('set_relation_title'));
+				$input = "<select id='field-{$field_info_type->name}' name='{$field_info_type->name}[]' multiple='multiple' size='8' class='$css_class' data-placeholder='$select_title' style='$width_style' >";
+
+				if(!empty($unselected_values))
+					foreach($unselected_values as $id => $name)
+					{
+						$input .= "<option value='$id'>$name</option>";
+					}
+
+				if(!empty($selected_values))
+					foreach($selected_values as $id => $name)
+					{
+						$input .= "<option value='$id' selected='selected'>$name</option>";
+					}
+
+				$input .= "</select>";
+			}
 		}
 
 		return $input;
@@ -5127,9 +5334,10 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @param string $title_field_selection_table
 	 * @param string $priority_field_relation_table
 	 * @param mixed $where_clause
+	 * @param boolean $extra_fields
      * @return Grocery_CRUD
 	 */
-	public function set_relation_n_n($field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table, $primary_key_alias_to_selection_table , $title_field_selection_table , $priority_field_relation_table = null, $where_clause = null)
+	public function set_relation_n_n($field_name, $relation_table, $selection_table, $primary_key_alias_to_this_table, $primary_key_alias_to_selection_table , $title_field_selection_table , $priority_field_relation_table = null, $where_clause = null, $extra_fields = null)
 	{
 		$this->relation_n_n[$field_name] =
 			(object)array(
@@ -5140,7 +5348,8 @@ class Grocery_CRUD extends grocery_CRUD_States
 				'primary_key_alias_to_selection_table' => $primary_key_alias_to_selection_table ,
 				'title_field_selection_table' => $title_field_selection_table ,
 				'priority_field_relation_table' => $priority_field_relation_table,
-				'where_clause' => $where_clause
+				'where_clause' => $where_clause,
+				'extra_fields' => $extra_fields
 			);
 
 		return $this;
