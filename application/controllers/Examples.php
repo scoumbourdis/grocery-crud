@@ -234,6 +234,15 @@ class Examples extends CI_Controller {
 		$crud->set_subject('Customer');
 		$crud->set_relation('salesRepEmployeeNumber','employees','lastName');
 
+
+		echo "<pre>";
+		print_r([
+			strtolower(__CLASS__."/".__FUNCTION__),
+			site_url(strtolower(__CLASS__."/".__FUNCTION__)),
+			site_url(strtolower(__CLASS__."/multigrids"))
+		]);
+		echo "</pre>";
+
 		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/multigrids")));
 
 		$output = $crud->render();
@@ -243,6 +252,105 @@ class Examples extends CI_Controller {
 		} else {
 			return $output;
 		}
+	}
+
+	public function location(){
+
+		$base_table = 'country';
+
+		$base_url = current_url();
+
+		if (strpos($base_url, $base_table) === false){
+			$base_url .= '/' . $base_table;
+		}
+
+		print_r($base_url. '<br/>');
+
+		$args = func_get_args();
+
+		// Map
+
+		$map = [
+			"country" => [
+				"ref" => null,
+				"next_depth" => "city",
+			],
+			"city" => [
+				"ref" => "country_id",
+				"next_depth" => "municipality",
+			],
+			"municipality" => [
+				"ref" => "city_id",
+				"next_depth" => "neighborhood",
+			],
+			"neighborhood" => [
+				"ref" => "municipality_id",
+				"next_depth" => "place",
+			],
+			"place" => [
+				"ref" => "neighborhood_id",
+				"next_depth" => null,
+			],
+		];
+
+		$functions = [
+			'add',
+			'delete',
+			'read',
+		];
+		
+		$ignore = [
+			"created_date",
+			"modified_date",
+		];
+
+		if($args){
+
+			$ignore = array_merge($args, $ignore);
+			
+			$base_table = $args[sizeof($args) - 1];
+		}
+
+		print_r($args);
+
+		$crud = new grocery_CRUD();
+
+		// if(in_array(needle, $functions)){
+
+		// }
+		
+		$crud->set_table($base_table);
+
+		if(in_array($base_table, array_keys($map))){
+			
+			if($map[$base_table]['ref']){
+				$crud->where($map[$base_table]['ref'], $args[sizeof($args) - 2]);
+
+				$ignore []= $map[$base_table]['ref'];
+			}
+
+			$crud->callback_column('name', function() use($base_url, $map, $base_table){
+
+					$x = func_get_args();
+
+					if($map[$base_table]['next_depth']){
+
+						$base_url = $base_url . '/' . $x[1]->id . '/' . $map[$base_table]['next_depth'];
+
+						return "<a href='$base_url'>{$x[0]}</a>";
+						
+					}else{
+
+						return $x[0];
+					}
+			});
+		}
+		
+		$crud->unset_columns($ignore);
+		$crud->unset_fields($ignore);
+
+		$output = $crud->render();
+		$this->_example_output($output);
 	}
 
 }
