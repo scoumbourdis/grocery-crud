@@ -257,17 +257,7 @@ class Examples extends CI_Controller {
 	public function location(){
 
 		$base_table = 'country';
-
-		$base_url = current_url();
-
-		if (strpos($base_url, $base_table) === false){
-			$base_url .= '/' . $base_table;
-		}
-
-		print_r($base_url. '<br/>');
-
-		$args = func_get_args();
-
+		
 		// Map
 
 		$map = [
@@ -293,10 +283,33 @@ class Examples extends CI_Controller {
 			],
 		];
 
+		/*##########################################################*/
+		/*##################### DEEP LOGIC #########################*/
+		/*##########################################################*/
+
+		$base_url = current_url();
+
+		if (strpos($base_url, $base_table) === false){
+			$base_url .= '/' . $base_table;
+		}
+
+		print_r($base_url. '<br/>');
+		print_r(strpos($base_url, 'edit'). '<br/>');
+
+		$args = func_get_args();
+
 		$functions = [
 			'add',
 			'delete',
 			'read',
+			'print',
+			'export',
+			'insert_validation',
+			'insert',
+			'delete',
+			'update',
+			'ajax_list_info',
+			// 'ajax_list',
 		];
 		
 		$ignore = [
@@ -308,17 +321,28 @@ class Examples extends CI_Controller {
 
 			$ignore = array_merge($args, $ignore);
 			
-			$base_table = $args[sizeof($args) - 1];
+			$last_section = $args[sizeof($args) - 1];
+
+			
+			if(in_array($last_section, $functions)){
+
+				$last_section = $args[sizeof($args) - 2];
+
+			}elseif(strpos($base_url, 'edit') || strpos($base_url, 'update_validation') || strpos($base_url, 'update') || strpos($base_url, 'delete')){
+				
+				$last_section = $args[sizeof($args) - 3];
+
+			}
+
+			print_r("<h3>TMP: $last_section</h3>");
+
+			$base_table = $last_section;
 		}
 
 		print_r($args);
 
 		$crud = new grocery_CRUD();
 
-		// if(in_array(needle, $functions)){
-
-		// }
-		
 		$crud->set_table($base_table);
 
 		if(in_array($base_table, array_keys($map))){
@@ -329,6 +353,7 @@ class Examples extends CI_Controller {
 				$ignore []= $map[$base_table]['ref'];
 			}
 
+			// Column CallBack
 			$crud->callback_column('name', function() use($base_url, $map, $base_table){
 
 					$x = func_get_args();
@@ -343,6 +368,16 @@ class Examples extends CI_Controller {
 
 						return $x[0];
 					}
+			});
+
+			// Before Insert CallBack
+			$crud->callback_before_insert(function() use($base_url, $map, $base_url){
+
+				$x = func_get_args();
+
+				print_r($x);
+				die('NO INSERT ^_^');
+
 			});
 		}
 		
