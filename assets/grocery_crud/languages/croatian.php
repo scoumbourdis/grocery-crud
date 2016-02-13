@@ -3,7 +3,7 @@
 	$lang['list_actions'] 			= 'Akcije';
 	$lang['list_page'] 				= 'Stranica';
 	$lang['list_paging_of'] 		= 'od';
-	$lang['list_displaying']		= 'Prikazujem {start} da {end} od {results} stavki';
+	$lang['list_displaying']		= 'Prikazujem {start} do {end} od {results} stavki';
 	$lang['list_filtered_from']		= '(filtrirano iz  {total_results} zapisa ukupno)';
 	$lang['list_show_entries']		= 'Prikaži {paging} unose';
 	$lang['list_no_items']			= 'ne postoji unos za prikaz';
