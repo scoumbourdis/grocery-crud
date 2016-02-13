@@ -1,5 +1,6 @@
 v 1.5.5
    Add Croatian language - translated by: Siniša Dragičević Martinčić
+   - Small CSS fixes: Datetime and date picker was overflowing in some languages
 v 1.5.4
    Changes for compatibility without jQuery Migrate
 v 1.5.3
