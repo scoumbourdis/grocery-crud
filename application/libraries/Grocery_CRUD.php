@@ -3118,8 +3118,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                 {
                     if(empty($_POST['search_field']))
                     {
-                        $search_text = strip_tags($_POST['search_field']);
-                        $state_info->search = (object)array('field' => null , 'text' => $_POST['search_text']);
+                        $search_text = strip_tags($_POST['search_text']);
+                        $state_info->search = (object)array('field' => null , 'text' => $search_text);
                     }
                     else
                     {
