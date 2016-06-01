@@ -822,7 +822,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$this->basic_model->where($primary_key,$state_info->primary_key);
 					$row = $this->basic_model->get_row();
 
-					if(!isset($row->$field_name)) {
+					if(!property_exists($row, $field_name)) {
 						throw new Exception("The field name doesn't exist in the database. ".
 								 			"Please use the unique fields only for fields ".
 											"that exist in the database");
@@ -830,7 +830,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 					$previous_field_name_value = $row->$field_name;
 
-					if(!empty($previous_field_name_value) && $previous_field_name_value != $field_name_value) {
+					if(!empty($field_name_value) && $previous_field_name_value != $field_name_value) {
 						$form_validation->set_rules( $field_name,
 								$field_types[$field_name]->display_as,
 								'is_unique['.$this->basic_db_table.'.'.$field_name.']');
