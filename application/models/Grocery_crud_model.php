@@ -50,7 +50,7 @@ class Grocery_crud_model  extends CI_Model  {
     	if($this->table_name === null)
     		return false;
 
-    	$select = "`{$this->table_name}`.*";
+    	$select = "{$this->table_name}.*";
 
     	//set_relation special queries
     	if(!empty($this->relation))
