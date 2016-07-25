@@ -4113,6 +4113,13 @@ class Grocery_CRUD extends grocery_CRUD_States
 				{
 
 					$new_column = $this->_unique_field_name($this->relation[$column][0]);
+					//replace unsets
+					if(!empty($this->unset_columns) && in_array($column,$this->unset_columns))
+					{	
+						if( $this->relation[$column][0] ){
+							array_push($this->unset_columns, $new_column);
+						}
+					}
 					$this->columns[$col_num] = $new_column;
 
 					if(isset($this->display_as[$column]))
