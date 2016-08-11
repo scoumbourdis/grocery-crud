@@ -12,7 +12,7 @@
 	$lang['list_search'] 			= 'Ricerca';
 	$lang['list_search_all'] 		= 'Ricerca tutto';
 	$lang['list_clear_filtering'] 		= 'Azzera filtri';
-	$lang['list_delete'] 			= 'Cancella';
+	$lang['list_delete'] 			= 'Elimina';
 	$lang['list_edit'] 			= 'Modifica';
 	$lang['list_paging_first'] 		= 'Primo';
 	$lang['list_paging_previous'] 		= 'Precedente';
@@ -22,7 +22,7 @@
 	$lang['form_edit'] 			= 'Modifica';
 	$lang['form_back_to_list'] 		= 'Ritorna alla lista';
 	$lang['form_update_changes'] 		= 'Aggiorna modifiche';
-	$lang['form_cancel'] 			= 'Cancella';
+	$lang['form_cancel'] 			= 'Annulla';
 	$lang['form_update_loading'] 		= 'Operazione in corso, aggiornamento modifiche...';
 	$lang['update_success_message'] 	= 'I tuoi dati sono stati aggiornati con successo.';
 	$lang['form_go_back_to_list'] 		= 'Torna alla lista';
@@ -70,4 +70,4 @@
 	$lang['ui_month'] 			= 'mm';
 	$lang['ui_year'] 			= 'aaaa';
 	/* Added in version 1.5.2 */
-	$lang['list_more'] 			= 'Ancora';
+	$lang['list_more'] 			= 'Altro';
