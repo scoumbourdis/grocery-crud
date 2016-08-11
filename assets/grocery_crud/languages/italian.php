@@ -12,7 +12,7 @@
 	$lang['list_search'] 			= 'Ricerca';
 	$lang['list_search_all'] 		= 'Ricerca tutto';
 	$lang['list_clear_filtering'] 		= 'Azzera filtri';
-	$lang['list_delete'] 			= 'Cancella';
+	$lang['list_delete'] 			= 'Elimina';
 	$lang['list_edit'] 			= 'Modifica';
 	$lang['list_paging_first'] 		= 'Primo';
 	$lang['list_paging_previous'] 		= 'Precedente';
@@ -70,4 +70,4 @@
 	$lang['ui_month'] 			= 'mm';
 	$lang['ui_year'] 			= 'aaaa';
 	/* Added in version 1.5.2 */
-	$lang['list_more'] 			= 'Ancora';
+	$lang['list_more'] 			= 'Altro';
