@@ -102,23 +102,26 @@
 	}
 </style>
 <?php }?>
-<div id='list-report-error' class='report-div error report-list'></div>
-<div id='list-report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>><?php
- if($success_message !== null){?>
-	<p><?php echo $success_message; ?></p>
-<?php }
-?></div>
-<div class="dataTablesContainer">
-	<?php if(!$unset_add){?>
-		<div class="datatables-add-button">
-		<a role="button" class="add_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="<?php echo $add_url?>">
-			<span class="ui-button-icon-primary ui-icon ui-icon-circle-plus"></span>
-			<span class="ui-button-text"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
-		</a>
-		</div>
-	<?php }?>
-	
-	<div style='height:10px;'></div>
+<div class="grocerycrud-container">
 
-	<?php echo $list_view?>
+	<div id='list-report-error' class='report-div error report-list'></div>
+	<div id='list-report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>><?php
+	 if($success_message !== null){?>
+		<p><?php echo $success_message; ?></p>
+	<?php }
+	?></div>
+	<div class="dataTablesContainer">
+		<?php if(!$unset_add){?>
+			<div class="datatables-add-button">
+			<a role="button" class="add_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="<?php echo $add_url?>">
+				<span class="ui-button-icon-primary ui-icon ui-icon-circle-plus"></span>
+				<span class="ui-button-text"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
+			</a>
+			</div>
+		<?php }?>
+
+		<div style='height:10px;'></div>
+
+		<?php echo $list_view?>
+	</div>
 </div>
