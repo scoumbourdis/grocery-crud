@@ -186,7 +186,12 @@ class Grocery_crud_model  extends CI_Model  {
     		$this->db->select($select,false);
     	}
 
-		return $this->db->get($this->table_name)->num_rows();
+		//This one make the query take all the fields and if you have a heavy table it takes ages to load
+		//return $this->db->get($this->table_name)->num_rows();
+		
+		//This version take just the primary key and it's so fast...
+    		$key = $this->get_primary_key();
+		return $this->db->query("SELECT $key FROM $this->table_name")->num_rows();
     }
 
     function set_basic_table($table_name = null)
