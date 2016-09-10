@@ -36,7 +36,7 @@ $lang['form_or'] = 'of';
 $lang['form_save'] = 'Stoor';
 $lang['form_insert_loading'] = 'Besig om die data te stoor...';
 
-$lang['form_upload_a_file'] = 'Laai \'n lêer op';
+$lang['form_upload_a_file'] = 'Laai \'n lÃªer op';
 $lang['form_upload_delete'] = 'Verwyder';
 $lang['form_button_clear'] = 'Herstel vorm';
 
@@ -65,12 +65,12 @@ $lang['form_update_and_go_back'] = 'Dateer op en keer terug na lys';
 $lang['string_delete_file'] = "Besig om uit te vee";
 $lang['string_progress'] = "Vordering: ";
 $lang['error_on_uploading'] = "'n Fout het voorgekom met die oplaai proses.";
-$lang['message_prompt_delete_file'] = "Is jy seker jy wil hierdie lêer uitvee?";
+$lang['message_prompt_delete_file'] = "Is jy seker jy wil hierdie lÃªer uitvee?";
 
-$lang['error_max_number_of_files'] = "Jy kan slegs een lêer op 'n slag oplaai.";
+$lang['error_max_number_of_files'] = "Jy kan slegs een lÃªer op 'n slag oplaai.";
 $lang['error_accept_file_types'] = "Hierdie tipe agtervoegsel word nie toegelaat nie.";
-$lang['error_max_file_size'] = "Die opgelaaide lêer se grootte is meer as die maksium van {max_file_size}.";
-$lang['error_min_file_size'] = "Jy kan nie 'n leë lêer oplaai nie.";
+$lang['error_max_file_size'] = "Die opgelaaide lÃªer se grootte is meer as die maksium van {max_file_size}.";
+$lang['error_min_file_size'] = "Jy kan nie 'n leÃ« lÃªer oplaai nie.";
 
 /* Added in version 1.3.1 */
 $lang['list_export'] 	= "Laai af";
@@ -85,7 +85,9 @@ $lang['ui_day'] = 'dd';
 $lang['ui_month'] = 'mm';
 $lang['ui_year'] = 'yyyy';
 
+/* Added in version 1.5.2 */
+$lang['list_more'] = 'More';
 
-	/* Added in version 1.5.2 */
-	$lang['list_more'] = 'More';
+/* Added in version 1.5.6 */
+$lang['list_search_column'] = 'Search {column_name}';
 
