@@ -86,3 +86,8 @@
 	/* Added in version 1.5.2 */
 	$lang['list_more'] = 'Plus';
 
+
+
+	/* Added in version 1.5.6 */
+	$lang['list_search_column'] = 'Search {column_name}';
+

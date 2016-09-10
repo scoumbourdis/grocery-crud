@@ -1,3 +1,7 @@
+v 1.5.6
+   - Unset bootstrap with more CSS unsets
+   - Languages updates (Portuguese, Italian, Spanish)
+   - #367: Missing translation for Search {column_name}
 v 1.5.5
    Add Croatian language - translated by: Siniša Dragičević Martinčić
    - Small CSS fixes: Datetime and date picker was overflowing in some languages

@@ -85,3 +85,6 @@
 	/* Added in version 1.5.2 */
 	$lang['list_more'] = 'Επιπλέον';
 
+	/* Added in version 1.5.6 */
+	$lang['list_search_column'] = 'Αναζήτηση {column_name}';
+
