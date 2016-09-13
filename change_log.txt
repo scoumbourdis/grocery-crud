@@ -1,3 +1,5 @@
+v 1.5.7
+   - #370: A faster way to calculate the totals
 v 1.5.6
    - Unset bootstrap with more CSS unsets
    - Languages updates (Portuguese, Italian, Spanish)
