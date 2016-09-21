@@ -188,7 +188,7 @@ class Grocery_crud_model  extends CI_Model  {
 
 	// A fast way to calculate the total results
     	$key = $this->get_primary_key();
-	$this->db->select($key);
+	$this->db->select($this->table_name . '.' . $key);
 	return $this->db->get($this->table_name)->num_rows();
     }
 
