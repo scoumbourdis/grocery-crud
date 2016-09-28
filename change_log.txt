@@ -1,4 +1,5 @@
-v 1.5.7
+v 1.6.0
+   - #331: Have a configurable XSS clean option to prevent XSS attacks
    - #370: A faster way to calculate the totals
 v 1.5.6
    - Unset bootstrap with more CSS unsets
@@ -25,7 +26,7 @@ v 1.5.0
 	#211 - Bug if use where clause.
 	#197 - Properly sanitize filenames for uploads.
 	#237 - Set Timepicker to 24 hour format.
-    	#294 - Javascript bug with set_subject().
+    #294 - Javascript bug with set_subject().
 	Add a new method unset_view that is just an alias to unset_read method.
 	Multiple delete fields for flexibility for future themes.
 	Fixing the bug of jquery form plugin with returning the textarea as required.
