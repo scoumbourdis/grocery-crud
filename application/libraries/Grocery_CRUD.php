@@ -755,7 +755,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				if(isset($this->validation_rules[$field_name]))
 				{
 					$rule = $this->validation_rules[$field_name];
-					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules']);
+					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules'],$rule['errors']);
 				}
 			}
 
@@ -870,7 +870,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				if(isset($this->validation_rules[$field_name]))
 				{
 					$rule = $this->validation_rules[$field_name];
-					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules']);
+					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules'],$rule['errors']);
 				}
 			}
 
@@ -3593,13 +3593,14 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @access	public
 	 * @param	mixed
 	 * @param	string
+      * @oaram array
 	 * @return	void
 	 */
-	function set_rules($field, $label = '', $rules = '')
+	function set_rules($field, $label = '', $rules = '', $errors = array())
 	{
 		if(is_string($field))
 		{
-			$this->validation_rules[$field] = array('field' => $field, 'label' => $label, 'rules' => $rules);
+			$this->validation_rules[$field] = array('field' => $field, 'label' => $label, 'rules' => $rules, 'errors', $errors);
 		}elseif(is_array($field))
 		{
 			foreach($field as $num_field => $field_array)
