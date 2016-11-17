@@ -3600,7 +3600,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	{
 		if(is_string($field))
 		{
-			$this->validation_rules[$field] = array('field' => $field, 'label' => $label, 'rules' => $rules, 'errors', $errors);
+			$this->validation_rules[$field] = array('field' => $field, 'label' => $label, 'rules' => $rules, 'errors' => $errors);
 		}elseif(is_array($field))
 		{
 			foreach($field as $num_field => $field_array)
