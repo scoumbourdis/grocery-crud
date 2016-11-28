@@ -18,7 +18,7 @@
 	$lang['list_edit'] 				= 'Edit 编辑';
 	$lang['list_paging_first'] 		= 'First 首页';
 	$lang['list_paging_previous'] 	= 'Previous 前一页';
-	$lang['list_paging_next'] 		= 'Mext 后一页';
+	$lang['list_paging_next'] 		= 'Next 后一页';
 	$lang['list_paging_last'] 		= 'Last 最后';
 	$lang['list_loading'] 			= 'Loading... 载入...';
 
