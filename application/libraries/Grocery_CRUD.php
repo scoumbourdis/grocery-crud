@@ -3582,7 +3582,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	//IMF - can't use $_SERVER since in properties section of class
 	protected $default_language_path	=  '../bitscode/GroceryCrud/assets/grocery_crud/languages'; //IMF
 	protected $default_config_path		=  '../bitscode/GroceryCrud/assets/grocery_crud/config';  //IMF
-	protected $default_assets_path		=  '../bitscode/GroceryCrud/assets/grocery_crud';  //IMF
+	protected $default_assets_path		=  '/assets/grocery_crud';  //IMF
 
 	/**
 	 *
