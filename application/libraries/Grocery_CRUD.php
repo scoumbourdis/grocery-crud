@@ -3578,11 +3578,9 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $default_css_path			= null; //autogenerate, please do not modify
 	protected $default_texteditor_path 	= null; //autogenerate, please do not modify
 	protected $default_theme_path		= null; //autogenerate, please do not modify
-	//IMF - Moved CodeIgniter & GroceryCrud outside of public_html directory
-	//IMF - can't use $_SERVER since in properties section of class
-	protected $default_language_path	=  '../bitscode/GroceryCrud/assets/grocery_crud/languages'; //IMF
-	protected $default_config_path		=  '../bitscode/GroceryCrud/assets/grocery_crud/config';  //IMF
-	protected $default_assets_path		=  '../bitscode/GroceryCrud/assets/grocery_crud';  //IMF
+	protected $default_language_path	= 'assets/grocery_crud/languages';
+	protected $default_config_path		= 'assets/grocery_crud/config';
+	protected $default_assets_path		= 'assets/grocery_crud';
 
 	/**
 	 *
