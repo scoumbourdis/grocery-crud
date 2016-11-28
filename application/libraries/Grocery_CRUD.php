@@ -1871,27 +1871,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key);
 		$data->is_ajax 			= $this->_is_ajax();
 
-	/*	echo "Primary Key: " . $state_info->primary_key . "*\n"; //IMF
-		echo "URL" . $data->add_url . "*\n";
-		echo "Invited by " . $data->field_values->InvitedByCompanyID . "*\n";
-		print_r($state_info);
-		print_r($data->field_values); //Record to edit
-		$da = $data->field_values;
-		foreach ($da as $name => $value) {
-			echo "$name: $value\n";
-		}
-	*/
-	
-		/* Hack to enforce security for particular applications IMF*/
-		// For guest_list make sure one can only read/edit the people they invited.
-		if (strpos($data->add_url,'guest_list') > 0) {
-			//echo $data->field_values->InvitedByCompanyID;
-			if ($data->field_values->InvitedByCompanyID != $_SESSION["CompanyID"] ) {
-				throw new Exception('You do not haver permisson to read or edit that record', 99);
-				die();
-			}
-		}
-					
 		$this->_theme_view('edit.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
 
@@ -1923,16 +1902,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key);
 		$data->is_ajax 			= $this->_is_ajax();
 
-		/* Hack to enforce security for particular applications IMF*/
-		// For guest_list make sure one can only read/edit the people they invited.
-		if (strpos($data->add_url,'guest_list') > 0) {
-			//echo $data->field_values->InvitedByCompanyID;
-			if ($data->field_values->InvitedByCompanyID != $_SESSION["CompanyID"] ) {
-				throw new Exception('You do not haver permisson to read or edit that record', 99);
-				die();
-			}
-		}
-		
 		$this->_theme_view('read.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
 
