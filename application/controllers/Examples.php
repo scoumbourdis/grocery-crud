@@ -234,6 +234,15 @@ class Examples extends CI_Controller {
 		$crud->set_subject('Customer');
 		$crud->set_relation('salesRepEmployeeNumber','employees','lastName');
 
+
+		echo "<pre>";
+		print_r([
+			strtolower(__CLASS__."/".__FUNCTION__),
+			site_url(strtolower(__CLASS__."/".__FUNCTION__)),
+			site_url(strtolower(__CLASS__."/multigrids"))
+		]);
+		echo "</pre>";
+
 		$crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/multigrids")));
 
 		$output = $crud->render();
@@ -243,6 +252,140 @@ class Examples extends CI_Controller {
 		} else {
 			return $output;
 		}
+	}
+
+	public function location(){
+
+		$base_table = 'country';
+		
+		// Map
+
+		$map = [
+			"country" => [
+				"ref" => null,
+				"next_depth" => "city",
+			],
+			"city" => [
+				"ref" => "country_id",
+				"next_depth" => "municipality",
+			],
+			"municipality" => [
+				"ref" => "city_id",
+				"next_depth" => "neighborhood",
+			],
+			"neighborhood" => [
+				"ref" => "municipality_id",
+				"next_depth" => "place",
+			],
+			"place" => [
+				"ref" => "neighborhood_id",
+				"next_depth" => null,
+			],
+		];
+
+		/*##########################################################*/
+		/*##################### DEEP LOGIC #########################*/
+		/*##########################################################*/
+
+		$base_url = current_url();
+
+		if (strpos($base_url, $base_table) === false){
+			$base_url .= '/' . $base_table;
+		}
+
+		print_r($base_url. '<br/>');
+		print_r(strpos($base_url, 'edit'). '<br/>');
+
+		$args = func_get_args();
+
+		$functions = [
+			'add',
+			'delete',
+			'read',
+			'print',
+			'export',
+			'insert_validation',
+			'insert',
+			'delete',
+			'update',
+			'ajax_list_info',
+			// 'ajax_list',
+		];
+		
+		$ignore = [
+			"created_date",
+			"modified_date",
+		];
+
+		if($args){
+
+			$ignore = array_merge($args, $ignore);
+			
+			$last_section = $args[sizeof($args) - 1];
+
+			
+			if(in_array($last_section, $functions)){
+
+				$last_section = $args[sizeof($args) - 2];
+
+			}elseif(strpos($base_url, 'edit') || strpos($base_url, 'update_validation') || strpos($base_url, 'update') || strpos($base_url, 'delete')){
+				
+				$last_section = $args[sizeof($args) - 3];
+
+			}
+
+			print_r("<h3>TMP: $last_section</h3>");
+
+			$base_table = $last_section;
+		}
+
+		print_r($args);
+
+		$crud = new grocery_CRUD();
+
+		$crud->set_table($base_table);
+
+		if(in_array($base_table, array_keys($map))){
+			
+			if($map[$base_table]['ref']){
+				$crud->where($map[$base_table]['ref'], $args[sizeof($args) - 2]);
+
+				$ignore []= $map[$base_table]['ref'];
+			}
+
+			// Column CallBack
+			$crud->callback_column('name', function() use($base_url, $map, $base_table){
+
+					$x = func_get_args();
+
+					if($map[$base_table]['next_depth']){
+
+						$base_url = $base_url . '/' . $x[1]->id . '/' . $map[$base_table]['next_depth'];
+
+						return "<a href='$base_url'>{$x[0]}</a>";
+						
+					}else{
+
+						return $x[0];
+					}
+			});
+
+			// Before Insert CallBack
+			$crud->callback_before_insert(function() use($base_url, $map, $base_url){
+
+				$x = func_get_args();
+
+				print_r($x);
+				die('NO INSERT ^_^');
+
+			});
+		}
+		
+		$crud->unset_columns($ignore);
+		$crud->unset_fields($ignore);
+
+		$output = $crud->render();
+		$this->_example_output($output);
 	}
 
 }
