@@ -1,6 +1,7 @@
 v 1.5.8
     - #382: Adding custom error message for set_rules()
     - Two new lang strings for the multiple delete confirmation
+    - #388: Chosen select have 100% width at flexigrid theme
 v 1.5.7
    - #331: Have a configurable XSS clean option to prevent XSS attacks
    - #370: A faster way to calculate the totals
