@@ -311,7 +311,7 @@ table th
 	border: 1px solid #AAA;
 	padding: 5px 5px 5px 5px;
 }
-.flexigrid input.form-control {
+.flexigrid input[type=text].form-control {
 	width: 500px;
 }
 .flexigrid div.form-div textarea
