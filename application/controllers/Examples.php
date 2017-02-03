@@ -14,7 +14,7 @@ class Examples extends CI_Controller {
 
 	public function _example_output($output = null)
 	{
-		$this->load->view('example.php',$output);
+		$this->load->view('example.php',(array)$output);
 	}
 
 	public function offices()
