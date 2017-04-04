@@ -92,5 +92,5 @@
 	/* Added in version 1.5.8 */
 	$lang['alert_delete_multiple'] = '本当にこの {items_amount} 行を削除しますか?';
 
-	$lang['alert_delete_multiple_one'] = '本当にこの1行を削除しますか?';
+	$lang['alert_delete_multiple_one'] = '本当にこの 1 行を削除しますか?';
 
