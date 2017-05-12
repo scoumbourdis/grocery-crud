@@ -1572,6 +1572,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$data->total_results = $this->get_total_results();
 
+        $data->dialog_forms = $this->config->dialog_forms;
 		$data->columns 				= $this->get_columns();
 
 		$data->success_message		= $this->get_success_message_at_list($state_info);
