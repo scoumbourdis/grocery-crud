@@ -135,9 +135,9 @@ class Grocery_crud_model  extends CI_Model  {
     	return $select;
     }
 
-    function order_by($order_by , $direction)
+    function order_by($order_by, $direction, $escape = NULL)
     {
-    	$this->db->order_by( $order_by , $direction );
+        $this->db->order_by($order_by, $direction, $escape);
     }
 
     function where($key, $value = NULL, $escape = TRUE)
