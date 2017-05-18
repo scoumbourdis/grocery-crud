@@ -1789,9 +1789,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				else
 				{
 					$actions_urls[$unique_id] =
-						$action->url_has_http ?
-							$action->link_url.$row->$primary_key :
-							site_url($action->link_url.'/'.$row->$primary_key);
+					$action->url_has_http ?
+					 $this->http_link_url() :
+						$this->no_http_link_url();
 				}
 			}
 			$row->action_urls = $actions_urls;
@@ -1800,6 +1800,38 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		return $list;
 	}
 
+	private function http_link_url()
+	{
+		//$composite_keys
+		if(property_exists($action, "composite_keys"))
+		{
+			return get_url_stub($action);
+		}
+		else
+			return $action->link_url.$row->$primary_key;
+	}
+
+	private function no_http_link_url()
+	{
+		if(property_exists($action, "composite_keys"))
+		{
+			return get_url_stub($action);
+		}
+		else
+			return site_url($action->link_url.'/'.$row->$primary_key);
+	}
+
+	private function get_url_stub($action)
+	{
+			$var = $action->link_url;
+			$row_array = (array) $row;
+			foreach ($action->composite_keys as $composite_key)
+			{
+				$var.=$row_array[$composite_key]."/";
+			}
+			return $var;
+	}
+	
 	protected function change_list($list,$types)
 	{
 		$primary_key = $this->get_primary_key();
@@ -5118,6 +5150,33 @@ class Grocery_CRUD extends grocery_CRUD_States
 			'label' 		=> $label,
 			'image_url' 	=> $image_url,
 			'link_url'		=> $link_url,
+			'css_class' 	=> $css_class,
+			'url_callback' 	=> $url_callback,
+			'url_has_http'	=> substr($link_url,0,7) == 'http://' || substr($link_url,0,8) == 'https://' ? true : false
+		);
+
+		return $this;
+	}
+
+	/**
+	 *
+	 * Enter description here ...
+	 * @param $title
+	 * @param $image_url
+	 * @param $url
+	 * @param $css_class
+	 * @param $url_callback
+	 * @param $composite_keys
+	 */
+	public function add_action_composite( $label, $image_url = '', $link_url = '', $css_class = '', $url_callback = null, $composite_keys)
+	{
+		$unique_id = substr($label,0,1).substr(md5($label.$link_url),-8); //The unique id is used for class name so it must begin with a string
+
+		$this->actions[$unique_id]  = (object)array(
+			'label' 		=> $label,
+			'image_url' 	=> $image_url,
+			'link_url'		=> $link_url,
+			'composite_keys' => $composite_keys,
 			'css_class' 	=> $css_class,
 			'url_callback' 	=> $url_callback,
 			'url_has_http'	=> substr($link_url,0,7) == 'http://' || substr($link_url,0,8) == 'https://' ? true : false
