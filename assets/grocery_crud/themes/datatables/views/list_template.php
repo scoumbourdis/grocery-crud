@@ -59,6 +59,8 @@
 
 	var export_text = '<?php echo $this->l('list_export');?>';
 	var print_text = '<?php echo $this->l('list_print');?>';
+        
+        var unset_search = <?php echo ($unset_search ? 'true' : 'false'); ?>;
 
 	<?php
 	//A work around for method order_by that doesn't work correctly on datatables theme

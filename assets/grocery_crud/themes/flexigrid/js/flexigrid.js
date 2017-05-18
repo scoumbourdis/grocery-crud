@@ -72,7 +72,7 @@ $(function(){
 			createCookie('per_page_'+unique_hash,$('#per_page').val(),1);
 			createCookie('hidden_ordering_'+unique_hash,$('#hidden-ordering').val(),1);
 			createCookie('hidden_sorting_'+unique_hash,$('#hidden-sorting').val(),1);
-			createCookie('search_text_'+unique_hash,$(this).closest('.flexigrid').find('.search_text').val(),1);
+			createCookie('search_text_'+unique_hash,$(this).closest('.flexigrid').find('.search_text').val() || "",1);
 			createCookie('search_field_'+unique_hash,$('#search_field').val(),1);
 		}
 

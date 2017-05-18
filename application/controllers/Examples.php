@@ -244,5 +244,76 @@ class Examples extends CI_Controller {
 			return $output;
 		}
 	}
+        
+	function unset_search_unset_refresh()
+	{
+		$this->config->load('grocery_crud');
+		$this->config->set_item('grocery_crud_dialog_forms',true);
+		$this->config->set_item('grocery_crud_default_per_page',10);
+
+		$output1 = $this->customers_flexigrid_unset_search_unset_refresh();
+
+		$output2 = $this->customers_datatables_unset_search_unset_refresh();
+
+
+		$js_files = $output1->js_files + $output2->js_files;
+		$css_files = $output1->css_files + $output2->css_files;
+		$output = "<h1>List 1</h1>".$output1->output."<h1>List 2</h1>".$output2->output;
+
+		$this->_example_output((object)array(
+				'js_files' => $js_files,
+				'css_files' => $css_files,
+				'output'	=> $output
+		));
+	}
+
+	public function customers_flexigrid_unset_search_unset_refresh()
+	{
+            $crud = new grocery_CRUD();
+
+            $crud->set_table('customers');
+            $crud->set_theme('flexigrid');
+            $crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit');
+            $crud->display_as('salesRepEmployeeNumber','from Employeer')
+                    ->display_as('customerName','Name')
+                    ->display_as('contactLastName','Last Name');
+            $crud->set_subject('Customer');
+            $crud->set_relation('salesRepEmployeeNumber','employees','lastName');
+            $crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/unset_search")));
+            $crud->unset_search();
+            $crud->unset_refresh();
+            $output = $crud->render();
+
+            if($crud->getState() != 'list') {
+                $this->_example_output($output);
+            } else {
+                return $output;
+            }
+	}
+
+	public function customers_datatables_unset_search_unset_refresh()
+	{
+            
+            $crud = new grocery_CRUD();
+
+            $crud->set_table('customers');
+            $crud->set_theme('datatables');
+            $crud->columns('customerName','contactLastName','phone','city','country','salesRepEmployeeNumber','creditLimit');
+            $crud->display_as('salesRepEmployeeNumber','from Employeer')
+                    ->display_as('customerName','Name')
+                    ->display_as('contactLastName','Last Name');
+            $crud->set_subject('Customer');
+            $crud->set_relation('salesRepEmployeeNumber','employees','lastName');
+            $crud->set_crud_url_path(site_url(strtolower(__CLASS__."/".__FUNCTION__)),site_url(strtolower(__CLASS__."/unset_search")));
+            $crud->unset_search();
+            $crud->unset_refresh();
+            $output = $crud->render();
+
+            if($crud->getState() != 'list') {
+                $this->_example_output($output);
+            } else {
+                return $output;
+            }
+	}
 
 }

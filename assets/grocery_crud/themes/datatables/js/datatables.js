@@ -169,7 +169,7 @@ function loadDataTable(this_datatables) {
 			});
 			add_edit_button_listener();
 		},
-		"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
+		"sDom": 'T<"clear"><"H"l' + (unset_search != true ? 'f' : '') +'r>t<"F"ip>',
 	    "oTableTools": {
 	    	"aButtons": aButtons,
 	        "sSwfPath": base_url+"assets/grocery_crud/themes/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"

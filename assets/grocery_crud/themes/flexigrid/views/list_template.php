@@ -101,6 +101,7 @@ if($success_message !== null){?>
 	</div>
 	<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" class="filtering_form" autocomplete = "off" data-ajax-list-info-url="'.$ajax_list_info_url.'"'); ?>
 	<div class="sDiv quickSearchBox" id='quickSearchBox'>
+            <?php if(!$unset_search) { ?>
 		<div class="sDiv2">
 			<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox search_text" name="search_text" size="30" id='search_text'>
 			<select name="search_field" id="search_field">
@@ -111,6 +112,7 @@ if($success_message !== null){?>
 			</select>
             <input type="button" value="<?php echo $this->l('list_search');?>" class="crud_search" id='crud_search'>
 		</div>
+            <?php }?>
         <div class='search-div-clear-button'>
         	<input type="button" value="<?php echo $this->l('list_clear_filtering');?>" id='search_clear' class="search_clear">
         </div>
@@ -160,6 +162,7 @@ if($success_message !== null){?>
 			</div>
 			<div class="btnseparator">
 			</div>
+                        <?php if(!$unset_refresh) { ?>
 			<div class="pGroup">
 				<div class="pReload pButton ajax_refresh_and_loading" id='ajax_refresh_and_loading'>
 					<span></span>
@@ -167,6 +170,7 @@ if($success_message !== null){?>
 			</div>
 			<div class="btnseparator">
 			</div>
+                        <?php }?>
 			<div class="pGroup">
 				<span class="pPageStat">
 					<?php $paging_starts_from = "<span id='page-starts-from' class='page-starts-from'>1</span>"; ?>

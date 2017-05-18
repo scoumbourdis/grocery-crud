@@ -1597,6 +1597,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_delete			= $this->unset_delete;
 		$data->unset_export			= $this->unset_export;
 		$data->unset_print			= $this->unset_print;
+		$data->unset_search			= $this->unset_search;
+		$data->unset_refresh			= $this->unset_refresh;
 
 		$default_per_page = $this->config->default_per_page;
 		$data->paging_options = $this->config->paging_options;
@@ -3526,6 +3528,8 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $unset_add_fields 	= null;
 	protected $unset_edit_fields	= null;
 	protected $unset_read_fields	= null;
+        protected $unset_search                 = false;
+        protected $unset_refresh                = false;
 
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
@@ -3803,6 +3807,30 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 
+        /**
+         * Unsets the serach inputs from the list
+         * 
+         * @return \Grocery_CRUD
+         */
+        public function unset_search()
+        {
+                $this->unset_search = true;
+
+                return $this;
+        }
+
+        /**
+         * Unsets the refresh button from the list
+         * 
+         * @return \Grocery_CRUD
+         */
+        public function unset_refresh()
+        {
+                $this->unset_refresh = true;
+
+                return $this;
+        }
+        
 	/**
 	 * Unsets all the operations from the list
 	 *
