@@ -271,10 +271,10 @@ class grocery_CRUD_Field_Types
 				}
 			break;
 			case 'string':
-				$value = $this->character_limiter($value,$this->character_limiter,"...");
+				$value = html_escape($this->character_limiter($value,$this->character_limiter,"..."));
 			break;
 			case 'text':
-				$value = $this->character_limiter(strip_tags($value),$this->character_limiter,"...");
+				$value = html_escape($this->character_limiter(strip_tags($value),$this->character_limiter,"..."));
 			break;
 			case 'date':
 				if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
@@ -315,7 +315,7 @@ class grocery_CRUD_Field_Types
 			break;
 
 			case 'relation_n_n':
-				$value = $this->character_limiter(str_replace(',',', ',$value),$this->character_limiter,"...");
+				$value = html_escape($this->character_limiter(str_replace(',',', ',$value),$this->character_limiter,"..."));
 			break;
 
 			case 'password':
@@ -359,7 +359,7 @@ class grocery_CRUD_Field_Types
 			break;
 
 			default:
-				$value = $this->character_limiter($value,$this->character_limiter,"...");
+				$value = html_escape($this->character_limiter($value,$this->character_limiter,"..."));
 			break;
 		}
 
@@ -1816,7 +1816,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				elseif(isset($types[$field_name]))
 					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $field_value);
 				else
-					$list[$num_row]->$field_name = $field_value;
+					$list[$num_row]->$field_name = html_escape($field_value);
 			}
 		}
 
