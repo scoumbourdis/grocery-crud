@@ -1,5 +1,6 @@
 v 1.5.9
     - Clean-up redundant JavaScript load if it is not required.
+    - Remove Export as it is a flash plugin and the browser is showing it as a blocked plugin for security reasons.
 v 1.5.8
     - #382: Adding custom error message for set_rules()
     - Two new lang strings for the multiple delete confirmation
