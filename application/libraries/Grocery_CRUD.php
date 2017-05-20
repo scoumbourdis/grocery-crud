@@ -215,48 +215,58 @@ class grocery_CRUD_Field_Types
 	 */
 	protected function get_field_input($field_info, $value = null)
 	{
+	    if ($field_info->crud_type == 'readonly' && in_array($field_info->type, array('date', 'datetime'))) {
+	        $real_type = $field_info->type.'_'.'readonly';
+	    } else {
 			$real_type = $field_info->crud_type;
-
-			$types_array = array(
-					'integer',
-					'text',
-					'true_false',
-					'string',
-					'date',
-					'datetime',
-					'enum',
-					'set',
-					'relation',
-					'relation_readonly',
-					'relation_n_n',
-					'upload_file',
-					'upload_file_readonly',
-					'hidden',
-					'password',
-					'readonly',
-					'dropdown',
-					'multiselect'
-			);
-
-			if (in_array($real_type,$types_array)) {
-				/* A quick way to go to an internal method of type $this->get_{type}_input .
-				 * For example if the real type is integer then we will use the method
-				 * $this->get_integer_input
-				 *  */
-				$field_info->input = $this->{"get_".$real_type."_input"}($field_info,$value);
-			}
-			else
-			{
-				$field_info->input = $this->get_string_input($field_info,$value);
-			}
+	    }
+	    
+	    $types_array = array(
+	            'integer',
+	            'text',
+	            'true_false',
+	            'string',
+	            'date',
+	            'date_readonly',
+	            'datetime',
+	            'datetime_readonly',
+	            'enum',
+	            'set',
+	            'relation',
+	            'relation_readonly',
+	            'relation_n_n',
+	            'upload_file',
+	            'upload_file_readonly',
+	            'hidden',
+	            'password',
+	            'readonly',
+	            'dropdown',
+	            'multiselect'
+	    );
+	    
+		if (in_array($real_type,$types_array)) {
+			/* A quick way to go to an internal method of type $this->get_{type}_input .
+			 * For example if the real type is integer then we will use the method
+			 * $this->get_integer_input
+			 *  */
+			$field_info->input = $this->{"get_".$real_type."_input"}($field_info,$value);
+		}
+		else
+		{
+			$field_info->input = $this->get_string_input($field_info,$value);
+		}
 
 		return $field_info;
 	}
 
 	protected function change_list_value($field_info, $value = null)
 	{
-		$real_type = $field_info->crud_type;
-
+	    if (in_array($field_info->type, array('date', 'datetime')) && $field_info->crud_type == 'readonly') {
+	        $real_type = $field_info->type;
+	    } else {
+	        $real_type = $field_info->crud_type;
+	    }
+	    
 		switch ($real_type) {
 			case 'hidden':
 			case 'invisible':
@@ -2391,6 +2401,29 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		<a class='datepicker-input-clear' tabindex='-1'>".$this->l('form_button_clear')."</a> (".$this->ui_date_format.")";
 		return $input;
 	}
+	
+	protected function get_date_readonly_input($field_info, $value)
+	{
+	    if (!empty($value) && $value != '0000-00-00' && $value != '1970-01-01') {
+	        list($year, $month, $day) = explode("-", $value);
+	        $value = date($this->php_date_format, mktime (0, 0, 0, (int)$month , (int)$day , (int)$year));
+	    } else {
+	        $value = '';
+	    }
+	    return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$value.'</div>';
+	}
+	
+	protected function get_datetime_readonly_input($field_info, $value)
+	{
+	    if (!empty($value) && $value != '0000-00-00 00:00:00' && $value != '1970-01-01 00:00:00') {
+	        list($year, $month, $day) = explode('-', substr($value, 0, 10));
+	        $date = date($this->php_date_format, mktime(0, 0, 0, $month, $day, $year));
+	        $datetime = $date.substr($value, 10);
+	    } else {
+	        $datetime = '';
+	    }
+	    return '<div id="field-'.$field_info->name.'" class="readonly_label">'.$datetime.'</div>';
+	}
 
 	protected function get_dropdown_input($field_info,$value)
 	{
@@ -2812,18 +2845,21 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function get_read_input_fields($field_values = null)
 	{
 		$read_fields = $this->get_read_fields();
+		$types = $this->get_field_types();
 
 		$this->field_types = null;
 		$this->required_fields = null;
 
-		$read_inputs = array();
 		foreach ($read_fields as $field) {
-			if (!empty($this->change_field_type)
-					&& isset($this->change_field_type[$field->field_name])
-					&& $this->change_field_type[$field->field_name]->type == 'hidden') {
-				continue;
+			if (empty($this->change_field_type)
+					|| !isset($this->change_field_type[$field->field_name])
+					|| $this->change_field_type[$field->field_name]->type != 'hidden') {
+    			if (in_array($types[$field->field_name]->type, array('date', 'datetime'))) {
+    			    $this->field_type($field->field_name, $types[$field->field_name]->type.'_readonly');
+    			} else {
+        			$this->field_type($field->field_name, 'readonly');
+    			}
 			}
-			$this->field_type($field->field_name, 'readonly');
 		}
 
 		$fields = $this->get_read_fields();
