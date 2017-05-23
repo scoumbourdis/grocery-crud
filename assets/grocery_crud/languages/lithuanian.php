@@ -88,3 +88,8 @@ $lang['list_more'] = 'Daugiau';
 
 /* Added in version 1.5.6 */
 $lang['list_search_column'] = 'Ieškoti {column_name}';
+
+/* Added in version 1.5.8 */
+$lang['alert_delete_multiple'] = 'Ar tikrai norite ištrinti šiuos {items_amount} įrašus?';
+
+$lang['alert_delete_multiple_one'] = 'Ar tikrai norite ištrinti šį įrašą?';

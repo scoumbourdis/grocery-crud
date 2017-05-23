@@ -1,4 +1,12 @@
+v 1.5.9
+    - Clean-up redundant JavaScript load if it is not required.
+    - Remove Export as it is a flash plugin and the browser is showing it as a blocked plugin for security reasons.
+v 1.5.8
+    - #382: Adding custom error message for set_rules()
+    - Two new lang strings for the multiple delete confirmation
+    - #388: Chosen select have 100% width at flexigrid theme
 v 1.5.7
+   - #331: Have a configurable XSS clean option to prevent XSS attacks
    - #370: A faster way to calculate the totals
 v 1.5.6
    - Unset bootstrap with more CSS unsets
@@ -25,7 +33,7 @@ v 1.5.0
 	#211 - Bug if use where clause.
 	#197 - Properly sanitize filenames for uploads.
 	#237 - Set Timepicker to 24 hour format.
-    	#294 - Javascript bug with set_subject().
+    #294 - Javascript bug with set_subject().
 	Add a new method unset_view that is just an alias to unset_read method.
 	Multiple delete fields for flexibility for future themes.
 	Fixing the bug of jquery form plugin with returning the textarea as required.

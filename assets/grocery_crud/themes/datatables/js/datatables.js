@@ -27,15 +27,6 @@ $(document).ready(function() {
 		}
 	});
 
-	if(!unset_export)
-	{
-		aButtons.push(    {
-	         "sExtends":    "xls",
-	         "sButtonText": export_text,
-	         "mColumns": mColumns
-	     });
-	}
-
 	if(!unset_print)
 	{
 		aButtons.push({

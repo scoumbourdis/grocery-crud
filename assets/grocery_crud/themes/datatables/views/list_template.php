@@ -7,13 +7,13 @@
 	$this->set_css($this->default_theme_path.'/datatables/extras/TableTools/media/css/TableTools.css');
 	$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 
-	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
-	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
-	$this->set_js_lib($this->default_javascript_path.'/common/lazyload-min.js');
+    if ($dialog_forms) {
+        $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
+        $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
+        $this->set_js_lib($this->default_javascript_path.'/common/lazyload-min.js');
+    }
 
-	if (!$this->is_IE7()) {
-		$this->set_js_lib($this->default_javascript_path.'/common/list.js');
-	}
+    $this->set_js_lib($this->default_javascript_path.'/common/list.js');
 
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
 	$this->set_js_lib($this->default_theme_path.'/datatables/js/jquery.dataTables.min.js');

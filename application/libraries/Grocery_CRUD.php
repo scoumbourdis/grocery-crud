@@ -16,7 +16,7 @@
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2014, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.5.6
+ * @version    	1.5.8
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -468,7 +468,7 @@ class grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.6
+ * @version    	1.5.8
  * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
@@ -532,6 +532,15 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 		return $this->basic_model->get_total_results();
 	}
+
+    protected function filter_data_from_xss($post_data) {
+        foreach ($post_data as $field_name => $rawData) {
+            if (!is_array($rawData)) {
+                $post_data[$field_name] = filter_var(strip_tags($rawData));
+            }
+        }
+        return $post_data;
+    }
 
 	public function set_model($model_name)
 	{
@@ -746,7 +755,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				if(isset($this->validation_rules[$field_name]))
 				{
 					$rule = $this->validation_rules[$field_name];
-					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules']);
+					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules'],$rule['errors']);
 				}
 			}
 
@@ -861,7 +870,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				if(isset($this->validation_rules[$field_name]))
 				{
 					$rule = $this->validation_rules[$field_name];
-					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules']);
+					$form_validation->set_rules($rule['field'],$rule['label'],$rule['rules'],$rule['errors']);
 				}
 			}
 
@@ -890,6 +899,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if($validation_result->success)
 		{
 			$post_data = $state_info->unwrapped_data;
+
+            if ($this->config->xss_clean) {
+                $post_data = $this->filter_data_from_xss($post_data);
+            }
 
 			$add_fields = $this->get_add_fields();
 
@@ -1008,6 +1021,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		{
 			$post_data 		= $state_info->unwrapped_data;
 			$primary_key 	= $state_info->primary_key;
+
+            if ($this->config->xss_clean) {
+                $post_data = $this->filter_data_from_xss($post_data);
+            }
 
 			if($this->callback_update === null)
 			{
@@ -1517,7 +1534,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.6
+ * @version    	1.5.8
  */
 class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 {
@@ -1555,6 +1572,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$data->total_results = $this->get_total_results();
 
+        $data->dialog_forms = $this->config->dialog_forms;
 		$data->columns 				= $this->get_columns();
 
 		$data->success_message		= $this->get_success_message_at_list($state_info);
@@ -2983,7 +3001,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.6
+ * @version    	1.5.8
  */
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
@@ -3412,7 +3430,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2014, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.5.6
+ * @version    	1.5.8
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -3435,7 +3453,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 *
 	 * @var	string
 	 */
-	const	VERSION = "1.5.6";
+	const	VERSION = "1.5.8";
 
 	const	JQUERY 			= "jquery-1.11.1.min.js";
 	const	JQUERY_UI_JS 	= "jquery-ui-1.10.3.custom.min.js";
@@ -3576,13 +3594,14 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @access	public
 	 * @param	mixed
 	 * @param	string
+      * @oaram array
 	 * @return	void
 	 */
-	function set_rules($field, $label = '', $rules = '')
+	function set_rules($field, $label = '', $rules = '', $errors = array())
 	{
 		if(is_string($field))
 		{
-			$this->validation_rules[$field] = array('field' => $field, 'label' => $label, 'rules' => $rules);
+			$this->validation_rules[$field] = array('field' => $field, 'label' => $label, 'rules' => $rules, 'errors' => $errors);
 		}elseif(is_array($field))
 		{
 			foreach($field as $num_field => $field_array)
@@ -4396,6 +4415,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->config->paging_options		= $ci->config->item('grocery_crud_paging_options');
         $this->config->default_theme        = $ci->config->item('grocery_crud_default_theme');
         $this->config->environment          = $ci->config->item('grocery_crud_environment');
+        $this->config->xss_clean            = $ci->config->item('grocery_crud_xss_clean');
 
 		/** Initialize default paths */
 		$this->default_javascript_path				= $this->default_assets_path.'/js';
