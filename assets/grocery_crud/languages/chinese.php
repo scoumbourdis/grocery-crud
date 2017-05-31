@@ -91,7 +91,7 @@
 	$lang['list_search_column'] = '查询 {column_name}';
 
 	/* Added in version 1.5.8 */
-	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
+	$lang['alert_delete_multiple'] = '你确定要删除这些项吗（项_总数: {items_amount}) ?';
 
-	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
+	$lang['alert_delete_multiple_one'] = '你确定要删除此一项吗?';
 
