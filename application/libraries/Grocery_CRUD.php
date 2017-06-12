@@ -3116,13 +3116,15 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
             case 16: //export to excel
             case 17: //print
                 $state_info = (object)array();
-                if(!empty($_POST['per_page']))
+                $data = !empty($_POST) ? $_POST : $_GET;
+
+                if(!empty($data['per_page']))
                 {
-                    $state_info->per_page = is_numeric($_POST['per_page']) ? $_POST['per_page'] : null;
+                    $state_info->per_page = is_numeric($data['per_page']) ? $data['per_page'] : null;
                 }
-                if(!empty($_POST['page']))
+                if(!empty($data['page']))
                 {
-                    $state_info->page = is_numeric($_POST['page']) ? $_POST['page'] : null;
+                    $state_info->page = is_numeric($data['page']) ? $data['page'] : null;
                 }
                 //If we request an export or a print we don't care about what page we are
                 if($state_code === 16 || $state_code === 17)
@@ -3130,29 +3132,29 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                     $state_info->page = 1;
                     $state_info->per_page = 1000000; //a very big number!
                 }
-                if(!empty($_POST['order_by'][0]))
+                if(!empty($data['order_by'][0]))
                 {
-                    $state_info->order_by = $_POST['order_by'];
+                    $state_info->order_by = $data['order_by'];
                 }
-                if(!empty($_POST['search_text']))
+                if(!empty($data['search_text']))
                 {
-                    if(empty($_POST['search_field']))
+                    if(empty($data['search_field']))
                     {
-                        $search_text = strip_tags($_POST['search_field']);
-                        $state_info->search = (object)array('field' => null , 'text' => $_POST['search_text']);
+                        $search_text = strip_tags($data['search_field']);
+                        $state_info->search = (object)array('field' => null , 'text' => $data['search_text']);
                     }
                     else
                     {
-                        if (is_array($_POST['search_field'])) {
+                        if (is_array($data['search_field'])) {
                             $search_array = array();
-                            foreach ($_POST['search_field'] as $search_key => $search_field_name) {
-                                $search_array[$search_field_name] = !empty($_POST['search_text'][$search_key]) ? $_POST['search_text'][$search_key] : '';
+                            foreach ($data['search_field'] as $search_key => $search_field_name) {
+                                $search_array[$search_field_name] = !empty($data['search_text'][$search_key]) ? $data['search_text'][$search_key] : '';
                             }
                             $state_info->search	= $search_array;
                         } else {
                             $state_info->search	= (object)array(
-                                'field' => strip_tags($_POST['search_field']) ,
-                                'text' => $_POST['search_text'] );
+                                'field' => strip_tags($data['search_field']) ,
+                                'text' => $data['search_text'] );
                         }
                     }
                 }
