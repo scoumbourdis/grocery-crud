@@ -562,6 +562,8 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 	protected function set_ajax_list_queries($state_info = null)
 	{
+        $field_types = $this->get_field_types();
+
 		if(!empty($state_info->per_page))
 		{
 			if(empty($state_info->page) || !is_numeric($state_info->page) )
@@ -654,7 +656,8 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					{
 						//@todo have a where for the relation_n_n statement
 					}
-					else
+					elseif (isset($field_types[$column->field_name])
+                        && !in_array($field_types[$column->field_name]->type, array('date', 'datetime', 'timestamp')))
 					{
 						$this->or_like($column->field_name, $search_text);
 					}
@@ -2289,7 +2292,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		else
 		{
-			$input = "<textarea id='field-{$field_info->name}' name='{$field_info->name}'>$value</textarea>";
+			$input = "<textarea id='field-{$field_info->name}' name='{$field_info->name}' class='form-control'>$value</textarea>";
 		}
 		return $input;
 	}

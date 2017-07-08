@@ -1,4 +1,5 @@
 v 1.5.9
+    - #413: Unexpected error when there are non english chars and a datetime field as column
     - #406: Export button to work without the need of a popup window or new tab
     - Clean-up redundant JavaScript load if it is not required.
     - Remove Export as a flash plugin for security reasons and instead add a download link
