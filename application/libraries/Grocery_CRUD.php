@@ -636,31 +636,32 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					foreach($this->where as $where)
 						$this->basic_model->having($where[0],$where[1],$where[2]);
 
-				foreach($columns as $column)
-				{
-					if(isset($temp_relation[$column->field_name]))
-					{
-						if(is_array($temp_relation[$column->field_name]))
-						{
-							foreach($temp_relation[$column->field_name] as $search_field)
-							{
-								$this->or_like($search_field, $search_text);
-							}
-						}
-						else
-						{
-							$this->or_like($temp_relation[$column->field_name], $search_text);
-						}
+				$likes = array();
+                
+				foreach ($columns as $column) {
+				    if (isset($temp_relation[$column->field_name])) {
+					if (is_array($temp_relation[$column->field_name])) {
+					    foreach ($temp_relation[$column->field_name] as $search_field) {
+						$likes[$search_field] = $search_text;
+					    }
+					} else {
+					    $likes[$temp_relation[$column->field_name]] = $search_text;
 					}
-					elseif(isset($this->relation_n_n[$column->field_name]))
-					{
-						//@todo have a where for the relation_n_n statement
-					}
-					elseif (isset($field_types[$column->field_name])
-                        && !in_array($field_types[$column->field_name]->type, array('date', 'datetime', 'timestamp')))
-					{
-						$this->or_like($column->field_name, $search_text);
-					}
+				    } elseif (isset($this->relation_n_n[$column->field_name])) {
+					//@todo have a where for the relation_n_n statement
+				    } else {
+					$likes[$column->field_name] = $search_text;
+				    }
+				}
+
+				$where_clause = "";
+				foreach ($likes as $field => $search_text) {
+				    $where_clause = $where_clause. " OR ".$field. " LIKE '%".$this->basic_model->escape_like_str($search_text)."%' ESCAPE '!'";
+				}
+
+				if(sizeof($likes)>0){
+				    $where_clause = "(".substr($where_clause, 4).")";
+				    $this->basic_model->where($where_clause);
 				}
 			}
 		}
