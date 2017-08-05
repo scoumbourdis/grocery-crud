@@ -366,6 +366,126 @@ class grocery_CRUD_Field_Types
 		return $value;
 	}
 
+
+
+	protected function change_read_value($field_info, $value = null)
+	{
+		$real_type = $field_info->crud_type;
+		
+		switch ($real_type) {
+			case 'hidden':
+			case 'invisible':
+			case 'integer':
+
+			break;
+			case 'true_false':
+				if(is_array($field_info->extras) && array_key_exists($value,$field_info->extras)) {
+					$value = $field_info->extras[$value];
+				} else if(isset($this->default_true_false_text[$value])) {
+					$value = $this->default_true_false_text[$value];
+				}
+			break;
+			case 'string':
+				$value = $this->character_limiter($value,$this->character_limiter,"...");
+			break;
+			case 'text':
+				//$value = $this->character_limiter(strip_tags($value),$this->character_limiter,"...");
+			break;
+			case 'date':
+				if(!empty($value) && $value != '0000-00-00' && $value != '1970-01-01')
+				{
+					list($year,$month,$day) = explode("-",$value);
+
+					$value = date($this->php_date_format, mktime (0, 0, 0, (int)$month , (int)$day , (int)$year));
+				}
+				else
+				{
+					$value = '';
+				}
+			break;
+			case 'datetime':
+				if(!empty($value) && $value != '0000-00-00 00:00:00' && $value != '1970-01-01 00:00:00')
+				{
+					list($year,$month,$day) = explode("-",$value);
+					list($hours,$minutes) = explode(":",substr($value,11));
+
+					$value = date($this->php_date_format." - H:i", mktime ((int)$hours , (int)$minutes , 0, (int)$month , (int)$day ,(int)$year));
+				}
+				else
+				{
+					$value = '';
+				}
+			break;
+			case 'enum':
+				$value = $this->character_limiter($value,$this->character_limiter,"...");
+			break;
+
+			case 'multiselect':
+				$value_as_array = array();
+				foreach(explode(",",$value) as $row_value)
+				{
+					$value_as_array[] = array_key_exists($row_value,$field_info->extras) ? $field_info->extras[$row_value] : $row_value;
+				}
+				$value = implode(",",$value_as_array);
+			break;
+
+			case 'relation':
+				$value_arr = $this->get_relation_array($field_info->extras);
+				$value = $value_arr[$value];
+			break;
+
+			case 'relation_n_n':
+				//$value = $this->character_limiter(str_replace(',',', ',$value),$this->character_limiter,"...");
+			break;
+
+			case 'password':
+				$value = '******';
+			break;
+
+			case 'dropdown':
+				$value = array_key_exists($value,$field_info->extras) ? $field_info->extras[$value] : $value;
+			break;
+
+			case 'upload_file':
+				if(empty($value))
+				{
+					$value = "";
+				}
+				else
+				{
+					$is_image = !empty($value) &&
+					( substr($value,-4) == '.jpg'
+							|| substr($value,-4) == '.png'
+							|| substr($value,-5) == '.jpeg'
+							|| substr($value,-4) == '.gif'
+							|| substr($value,-5) == '.tiff')
+							? true : false;
+
+					$file_url = base_url().$field_info->extras->upload_path."/$value";
+
+					$file_url_anchor = '<a href="'.$file_url.'"';
+					if($is_image)
+					{
+						$file_url_anchor .= ' class="image-thumbnail"><img src="'.$file_url.'" height="50px">';
+					}
+					else
+					{
+						$file_url_anchor .= ' target="_blank">'.$this->character_limiter($value,$this->character_limiter,'...',true);
+					}
+					$file_url_anchor .= '</a>';
+
+					$value = $file_url_anchor;
+				}
+			break;
+
+			default:
+				//$value = $this->character_limiter($value,$this->character_limiter,"...");
+			break;
+		}
+
+		return $value;
+	}
+
 	/**
 	 * Character Limiter of codeigniter (I just don't want to load the helper )
 	 *
@@ -2826,7 +2946,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 					&& $this->change_field_type[$field->field_name]->type == 'hidden') {
 				continue;
 			}
-			$this->field_type($field->field_name, 'readonly');
+			//$this->field_type($field->field_name, 'readonly');
 		}
 
 		$fields = $this->get_read_fields();
@@ -2834,20 +2954,27 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$input_fields = array();
 
-		foreach($fields as $field_num => $field)
+		foreach($fields as $field)
 		{
 			$field_info = $types[$field->field_name];
 
 			$field_value = !empty($field_values) && isset($field_values->{$field->field_name}) ? $field_values->{$field->field_name} : null;
-			if(!isset($this->callback_read_field[$field->field_name]))
-			{
-				$field_input = $this->get_field_input($field_info, $field_value);
-			}
-			else
+			if(isset($this->callback_read_field[$field->field_name]))
 			{
 				$primary_key = $this->getStateInfo()->primary_key;
 				$field_input = $field_info;
 				$field_input->input = call_user_func($this->callback_read_field[$field->field_name], $field_value, $primary_key, $field_info, $field_values);
+			}
+			elseif(isset($this->callback_column[$field->field_name]))
+			{
+				$primary_key = $this->getStateInfo()->primary_key;
+				$field_input = $field_info;
+				$field_input->input = call_user_func($this->callback_column[$field->field_name], $field_value, $field_values);
+			}
+			else
+			{
+				$field_input = $this->get_field_input($field_info, $field_value);
+				$field_input->input = $this->change_read_value($field_info, $field_value);
 			}
 
 			switch ($field_info->crud_type) {
@@ -2857,11 +2984,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			    	continue;
 			    	break;
 			    case 'hidden':
-			    	$this->read_hidden_fields[] = $field_input;
-			    	unset($this->read_fields[$field_num]);
-			    	unset($fields[$field_num]);
-			    	continue;
-			    	break;
+			    	if(isset($field_num)){
+				    	$this->read_hidden_fields[] = $field_input;
+						unset($this->read_fields[$field_num]);
+						unset($fields[$field_num]);
+						continue;
+						break;
+					}
 			}
 
 			$input_fields[$field->field_name] = $field_input;
@@ -3545,6 +3674,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $callback_column			= array();
 	protected $callback_add_field		= array();
 	protected $callback_edit_field		= array();
+	protected $callback_read_field		= array();
 	protected $callback_upload			= null;
 	protected $callback_before_upload	= null;
 	protected $callback_after_upload	= null;
@@ -4887,6 +5017,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	{
 		$this->callback_add_field[$field] = $callback;
 		$this->callback_edit_field[$field] = $callback;
+		$this->callback_read_field[$field] = $callback;
 
 		return $this;
 	}
@@ -4913,6 +5044,19 @@ class Grocery_CRUD extends grocery_CRUD_States
 	public function callback_edit_field($field, $callback = null)
 	{
 		$this->callback_edit_field[$field] = $callback;
+
+		return $this;
+	}
+
+	/**
+	 *
+	 * Enter description here ...
+	 * @param string $field
+	 * @param mixed $callback
+	 */
+	public function callback_read_field($field, $callback = null)
+	{
+		$this->callback_read_field[$field] = $callback;
 
 		return $this;
 	}
