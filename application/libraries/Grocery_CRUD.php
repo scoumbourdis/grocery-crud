@@ -1299,11 +1299,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			unset($temp1[0]);
 
 			$field_names_array = array();
-			foreach($temp1 as $field) {
-				list($field_name) = explode('}',$field);
-				$field_name = $this->_unique_join_name($relation_values[0]).'.'. $field_name;
-				$field_names_array[] = $field_name;
-			}
+			foreach($temp1 as $field) { 
+				list($field_name) = explode('}',$field); 
+				$field_name = $this->_unique_join_name($relation_values[0]).'.'. $field_name; 
+				$field_names_array[] = $field_name; 
+			} 
 
 			return $field_names_array;
 		}
@@ -1973,12 +1973,16 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->_get_ajax_results();
 	}
 
-	protected function showEditForm($state_info)
+	protected function showEditForm($state_info,$type="edit")
 	{
+		//IF $type IS CLONE THEN ACT LIKE THAT
+		
 		$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 
 		$data 				= $this->get_common_data();
 		$data->types 		= $this->get_field_types();
+
+		$data->type = $type;
 
 		$data->field_values = $this->get_edit_values($state_info->primary_key);
 
@@ -1986,6 +1990,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$data->list_url 	= $this->getListUrl();
 		$data->update_url	= $this->getUpdateUrl($state_info);
+		if($type=="clone"){				
+			$data->update_url	= $this->getInsertUrl();
+		}
 		$data->delete_url	= $this->getDeleteUrl($state_info);
 		$data->read_url		= $this->getReadUrl($state_info->primary_key);
 		$data->input_fields = $this->get_edit_input_fields($data->field_values);
@@ -1994,6 +2001,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->fields 		= $this->get_edit_fields();
 		$data->hidden_fields	= $this->get_edit_hidden_fields();
 		$data->unset_back_to_list	= $this->unset_back_to_list;
+		$data->unset_clone	= $this->unset_clone;
 
 		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key);
 		$data->is_ajax 			= $this->_is_ajax();
@@ -3146,6 +3154,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
     const STATE_EDIT = 3;
     const STATE_DELETE = 4;
     const STATE_INSERT = 5;
+    const STATE_CLONE = 20;
 
     const STATE_READ = 18;
     const STATE_DELETE_MULTIPLE = '19';
@@ -3170,7 +3179,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		16  => 'export',
 		17  => 'print',
 		18  => 'read',
-        19  => 'delete_multiple'
+        19  => 'delete_multiple',
+        20  => 'clone'
 	);
 
     public function getStateInfo()
@@ -3195,6 +3205,15 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                     $state_info = (object) array('primary_key' => $first_parameter);
                 } else {
                     throw new Exception('On the state "edit" the Primary key cannot be null', 6);
+                    die();
+                }
+                break;
+                
+            case self::STATE_CLONE:
+                if ($first_parameter !== null) {
+                    $state_info = (object) array('primary_key' => $first_parameter);
+                } else {
+                    throw new Exception('On the state "clone" the Primary key cannot be null', 6);
                     die();
                 }
                 break;
@@ -3659,6 +3678,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $unset_export			= false;
 	protected $unset_print			= false;
 	protected $unset_back_to_list	= false;
+	protected $unset_clone			= false;
 	protected $unset_columns		= null;
 	protected $unset_add_fields 	= null;
 	protected $unset_edit_fields	= null;
@@ -4051,6 +4071,19 @@ class Grocery_CRUD extends grocery_CRUD_States
 	public function unset_back_to_list()
 	{
 		$this->unset_back_to_list = true;
+
+		return $this;
+	}
+
+
+	/**
+	 * Unsets everything that has to do with buttons or links with clone
+	 * @access	public
+	 * @return	void
+	 */
+	public function unset_clone()
+	{
+		$this->unset_clone = true;
 
 		return $this;
 	}
@@ -4879,6 +4912,25 @@ class Grocery_CRUD extends grocery_CRUD_States
 				$this->delete_layout($delete_result);
 
                 break;
+
+			case 20://clone
+				if($this->unset_clone)
+				{
+					throw new Exception('You don\'t have permissions for this operation', 14);
+					die();
+				}
+
+				if($this->theme === null)
+					$this->set_theme($this->default_theme);
+				$this->setThemeBasics();
+
+				$this->set_basic_Layout();
+
+				$state_info = $this->getStateInfo();
+
+				$this->showEditForm($state_info,"clone");
+
+			break;
 
 		}
 
