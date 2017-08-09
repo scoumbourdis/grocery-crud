@@ -58,10 +58,6 @@
 	$lang['form_save_and_go_back']	= 'Save and go back to list';
 	$lang['form_update_and_go_back']= 'Update and go back to list';
 
-	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
-
 	/* Upload functionality */
 	$lang['string_delete_file'] 	= "Deleting file";
 	$lang['string_progress'] 		= "Progress: ";
@@ -88,4 +84,11 @@
 
 	/* Added in version 1.5.2 */
 	$lang['list_more'] = 'More';
+
+	/* Added in version 1.5.6 */
+	$lang['list_search_column'] = 'Search {column_name}';
+
+	/* Added in version 1.5.8 */
+	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
+	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
 

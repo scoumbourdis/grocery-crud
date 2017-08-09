@@ -8,7 +8,7 @@ table th
 /* CSS Document */
 .flexigrid {
 	font-family:Arial,Helvetica,sans-serif;
-	font-size:11px;
+	font-size:14px;
 	position:relative;
 	border:0px solid #eee;
 	overflow:hidden;
@@ -307,11 +307,12 @@ table th
 .flexigrid div.form-div input[type=text], .flexigrid div.form-div input[type=password]
 {
 	font-size: 15px;
-	width: 500px;
 	height:20px;
 	border: 1px solid #AAA;
 	padding: 5px 5px 5px 5px;
-	background: #fafafa;
+}
+.flexigrid input[type=text].form-control {
+	width: 500px;
 }
 .flexigrid div.form-div textarea
 {
@@ -331,7 +332,6 @@ table th
 .flexigrid div.form-div textarea:focus, .flexigrid div.form-div input[type=text]:focus, .flexigrid div.form-div select:focus
 {
 	border: 1px solid #444;
-	background: #fff;
 }
 div.form-div input.datepicker-input
 {

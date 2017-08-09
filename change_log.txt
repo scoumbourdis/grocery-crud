@@ -1,3 +1,19 @@
+v 1.5.9
+    - #413: Unexpected error when there are non english chars and a datetime field as column
+    - #406: Export button to work without the need of a popup window or new tab
+    - Clean-up redundant JavaScript load if it is not required.
+    - Remove Export as a flash plugin for security reasons and instead add a download link
+v 1.5.8
+    - #382: Adding custom error message for set_rules()
+    - Two new lang strings for the multiple delete confirmation
+    - #388: Chosen select have 100% width at flexigrid theme
+v 1.5.7
+   - #331: Have a configurable XSS clean option to prevent XSS attacks
+   - #370: A faster way to calculate the totals
+v 1.5.6
+   - Unset bootstrap with more CSS unsets
+   - Languages updates (Portuguese, Italian, Spanish)
+   - #367: Missing translation for Search {column_name}
 v 1.5.5
    Add Croatian language - translated by: Siniša Dragičević Martinčić
    - Small CSS fixes: Datetime and date picker was overflowing in some languages
@@ -19,7 +35,7 @@ v 1.5.0
 	#211 - Bug if use where clause.
 	#197 - Properly sanitize filenames for uploads.
 	#237 - Set Timepicker to 24 hour format.
-    	#294 - Javascript bug with set_subject().
+    #294 - Javascript bug with set_subject().
 	Add a new method unset_view that is just an alias to unset_read method.
 	Multiple delete fields for flexibility for future themes.
 	Fixing the bug of jquery form plugin with returning the textarea as required.

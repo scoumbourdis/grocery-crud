@@ -85,3 +85,10 @@
 	/* Added in version 1.5.2 */
 	$lang['list_more'] = 'Επιπλέον';
 
+	/* Added in version 1.5.6 */
+	$lang['list_search_column'] = 'Αναζήτηση {column_name}';
+
+	/* Added in version 1.5.8 */
+	$lang['alert_delete_multiple'] = 'Είστε σίγουροι ότι θέλετε να διαγράψετε τις {items_amount} επιλεγμένες εγγραφές?';
+	$lang['alert_delete_multiple_one'] = 'Είστε σίγουροι ότι θέλετε να διαγράψετε την επιλεγμένη εγγραφή?';
+

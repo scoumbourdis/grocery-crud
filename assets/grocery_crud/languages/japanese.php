@@ -84,5 +84,13 @@
 	$lang['ui_year'] = 'yyyy';
 
 	/* Added in version 1.5.2 */
-	$lang['list_more'] = 'More';
+	$lang['list_more'] = '詳細';
+
+	/* Added in version 1.5.6 */
+	$lang['list_search_column'] = '検索 {column_name}';
+
+	/* Added in version 1.5.8 */
+	$lang['alert_delete_multiple'] = '本当にこの {items_amount} 行を削除しますか?';
+
+	$lang['alert_delete_multiple_one'] = '本当にこの 1 行を削除しますか?';
 

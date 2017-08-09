@@ -13,6 +13,21 @@ $(function(){
 		}
 	});
 
+    var create_export_url = function ($this_form) {
+        var $flexigridContainer = $this_form.closest('.flexigrid'),
+            exportQuery = '';
+
+        $.each($flexigridContainer.find('.filtering_form').serializeArray(), function(i, field) {
+        	if (field.value !== '') {
+                exportQuery += field.name + '=' + field.value + '&';
+			}
+        });
+
+        exportQuery = exportQuery.substr(0, exportQuery.length - 1)
+
+        $flexigridContainer.find('.export-anchor').attr('href', export_url + '?' + exportQuery)
+    };
+
 	var call_fancybox = function () {
 		//If there is no thumbnail this means that the fancybox library doesn't exist
 		if ($('.image-thumbnail').length > 0) {
@@ -62,6 +77,7 @@ $(function(){
 						this_form.closest('.flexigrid').find('.ajax_list').html(data);
 						call_fancybox();
 						add_edit_button_listener();
+						create_export_url(this_form);
 					 }
 				});
 			 }
@@ -167,22 +183,6 @@ $(function(){
 		}
 
 		return false;
-	});
-
-	$('.export-anchor').click(function(){
-		var export_url = $(this).attr('data-url');
-
-		var form_input_html = '';
-		$.each($(this).closest('.flexigrid').find('.filtering_form').serializeArray(), function(i, field) {
-		    form_input_html = form_input_html + '<input type="hidden" name="'+field.name+'" value="'+field.value+'">';
-		});
-
-		var form_on_demand = $("<form/>").attr("id","export_form").attr("method","post").attr("target","_blank")
-								.attr("action",export_url).html(form_input_html);
-
-		$(this).closest('.flexigrid').find('.hidden-operations').html(form_on_demand);
-
-		$(this).closest('.flexigrid').find('.hidden-operations').find('#export_form').submit();
 	});
 
 	$('.print-anchor').click(function(){
