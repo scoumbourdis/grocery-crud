@@ -1170,17 +1170,19 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 	protected function _get_field_names_to_search(array $relation_values)
 	{
-		if(!strstr($relation_values[2],'{'))
+		if(!strstr($relation_values[2],'{')) {
 			return $this->_unique_join_name($relation_values[0]).'.'.$relation_values[2];
-		else
-		{
+		} else {
 			$relation_values[2] = ' '.$relation_values[2].' ';
 			$temp1 = explode('{',$relation_values[2]);
 			unset($temp1[0]);
 
 			$field_names_array = array();
-			foreach($temp1 as $field)
-				list($field_names_array[]) = explode('}',$field);
+			foreach($temp1 as $field) {
+				list($field_name) = explode('}',$field);
+				$field_name = $this->_unique_join_name($relation_values[0]).'.'. $field_name;
+				$field_names_array[] = $field_name;
+			}
 
 			return $field_names_array;
 		}
