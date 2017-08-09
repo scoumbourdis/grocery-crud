@@ -1,4 +1,5 @@
 v 1.5.9
+    - #420: set_relation with brackets is causing ambiguous column name when the field name exists at the basic table
     - #413: Unexpected error when there are non english chars and a datetime field as column
     - #406: Export button to work without the need of a popup window or new tab
     - Clean-up redundant JavaScript load if it is not required.
