@@ -431,7 +431,8 @@ class grocery_CRUD_Field_Types
 
 			case 'relation':
 				$value_arr = $this->get_relation_array($field_info->extras);
-				$value = $value_arr[$value];
+				if(isset($value_arr[$value]))
+					$value = $value_arr[$value];
 			break;
 
 			case 'relation_n_n':
