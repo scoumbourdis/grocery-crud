@@ -1706,6 +1706,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->primary_key 			= $this->get_primary_key();
 		$data->add_url				= $this->getAddUrl();
 		$data->edit_url				= $this->getEditUrl();
+		$data->clone_url			= $this->getCloneUrl();
 		$data->delete_url			= $this->getDeleteUrl();
         $data->delete_multiple_url	= $this->getDeleteMultipleUrl();
 		$data->read_url				= $this->getReadUrl();
@@ -1719,6 +1720,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$data->unset_add			= $this->unset_add;
 		$data->unset_edit			= $this->unset_edit;
+		$data->unset_clone			= $this->unset_clone;
 		$data->unset_read			= $this->unset_read;
 		$data->unset_delete			= $this->unset_delete;
 		$data->unset_export			= $this->unset_export;
@@ -1740,6 +1742,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$data->list[$num_row]->edit_url = $data->edit_url.'/'.$row->{$data->primary_key};
 			$data->list[$num_row]->delete_url = $data->delete_url.'/'.$row->{$data->primary_key};
 			$data->list[$num_row]->read_url = $data->read_url.'/'.$row->{$data->primary_key};
+			$data->list[$num_row]->clone_url = $data->clone_url.'/'.$row->{$data->primary_key};
 		}
 
 		if(!$ajax)
@@ -1987,6 +1990,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->field_values = $this->get_edit_values($state_info->primary_key);
 
 		$data->add_url		= $this->getAddUrl();
+		$data->clone_url		= $this->getCloneUrl($state_info);
 
 		$data->list_url 	= $this->getListUrl();
 		$data->update_url	= $this->getUpdateUrl($state_info);
@@ -3514,6 +3518,14 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			return $this->state_url('edit');
 		else
 			return $this->state_url('edit/'.$primary_key);
+	}
+
+	protected function getCloneUrl($primary_key = null)
+	{
+		if($primary_key === null)
+			return $this->state_url('clone');
+		else
+			return $this->state_url('clone/'.$primary_key->primary_key);
 	}
 
 	protected function getReadUrl($primary_key = null)
