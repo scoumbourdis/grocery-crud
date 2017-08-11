@@ -1042,6 +1042,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						return false;
 				}
 
+
 				$insert_data = array();
 				$types = $this->get_field_types();
 				foreach($add_fields as $num_row => $field)
@@ -1473,6 +1474,32 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 	{
 		$values = $this->basic_model->get_edit_values($primary_key_value);
 
+		if(!empty($this->relation_n_n))
+		{
+			foreach($this->relation_n_n as $field_name => $field_info)
+			{
+				$values->$field_name = $this->get_relation_n_n_selection_array($primary_key_value, $field_info);
+			}
+		}
+
+		return $values;
+	}
+
+	protected function get_clone_values($primary_key_value)
+	{
+		$values = $this->basic_model->get_edit_values($primary_key_value);
+
+		$types 	= $this->get_field_types();
+		//print_r($types['file1']);
+		//print_r($types);
+		//die;
+		foreach($values as $k=>$v){
+			if($types[$k.'']->crud_type=="upload_file"){
+				//print_r($values->$k);
+				$values->$k = "";
+			}
+		}
+		
 		if(!empty($this->relation_n_n))
 		{
 			foreach($this->relation_n_n as $field_name => $field_info)
@@ -1988,7 +2015,9 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->type = $type;
 
 		$data->field_values = $this->get_edit_values($state_info->primary_key);
-
+		if($type=="clone"){				
+			$data->field_values = $this->get_clone_values($state_info->primary_key);
+		}
 		$data->add_url		= $this->getAddUrl();
 		$data->clone_url		= $this->getCloneUrl($state_info);
 
@@ -3694,6 +3723,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $unset_columns		= null;
 	protected $unset_add_fields 	= null;
 	protected $unset_edit_fields	= null;
+	protected $unset_clone_fields	= null;
 	protected $unset_read_fields	= null;
 
 	/* Callbacks */
@@ -3706,10 +3736,14 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $callback_before_delete 	= null;
 	protected $callback_after_delete 	= null;
 	protected $callback_delete 			= null;
+	protected $callback_before_clone 	= null;
+	protected $callback_after_clone 	= null;
+	protected $callback_clone 			= null;
 	protected $callback_column			= array();
 	protected $callback_add_field		= array();
 	protected $callback_edit_field		= array();
 	protected $callback_read_field		= array();
+	protected $callback_clone_field		= array();
 	protected $callback_upload			= null;
 	protected $callback_before_upload	= null;
 	protected $callback_after_upload	= null;
@@ -3982,6 +4016,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	{
 		$this->unset_add 	= true;
 		$this->unset_edit 	= true;
+		$this->unset_clone = true;
 		$this->unset_delete = true;
 		$this->unset_read	= true;
 		$this->unset_export = true;
@@ -4027,6 +4062,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 
 		$this->unset_add_fields = $args;
 		$this->unset_edit_fields = $args;
+		$this->unset_clone_fields = $args;
 		$this->unset_read_fields = $args;
 
 		return $this;
@@ -4056,6 +4092,20 @@ class Grocery_CRUD extends grocery_CRUD_States
 		}
 
 		$this->unset_edit_fields = $args;
+
+		return $this;
+	}
+
+	public function unset_clone_fields()
+	{
+		$args = func_get_args();
+
+		if(isset($args[0]) && is_array($args[0]))
+		{
+			$args = $args[0];
+		}
+
+		$this->unset_clone_fields = $args;
 
 		return $this;
 	}
@@ -5057,6 +5107,39 @@ class Grocery_CRUD extends grocery_CRUD_States
 	public function callback_delete($callback = null)
 	{
 		$this->callback_delete = $callback;
+
+		return $this;
+	}
+
+	/**
+	 *
+	 * Enter description here ...
+	 */
+	public function callback_before_clone($callback = null)
+	{
+		$this->callback_before_clone = $callback;
+
+		return $this;
+	}
+
+	/**
+	 *
+	 * Enter description here ...
+	 */
+	public function callback_after_clone($callback = null)
+	{
+		$this->callback_after_clone = $callback;
+
+		return $this;
+	}
+
+	/**
+	 *
+	 * Enter description here ...
+	 */
+	public function callback_clone($callback = null)
+	{
+		$this->callback_clone = $callback;
 
 		return $this;
 	}
