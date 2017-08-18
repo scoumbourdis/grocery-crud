@@ -625,6 +625,15 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($this->or_like as $or_like)
 				$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);
 
+		if(!empty($this->or_like_group))
+			foreach($this->or_like_group as $or_like_group){
+				$this->basic_model->group_start();
+				foreach($or_like_group as $or_like){
+					$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);
+				}
+				$this->basic_model->group_end();
+			}
+			
 		if(!empty($this->having))
 			foreach($this->having as $having)
 				$this->basic_model->having($having[0],$having[1],$having[2]);
@@ -716,7 +725,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
                     if (isset($temp_relation[$search_field])) {
                         if (is_array($temp_relation[$search_field])) {
                             foreach ($temp_relation[$search_field] as $relation_field) {
-                                $this->or_like($relation_field , $search_text);
+                                $this->or_like_group($relation_field , $search_text);
                             }
                         } else {
                             $this->like($temp_relation[$search_field] , $search_text);
@@ -725,7 +734,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
                         $escaped_text = $this->basic_model->escape_str($search_text);
                         $this->having($search_field." LIKE '%".$escaped_text."%'");
                     } else {
-                        $this->like($search_field, $search_text);
+                        $this->like($this->basic_db_table.'.'.$search_field, $search_text);
                     }
 
 
@@ -744,7 +753,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$escaped_text = $this->basic_model->escape_str($state_info->search->text);
 					$this->having($state_info->search->field." LIKE '%".$escaped_text."%'");
 				} else {
-					$this->like($state_info->search->field , $state_info->search->text);
+					$this->like($this->basic_db_table.'.'.$state_info->search->field , $state_info->search->text);
 				}
 			}
 			else
@@ -780,7 +789,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					elseif (isset($field_types[$column->field_name])
                         && !in_array($field_types[$column->field_name]->type, array('date', 'datetime', 'timestamp')))
 					{
-						$this->or_like($column->field_name, $search_text);
+						$this->or_like($this->basic_db_table.'.'.$column->field_name, $search_text);
 					}
 				}
 			}
@@ -1416,8 +1425,18 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$this->basic_model->like($like[0],$like[1],$like[2]);
 
 		if(!empty($this->or_like))
-			foreach($this->or_like as $or_like)
+			foreach($this->or_like as $or_like){
 				$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);
+			}
+			
+		if(!empty($this->or_like_group))
+			foreach($this->or_like_group as $or_like_group){
+				$this->basic_model->group_start();
+				foreach($or_like_group as $or_like){
+					$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);
+				}
+				$this->basic_model->group_end();
+			}
 
 		if(!empty($this->having))
 			foreach($this->having as $having)
@@ -2058,6 +2077,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$data->list_url 	= $this->getListUrl();
 		$data->update_url	= $this->getUpdateUrl($state_info);
+		$data->edit_url		= $this->getEditUrl($state_info->primary_key);
 		$data->delete_url	= $this->getDeleteUrl($state_info);
 		$data->read_url		= $this->getReadUrl($state_info->primary_key);
 		$data->input_fields = $this->get_read_input_fields($data->field_values);
@@ -4609,6 +4629,14 @@ class Grocery_CRUD extends grocery_CRUD_States
 	public function or_like($field, $match = '', $side = 'both')
 	{
 		$this->or_like[] = array($field, $match, $side);
+
+		return $this;
+	}
+
+	public function or_like_group($field, $match = '', $side = 'both')
+	{
+		$tb_name = substr($field, 0, strpos($field,"."));
+		$this->or_like_group[$tb_name][] = array($field, $match, $side);
 
 		return $this;
 	}
