@@ -3576,7 +3576,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @access	public
 	 * @param	string
 	 * @param	array
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function columns()
 	{
@@ -3602,7 +3602,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @param	mixed
 	 * @param	string
       * @oaram array
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	function set_rules($field, $label = '', $rules = '', $errors = array())
 	{
@@ -3669,7 +3669,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @access	public
 	 * @param	string
 	 * @param	array
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_texteditor()
 	{
@@ -3691,7 +3691,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * Unsets just the jquery library from the js. This function can be used if there is already a jquery included
 	 * in the main template. This will avoid all jquery conflicts.
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_jquery()
 	{
@@ -3705,7 +3705,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * when the jquery UI JavaScript and CSS are already included in the main template.
 	 * This will avoid all jquery UI conflicts.
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_jquery_ui()
 	{
@@ -3718,7 +3718,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * Unsets just the twitter bootstrap libraries from the js and css. This function can be used if there is already twitter bootstrap files included
 	 * in the main template. If you are already using a bootstrap template then it's not necessary to load the files again.
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_bootstrap()
 	{
@@ -3730,7 +3730,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Unsets the add operation from the list
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_add()
 	{
@@ -3742,7 +3742,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Unsets the edit operation from the list
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_edit()
 	{
@@ -3754,7 +3754,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Unsets the delete operation from the list
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_delete()
 	{
@@ -3766,7 +3766,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Unsets the read operation from the list
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_read()
 	{
@@ -3778,7 +3778,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Just an alias to unset_read
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 * */
 	public function unset_view()
 	{
@@ -3788,7 +3788,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Unsets the export button and functionality from the list
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_export()
 	{
@@ -3801,7 +3801,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Unsets the print button and functionality from the list
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_print()
 	{
@@ -3813,7 +3813,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Unsets all the operations from the list
 	 *
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_operations()
 	{
@@ -3830,7 +3830,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Unsets a column from the list
 	 *
-	 * @return	void.
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_columns()
 	{
@@ -3915,7 +3915,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	/**
 	 * Unsets everything that has to do with buttons or links with go back to list message
 	 * @access	public
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function unset_back_to_list()
 	{
@@ -3931,7 +3931,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * @access	public
 	 * @param	string
 	 * @param	array
-	 * @return	void
+	 * @return	Grocery_CRUD
 	 */
 	public function fields()
 	{
@@ -4002,7 +4002,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * Changes the displaying label of the field
 	 * @param $field_name
 	 * @param $display_as
-	 * @return void
+	 * @return Grocery_CRUD
 	 */
 	public function display_as($field_name, $display_as = null)
 	{
