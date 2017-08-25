@@ -3869,6 +3869,10 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 
+	/**
+	 * Unsets fields from the add form
+	 * Fields set using this function will be used in place of fields set using unset_fields
+	 */
 	public function unset_add_fields()
 	{
 		$args = func_get_args();
@@ -3883,6 +3887,10 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 
+	/**
+	 * Unsets fields from the edit form
+	 * Fields set using this function will be used in place of fields set using unset_fields
+	 */
 	public function unset_edit_fields()
 	{
 		$args = func_get_args();
@@ -3897,6 +3905,10 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 
+	/**
+	 * Unsets fields from the read page
+	 * Fields set using this function will be used in place of fields set using unset_fields
+	 */
 	public function unset_read_fields()
 	{
 		$args = func_get_args();
