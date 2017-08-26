@@ -734,7 +734,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
                         $escaped_text = $this->basic_model->escape_str($search_text);
                         $this->having($search_field." LIKE '%".$escaped_text."%'");
                     } else {
-                        $this->like($this->basic_db_table.'.'.$search_field, $search_text);
+                        $this->like((strpos($search_field,".")!=false?'':$this->basic_db_table.'.').$search_field, $search_text);
                     }
 
 
@@ -753,7 +753,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$escaped_text = $this->basic_model->escape_str($state_info->search->text);
 					$this->having($state_info->search->field." LIKE '%".$escaped_text."%'");
 				} else {
-					$this->like($this->basic_db_table.'.'.$state_info->search->field , $state_info->search->text);
+					$this->like((strpos(".",$state_info->search->field)!==false?'':$this->basic_db_table.'.').$state_info->search->field , $state_info->search->text);
 				}
 			}
 			else
@@ -789,7 +789,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					elseif (isset($field_types[$column->field_name])
                         && !in_array($field_types[$column->field_name]->type, array('date', 'datetime', 'timestamp')))
 					{
-						$this->or_like($this->basic_db_table.'.'.$column->field_name, $search_text);
+						$this->or_like((strpos($state_info->search->field,".")!==false?'':$this->basic_db_table.'.').$column->field_name, $search_text);
 					}
 				}
 			}
