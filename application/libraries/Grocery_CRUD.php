@@ -753,7 +753,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$escaped_text = $this->basic_model->escape_str($state_info->search->text);
 					$this->having($state_info->search->field." LIKE '%".$escaped_text."%'");
 				} else {
-					$this->like((strpos(".",$state_info->search->field)!==false?'':$this->basic_db_table.'.').$state_info->search->field , $state_info->search->text);
+					$this->like((strpos($state_info->search->field,".")!==false?'':$this->basic_db_table.'.').$state_info->search->field , $state_info->search->text);
 				}
 			}
 			else
@@ -2078,6 +2078,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->list_url 	= $this->getListUrl();
 		$data->update_url	= $this->getUpdateUrl($state_info);
 		$data->edit_url		= $this->getEditUrl($state_info->primary_key);
+		$data->clone_url		= $this->getCloneUrl($state_info);
 		$data->delete_url	= $this->getDeleteUrl($state_info);
 		$data->read_url		= $this->getReadUrl($state_info->primary_key);
 		$data->input_fields = $this->get_read_input_fields($data->field_values);
