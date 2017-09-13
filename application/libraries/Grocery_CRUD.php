@@ -488,33 +488,43 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 	protected function get_total_results()
 	{
-		if(!empty($this->where))
+		if(!empty($this->where)) {
 			foreach($this->where as $where)
 				$this->basic_model->where($where[0],$where[1],$where[2]);
+		}
 
-		if(!empty($this->or_where))
+		if(!empty($this->or_where)) {
 			foreach($this->or_where as $or_where)
 				$this->basic_model->or_where($or_where[0],$or_where[1],$or_where[2]);
+		}
 
-		if(!empty($this->like))
+		if(!empty($this->like)) {
 			foreach($this->like as $like)
 				$this->basic_model->like($like[0],$like[1],$like[2]);
+		}
 
-		if(!empty($this->or_like))
-			foreach($this->or_like as $or_like)
-				$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);
+		if(!empty($this->or_like)) {
+		    $this->basic_model->db->group_start();
+		    foreach($this->or_like as $or_like) {
+		        $this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);
+		    }
+		    $this->basic_model->db->group_end();
+		}
 
-		if(!empty($this->having))
+		if(!empty($this->having)) {
 			foreach($this->having as $having)
 				$this->basic_model->having($having[0],$having[1],$having[2]);
+		}
 
-		if(!empty($this->or_having))
+		if(!empty($this->or_having)) {
 			foreach($this->or_having as $or_having)
 				$this->basic_model->or_having($or_having[0],$or_having[1],$or_having[2]);
+		}
 
-		if(!empty($this->relation))
+		if(!empty($this->relation)) {
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);
+		}
 
 		if(!empty($this->relation_n_n))
 		{
@@ -631,10 +641,17 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$columns = $this->get_columns();
 
 				$search_text = $state_info->search->text;
-
+                
+				/*
 				if(!empty($this->where))
 					foreach($this->where as $where)
 						$this->basic_model->having($where[0],$where[1],$where[2]);
+						*/
+				if(!empty($this->where)) {
+				    foreach($this->where as $where) {
+				        $this->basic_model->where($where[0],$where[1],$where[2]);
+				    }
+				}
 
 				foreach($columns as $column)
 				{
@@ -834,7 +851,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$this->basic_model->where($primary_key,$state_info->primary_key);
 					$row = $this->basic_model->get_row();
 
-					if(!property_exists($row, $field_name)) {
+					if(!isset($row->$field_name)) {
 						throw new Exception("The field name doesn't exist in the database. ".
 								 			"Please use the unique fields only for fields ".
 											"that exist in the database");
@@ -842,7 +859,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 					$previous_field_name_value = $row->$field_name;
 
-					if(!empty($field_name_value) && $previous_field_name_value != $field_name_value) {
+					if(!empty($previous_field_name_value) && $previous_field_name_value != $field_name_value) {
 						$form_validation->set_rules( $field_name,
 								$field_types[$field_name]->display_as,
 								'is_unique['.$this->basic_db_table.'.'.$field_name.']');
@@ -1278,36 +1295,47 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
 	protected function get_list()
 	{
-		if(!empty($this->order_by))
+		if(!empty($this->order_by)) {
 			$this->basic_model->order_by($this->order_by[0],$this->order_by[1]);
+		}
 
-		if(!empty($this->where))
+		if(!empty($this->where)) {
 			foreach($this->where as $where)
 				$this->basic_model->where($where[0],$where[1],$where[2]);
+		}
 
-		if(!empty($this->or_where))
+		if(!empty($this->or_where)) {
 			foreach($this->or_where as $or_where)
 				$this->basic_model->or_where($or_where[0],$or_where[1],$or_where[2]);
+		}
 
-		if(!empty($this->like))
+		if(!empty($this->like)) {
 			foreach($this->like as $like)
 				$this->basic_model->like($like[0],$like[1],$like[2]);
+		}
 
-		if(!empty($this->or_like))
-			foreach($this->or_like as $or_like)
+		if(!empty($this->or_like)) {
+		    $this->basic_model->db->group_start();
+			foreach($this->or_like as $or_like) {
 				$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);
+			}
+			$this->basic_model->db->group_end();
+		}
 
-		if(!empty($this->having))
+		if(!empty($this->having)) {
 			foreach($this->having as $having)
 				$this->basic_model->having($having[0],$having[1],$having[2]);
+		}
 
-		if(!empty($this->or_having))
+		if(!empty($this->or_having)) {
 			foreach($this->or_having as $or_having)
 				$this->basic_model->or_having($or_having[0],$or_having[1],$or_having[2]);
+		}
 
-		if(!empty($this->relation))
+		if(!empty($this->relation)) {
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);
+		}
 
 		if(!empty($this->relation_n_n))
 		{
