@@ -49,40 +49,49 @@
 	$lang['insert_error']			= '新增记录的时候发生错误.';
 	$lang['update_error']			= '保存记录的时候发生错误.';
 
+/* Additional translations by @iradave based upon inputs from C. Zhu 7/7/16 */
 	/* Added in version 1.2.1 */
-	$lang['set_relation_title']		= 'Select {field_display_as}';
-	$lang['list_record']			= 'Record';
-	$lang['form_inactive']			= 'inactive';
-	$lang['form_active']			= 'active';
+	$lang['set_relation_title']		= '选择 {field_display_as}';
+	$lang['list_record']			= '记录';
+	$lang['form_inactive']			= '注销';
+	$lang['form_active']			= '激活';
 
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'Save and go back to list';
-	$lang['form_update_and_go_back']= 'Update and go back to list';
+	$lang['form_save_and_go_back']	= '保存并返回列表';
+	$lang['form_update_and_go_back']= '保存并返回列表';
 
 	/* Upload functionality */
-	$lang['string_delete_file'] 	= "Deleting file";
-	$lang['string_progress'] 		= "Progress: ";
-	$lang['error_on_uploading'] 	= "An error has occurred on uploading.";
-	$lang['message_prompt_delete_file'] 	= "Are you sure that you want to delete this file?";
+	$lang['string_delete_file'] 	= "正在删除数据";
+	$lang['string_progress'] 		= "进程: ";
+	$lang['error_on_uploading'] 	= "加载时发生了错误.";
+	$lang['message_prompt_delete_file'] 	= "确定删除这些文件?";
 
-	$lang['error_max_number_of_files'] 	= "You can only upload one file each time.";
-	$lang['error_accept_file_types'] 	= "You are not allow to upload this kind of extension.";
-	$lang['error_max_file_size'] 		= "The uploaded file exceeds the {max_file_size} directive that was specified.";
-	$lang['error_min_file_size'] 		= "You cannot upload an empty file.";
+	$lang['error_max_number_of_files'] 	= "一次只能上传一份文件.";
+	$lang['error_accept_file_types'] 	= "不允许上传这种类型的拓展文件.";
+	$lang['error_max_file_size'] 		= "上传的文件超过了指示所规定的最大尺寸.";
+	$lang['error_min_file_size'] 		= "不能上传空的文件.";
 
 	/* Added in version 1.3.1 */
-	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
-	$lang['minimize_maximize'] = 'Minimize/Maximize';
-
+	$lang['list_export'] 	= "导出";
+	$lang['list_print'] 	= "打印";
+	$lang['minimize_maximize'] = '最小值/最大值';
+	
 	/* Added in version 1.4 */
-	$lang['list_view'] = 'View';
-
+	$lang['list_view'] = '浏览';
+	
 	/* Added in version 1.5.1 */
-	$lang['ui_day'] = 'dd';
-	$lang['ui_month'] = 'mm';
-	$lang['ui_year'] = 'yyyy';
-
+	$lang['ui_day'] = '日期';
+	$lang['ui_month'] = '月份';
+	$lang['ui_year'] = '年份';
+	
 	/* Added in version 1.5.2 */
-	$lang['list_more'] = 'More';
+	$lang['list_more'] = '更多';
+
+	/* Added in version 1.5.6 */
+	$lang['list_search_column'] = '查询 {column_name}';
+
+	/* Added in version 1.5.8 */
+	$lang['alert_delete_multiple'] = '你确定要删除这些项吗（项_总数: {items_amount}) ?';
+
+	$lang['alert_delete_multiple_one'] = '你确定要删除此一项吗?';
 

@@ -7,13 +7,13 @@
 	$this->set_css($this->default_theme_path.'/datatables/extras/TableTools/media/css/TableTools.css');
 	$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 
-	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
-	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
-	$this->set_js_lib($this->default_javascript_path.'/common/lazyload-min.js');
+    if ($dialog_forms) {
+        $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
+        $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
+        $this->set_js_lib($this->default_javascript_path.'/common/lazyload-min.js');
+    }
 
-	if (!$this->is_IE7()) {
-		$this->set_js_lib($this->default_javascript_path.'/common/list.js');
-	}
+    $this->set_js_lib($this->default_javascript_path.'/common/list.js');
 
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/ui/'.grocery_CRUD::JQUERY_UI_JS);
 	$this->set_js_lib($this->default_theme_path.'/datatables/js/jquery.dataTables.min.js');
@@ -59,6 +59,7 @@
 
 	var export_text = '<?php echo $this->l('list_export');?>';
 	var print_text = '<?php echo $this->l('list_print');?>';
+	var export_url = '<?php echo $export_url; ?>'
 
 	<?php
 	//A work around for method order_by that doesn't work correctly on datatables theme
@@ -102,23 +103,26 @@
 	}
 </style>
 <?php }?>
-<div id='list-report-error' class='report-div error report-list'></div>
-<div id='list-report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>><?php
- if($success_message !== null){?>
-	<p><?php echo $success_message; ?></p>
-<?php }
-?></div>
-<div class="dataTablesContainer">
-	<?php if(!$unset_add){?>
-		<div class="datatables-add-button">
-		<a role="button" class="add_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="<?php echo $add_url?>">
-			<span class="ui-button-icon-primary ui-icon ui-icon-circle-plus"></span>
-			<span class="ui-button-text"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
-		</a>
-		</div>
-	<?php }?>
-	
-	<div style='height:10px;'></div>
+<div class="grocerycrud-container">
 
-	<?php echo $list_view?>
+	<div id='list-report-error' class='report-div error report-list'></div>
+	<div id='list-report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>><?php
+	 if($success_message !== null){?>
+		<p><?php echo $success_message; ?></p>
+	<?php }
+	?></div>
+	<div class="dataTablesContainer">
+		<?php if(!$unset_add){?>
+			<div class="datatables-add-button">
+			<a role="button" class="add_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="<?php echo $add_url?>">
+				<span class="ui-button-icon-primary ui-icon ui-icon-circle-plus"></span>
+				<span class="ui-button-text"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
+			</a>
+			</div>
+		<?php }?>
+
+		<div style='height:10px;'></div>
+
+		<?php echo $list_view?>
+	</div>
 </div>

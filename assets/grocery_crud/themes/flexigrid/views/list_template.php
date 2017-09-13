@@ -2,13 +2,13 @@
 	$this->set_css($this->default_theme_path.'/flexigrid/css/flexigrid.css');
 	$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 
-	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
-	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
-	$this->set_js_lib($this->default_javascript_path.'/common/lazyload-min.js');
+	if ($dialog_forms) {
+        $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
+        $this->set_js_lib($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
+        $this->set_js_lib($this->default_javascript_path.'/common/lazyload-min.js');
+    }
 
-	if (!$this->is_IE7()) {
-		$this->set_js_lib($this->default_javascript_path.'/common/list.js');
-	}
+    $this->set_js_lib($this->default_javascript_path.'/common/list.js');
 
 	$this->set_js($this->default_theme_path.'/flexigrid/js/cookies.js');
 	$this->set_js($this->default_theme_path.'/flexigrid/js/flexigrid.js');
@@ -33,6 +33,7 @@
 	var subject = '<?php echo addslashes($subject); ?>';
 	var ajax_list_info_url = '<?php echo $ajax_list_info_url; ?>';
 	var unique_hash = '<?php echo $unique_hash; ?>';
+	var export_url = '<?php echo $export_url; ?>';
 
 	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
 
@@ -72,7 +73,7 @@ if($success_message !== null){?>
 		<?php }?>
 		<div class="tDiv3">
 			<?php if(!$unset_export) { ?>
-        	<a class="export-anchor" data-url="<?php echo $export_url; ?>" target="_blank">
+        	<a class="export-anchor" href="<?php echo $export_url; ?>" download>
 				<div class="fbutton">
 					<div>
 						<span class="export"><?php echo $this->l('list_export');?></span>

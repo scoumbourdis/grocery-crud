@@ -77,8 +77,6 @@
 	$lang['list_export'] 			= "Excel форматаар хадгалах";
 	$lang['list_print'] 			= "Хэвлэх";
 	$lang['minimize_maximize'] 		= 'Хаах/Нээх';
-
-
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'Харах';
 
@@ -86,8 +84,14 @@
 	$lang['ui_day'] = 'dd';
 	$lang['ui_month'] = 'mm';
 	$lang['ui_year'] = 'yyyy';
-
-
 	/* Added in version 1.5.2 */
 	$lang['list_more'] = 'More';
+
+	/* Added in version 1.5.6 */
+	$lang['list_search_column'] = 'Search {column_name}';
+
+	/* Added in version 1.5.8 */
+	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
+
+	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
 

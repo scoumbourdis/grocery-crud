@@ -74,8 +74,6 @@
 	$lang['list_export'] 	= "Export";
 	$lang['list_print'] 	= "Printare";
 	$lang['minimize_maximize'] = 'Minimizare/Maximizare';
-
-
 	/* Added in version 1.4 */
 	$lang['list_view'] = 'View';
 
@@ -86,4 +84,12 @@
 
 	/* Added in version 1.5.2 */
 	$lang['list_more'] = 'More';
+
+	/* Added in version 1.5.6 */
+	$lang['list_search_column'] = 'Search {column_name}';
+
+	/* Added in version 1.5.8 */
+	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
+
+	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
 

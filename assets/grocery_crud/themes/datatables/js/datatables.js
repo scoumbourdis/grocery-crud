@@ -27,14 +27,13 @@ $(document).ready(function() {
 		}
 	});
 
-	if(!unset_export)
-	{
-		aButtons.push(    {
-	         "sExtends":    "xls",
-	         "sButtonText": export_text,
-	         "mColumns": mColumns
-	     });
-	}
+    if(!unset_export)
+    {
+        aButtons.push({
+            "sExtends":    "text",
+            "sButtonText": export_text
+        });
+    }
 
 	if(!unset_print)
 	{
@@ -151,6 +150,10 @@ function loadDataTable(this_datatables) {
     	},
 		"iDisplayLength": default_per_page,
 		"aaSorting": datatables_aaSorting,
+		"fnInitComplete" : function () {
+            $('.DTTT_button_text').attr('download', '');
+            $('.DTTT_button_text').attr('href', export_url);
+		},
 		"oLanguage":{
 		    "sProcessing":   list_loading,
 		    "sLengthMenu":   show_entries_string,
@@ -177,6 +180,7 @@ function loadDataTable(this_datatables) {
 				'overlayShow'	:	false
 			});
 			add_edit_button_listener();
+            $('.DTTT_button_text').attr('href', export_url);
 		},
 		"sDom": 'T<"clear"><"H"lfr>t<"F"ip>',
 	    "oTableTools": {
