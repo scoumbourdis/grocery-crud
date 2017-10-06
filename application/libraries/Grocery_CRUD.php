@@ -642,6 +642,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($this->or_having as $or_having)
 				$this->basic_model->or_having($or_having[0],$or_having[1],$or_having[2]);
 
+		if(!empty($this->join))
+			foreach($this->join as $join)
+				$this->basic_model->join($join[0],$join[1],$join[2]);
+
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);
@@ -1445,6 +1449,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->or_having))
 			foreach($this->or_having as $or_having)
 				$this->basic_model->or_having($or_having[0],$or_having[1],$or_having[2]);
+
+		if(!empty($this->join))
+			foreach($this->join as $join)
+				$this->basic_model->join($join[0],$join[1],$join[2]);
 
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
@@ -3712,6 +3720,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $like 				= array();
 	protected $having 				= array();
 	protected $or_having 			= array();
+	protected $join		 			= array();
 	protected $limit 				= null;
 	protected $required_fields		= array();
 	protected $_unique_fields 			= array();
@@ -4623,6 +4632,13 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected function or_having($key, $value = '', $escape = TRUE)
 	{
 		$this->or_having[] = array($key, $value, $escape);
+
+		return $this;
+	}
+
+	public function join($table, $where = '', $type = "left")
+	{
+		$this->join[] = array($table, $where, $type);
 
 		return $this;
 	}

@@ -160,6 +160,11 @@ class Grocery_crud_model  extends CI_Model  {
     	$this->db->or_having( $key, $value, $escape);
     }
 
+    function join($table, $where, $type = "left")
+    {
+    	$this->db->join( $table, $where, $type);
+    }
+
     function like($field, $match = '', $side = 'both')
     {
     	$this->db->like($field, $match, $side);
