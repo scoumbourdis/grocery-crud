@@ -63,7 +63,7 @@ class Grocery_crud_model  extends CI_Model  {
 
 				if(strstr($related_field_title,'{'))
 				{
-					$related_field_title = str_replace(" ","&nbsp;",$related_field_title);
+					//$related_field_title = str_replace(" ","&nbsp;",$related_field_title);
     				$select .= ", CONCAT('".str_replace(array('{','}'),array("',COALESCE({$unique_join_name}.",", ''),'"),str_replace("'","\\'",$related_field_title))."') as $unique_field_name";
 				}
     			else
@@ -160,6 +160,11 @@ class Grocery_crud_model  extends CI_Model  {
     	$this->db->or_having( $key, $value, $escape);
     }
 
+    function join($table, $where, $type = "left")
+    {
+    	$this->db->join( $table, $where, $type);
+    }
+
     function like($field, $match = '', $side = 'both')
     {
     	$this->db->like($field, $match, $side);
@@ -173,6 +178,16 @@ class Grocery_crud_model  extends CI_Model  {
     function limit($value, $offset = '')
     {
     	$this->db->limit( $value , $offset );
+    }
+
+    function group_start()
+    {
+    	$this->db->group_start();
+    }
+
+    function group_end()
+    {
+    	$this->db->group_end();
     }
 
     function get_total_results()
@@ -255,7 +270,7 @@ class Grocery_crud_model  extends CI_Model  {
 
     	if(strstr($related_field_title,'{'))
     	{
-    		$related_field_title = str_replace(" ", "&nbsp;", $related_field_title);
+    		//$related_field_title = str_replace(" ", "&nbsp;", $related_field_title);
     		$select .= "CONCAT('".str_replace(array('{','}'),array("',COALESCE(",", ''),'"),str_replace("'","\\'",$related_field_title))."') as $field_name_hash";
     	}
     	else
