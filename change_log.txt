@@ -1,3 +1,5 @@
+v 1.6.0
+    - #432: Bootstrap Theme issues with filtering when we are using set_relation with multiple fields
 v 1.5.9
     - #420: set_relation with brackets is causing ambiguous column name when the field name exists at the basic table
     - #413: Unexpected error when there are non english chars and a datetime field as column

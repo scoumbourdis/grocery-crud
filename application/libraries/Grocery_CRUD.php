@@ -594,9 +594,16 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 
                     if (isset($temp_relation[$search_field])) {
                         if (is_array($temp_relation[$search_field])) {
+                            $temp_where_query_array = [];
+
                             foreach ($temp_relation[$search_field] as $relation_field) {
-                                $this->or_like($relation_field , $search_text);
+                                $escaped_text = $this->basic_model->escape_str($search_text);
+                                $temp_where_query_array[] = $relation_field . ' LIKE \'%' . $escaped_text . '%\'';
                             }
+                            if (!empty($temp_where_query_array)) {
+                                $this->where('(' . implode(' OR ', $temp_where_query_array) . ')', null);
+                            }
+
                         } else {
                             $this->like($temp_relation[$search_field] , $search_text);
                         }
