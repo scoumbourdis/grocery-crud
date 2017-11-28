@@ -1640,6 +1640,10 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$this->set_echo_and_die();
 			$this->_theme_view('list.php',$data);
 		}
+
+        if (!empty($this->upload_fields)) {
+            $this->load_js_fancybox();
+        }
 	}
 
 	protected function exportToExcel($state_info = null)
