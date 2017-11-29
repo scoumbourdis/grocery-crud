@@ -172,13 +172,16 @@ function loadDataTable(this_datatables) {
 		"bDestory": true,
 		"bRetrieve": true,
 		"fnDrawCallback": function() {
-			$('.image-thumbnail').fancybox({
-				'transitionIn'	:	'elastic',
-				'transitionOut'	:	'elastic',
-				'speedIn'		:	600,
-				'speedOut'		:	200,
-				'overlayShow'	:	false
-			});
+            //If there is no thumbnail this means that the fancybox library doesn't exist
+            if ($('.image-thumbnail').length > 0) {
+                $('.image-thumbnail').fancybox({
+                    'transitionIn': 'elastic',
+                    'transitionOut': 'elastic',
+                    'speedIn': 600,
+                    'speedOut': 200,
+                    'overlayShow': false
+                });
+            }
 			add_edit_button_listener();
             $('.DTTT_button_text').attr('href', export_url);
 		},
