@@ -971,6 +971,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 							$insert_data[$field->field_name] = $post_data[$field->field_name];
 						}
 					}
+					else {
+						if($types[$field->field_name]->crud_type == 'true_false_checkbox') {
+							$insert_data[$field->field_name] = 0;
+						}
+					}
 				}
 
 				$insert_result =  $this->basic_model->db_insert($insert_data);
@@ -1094,6 +1099,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						else
 						{
 							$update_data[$field->field_name] = $post_data[$field->field_name];
+						}
+					}
+					else {
+						if($types[$field->field_name]->crud_type == 'true_false_checkbox') {
+							$update_data[$field->field_name] = 0;
 						}
 					}
 				}
