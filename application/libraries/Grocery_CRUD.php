@@ -221,6 +221,7 @@ class grocery_CRUD_Field_Types
 					'integer',
 					'text',
 					'true_false',
+					'true_false_checkbox',
 					'string',
 					'date',
 					'datetime',
@@ -264,6 +265,7 @@ class grocery_CRUD_Field_Types
 
 			break;
 			case 'true_false':
+			case 'true_false_checkbox':
 				if(is_array($field_info->extras) && array_key_exists($value,$field_info->extras)) {
 					$value = $field_info->extras[$value];
 				} else if(isset($this->default_true_false_text[$value])) {
@@ -2245,6 +2247,25 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			"<div class=\"radio\"><label>
 				<input id='field-{$field_info->name}-false' type=\"radio\" name=\"{$field_info->name}\" value=\"0\" $checked />
 				$false_string
+			 </label> </div>";
+
+		$input .= "</div>";
+
+		return $input;
+	}
+
+	protected function get_true_false_checkbox_input($field_info,$value)
+	{
+		$value_is_null = empty($value) && $value !== '0' && $value !== 0 ? true : false;
+
+		$input = "<div class='pretty-radio-buttons'>";
+
+		$checkbox_string = is_array($field_info->extras) && array_key_exists(2,$field_info->extras) ? $field_info->extras[2] : $this->default_true_false_text[1];
+		$checked = $value === '1' || ($value_is_null && $field_info->default === '1') ? "checked = 'checked'" : "";
+		$input .=
+			"<div class=\"checkbox\"><label>
+				<input id='field-{$field_info->name}-true' type=\"checkbox\" name=\"{$field_info->name}\" value=\"1\" $checked />
+				$checkbox_string
 			 </label> </div>";
 
 		$input .= "</div>";
