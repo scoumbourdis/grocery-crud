@@ -1,4 +1,5 @@
 v 1.6.0
+    - #211: Bug if use where clause and try to "search all" the fields
     - #432: Bootstrap Theme issues with filtering when we are using set_relation with multiple fields
     - #353: Adding callback_read_field function
     - #433: Preview click with fancybox to work the same across all the themes

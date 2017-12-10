@@ -645,6 +645,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						$this->basic_model->having($where[0],$where[1],$where[2]);
 
                 $temp_where_query_array = [];
+                $basic_table = $this->get_table();
 
 				foreach($columns as $column)
 				{
@@ -673,7 +674,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
                         !in_array($field_types[$column->field_name]->type, array('date', 'datetime', 'timestamp'))
                     ) {
                         $escaped_text = $this->basic_model->escape_str($search_text);
-                        $temp_where_query_array[] = $column->field_name . ' LIKE \'%' . $escaped_text . '%\'';
+                        $temp_where_query_array[] =  '`' . $basic_table . '`.' . $column->field_name . ' LIKE \'%' . $escaped_text . '%\'';
 					}
 				}
 
@@ -2194,8 +2195,10 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		elseif($this->echo_and_die === true)
 		{
-			echo $this->views_as_string;
-			die();
+            return (object)array(
+                'isAjax' => true,
+                'output' => $this->views_as_string,
+            );
 		}
 	}
 
