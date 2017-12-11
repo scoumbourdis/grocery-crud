@@ -2195,10 +2195,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		elseif($this->echo_and_die === true)
 		{
-            return (object)array(
-                'isAjax' => true,
-                'output' => $this->views_as_string,
-            );
+			echo $this->views_as_string;
+			die();
 		}
 	}
 
