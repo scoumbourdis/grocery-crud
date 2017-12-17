@@ -91,4 +91,6 @@
 	/* Added in version 1.5.8 */
 	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
 	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
-
+	
+	/* Added  2017-11-15	*/
+	$lang['error_not_unique'] = 'This %s is already in the database. Please enter a unique value for this field.';
