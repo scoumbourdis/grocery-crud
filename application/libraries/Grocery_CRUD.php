@@ -371,7 +371,7 @@ class grocery_CRUD_Field_Types
 	protected function change_read_value($field_info, $value = null)
 	{
 		$real_type = $field_info->crud_type;
-		
+
 		switch ($real_type) {
 			case 'hidden':
 			case 'invisible':
@@ -633,7 +633,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				}
 				$this->basic_model->group_end();
 			}
-			
+
 		if(!empty($this->having))
 			foreach($this->having as $having)
 				$this->basic_model->having($having[0],$having[1],$having[2]);
@@ -642,9 +642,17 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($this->or_having as $or_having)
 				$this->basic_model->or_having($or_having[0],$or_having[1],$or_having[2]);
 
+		if(!empty($this->group_by))
+			foreach($this->group_by as $group_by)
+				$this->basic_model->group_by($group_by[0]);
+
 		if(!empty($this->join))
 			foreach($this->join as $join)
 				$this->basic_model->join($join[0],$join[1],$join[2]);
+
+		if(!empty($this->select))
+			foreach($this->select as $select)
+				$this->basic_model->select($select[0],$select[1]);
 
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
@@ -1313,11 +1321,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			unset($temp1[0]);
 
 			$field_names_array = array();
-			foreach($temp1 as $field) { 
-				list($field_name) = explode('}',$field); 
-				$field_name = $this->_unique_join_name($relation_values[0]).'.'. $field_name; 
-				$field_names_array[] = $field_name; 
-			} 
+			foreach($temp1 as $field) {
+				list($field_name) = explode('}',$field);
+				$field_name = $this->_unique_join_name($relation_values[0]).'.'. $field_name;
+				$field_names_array[] = $field_name;
+			}
 
 			return $field_names_array;
 		}
@@ -1432,7 +1440,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($this->or_like as $or_like){
 				$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);
 			}
-			
+
 		if(!empty($this->or_like_group))
 			foreach($this->or_like_group as $or_like_group){
 				$this->basic_model->group_start();
@@ -1450,9 +1458,17 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($this->or_having as $or_having)
 				$this->basic_model->or_having($or_having[0],$or_having[1],$or_having[2]);
 
+		if(!empty($this->group_by))
+			foreach($this->group_by as $group_by)
+				$this->basic_model->group_by($group_by[0]);
+
 		if(!empty($this->join))
 			foreach($this->join as $join)
 				$this->basic_model->join($join[0],$join[1],$join[2]);
+
+		if(!empty($this->select))
+			foreach($this->select as $select)
+				$this->basic_model->select($select[0],$select[1]);
 
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
@@ -1526,7 +1542,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 				$values->$k = "";
 			}
 		}
-		
+
 		if(!empty($this->relation_n_n))
 		{
 			foreach($this->relation_n_n as $field_name => $field_info)
@@ -2033,7 +2049,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function showEditForm($state_info,$type="edit")
 	{
 		//IF $type IS CLONE THEN ACT LIKE THAT
-		
+
 		$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 
 		$data 				= $this->get_common_data();
@@ -2042,7 +2058,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->type = $type;
 
 		$data->field_values = $this->get_edit_values($state_info->primary_key);
-		if($type=="clone"){				
+		if($type=="clone"){
 			$data->field_values = $this->get_clone_values($state_info->primary_key);
 		}
 		$data->add_url		= $this->getAddUrl();
@@ -2050,7 +2066,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$data->list_url 	= $this->getListUrl();
 		$data->update_url	= $this->getUpdateUrl($state_info);
-		if($type=="clone"){				
+		if($type=="clone"){
 			$data->update_url	= $this->getInsertUrl();
 		}
 		$data->delete_url	= $this->getDeleteUrl($state_info);
@@ -3270,7 +3286,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                     die();
                 }
                 break;
-                
+
             case self::STATE_CLONE:
                 if ($first_parameter !== null) {
                     $state_info = (object) array('primary_key' => $first_parameter);
@@ -3717,10 +3733,13 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $display_as 			= array();
 	protected $order_by 			= null;
 	protected $where 				= array();
+	protected $or_where 			= array();
 	protected $like 				= array();
 	protected $having 				= array();
 	protected $or_having 			= array();
+	protected $group_by 			= array();
 	protected $join		 			= array();
+	protected $select	 			= array();
 	protected $limit 				= null;
 	protected $required_fields		= array();
 	protected $_unique_fields 			= array();
@@ -4622,16 +4641,23 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 
-	protected function having($key, $value = '', $escape = TRUE)
+	public function having($key, $value = '', $escape = TRUE)
 	{
 		$this->having[] = array($key, $value, $escape);
 
 		return $this;
 	}
 
-	protected function or_having($key, $value = '', $escape = TRUE)
+	public function or_having($key, $value = '', $escape = TRUE)
 	{
 		$this->or_having[] = array($key, $value, $escape);
+
+		return $this;
+	}
+
+	public function group_by($field)
+	{
+		$this->group_by[] = array($field);
 
 		return $this;
 	}
@@ -4639,6 +4665,13 @@ class Grocery_CRUD extends grocery_CRUD_States
 	public function join($table, $where = '', $type = "left")
 	{
 		$this->join[] = array($table, $where, $type);
+
+		return $this;
+	}
+
+	public function select($select, $escape = NULL)
+	{
+		$this->select[] = array($select, $escape);
 
 		return $this;
 	}

@@ -165,6 +165,11 @@ class Grocery_crud_model  extends CI_Model  {
     	$this->db->join( $table, $where, $type);
     }
 
+    function select($select, $escape = NULL)
+    {
+    	$this->db->select( $select, $escape);
+    }
+
     function like($field, $match = '', $side = 'both')
     {
     	$this->db->like($field, $match, $side);
@@ -178,6 +183,11 @@ class Grocery_crud_model  extends CI_Model  {
     function limit($value, $offset = '')
     {
     	$this->db->limit( $value , $offset );
+    }
+
+    function group_by($field)
+    {
+    	$this->db->group_by( $field );
     }
 
     function group_start()
@@ -205,7 +215,7 @@ class Grocery_crud_model  extends CI_Model  {
     	} else {
             $this->db->select($this->table_name . '.' . $key);
         }
-        
+
         return $this->db->get($this->table_name)->num_rows();
     }
 
