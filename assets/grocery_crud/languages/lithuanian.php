@@ -4,9 +4,9 @@ $lang['list_add'] = 'Pridėti';
 $lang['list_actions'] = 'Veiksmai';
 $lang['list_page'] = 'Puslapis';
 $lang['list_paging_of'] = 'iš';
-$lang['list_displaying'] = 'Rodoma nuo {start} iki {end} iš {results} užrašų';
-$lang['list_filtered_from'] = '(išfiltruota iš {total_results} užrašų)';
-$lang['list_show_entries'] = 'Rodyti {paging} užrašų';
+$lang['list_displaying'] = 'Rodoma nuo {start} iki {end} iš {results} įrašų';
+$lang['list_filtered_from'] = '(išfiltruota iš {total_results} įrašų)';
+$lang['list_show_entries'] = 'Rodyti {paging} įrašų';
 $lang['list_no_items'] = 'Nera įrašų atvaizdavimui';
 $lang['list_zero_entries'] = 'Rodoma 0 įrašų, nes yra 0 įrašų.';
 $lang['list_search'] = 'Paieška';
@@ -15,35 +15,35 @@ $lang['list_clear_filtering'] = 'Valyti filtrą';
 $lang['list_delete'] = 'Trinti';
 $lang['list_edit'] = 'Redaguoti';
 $lang['list_paging_first'] = 'Pirmas';
-$lang['list_paging_previous'] = 'Prieštai esantis';
-$lang['list_paging_next'] = 'Sekantis';
+$lang['list_paging_previous'] = 'Ankstesnis';
+$lang['list_paging_next'] = 'Kitas';
 $lang['list_paging_last'] = 'Paskutinis';
-$lang['list_loading'] = 'Kraunama...';
+$lang['list_loading'] = 'Įkeliama...';
 
 $lang['form_edit'] = 'Redaguoti';
 $lang['form_back_to_list'] = 'Atgal į sąrašą';
 $lang['form_update_changes'] = 'Saugoti pakeitimus';
 $lang['form_cancel'] = 'Atšaukti';
-$lang['form_update_loading'] = 'Kraunama, informacijos atnaujinimas...';
-$lang['update_success_message'] = 'Info sekmingai atnaujinta.';
+$lang['form_update_loading'] = 'Įkeliama, informacija atnaujinama...';
+$lang['update_success_message'] = 'Informacija sekmingai atnaujinta.';
 $lang['form_go_back_to_list'] = 'Grįžti prie sąrašo';
 
 $lang['form_add'] = 'Pridėti';
-$lang['insert_success_message'] = 'Info sekmingai įrašyta į Duomenų bazę.';
+$lang['insert_success_message'] = 'Informacija sekmingai įrašyta į duomenų bazę.';
 $lang['form_or'] = 'arba';
 $lang['form_save'] = 'saugoti';
-$lang['form_insert_loading'] = 'Kraunama, info saugoma...';
+$lang['form_insert_loading'] = 'Įkeliama, informacija įrašoma...';
 
-$lang['form_upload_a_file'] = 'Atsiųsti bylą';
+$lang['form_upload_a_file'] = 'Atsiųsti failą';
 $lang['form_upload_delete'] = 'Trinti';
 $lang['form_button_clear'] = 'Valyti';
 
-$lang['delete_success_message'] = 'Info išvalyta iš duomenų bazės.';
-$lang['delete_error_message'] = 'Info neišvalyta is Duomenų bazės.';
+$lang['delete_success_message'] = 'Informacija išvalyta iš duomenų bazės.';
+$lang['delete_error_message'] = 'Informacija neišvalyta is duomenų bazės.';
 
 /* Javascript messages */
-$lang['alert_add_form'] = 'Įrašyta info gali būti neišsaugota.\\nNorite grįžti prie sąrašo?';
-$lang['alert_edit_form'] = 'Pakeista info gali būti neišsaugota.\\nNorite grįžti prie sąrašo?';
+$lang['alert_add_form'] = 'Įrašoma informacija gali būti neišsaugota.\\Norite grįžti prie sąrašo?';
+$lang['alert_edit_form'] = 'Pakeista informacija gali būti neišsaugota.\\Norite grįžti prie sąrašo?';
 $lang['alert_delete'] = 'Ar tikrai noriti ištrinti įrašą?';
 
 $lang['insert_error'] = 'Įrašant įvyko klaida.';
@@ -60,37 +60,36 @@ $lang['form_save_and_go_back'] = 'Saugoti ir grįžti į sąrašą';
 $lang['form_update_and_go_back']= 'Saugoti pakeitimus ir grįžti į sąrašą';
 
 /* Upload functionality */
-$lang['string_delete_file'] = 'Bylos šalinimas';
+$lang['string_delete_file'] = 'Failo šalinimas';
 $lang['string_progress'] = 'Progresas: ';
-$lang['error_on_uploading'] = 'Ivyko klaida, byla neužkrauta.';
-$lang['message_prompt_delete_file'] = 'Ar Jus tikrai norite ištrinti šia bylą?';
+$lang['error_on_uploading'] = 'Ivyko klaida, failas neįkeltas.';
+$lang['message_prompt_delete_file'] = 'Ar Jūs tikrai norite ištrinti šį failą?';
 
-$lang['error_max_number_of_files'] = 'Vienu karti galite užkrauti tik viena bylą.';
-$lang['error_accept_file_types'] = 'Negalima užkrauti bylos, dėl bylos fotmato.';
-$lang['error_max_file_size'] = 'Byla labai didelė, negalima jos užgrauti. Dydis: {max_file_size}.';
-$lang['error_min_file_size'] = 'Negalima užkrauti tuščios bylos.';
+$lang['error_max_number_of_files'] = 'Vienu metu galite įkelti tik vieną bylą.';
+$lang['error_accept_file_types'] = 'Failo įkeltin nepavyko dėl failo formato.';
+$lang['error_max_file_size'] = 'Failas labai didelis, negalima jo įkelti. Leidžiamas dydis: {max_file_size}.';
+$lang['error_min_file_size'] = 'Negalima įkelti tuščio failo.';
 
 /* Added in version 1.3.1 */
 $lang['list_export'] = 'Eksportuoti';
 $lang['list_print'] = 'Spausdinti';
-$lang['minimize_maximize'] = 'Sumažinti/Padidinti';
+$lang['minimize_maximize'] = 'Sumažinti / padidinti';
 
 /* Added in version 1.4 */
-$lang['list_view'] = 'Pažiūrėti';
+$lang['list_view'] = 'Peržiūrėti';
 
 /* Added in version 1.5.1 */
 $lang['ui_day'] = 'dd';
 $lang['ui_month'] = 'mm';
-$lang['ui_year'] = 'yyyy';
+$lang['ui_year'] = 'mmmm';
 
-	/* Added in version 1.5.2 */
-	$lang['list_more'] = 'More';
+/* Added in version 1.5.2 */
+$lang['list_more'] = 'Daugiau';
 
-	/* Added in version 1.5.6 */
-	$lang['list_search_column'] = 'Search {column_name}';
+/* Added in version 1.5.6 */
+$lang['list_search_column'] = 'Ieškoti {column_name}';
 
-	/* Added in version 1.5.8 */
-	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
+/* Added in version 1.5.8 */
+$lang['alert_delete_multiple'] = 'Ar tikrai norite ištrinti šiuos {items_amount} įrašus?';
 
-	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
-
+$lang['alert_delete_multiple_one'] = 'Ar tikrai norite ištrinti šį įrašą?';
