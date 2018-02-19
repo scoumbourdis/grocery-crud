@@ -659,6 +659,19 @@ div.pGroup {
 	margin-left:5px;
 	display: block;
 }
+.flexigrid .clone-icon
+{
+	background:url(images/clone.png) no-repeat;
+	cursor: pointer;
+	width: 16px;
+	height:16px;
+	float:right;
+	border: none !important;
+	padding:0px !important;
+	padding-bottom:0px !important;
+	margin-left:5px;
+	display: block;
+}
 .flexigrid .delete-icon
 {
 	background:url(images/close.png) no-repeat;

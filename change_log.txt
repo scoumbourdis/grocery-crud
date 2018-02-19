@@ -1,3 +1,5 @@
+v 1.6.1
+    - #441 Adding clone functionality
 v 1.6.0
     - #211: Bug if use where clause and try to "search all" the fields
     - #432: Bootstrap Theme issues with filtering when we are using set_relation with multiple fields

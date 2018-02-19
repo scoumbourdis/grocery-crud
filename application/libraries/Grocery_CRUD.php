@@ -1899,7 +1899,38 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->_get_ajax_results();
 	}
 
-	protected function showEditForm($state_info)
+    protected function showCloneForm($state_info)
+    {
+        $this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
+
+        $data 				= $this->get_common_data();
+        $data->types 		= $this->get_field_types();
+
+        $data->field_values = $this->get_edit_values($state_info->primary_key);
+
+        $data->add_url		= $this->getAddUrl();
+        $data->list_url 	= $this->getListUrl();
+        $data->update_url	= $this->getInsertUrl();
+        $data->delete_url	= $this->getDeleteUrl($state_info);
+        $data->read_url		= $this->getReadUrl($state_info->primary_key);
+        $data->input_fields = $this->get_edit_input_fields($data->field_values);
+        $data->unique_hash			= $this->get_method_hash();
+
+        $data->fields 		= $this->get_edit_fields();
+        $data->hidden_fields	= $this->get_edit_hidden_fields();
+        $data->unset_back_to_list	= $this->unset_back_to_list;
+
+        $data->validation_url	= $this->getValidationInsertUrl();
+        $data->is_ajax 			= $this->_is_ajax();
+
+        $this->_theme_view('edit.php',$data);
+        $this->_inline_js("var js_date_format = '".$this->js_date_format."';");
+
+        $this->_get_ajax_results();
+    }
+
+
+    protected function showEditForm($state_info)
 	{
 		$this->set_js_lib($this->default_javascript_path.'/'.grocery_CRUD::JQUERY);
 
@@ -4864,7 +4895,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 
                 $state_info = $this->getStateInfo();
 
-                $this->showEditForm($state_info, 'clone');
+                $this->showCloneForm($state_info);
 
                 break;
 
