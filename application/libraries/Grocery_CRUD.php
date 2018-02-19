@@ -4054,6 +4054,13 @@ class Grocery_CRUD extends grocery_CRUD_States
         return $this;
     }
 
+    public function set_clone()
+    {
+        $this->unset_clone = false;
+
+        return $this;
+    }
+
 	/**
 	 *
 	 * The fields that user will see on add/edit
