@@ -94,3 +94,8 @@
 
 	$lang['alert_delete_multiple_one'] = '本当にこの 1 行を削除しますか?';
 
+
+
+	/* Added in version 1.6.1 */
+	$lang['list_clone'] = 'Clone';
+

@@ -94,3 +94,8 @@
 
 	$lang['alert_delete_multiple_one'] = 'Êtes-vous sûr de vouloir supprimer cet élément ?';
 
+
+
+	/* Added in version 1.6.1 */
+	$lang['list_clone'] = 'Clone';
+

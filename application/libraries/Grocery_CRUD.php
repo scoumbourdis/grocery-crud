@@ -3838,6 +3838,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	public function unset_add()
 	{
 		$this->unset_add = true;
+        $this->unset_clone = true;
 
 		return $this;
 	}
@@ -4057,6 +4058,7 @@ class Grocery_CRUD extends grocery_CRUD_States
     public function set_clone()
     {
         $this->unset_clone = false;
+        $this->unset_add = false;
 
         return $this;
     }
