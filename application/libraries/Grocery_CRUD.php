@@ -3228,7 +3228,12 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                 {
                     $state_info->order_by = $data['order_by'];
                 }
-                if(!empty($data['search_text']))
+		/**
+		 * if search field value contains 0 then it does not work - empty("0") = true
+		 * fix will be to change condition: check empty string 
+		 * trim($data['search_text']) != "" || !empty($data['search_text')
+		 **/
+                if(trim($data['search_text']) != "" || !empty($data['search_text']))
                 {
                     if(empty($data['search_field']))
                     {
