@@ -1,3 +1,5 @@
+v 1.6.2
+    - #442: Searching in grid with value 0 is not working
 v 1.6.1
     - #441 Adding clone functionality - contribution from @portapipe
 v 1.6.0

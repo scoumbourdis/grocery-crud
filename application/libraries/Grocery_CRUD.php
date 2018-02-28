@@ -580,7 +580,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			$this->order_by($state_info->order_by[0],$state_info->order_by[1]);
 		}
 
-		if(!empty($state_info->search))
+		if(isset($state_info->search) && $state_info->search !== '')
 		{
 			if (!empty($this->relation)) {
 				foreach ($this->relation as $relation_name => $relation_values) {
@@ -3228,7 +3228,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                 {
                     $state_info->order_by = $data['order_by'];
                 }
-                if(!empty($data['search_text']))
+                if(isset($data['search_text']) && $data['search_text'] !== '')
                 {
                     if(empty($data['search_field']))
                     {
@@ -3240,7 +3240,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                         if (is_array($data['search_field'])) {
                             $search_array = array();
                             foreach ($data['search_field'] as $search_key => $search_field_name) {
-                                $search_array[$search_field_name] = !empty($data['search_text'][$search_key]) ? $data['search_text'][$search_key] : '';
+                                $search_array[$search_field_name] = isset($data['search_text'][$search_key]) ? $data['search_text'][$search_key] : '';
                             }
                             $state_info->search	= $search_array;
                         } else {
