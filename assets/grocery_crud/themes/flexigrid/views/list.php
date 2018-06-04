@@ -26,7 +26,7 @@
 		</thead>		
 		<tbody>
 <?php foreach($list as $num_row => $row){ ?>        
-		<tr  <?php if($num_row % 2 == 1){?>class="erow"<?php }?>>
+		<tr  style="<?php if(isset($row->column_stlye)) echo $row->column_stlye;?>"  <?php if($num_row % 2 == 1 && !isset($row->column_stlye)){?>class="erow "<?php }?>>
 			<?php foreach($columns as $column){?>
 			<td width='<?php echo $column_width?>%' class='<?php if(isset($order_by[0]) &&  $column->field_name == $order_by[0]){?>sorted<?php }?>'>
 				<div class='text-left'><?php echo $row->{$column->field_name} != '' ? $row->{$column->field_name} : '&nbsp;' ; ?></div>
