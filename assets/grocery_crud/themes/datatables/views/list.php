@@ -11,7 +11,7 @@
 	</thead>
 	<tbody>
 		<?php foreach($list as $num_row => $row){ ?>
-		<tr id='row-<?php echo $num_row?>'>
+		<tr style="<?php if(isset($row->column_stlye)) echo $row->column_stlye;?>" id='row-<?php echo $num_row?>'>
 			<?php foreach($columns as $column){?>
 				<td><?php echo $row->{$column->field_name}?></td>
 			<?php }?>

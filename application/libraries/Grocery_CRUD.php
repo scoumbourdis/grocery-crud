@@ -1857,6 +1857,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$primary_key = $this->get_primary_key();
 		$has_callbacks = !empty($this->callback_column) ? true : false;
 		$output_columns = $this->get_columns();
+		
 		foreach($list as $num_row => $row)
 		{
 			foreach($output_columns as $column)
@@ -1869,6 +1870,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $field_value);
 				else
 					$list[$num_row]->$field_name = $field_value;
+				if(isset($this->callback_row_format_condiction))
+                    $list[$num_row]->column_stlye = call_user_func($this->callback_row_format_condiction, $row);
 			}
 		}
 
@@ -3653,6 +3656,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $callback_upload			= null;
 	protected $callback_before_upload	= null;
 	protected $callback_after_upload	= null;
+	protected $callback_row_format_condiction	= null;
 
 	protected $default_javascript_path	= null; //autogenerate, please do not modify
 	protected $default_css_path			= null; //autogenerate, please do not modify
@@ -3661,6 +3665,8 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $default_language_path	= 'assets/grocery_crud/languages';
 	protected $default_config_path		= 'assets/grocery_crud/config';
 	protected $default_assets_path		= 'assets/grocery_crud';
+	
+	
 
 	/**
 	 *
@@ -5167,6 +5173,20 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this;
 
 	}
+	
+	/**
+     *
+     * A callback that triggered when rendering row
+     * @param mixed $callback
+     * @return grocery_CRUD
+     */
+    public function callback_row_format_condiction($callback = null)
+    {
+        $this->callback_row_format_condiction = $callback;
+
+        return $this;
+
+    }
 
 	/**
 	 *
