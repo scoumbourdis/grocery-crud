@@ -16,7 +16,7 @@
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2014, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.5.8
+ * @version    	1.6.1
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -589,7 +589,7 @@ class grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.8
+ * @version    	1.6.1
  * @link		http://www.grocerycrud.com/documentation
  */
 class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
@@ -722,7 +722,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			$this->order_by($state_info->order_by[0],$state_info->order_by[1]);
 		}
 
-		if(!empty($state_info->search))
+		if(isset($state_info->search) && $state_info->search !== '')
 		{
 			if (!empty($this->relation)) {
 				foreach ($this->relation as $relation_name => $relation_values) {
@@ -994,7 +994,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$this->basic_model->where($primary_key,$state_info->primary_key);
 					$row = $this->basic_model->get_row();
 
-					if(!isset($row->$field_name)) {
+					if(!property_exists($row, $field_name)) {
 						throw new Exception("The field name doesn't exist in the database. ".
 								 			"Please use the unique fields only for fields ".
 											"that exist in the database");
@@ -1092,7 +1092,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						$post_data[$field->field_name] = array();
 					}
 
-					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
+					if(array_key_exists($field->field_name, $post_data) && !isset($this->relation_n_n[$field->field_name]))
 					{
 						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && is_array($post_data[$field->field_name]) && empty($post_data[$field->field_name]))
 						{
@@ -1217,7 +1217,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						$post_data[$field->field_name] = array();
 					}
 
-					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
+					if(array_key_exists($field->field_name, $post_data) && !isset($this->relation_n_n[$field->field_name]))
 					{
 						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && is_array($post_data[$field->field_name]) && empty($post_data[$field->field_name]))
 						{
@@ -1748,7 +1748,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.8
+ * @version    	1.6.1
  */
 class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 {
@@ -3243,7 +3243,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
  *
  * @package    	grocery CRUD
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
- * @version    	1.5.8
+ * @version    	1.6.1
  */
 class grocery_CRUD_States extends grocery_CRUD_Layout
 {
@@ -3389,7 +3389,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                 {
                     $state_info->order_by = $data['order_by'];
                 }
-                if(!empty($data['search_text']))
+                if(isset($data['search_text']) && $data['search_text'] !== '')
                 {
                     if(empty($data['search_field']))
                     {
@@ -3401,7 +3401,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                         if (is_array($data['search_field'])) {
                             $search_array = array();
                             foreach ($data['search_field'] as $search_key => $search_field_name) {
-                                $search_array[$search_field_name] = !empty($data['search_text'][$search_key]) ? $data['search_text'][$search_key] : '';
+                                $search_array[$search_field_name] = isset($data['search_text'][$search_key]) ? $data['search_text'][$search_key] : '';
                             }
                             $state_info->search	= $search_array;
                         } else {
@@ -3693,7 +3693,7 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
  * @package    	grocery CRUD
  * @copyright  	Copyright (c) 2010 through 2014, John Skoumbourdis
  * @license    	https://github.com/scoumbourdis/grocery-crud/blob/master/license-grocery-crud.txt
- * @version    	1.5.8
+ * @version    	1.6.1
  * @author     	John Skoumbourdis <scoumbourdisj@gmail.com>
  */
 
@@ -3716,7 +3716,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 *
 	 * @var	string
 	 */
-	const	VERSION = "1.5.8";
+	const	VERSION = "1.6.1";
 
 	const	JQUERY 			= "jquery-1.11.1.min.js";
 	const	JQUERY_UI_JS 	= "jquery-ui-1.10.3.custom.min.js";
