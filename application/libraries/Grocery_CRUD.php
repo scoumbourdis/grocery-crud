@@ -853,7 +853,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$this->basic_model->where($primary_key,$state_info->primary_key);
 					$row = $this->basic_model->get_row();
 
-					if(!isset($row->$field_name)) {
+					if(!property_exists($row, $field_name)) {
 						throw new Exception("The field name doesn't exist in the database. ".
 								 			"Please use the unique fields only for fields ".
 											"that exist in the database");
@@ -950,7 +950,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						$post_data[$field->field_name] = array();
 					}
 
-					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
+					if(array_key_exists($field->field_name, $post_data) && !isset($this->relation_n_n[$field->field_name]))
 					{
 						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && is_array($post_data[$field->field_name]) && empty($post_data[$field->field_name]))
 						{
@@ -1075,7 +1075,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						$post_data[$field->field_name] = array();
 					}
 
-					if(isset($post_data[$field->field_name]) && !isset($this->relation_n_n[$field->field_name]))
+					if(array_key_exists($field->field_name, $post_data) && !isset($this->relation_n_n[$field->field_name]))
 					{
 						if(isset($types[$field->field_name]->db_null) && $types[$field->field_name]->db_null && is_array($post_data[$field->field_name]) && empty($post_data[$field->field_name]))
 						{
