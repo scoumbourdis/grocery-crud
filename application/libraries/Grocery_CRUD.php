@@ -853,7 +853,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$this->basic_model->where($primary_key,$state_info->primary_key);
 					$row = $this->basic_model->get_row();
 
-					if(!isset($row->$field_name)) {
+					if(!property_exists($row, $field_name)) {
 						throw new Exception("The field name doesn't exist in the database. ".
 								 			"Please use the unique fields only for fields ".
 											"that exist in the database");
