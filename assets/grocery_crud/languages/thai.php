@@ -8,7 +8,7 @@
 	$lang['list_filtered_from']		= '(กรองจากทั้งหมด {total_results} แถว)';
 	$lang['list_show_entries']		= 'แสดง {paging} แถว';
 	$lang['list_no_items']			= 'ไม่พบรายการ';
-	$lang['list_zero_entries']		= 'แสดง 0 ุถึง 0 ของทั้งหมด 0 แถว';
+	$lang['list_zero_entries']		= 'แสดง 0 ถึง 0 ของทั้งหมด 0 แถว';
 	$lang['list_search'] 			= 'ค้นหา';	
 	$lang['list_search_all'] 		= 'ค้นหาทั้งหมด';
 	$lang['list_clear_filtering'] 	= 'ล้างตัวกรอง';
@@ -76,7 +76,7 @@
 	$lang['minimize_maximize'] = 'ย่อ/ขยาย';
 
 	/* Added in version 1.4 */
-	$lang['list_view'] = 'View';
+	$lang['list_view'] = 'แสดง';
 
 	/* Added in version 1.5.1 */
 	$lang['ui_day'] = 'dd';
@@ -84,18 +84,18 @@
 	$lang['ui_year'] = 'yyyy';
 
 	/* Added in version 1.5.2 */
-	$lang['list_more'] = 'More';
+	$lang['list_more'] = 'เพิ่มเติม';
 
 	/* Added in version 1.5.6 */
-	$lang['list_search_column'] = 'Search {column_name}';
+	$lang['list_search_column'] = 'ค้นหา {column_name}';
 
 	/* Added in version 1.5.8 */
-	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
+	$lang['alert_delete_multiple'] = 'คุณแน่ใจหรือไม่ที่จะลบข้อมูลทั้งหมด {items_amount} รายการ?';
 
-	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
+	$lang['alert_delete_multiple_one'] = 'คุณแน่ใจหรือไม่ที่จะลบข้อมูลนี้ 1 รายการ?';
 
 
 
 	/* Added in version 1.6.1 */
-	$lang['list_clone'] = 'Clone';
+	$lang['list_clone'] = 'สร้างซ้ำ';
 
