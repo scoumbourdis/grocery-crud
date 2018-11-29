@@ -1,3 +1,15 @@
+v 1.6.2
+    - #442: Searching in grid with value 0 is not working
+    - #458: Updated Lithuanian language by @dgvirtual
+    - #463: Updated Spanish language by @CarlosPinedaT
+    - Security fix
+v 1.6.1
+    - #441: Adding clone functionality - contribution from @portapipe
+v 1.6.0
+    - #211: Bug if use where clause and try to "search all" the fields
+    - #432: Bootstrap Theme issues with filtering when we are using set_relation with multiple fields
+    - #353: Adding callback_read_field function
+    - #433: Preview click with fancybox to work the same across all the themes
 v 1.5.9
     - #420: set_relation with brackets is causing ambiguous column name when the field name exists at the basic table
     - #413: Unexpected error when there are non english chars and a datetime field as column

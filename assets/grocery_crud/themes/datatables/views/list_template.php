@@ -21,11 +21,6 @@
 	$this->set_js($this->default_theme_path.'/datatables/js/datatables.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/ZeroClipboard.js');
 	$this->set_js($this->default_theme_path.'/datatables/extras/TableTools/media/js/TableTools.min.js');
-
-	/** Fancybox */
-	$this->set_css($this->default_css_path.'/jquery_plugins/fancybox/jquery.fancybox.css');
-	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.fancybox-1.3.4.js');
-	$this->set_js($this->default_javascript_path.'/jquery_plugins/jquery.easing-1.3.pack.js');
 ?>
 <script type='text/javascript'>
 	var base_url = '<?php echo base_url();?>';

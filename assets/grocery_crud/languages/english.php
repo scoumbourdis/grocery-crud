@@ -92,3 +92,6 @@
 	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
 	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
 
+	/* Added in version 1.6.1 */
+	$lang['list_clone'] = 'Clone';
+

@@ -35,12 +35,20 @@
 					</a>
 				<?php }?>
 
+                <?php if(!$unset_clone){?>
+                    <a href="<?php echo $row->clone_url?>" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
+                        <span class="ui-button-icon-primary ui-icon ui-icon-copy"></span>
+                        <span class="ui-button-text">&nbsp;<?php echo $this->l('list_clone'); ?></span>
+                    </a>
+                <?php }?>
+
 				<?php if(!$unset_edit){?>
 					<a href="<?php echo $row->edit_url?>" class="edit_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
 						<span class="ui-button-icon-primary ui-icon ui-icon-pencil"></span>
 						<span class="ui-button-text">&nbsp;<?php echo $this->l('list_edit'); ?></span>
 					</a>
 				<?php }?>
+
 				<?php if(!$unset_delete){?>
 					<a onclick = "javascript: return delete_row('<?php echo $row->delete_url?>', '<?php echo $num_row?>')"
 						href="javascript:void(0)" class="delete_button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">

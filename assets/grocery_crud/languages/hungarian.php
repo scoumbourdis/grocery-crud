@@ -1,5 +1,6 @@
 <?php
 /* Translated by: Wathfea */
+/* Additions, some changes by: grepaly@grepaly.hu, 2017.12.10. */
     $lang['list_add']               = 'Hozzáadás';
     $lang['list_actions']           = 'Feladatok';
     $lang['list_page']              = 'Oldal';
@@ -11,8 +12,8 @@
     $lang['list_zero_entries']      = '0 elemből 0 elem mutatása';
     $lang['list_search']            = 'Keresés';
     $lang['list_search_all']        = 'Összes keresése';
-    $lang['list_clear_filtering']   = 'Szűrők tiltása';
-    $lang['list_delete']            = 'Törlés';
+    $lang['list_clear_filtering']   = 'Szűrők törlése';
+    $lang['list_delete']            = 'Töröl';
     $lang['list_edit']              = 'Szerkesztés';
     $lang['list_paging_first']      = 'Első';
     $lang['list_paging_previous']   = 'Előző';
@@ -21,7 +22,7 @@
     $lang['list_loading']           = 'Betöltés...';
     $lang['form_edit']              = 'Szerkesztés';
     $lang['form_back_to_list']      = 'Vissza a listához';
-    $lang['form_update_changes']    = 'Módosítás';
+    $lang['form_update_changes']    = 'Módosít';
     $lang['form_cancel']            = 'Kilépés';
     $lang['form_update_loading']    = 'Betöltés, frissítések mentése...';
     $lang['update_success_message'] = 'Az adatok sikeresen elmentve';
@@ -37,15 +38,15 @@
     $lang['form_upload_delete']     = 'Törlés';
     $lang['form_button_clear']      = 'Ürít';
 
-    $lang['delete_success_message'] = 'Az adat sikeresen törölve az adatbázisból.';
-    $lang['delete_error_message']   = 'Az adatot nem sikerült törölni az adatbázisból';
+    $lang['delete_success_message'] = 'Adat sikeresen törölve.';
+    $lang['delete_error_message']   = 'Adat törlése sikertelen.';
 
 	/* Javascript messages */
-    $lang['alert_add_form']         = 'A változásokat még nem mentette.\\nBiztos, hogy szeretne visszamenni a listához?';
-    $lang['alert_edit_form']        = 'A változásokat még nem mentette.\\nBiztos, hogy szeretne visszamenni a listához?';
+    $lang['alert_add_form']         = 'A változásokat még nem mentette.\\nBiztos, hogy szeretne visszatérni a listához?';
+    $lang['alert_edit_form']        = 'A változásokat még nem mentette.\\nBiztos, hogy szeretne visszatérni a listához?';
     $lang['alert_delete']           = 'Biztosan törölni szeretné ezt a bejegyzést?';
 
-    $lang['insert_error']           = 'Hiba történt a beillesztés közben.';
+    $lang['insert_error']           = 'Hiba történt hozzáadás közben.';
     $lang['update_error']           = 'Hiba történt mentés közben.';
 
 	/* Added in version 1.2.1 */
@@ -56,11 +57,11 @@
 
 	/* Added in version 1.2.2 */
     $lang['form_save_and_go_back']  = 'Mentés és vissza a listához';
-    $lang['form_update_and_go_back']= 'Felülír és vissza a listához';
+    $lang['form_update_and_go_back']= 'Módosít és vissza a listához';
 
 	/* Added in version 1.2.2 */
     $lang['form_save_and_go_back']  = 'Mentés és vissza a listához';
-    $lang['form_update_and_go_back']= 'Felülír és vissza a listához';
+    $lang['form_update_and_go_back']= 'Módosít és vissza a listához';
 	/* Upload functionality */
     $lang['string_delete_file']     = "Fájl törlése";
     $lang['string_progress']        = "Állapot: ";
@@ -74,11 +75,11 @@
 
 	/* Added in version 1.3.1 */
 	$lang['list_export'] 	= "Export";
-	$lang['list_print'] 	= "Print";
-	$lang['minimize_maximize'] = 'Minimize/Maximize';
+	$lang['list_print'] 	= "Nyomtat";
+	$lang['minimize_maximize'] = 'Minimalizál/Maximalizál';
 
 	/* Added in version 1.4 */
-	$lang['list_view'] = 'View';
+	$lang['list_view'] = 'Mutat';
 
 	/* Added in version 1.5.1 */
 	$lang['ui_day'] = 'dd';
@@ -86,13 +87,17 @@
 	$lang['ui_year'] = 'yyyy';
 
 	/* Added in version 1.5.2 */
-	$lang['list_more'] = 'More';
+	$lang['list_more'] = 'Feladat';
 
 	/* Added in version 1.5.6 */
-	$lang['list_search_column'] = 'Search {column_name}';
+	$lang['list_search_column'] = '{column_name}-re keres';
 
 	/* Added in version 1.5.8 */
-	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
+	$lang['alert_delete_multiple'] = 'Biztosan törölni szeretne {items_amount} tételt?';
 
-	$lang['alert_delete_multiple_one'] = 'Are you sure that you want to delete this 1 item?';
+	$lang['alert_delete_multiple_one'] = 'Biztosan törölni szeretné a kijelölt tételt?';
+
+
+	/* Added in version 1.6.1 */
+	$lang['list_clone'] = 'Clone';
 

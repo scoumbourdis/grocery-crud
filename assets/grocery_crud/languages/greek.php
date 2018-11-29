@@ -92,3 +92,6 @@
 	$lang['alert_delete_multiple'] = 'Είστε σίγουροι ότι θέλετε να διαγράψετε τις {items_amount} επιλεγμένες εγγραφές?';
 	$lang['alert_delete_multiple_one'] = 'Είστε σίγουροι ότι θέλετε να διαγράψετε την επιλεγμένη εγγραφή?';
 
+	/* Added in version 1.6.1 */
+	$lang['list_clone'] = 'Αντιγραφή';
+

@@ -79,3 +79,8 @@
 
 	$lang['alert_delete_multiple_one'] 	= 'Sei sicuro di voler eliminare l\'elemento selezionato?';
 
+
+
+	/* Added in version 1.6.1 */
+	$lang['list_clone'] = 'Clone';
+
