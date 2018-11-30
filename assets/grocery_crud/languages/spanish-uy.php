@@ -1,5 +1,5 @@
 <?php
-	/** Translated by: Hector Cyc and neocastelli*/
+	/** Translated by: Mauricio López Coria */
 	$lang['list_add'] 				= 'Agregar';
 	$lang['list_actions'] 			= 'Acciones';
 	$lang['list_page'] 				= 'Página';
