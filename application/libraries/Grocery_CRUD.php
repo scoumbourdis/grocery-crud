@@ -2935,17 +2935,18 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			    case 'invisible':
 			    	unset($this->read_fields[$field_num]);
 			    	unset($fields[$field_num]);
-			    	continue;
 			    	break;
 			    case 'hidden':
 			    	$this->read_hidden_fields[] = $field_input;
 			    	unset($this->read_fields[$field_num]);
 			    	unset($fields[$field_num]);
-			    	continue;
 			    	break;
+                default:
+                    $input_fields[$field->field_name] = $field_input;
+                    break;
+
 			}
 
-			$input_fields[$field->field_name] = $field_input;
 		}
 
 		return $input_fields;
