@@ -732,9 +732,16 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($add_fields as $add_field)
 			{
 				$field_name = $add_field->field_name;
-				if(!isset($this->validation_rules[$field_name]) && in_array( $field_name, $required_fields) )
-				{
-					$this->set_rules( $field_name, $field_types[$field_name]->display_as, 'required');
+
+                // Workaround as Codeigniter set_rules has a bug with array and doesn't work with required fields.
+                // We are basically doing the check here!
+                if (array_key_exists($field_name, $this->relation_n_n) && in_array($field_name, $required_fields)) {
+                    if (!array_key_exists($field_name, $_POST)) {
+                        // This will always throw an error!
+                        $this->set_rules($field_name, $field_types[$field_name]->display_as, 'required');
+                    }
+                } else if(!isset($this->validation_rules[$field_name]) && in_array( $field_name, $required_fields) ) {
+					$this->set_rules($field_name, $field_types[$field_name]->display_as, 'required');
 				}
 			}
 		}
