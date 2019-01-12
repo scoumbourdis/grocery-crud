@@ -3259,12 +3259,12 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
                         if (is_array($data['search_field'])) {
                             $search_array = array();
                             foreach ($data['search_field'] as $search_key => $search_field_name) {
-                                $search_field_name = preg_replace('/[^a-zA-Z0-9_]/', '' , $search_field_name);
+                                $search_field_name = preg_replace("/[=\"'?\\\\]/", '' , $search_field_name);
                                 $search_array[$search_field_name] = isset($data['search_text'][$search_key]) ? $data['search_text'][$search_key] : '';
                             }
                             $state_info->search	= $search_array;
                         } else {
-                            $field_name = preg_replace('/[^a-zA-Z0-9_]/', '' , $data['search_field']);
+                            $field_name = preg_replace("/[=\"'?\\\\]/", '' , $data['search_field']);
                             $state_info->search	= (object)array(
                                 'field' => $field_name,
                                 'text' => $data['search_text'] );
