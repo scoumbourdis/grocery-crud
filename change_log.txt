@@ -1,5 +1,6 @@
 v1.6.3
    - #465: Translation for Spanish Uruguay by @mlopezcoria
+   - #470: Update Polish translation by @tikky
    - #468: Remove PHP 7.3 warnings
    - #38: Bug fix: required_fields doesn't work for relation_n_n fields
 v 1.6.2
