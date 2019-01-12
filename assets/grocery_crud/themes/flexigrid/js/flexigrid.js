@@ -1,3 +1,13 @@
+function success_message(message) {
+    $('#list-report-success').html(message);
+    $('#list-report-success').slideDown();
+}
+
+function error_message(message) {
+    $('#list-report-error').html(message);
+    $('#list-report-error').slideDown();
+}
+
 $(function(){
 	$('.quickSearchButton').click(function(){
 		$(this).closest('.flexigrid').find('.quickSearchBox').slideToggle('normal');
@@ -170,8 +180,6 @@ $(function(){
 					if(data.success)
 					{
 						this_container.find('.ajax_refresh_and_loading').trigger('click');
-
-						success_message(data.success_message);
 					}
 					else
 					{

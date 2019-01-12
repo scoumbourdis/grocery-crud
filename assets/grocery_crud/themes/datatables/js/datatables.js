@@ -13,6 +13,16 @@ function supports_html5_storage()
 	}
 }
 
+function success_message(message) {
+	$('#list-report-success').html(message);
+    $('#list-report-success').slideDown();
+}
+
+function error_message(message) {
+    $('#list-report-error').html(message);
+    $('#list-report-error').slideDown();
+}
+
 var use_storage = supports_html5_storage();
 
 var aButtons = [];
@@ -210,8 +220,6 @@ function delete_row(delete_url , row_id)
 			{
 				if(data.success)
 				{
-					success_message(data.success_message);
-
 					chosen_table = datatables_get_chosen_table($('tr#row-'+row_id).closest('.groceryCrudTable'));
 
 					$('tr#row-'+row_id).addClass('row_selected');
