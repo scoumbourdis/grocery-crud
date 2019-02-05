@@ -90,7 +90,7 @@ $lang['list_search_column'] = 'Ieškoti {column_name}';
 
 /* Added in version 1.5.8 */
 $lang['alert_delete_multiple'] = 'Ar esate tikri, kad norite ištrinti šiuos {items_amount} įrašus/-ų?';
-$lang['alert_delete_multiple_one'] = 'Ar esate tikri, kad norite ištrinti šį įrašą?'
+$lang['alert_delete_multiple_one'] = 'Ar esate tikri, kad norite ištrinti šį įrašą?';
 
 /* Added in version 1.6.1 */
 $lang['list_clone'] = 'Klonuoti';
