@@ -1,33 +1,33 @@
 <?php
 /* Translated by Mohammed Yasser Moghrabiah */
-	$lang['list_add'] 				= 'اضافة';
+	$lang['list_add'] 				= 'إضافة';
 	$lang['list_actions'] 			= '';
 	$lang['list_page'] 				= 'صفحة';
 	$lang['list_paging_of'] 		= 'من';
-	$lang['list_displaying']		= ' عرض من {start} الى {end}  |  من اصل {results} سطر';
+	$lang['list_displaying']		= ' عرض من {start} الى {end}  |  من أصل {results} سطر';
 	$lang['list_filtered_from']		= '- مفلتر من أصل  {total_results} سطر';
 	$lang['list_show_entries']		= 'عرض {paging} سطر';
-	$lang['list_no_items']			= 'لايوجد بيانات للعرض';
+	$lang['list_no_items']			= 'لا يوجد بيانات للعرض';
 
-	$lang['list_zero_entries']		= 'عرض 0 الى 0 من 0 عنصر';
+	$lang['list_zero_entries']		= 'عرض 0 إلى 0 من 0 عنصر';
 	$lang['list_search'] 			= 'بحث';
 	$lang['list_search_all'] 		= 'بحث بالكل';
 	$lang['list_clear_filtering'] 	= 'مسح فلاتر البحث';
 	$lang['list_delete'] 			= 'حذف';
 	$lang['list_edit'] 				= 'تعديل';
-	$lang['list_paging_first'] 		= 'الاول';
+	$lang['list_paging_first'] 		= 'الأول';
 	$lang['list_paging_previous'] 	= 'السابق';
 	$lang['list_paging_next'] 		= 'التالي';
-	$lang['list_paging_last'] 		= 'الاخير';
+	$lang['list_paging_last'] 		= 'الأخير';
 	$lang['list_loading'] 			= '... يتم التحميل';
 
 	$lang['form_edit'] 				= 'تعديل';
 	$lang['form_back_to_list'] 		= 'عودة -&gt;';
 	$lang['form_update_changes'] 	= 'تحديث التعديلات';
-	$lang['form_cancel'] 			= 'الغاء الأمر';
+	$lang['form_cancel'] 			= 'إلغاء الأمر';
 	$lang['form_update_loading'] 	= 'يتم تحديث البيانات...';
 	$lang['update_success_message'] = 'تم تحديث بياناتك بنجاح';
-	$lang['form_go_back_to_list'] 	= 'العودة الى القائمة ';
+	$lang['form_go_back_to_list'] 	= 'العودة إلى القائمة';
 
 	$lang['form_add'] 				= 'اضافة';
 	$lang['insert_success_message'] = 'تم حفظ بياناتك بنجاح .';
@@ -43,11 +43,11 @@
 	$lang['delete_error_message'] 	= '. لم يتم حذف بياناتك من قاعدة البيانات';
 
 	/* Javascript messages */
-	$lang['alert_add_form']			= ' البيانات التي ادخلتها ربما لن تحفظ .\\n هل انت متأكد انك تريد العودة ؟';
-	$lang['alert_edit_form']		= ' البيانات التي عدلتها ربما لن تحفظ .\\n هل انت متأكد انك تريد العودة ؟';
-	$lang['alert_delete']			= ' هل انت متأكد انك تريد حذف بيانات السطر ؟';
+	$lang['alert_add_form']			= ' البيانات التي أدخلتها ربما لن تحفظ .\\n هل أنت متأكد أنك تريد العودة ؟';
+	$lang['alert_edit_form']		= ' البيانات التي عدلتها ربما لن تحفظ .\\n هل أنت متأكد أنك تريد العودة ؟';
+	$lang['alert_delete']			= ' هل أنت متأكد أنك تريد حذف بيانات السطر ؟';
 
-	$lang['insert_error']			= 'حدث مشكلة عند ادخال البيانات .';
+	$lang['insert_error']			= 'حدث مشكلة عند إدخال البيانات .';
 	$lang['update_error']			= 'حدث مشكلة عند تحديث البيانات .';
 
 	/* Added in version 1.2.1 */
@@ -57,14 +57,14 @@
 	$lang['form_active']			= 'فعال';
 
 	/* Added in version 1.2.2 */
-	$lang['form_save_and_go_back']	= 'حفظ والعودة للقائمة الرئيسية';
-	$lang['form_update_and_go_back']= 'تعديل والعودة الى القائمة الرئيسية';
+	$lang['form_save_and_go_back']	= 'حفظ والعودة إلى القائمة الرئيسة';
+	$lang['form_update_and_go_back']= 'تعديل والعودة إلى القائمة الرئيسة';
 
 	/* Upload functionality */
 	$lang['string_delete_file'] 	= "... جاري حذف الملف ";
 	$lang['string_progress'] 		= "اكتمل : ";
 	$lang['error_on_uploading'] 	= "حدث خطأ أثناء الرفع .";
-	$lang['message_prompt_delete_file'] 	= "هل انت متأكد انك تريد حذف هذا الملف ؟";
+	$lang['message_prompt_delete_file'] 	= "هل أنت متأكد أنك تريد حذف هذا الملف ؟";
 
 	$lang['error_max_number_of_files'] 	= "يمكن رفع ملف واحد في كل مرة .";
 	$lang['error_accept_file_types'] 	= "لا يمكنك رفع هذا النوع من اللواحق .";
@@ -88,7 +88,7 @@
 	$lang['list_more'] = 'المزيد';
 
 	/* Added in version 1.5.6 */
-	$lang['list_search_column'] = 'Search {column_name}';
+	$lang['list_search_column'] = '{column_name} بحث'
 
 	/* Added in version 1.5.8 */
 	$lang['alert_delete_multiple'] = 'Are you sure that you want to delete those {items_amount} items?';
