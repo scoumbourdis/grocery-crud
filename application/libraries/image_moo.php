@@ -4,17 +4,17 @@
  *
  * Written due to image_lib not being so nice when you have to do multiple things to a single image!
  *
- * @license		MIT License
+ * @license		MIT License -
  * @author		Matthew Augier, aka Mat-Moo
- * @link		http://www.dps.uk.com
+ * @link		http://www.dps.uk.com http://www.matmoo.com
  * @docu		http://todo :)
  * @email		matthew@dps.uk.com
  *
  * @file		image_moo.php
- * @version		1.0.1
- * @date		2010 Dec 13
+ * @version		1.1.6
+ * @date		2014 Feb 5
  *
- * Copyright (c) 2010 Matthew Augier
+ * Copyright (c) 2011-2014 Matthew (Mat-Moo.com) Augier
  *
  * Requires PHP 5 and GD2!
  *
@@ -28,10 +28,12 @@
  * image manipulation functions
  * -----------------------------------------------------------------------------
  * load($x) - Loads an image file specified by $x - JPG, PNG, GIF supported
+ * load_temp() - Takes a cropped/altered image and makes it the main image to work with.
  * save($x) - Saved the manipulated image (if applicable) to file $x - JPG, PNG, GIF supported
+ * get_data_stream($filename="") - Return the image as a stream so that it can be sent as source data to the output
  * save_pa($prepend="", $append="", $overwrite=FALSE) - Saves using the original image name but with prepend and append text, e.g. load('moo.jpg')->save_pa('pre_','_app') would save as filename pre_moo_app.jpg
  * save_dynamic($filename="") - Saves as a stream output, use filename to return png/jpg/gif etc., default is jpeg
- * resize($x,$y,$pad=FALSE) - Proportioanlly resize original image using the bounds $x and $y, if padding is set return image is as defined centralised using BG colour
+ * resize($x,$y=FALSE,$pad=FALSE) - Proportioanlly resize original image using the bounds $x and $y (if y is false x size is used), if padding is set return image is as defined centralised using BG colour
  * resize_crop($x,$y) - Proportioanlly resize original image using the bounds $x and $y but cropped to fill dimensions
  * stretch($x,$y) - Take the original image and stretch it to fill new dimensions $x $y
  * crop($x1,$y1,$x2,$y2) - Crop the original image using Top left, $x1,$y1 to bottom right $x2,y2. New image size =$x2-x1 x $y2-y1
@@ -46,6 +48,9 @@
  * shadow($size=4, $direction=3, $colour="#444") - Size in pixels, note that the image will increase by this size, so resize(400,400)->shadoe(4) will give an image 404 pixels in size, Direction works on teh keypad basis like the watermark, so 3 is bottom right, $color if the colour of the shadow.
  * -----------------------------------------------------------------------------
  * image helper functions
+ * ignore_jpeg_warnings - Sets the gd.jpeg_ignore_warning to help load images that may otherwise not work
+ * allow_scale_up($onoff = FALSE) - When using resize, setting this to tru will allow small images to increase in size, otherwise they do not get resized
+ * real_filesize() - returns the filesize of the image in bytes etc.
  * display_errors($open = '<p>', $close = '</p>') - Display errors as Ci standard style
  * set_jpeg_quality($x) - quality to wrte jpeg files in for save, default 75 (1-100)
  * set_watermark_transparency($x) - the opacity of the watermark 1-100, 1-just about see, 100=solid
@@ -60,42 +65,70 @@
  * TO DO
  *
  * THANKS
- * Matjaž for poiting out the save_pa bug (should of tested it!)
+ * MatjaÅ¾ for poiting out the save_pa bug (should of tested it!)
  * Cahva for posting yet another bug in the save_pa (Man I can be silly sometimes!)
  * Cole spotting the resize flaw and providing a fix
+ * Nuno Mira for suggesting the new width/new size on teh ci forums
+ * HugoSolar for transparent rotate
  *
  */
 
 class Image_moo
 {
 	// image vars
-	private $main_image="";
+	private $main_image = "";
  	private $watermark_image;
 	private $temp_image;
-	private $jpeg_quality=75;
-	private $background_colour="#ffffff";
+	private $jpeg_quality = 75;
+	private $background_colour = "#ffffff";
 	private $watermark_method;
+	private $jpeg_ignore_warnings = FALSE;	// set to true or call ignore_jpeg_warnings()
+    private $can_stretch = FALSE; // when a resizing an image too small, allow it to be stretched larger
 
 	// other
-	private $filename="";
+	private $filename = "";
 
 	// watermark stuff, opacity
-	private $watermark_transparency=50;
+	private $watermark_transparency = 50;
 
 	// reported errors
-	public $errors=FALSE;
+	public $errors = FALSE;
 	private $error_msg = array();
 
 	// image info
-	public $width=0;
-	public $height=0;
+	public $width = 0;
+	public $height = 0;
+	public $new_width = 0;
+	public $new_height = 0;
 
-	function Image_moo()
+	function __construct()
 	//----------------------------------------------------------------------------------------------------------
 	// create stuff here as needed
 	//----------------------------------------------------------------------------------------------------------
 	{
 		log_message('debug', "Image Moo Class Initialized");
+		if ($this->jpeg_ignore_warnings) $this->ignore_jpeg_warnings();
+		if ($this->can_stretch) $this->can_stretch(TRUE);
+	}
+
+	public function ignore_jpeg_warnings($onoff = TRUE)
+	//----------------------------------------------------------------------------------------------------------
+	// having loaded lots of jpegs I quite often get corrupt ones, this setting relaxs GD a bit
+	// requires 5.1.3 php
+	//----------------------------------------------------------------------------------------------------------
+	{
+		ini_set('gd.jpeg_ignore_warning', $onoff == TRUE);
+		return $this;
+	}
+
+	public function allow_scale_up($onoff = FALSE)
+	//----------------------------------------------------------------------------------------------------------
+	// If you want to stretch or crop images that are smaller than the target size, call this with TRUE to scale
+    // up
+	//----------------------------------------------------------------------------------------------------------
+	{
+		$this->can_stretch = $onoff;
+		return $this;
 	}
 
 	private function _clear_errors()
@@ -133,6 +166,7 @@ class Image_moo
 	// verification util to see if you can use image_moo
 	//----------------------------------------------------------------------------------------------------------
 	{
+		// is gd loaded?
 		if ( ! extension_loaded('gd'))
 		{
 			if ( ! dl('gd.so'))
@@ -141,11 +175,14 @@ class Image_moo
 				return FALSE;
 			}
 		}
+
+		// check version
 		if (function_exists('gd_info'))
 		{
 			$gdarray = @gd_info();
-			$versiontxt = ereg_replace('[[:alpha:][:space:]()]+', '', $gdarray['GD Version']);
+			$versiontxt = preg_replace('/[A-Z,\ ()\[\]]/i', '', $gdarray['GD Version']);
 			$versionparts=explode('.',$versiontxt);
+			// looking for a version 2
 			if ($versionparts[0]=="2")
 			{
 				return TRUE;
@@ -158,6 +195,7 @@ class Image_moo
 		}
 		else
 		{
+			// should this be a warning?
 			$this->set_error('Could not verify GD version');
 			return FALSE;
 		}
@@ -168,6 +206,7 @@ class Image_moo
 	// checks that we have an image loaded
 	//----------------------------------------------------------------------------------------------------------
 	{
+		// generic check
 		if (!is_resource($this->main_image))
 		{
 			$this->set_error("No main image loaded!");
@@ -177,6 +216,54 @@ class Image_moo
 		{
 			return TRUE;
 		}
+	}
+
+	function get_data_stream($filename="")
+	//----------------------------------------------------------------------------------------------------------
+	// Saves image as a datastream for inline inclustion
+	// writes as a temp image
+	// you can not chain this one!
+	//----------------------------------------------------------------------------------------------------------
+	{
+		// validate we loaded a main image
+		if (!$this->_check_image()) return $this;
+
+		// if no operations, copy it for temp save
+		$this->_copy_to_temp_if_needed();
+
+		// ok, lets go!
+		if ($filename=="") $filename=rand(1000,999999).".jpg";					// send as jpeg
+		$ext = strtoupper(pathinfo($filename, PATHINFO_EXTENSION));
+
+		// start new buffer
+		ob_start();
+
+		switch ($ext)
+		{
+			case "GIF"  :
+				imagegif($this->temp_image);
+				break;
+			case "JPG" :
+			case "JPEG" :
+				imagejpeg($this->temp_image);
+				break;
+			case "PNG" :
+				imagepng($this->temp_image);
+				break;
+			default:
+				$this->set_error('Extension not recognised! Must be jpg/png/gif');
+				return FALSE;
+				break;
+		}
+
+		// get the buffer
+		$contents =  ob_get_contents();
+
+		// remove buffer
+		ob_end_clean();
+
+		// return teh buffer (allows user to encode it)
+		return $contents;
 	}
 
 	function save_dynamic($filename="")
@@ -301,22 +388,56 @@ class Image_moo
 		$image_info=getimagesize($filename);
 
 		// load file depending on mimetype
-		switch ($image_info["mime"])
+		try
 		{
-			case "image/gif"  :
-				return imagecreatefromgif($filename);
-				break;
-			case "image/jpeg" :
-				return imagecreatefromjpeg($filename);
-				break;
-			case "image/png" :
- 		        return imagecreatefrompng($filename);
-				break;
+			switch ($image_info["mime"])
+			{
+				case "image/gif"  :
+					return @imagecreatefromgif($filename);
+					break;
+				case "image/jpeg" :
+	    			return @imagecreatefromjpeg($filename);
+					break;
+				case "image/png" :
+	 		        return @imagecreatefrompng($filename);
+					break;
+			}
+		}
+		catch (Exception $e)
+		{
+			$this->set_error('Exception loading '.$filename.' - '.$e->getMessage());
 		}
 
 		// invalid filetype?!
 		$this->set_error('Unable to load '.$filename.' filetype '.$image_info["mime"].'not recognised');
 		return FALSE;
+	}
+
+	public function load_temp()
+	//----------------------------------------------------------------------------------------------------------
+	// Take the temp image and make it the main image
+	//----------------------------------------------------------------------------------------------------------
+	{
+		// validate we loaded a main image
+		if (!$this->_check_image()) return $this;
+
+		if (!is_resource($this->temp_image))
+		{
+			$this->set_error("No temp image created!");
+			return FALSE;
+		}
+
+		// make main the temp
+		$this->main_image = $this->temp_image;
+
+		// clear temp
+		$this->clear_temp();
+
+		// reset sizes
+		$this->_set_new_size();
+
+		// return the object
+		return $this;
 	}
 
 	public function load($filename)
@@ -343,8 +464,9 @@ class Image_moo
 		// no error, then get the dminesions set
 		if ($this->main_image <> FALSE)
 		{
-			$this->width = imageSX($this->main_image);
-			$this->height = imageSY($this->main_image);
+			$this->new_width = $this->width = imageSX($this->main_image);
+			$this->new_height = $this->height = imageSY($this->main_image);
+			$this->_set_new_size();
 		}
 
 		// return the object
@@ -377,6 +499,34 @@ class Image_moo
 
 		// return this object
 		return $this;
+	}
+
+	public function real_filesize()
+	//----------------------------------------------------------------------------------------------------------
+	// Returns the actual filesize of the original image
+	//----------------------------------------------------------------------------------------------------------
+	{
+		// filename?
+		if ($this->filename == "")
+		{
+			$this->set_error('Unable to get filesize, no filename!');
+			return "-";
+		}
+		if (!file_exists($this->filename))
+		{
+			$this->set_error('Unable to get filesize, file does not exist!');
+			return "-";
+		}
+
+		// set the units (found on filesize.php)
+		$size = filesize($this->filename);
+
+		// set the units
+    	$units = array(' B', ' KB', ' MB', ' GB', ' TB');
+    	for ($i = 0; $size >= 1024 && $i < 4; $i++) $size /= 1024;
+
+		// return the closest
+    	return round($size, 2).$units[$i];
 	}
 
 	public function set_watermark_transparency($transparency=50)
@@ -425,6 +575,7 @@ class Image_moo
 
 			// copy image to temp workspace
 			imagecopy($this->temp_image, $this->main_image, 0, 0, 0, 0, $this->width, $this->height);
+			$this->_set_new_size();
 		}
 	}
 
@@ -460,7 +611,7 @@ class Image_moo
 		$this->clear_temp();
 
 		// create a temp based on new dimensions
-		$this->temp_image = imagecreatetruecolor($mw,$mh);
+		$this->temp_image = imagecreatetruecolor($mw, $mh);
 
 		// check it
 		if(!is_resource($this->temp_image))
@@ -472,6 +623,7 @@ class Image_moo
 		// work out best positions for copy
 		$wx=$this->width / $mw;
 		$wy=$this->height / $mh;
+
 		if ($wx >= $wy)
 		{
 			// use full height
@@ -494,23 +646,36 @@ class Image_moo
 			$sy = ($this->height - $calc_height) / 2;
 			$sy2 = $calc_height;
 		}
+		
+		//image transparency preserved
+		imagealphablending( $this->temp_image, false );
+		imagesavealpha( $this->temp_image, true );
 
 		// copy section
 		imagecopyresampled($this->temp_image, $this->main_image, 0, 0, $sx, $sy, $mw, $mh, $sx2, $sy2);
+
+		// set sizes
+		$this->_set_new_size();
+
+		// return self
 		return $this;
 	}
 
-	public function resize($mw, $mh, $pad=FALSE)
+	public function resize($mw, $mh=FALSE, $pad=FALSE)
 	//----------------------------------------------------------------------------------------------------------
 	// take main image and resize to tempimage using boundaries mw,mh (max width or max height)
 	// this is proportional, pad to true will set it in the middle of area size
 	//----------------------------------------------------------------------------------------------------------
 	{
+        // no image - fail!
 		if (!$this->_check_image()) return $this;
 
+		// set mh if not set
+		if ($mh == FALSE) $mh = $mw;
+
 		// calc new dimensions
-		if( $this->width > $mw || $this->height > $mh ) {
-//		    if( $this->width > $this->height ) { could calc wronf - Cole Thorsen swapped to his suggestion
+		if( $this->width > $mw || $this->height > $mh || $this->can_stretch)
+        {
 			if( ($this->width / $this->height) > ($mw / $mh) ) {
 		        $tnw = $mw;
 		        $tnh = $tnw * $this->height / $this->width;
@@ -518,7 +683,9 @@ class Image_moo
 		        $tnh = $mh;
 		        $tnw = $tnh * $this->width / $this->height;
 		    }
-		} else {
+		}
+        else
+        {
 		    $tnw = $this->width;
 		    $tnh = $this->height;
 		}
@@ -540,6 +707,7 @@ class Image_moo
 			$px = 0;
 			$py = 0;
 		}
+
 		$this->temp_image = imagecreatetruecolor($tx,$ty);
 
 		// check it
@@ -549,16 +717,39 @@ class Image_moo
 			return $this;
 		}
 
+
+    	/* hmm what was I doing here?!
+		imagealphablending($this->main_image, true);
+    	$a = imagecolortransparent($this->temp_image, imagecolorallocatealpha($this->temp_image, 0, 0, 0, 127));
+		imagefilledrectangle($this->temp_image, 0, 0, $tx, $ty, $a);
+    	imagesavealpha($this->temp_image, true);
+    	*/
+
+		$col = $this->_html2rgb($this->background_colour);
+		$bg = imagecolorallocate($this->temp_image, $col[0], $col[1], $col[2]);
+		imagefilledrectangle($this->temp_image, 0, 0, $tx, $ty, $bg);
+
 		// if padding, fill background
 		if ($pad)
 		{
 			$col = $this->_html2rgb($this->background_colour);
 			$bg = imagecolorallocate($this->temp_image, $col[0], $col[1], $col[2]);
 			imagefilledrectangle($this->temp_image, 0, 0, $tx, $ty, $bg);
+			/* TO DO
+			imagealphablending($this->temp_image, false);
+			imagesavealpha($this->temp_image, true);
+			$color = imagecolorallocatealpha($this->temp_image, 0, 0, 0, 127);
+			imagefilledrectangle($this->temp_image, 0, 0, $this->width, $this->height, $color);
+			*/
 		}
 
 		// copy resized
 		imagecopyresampled($this->temp_image, $this->main_image, $px, $py, 0, 0, $tnw, $tnh, $this->width, $this->height);
+
+		// set sizes
+		$this->_set_new_size();
+
+		// return self
 		return $this;
 	}
 
@@ -585,6 +776,11 @@ class Image_moo
 
 		// copy resized (stethced, proportions not kept);
 		imagecopyresampled($this->temp_image, $this->main_image, 0, 0, 0, 0, $mw, $mh, $this->width, $this->height);
+
+		// set sizes
+		$this->_set_new_size();
+
+		// return self
 		return $this;
 	}
 
@@ -617,6 +813,11 @@ class Image_moo
 
 		// copy cropped portion
 		imagecopy($this->temp_image, $this->main_image, 0, 0, $x1, $y1, $x2 - $x1, $y2 - $y1);
+
+		// set sizes
+		$this->_set_new_size();
+
+		// return self
 		return $this;
 	}
 
@@ -667,11 +868,18 @@ class Image_moo
 		$this->_copy_to_temp_if_needed();
 
 		// set the colour
-		$col = $this->_html2rgb($$this->background_colour);
-		$bg = imagecolorallocate($this->temp_image, $col[0], $col[1], $col[2]);
+		$col = $this->_html2rgb($this->background_colour);
+		$bg = imagecolorallocatealpha($this->temp_image, 0, 0, 0, 127);
 
 		// rotate as needed
 		$this->temp_image = imagerotate($this->temp_image, $angle, $bg);
+		imagealphablending($this->temp_image, false);
+		imagesavealpha($this->temp_image, true);
+
+		// set sizes
+		$this->_set_new_size();
+
+		// return self
 		return $this;
 	}
 
@@ -799,7 +1007,7 @@ class Image_moo
 					break;
 				default:
 					$dest_x = $offset;
-					$this->set_error("Watermark position $position not in vlaid range 7,8,9 - 4,5,6 - 1,2,3");
+					$this->set_error("Watermark position $position not in valid range 7,8,9 - 4,5,6 - 1,2,3");
 			}
 			// do y position
 			switch ($position)
@@ -824,7 +1032,7 @@ class Image_moo
 					break;
 				default:
 					$dest_y = $offset;
-					$this->set_error("Watermark position $position not in vlaid range 7,8,9 - 4,5,6 - 1,2,3");
+					$this->set_error("Watermark position $position not in valid range 7,8,9 - 4,5,6 - 1,2,3");
 			}
 
 		}
@@ -900,12 +1108,8 @@ class Image_moo
 		// if no operations, copy it for temp save
 		$this->_copy_to_temp_if_needed();
 
-		// get temp widths
-		$temp_w = imageSX($this->temp_image);
-		$temp_h = imageSY($this->temp_image);
-
 		// create temp canvas to merge
-		$border_image = imagecreatetruecolor($temp_w, $temp_h);
+		$border_image = imagecreatetruecolor($this->new_width, $this->new_height);
 
 		// create colours
 		$black = imagecolorallocate($border_image, 0, 0, 0);
@@ -928,23 +1132,23 @@ class Image_moo
 
 		// create bg
 		imagecolortransparent($border_image, $bg_col);
-		imagefilledrectangle($border_image, 0,0, $temp_w, $temp_h, $bg_col);
+		imagefilledrectangle($border_image, 0,0, $this->new_width, $this->new_height, $bg_col);
 
 		// do border
 		for($x=0;$x<$width;$x++)
 		{
 			// top
-			imageline($border_image, $x, $x, $temp_w-$x-1, $x, $cols[0]);
+			imageline($border_image, $x, $x, $this->new_width-$x-1, $x, $cols[0]);
 			// left
-			imageline($border_image, $x, $x, $x, $temp_w-$x-1, $cols[1]);
+			imageline($border_image, $x, $x, $x, $this->new_width-$x-1, $cols[1]);
 			// bottom
-			imageline($border_image, $x, $temp_h-$x-1, $temp_w-1-$x, $temp_h-$x-1, $cols[3]);
+			imageline($border_image, $x, $this->new_height-$x-1, $this->new_width-1-$x, $this->new_height-$x-1, $cols[3]);
 			// right
-			imageline($border_image, $temp_w-$x-1, $x, $temp_w-$x-1, $temp_h-$x-1, $cols[2]);
+			imageline($border_image, $this->new_width-$x-1, $x, $this->new_width-$x-1, $this->new_height-$x-1, $cols[2]);
 		}
 
 		// merg with temp image
-		imagecopymerge($this->temp_image, $border_image, 0, 0, 0, 0, $temp_w, $temp_h, $opacity);
+		imagecopymerge($this->temp_image, $border_image, 0, 0, 0, 0, $this->new_width, $this->new_height, $opacity);
 
 		// clean up
 		imagedestroy($border_image);
@@ -1017,7 +1221,7 @@ class Image_moo
 			default:
 				$sh_x = $size;
 				$pic_x = 0;
-				$this->set_error("Shadow position $position not in vlaid range 7,8,9 - 4,5,6 - 1,2,3");
+				$this->set_error("Shadow position $position not in valid range 7,8,9 - 4,5,6 - 1,2,3");
 		}
 		// do y position
 		switch ($direction)
@@ -1046,7 +1250,7 @@ class Image_moo
 			default:
 				$sh_y = $size;
 				$pic_y = 0;
-				$this->set_error("Shadow position $position not in vlaid range 7,8,9 - 4,5,6 - 1,2,3");
+				$this->set_error("Shadow position $position not in valid range 7,8,9 - 4,5,6 - 1,2,3");
 		}
 
 		// create the shadow
@@ -1060,7 +1264,10 @@ class Image_moo
 		// clean up and desstroy temp image
 		imagedestroy($bu_image);
 
-		//return object
+		// set sizes
+		$this->_set_new_size();
+
+		// return self
 		return $this;
 	}
 
@@ -1080,7 +1287,10 @@ class Image_moo
 			$this->set_error("Filter $function failed");
 		}
 
-		// return object
+		// set sizes
+		$this->_set_new_size();
+
+		// return self
 		return $this;
 	}
 
@@ -1143,11 +1353,39 @@ class Image_moo
 		$corner = imagerotate($corner, 270, 0);
 		if ($corners[3]) imagecopymerge($this->temp_image, $corner, 0, $temp_h-$radius, 0, 0, $radius, $radius, 100);
 
-		// return object
+		// set sizes
+		$this->_set_new_size();
+
+		// return self
 		return $this;
 	}
 
+	private function _set_new_size()
+	//----------------------------------------------------------------------------------------------------------
+	// Updates the new_widht and height sizes
+	//----------------------------------------------------------------------------------------------------------
+	{
+		// just in case
+		if ( ! $this->_check_image())
+		{
+			$this->new_height = 0;
+			$this->new_width = 0;
+			return;
+		}
+
+		// is there a temp image?
+		if ( ! is_resource($this->temp_image))
+		{
+			$this->new_height = $this->height;
+			$this->new_width = $this->width;
+			return;
+		}
+
+		// set new sizes
+		$this->new_height = imagesy($this->temp_image);
+		$this->new_width = imagesx($this->temp_image);
+	}
 
 }
 /* End of file image_moo.php */
-/* Location: .system/application/libraries/image_moo.php */
+/* Location: /application/libraries/image_moo.php */
