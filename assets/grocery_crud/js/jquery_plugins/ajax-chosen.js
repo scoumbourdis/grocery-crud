@@ -33,7 +33,7 @@
           $.each(items, function(value, text) {
             return $("<option />").attr('value', value).html(text).appendTo(select);
           });
-          select.trigger("liszt:updated");
+          select.trigger("chosen:updated");
           field.attr('value', val);
           if (typeof success !== "undefined" && success !== null) return success();
         };
