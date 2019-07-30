@@ -63,9 +63,19 @@ var add_edit_button_listener = function () {
 	//If dialog AJAX forms is turned on from grocery CRUD config
 	if (dialog_forms) {
 
-		$('.edit_button,.add_button').unbind('click');
-		$('.edit_button,.add_button').click(function(){
-
+		/* 
+			Genya addition for custom action with dialog forms {
+		*/
+		$('.edit_button,.add_button,.custom-action').unbind('click');
+		$('.edit_button,.add_button,.custom-action').click(function(){
+		/*
+			}
+		*/
+		
+		/* // Orginal
+			$('.edit_button,.add_button').unbind('click');
+			$('.edit_button,.add_button').click(function(){
+		*/
 			fnOpenEditForm($(this));
 
 			return false;

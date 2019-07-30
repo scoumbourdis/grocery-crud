@@ -30,8 +30,8 @@
 	var unique_hash = '<?php echo $unique_hash; ?>';
 	var export_url = '<?php echo $export_url; ?>';
 
-	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";
-
+	var message_alert_delete = "<?php echo $this->l('alert_delete'); ?>";	
+	
 </script>
 <div id='list-report-error' class='report-div error'></div>
 <div id='list-report-success' class='report-div success report-list' <?php if($success_message !== null){?>style="display:block"<?php }?>><?php
@@ -43,7 +43,7 @@ if($success_message !== null){?>
 	<div id="hidden-operations" class="hidden-operations"></div>
 	<div class="mDiv">
 		<div class="ftitle">
-			&nbsp;
+			&nbsp;<?php echo $subject?> table
 		</div>
 		<div title="<?php echo $this->l('minimize_maximize');?>" class="ptogtitle">
 			<span></span>
@@ -53,20 +53,65 @@ if($success_message !== null){?>
 
 	<?php if(!$unset_add || !$unset_export || !$unset_print){?>
 	<div class="tDiv">
-		<?php if(!$unset_add){?>
+		
 		<div class="tDiv2">
-        	<a href='<?php echo $add_url?>' title='<?php echo $this->l('list_add'); ?> <?php echo $subject?>' class='add-anchor add_button'>
-			<div class="fbutton">
-				<div>
-					<span class="add"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
+			<?php if(!$unset_add){?>
+				<a href='<?php echo $add_url?>' title='<?php echo $this->l('list_add'); ?> <?php echo $subject?>' class='add-anchor add_button'>
+				<div class="fbutton">
+					<div>
+						<span class="add"><?php echo $this->l('list_add'); ?> <?php echo $subject?></span>
+					</div>
 				</div>
-			</div>
-            </a>
-			<div class="btnseparator">
-			</div>
+				</a>				
+				<div class="btnseparator">
+				</div>
+			<?php }?>
+			
+			<?php 
+				if(isset($custom_buttons)) {
+					foreach($custom_buttons as $key => $button) {
+						if($button['alignment'] == 'left') {
+			?>
+				<a href='<?php echo $button['link']?>' title='<?php echo $button['button_name']?>' class='<?php echo $button['css_classes'] ?>'>
+				<div class="fbutton">
+					<div>
+						<span class="add"><?php echo $button['button_name']?></span>
+					</div>
+				</div>
+				</a>				
+				<div class="btnseparator">
+				</div>
+			<?php 
+							unset($custom_buttons[$key]); // dont need for right alignment buttons next
+						}
+					}
+				}
+			?>			
+			
 		</div>
-		<?php }?>
+		
 		<div class="tDiv3">
+
+			<?php 
+				if(isset($custom_buttons)) {
+					foreach($custom_buttons as $key => $button) {
+						if($button['alignment'] == 'right') {
+			?>
+				<a href='<?php echo $button['link']?>' title='<?php echo $button['button_name']?>' class='<?php echo $button['css_classes'] ?>'>
+				<div class="fbutton">
+					<div>
+						<span class="add"><?php echo $button['button_name']?></span>
+					</div>
+				</div>
+				</a>				
+				<div class="btnseparator">
+				</div>
+			<?php 
+						}
+					}
+				}
+			?>			
+		
 			<?php if(!$unset_export) { ?>
         	<a class="export-anchor" href="<?php echo $export_url; ?>" download>
 				<div class="fbutton">
@@ -84,18 +129,22 @@ if($success_message !== null){?>
 						<span class="print"><?php echo $this->l('list_print');?></span>
 					</div>
 				</div>
-            </a>
+            </a>		
+			
 			<div class="btnseparator"></div>
 			<?php }?>
 		</div>
 		<div class='clear'></div>
 	</div>
 	<?php }?>
-
+	
 	<div id='ajax_list' class="ajax_list">
 		<?php echo $list_view?>
 	</div>
 	<?php echo form_open( $ajax_list_url, 'method="post" id="filtering_form" class="filtering_form" autocomplete = "off" data-ajax-list-info-url="'.$ajax_list_info_url.'"'); ?>
+	<div id="post_js_functions_list" style="display:none"><?php echo $post_ajax_callbacks; ?></div>
+	<?php if(!$unset_search) { ?>
+	
 	<div class="sDiv quickSearchBox" id='quickSearchBox'>
 		<div class="sDiv2">
 			<?php echo $this->l('list_search');?>: <input type="text" class="qsbsearch_fieldox search_text" name="search_text" size="30" id='search_text'>
@@ -111,22 +160,52 @@ if($success_message !== null){?>
         	<input type="button" value="<?php echo $this->l('list_clear_filtering');?>" id='search_clear' class="search_clear">
         </div>
 	</div>
+	
+	
+	<?php }?>	
+	
+	
+	
+	
 	<div class="pDiv">
 		<div class="pDiv2">
 			<div class="pGroup">
 				<span class="pcontrol">
+					
+					<?php if(!$unset_pagnation) { ?>
 					<?php list($show_lang_string, $entries_lang_string) = explode('{paging}', $this->l('list_show_entries')); ?>
 					<?php echo $show_lang_string; ?>
+					
 					<select name="per_page" id='per_page' class="per_page">
 						<?php foreach($paging_options as $option){?>
 							<option value="<?php echo $option; ?>" <?php if($option == $default_per_page){?>selected="selected"<?php }?>><?php echo $option; ?>&nbsp;&nbsp;</option>
 						<?php }?>
 					</select>
+					
 					<?php echo $entries_lang_string; ?>
+					
+					<?php }?>
+					
 					<input type='hidden' name='order_by[0]' id='hidden-sorting' class='hidden-sorting' value='<?php if(!empty($order_by[0])){?><?php echo $order_by[0]?><?php }?>' />
 					<input type='hidden' name='order_by[1]' id='hidden-ordering' class='hidden-ordering'  value='<?php if(!empty($order_by[1])){?><?php echo $order_by[1]?><?php }?>'/>
+					
+					
+					
 				</span>
 			</div>
+			
+			
+			
+			<div class="pGroup">
+				<div class="pReload pButton ajax_refresh_and_loading" id='ajax_refresh_and_loading'>
+					<span></span>
+				</div>
+			</div>	
+
+
+
+			
+			<?php if(!$unset_pagnation) { ?>
 			<div class="btnseparator">
 			</div>
 			<div class="pGroup">
@@ -171,13 +250,15 @@ if($success_message !== null){?>
 					<?php echo str_replace( array('{start}','{end}','{results}'),
 											array($paging_starts_from, $paging_ends_to, $paging_total_results),
 											$this->l('list_displaying')
-										   ); ?>
+										   ); ?>										   
 				</span>
 			</div>
+			<?php }?>
 		</div>
 		<div style="clear: both;">
 		</div>
 	</div>
+	
 	<?php echo form_close(); ?>
 	</div>
 </div>

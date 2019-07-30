@@ -1,18 +1,11 @@
-function success_message(message) {
-    $('#list-report-success').html(message);
-    $('#list-report-success').slideDown();
-}
-
-function error_message(message) {
-    $('#list-report-error').html(message);
-    $('#list-report-error').slideDown();
-}
-
 $(function(){
+
+ 
 	$('.quickSearchButton').click(function(){
 		$(this).closest('.flexigrid').find('.quickSearchBox').slideToggle('normal');
-	});
-
+	});	
+	
+	
 	$('.ptogtitle').click(function(){
 		if ($(this).hasClass('vsble')) {
 			$(this).removeClass('vsble');
@@ -55,6 +48,7 @@ $(function(){
 	add_edit_button_listener();
 
 	$('.filtering_form').submit(function(){
+		
 		var crud_page =  parseInt($(this).closest('.flexigrid').find('.crud_page').val(), 10);
 		var last_page = parseInt($(this).closest('.flexigrid').find('.last-page-number').html(), 10);
 
@@ -68,7 +62,7 @@ $(function(){
 		var this_form = $(this);
 
 		var ajax_list_info_url = $(this).attr('data-ajax-list-info-url');
-
+		var post_ajax_funcs = new Array();
 		$(this).ajaxSubmit({
 			 url: ajax_list_info_url,
 			 dataType: 'json',
@@ -88,6 +82,17 @@ $(function(){
 						call_fancybox();
 						add_edit_button_listener();
 						create_export_url(this_form);
+						
+						if(this_form.find('#post_js_functions_list').html() != ""){
+							post_ajax_funcs = this_form.find('#post_js_functions_list').html().split(',');
+							$.each(post_ajax_funcs, function(index, value) {
+								var post_funcs = value.split(":");
+								if(this_form.attr('action').includes(post_funcs[0])){
+									window[post_funcs[1]]();
+								}	
+							});
+						}
+						
 					 }
 				});
 			 }
@@ -101,7 +106,7 @@ $(function(){
 			createCookie('search_text_'+unique_hash,$(this).closest('.flexigrid').find('.search_text').val(),1);
 			createCookie('search_field_'+unique_hash,$('#search_field').val(),1);
 		}
-
+	
 		return false;
 	});
 
@@ -109,10 +114,14 @@ $(function(){
 		$(this).closest('.flexigrid').find('.crud_page').val('1');
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
 	});
-
+	
+	
 	$('.search_clear').click(function(){
 		$(this).closest('.flexigrid').find('.crud_page').val('1');
 		$(this).closest('.flexigrid').find('.search_text').val('');
+		
+		//$(this).closest('.flexigrid').find('.hidden-ordering').val(''); // genya addition clear ordering
+		
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
 	});
 
@@ -122,6 +131,7 @@ $(function(){
 	});
 
 	$('.ajax_refresh_and_loading').click(function(){
+		
 		$(this).closest('.flexigrid').find('.filtering_form').trigger('submit');
 	});
 
@@ -180,6 +190,8 @@ $(function(){
 					if(data.success)
 					{
 						this_container.find('.ajax_refresh_and_loading').trigger('click');
+
+						success_message(data.success_message);
 					}
 					else
 					{
@@ -189,6 +201,36 @@ $(function(){
 				}
 			});
 		}
+
+		return false;
+	});
+
+	/*
+		This bottome event listener added by Genya for custom action rendering.
+	*/
+	$('.ajax_list').on('click','.custom_immediate_layout', function(){
+		var delete_url = $(this).attr('href');
+
+		var this_container = $(this).closest('.flexigrid');
+
+		$.ajax({
+			url: delete_url,
+			dataType: 'json',
+			success: function(data)
+			{
+				if(data.success)
+				{
+					this_container.find('.ajax_refresh_and_loading').trigger('click');
+
+					success_message(data.success_message);
+				}
+				else
+				{
+					error_message(data.error_message);
+
+				}
+			}
+		});
 
 		return false;
 	});
