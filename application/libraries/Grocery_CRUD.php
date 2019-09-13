@@ -1661,6 +1661,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_export			= $this->unset_export;
 		$data->unset_print			= $this->unset_print;
 
+		$data->jquery_js            = grocery_CRUD::JQUERY;
+
 		$default_per_page = $this->config->default_per_page;
 		$data->paging_options = $this->config->paging_options;
 		$data->default_per_page		= is_numeric($default_per_page) && $default_per_page >1 && in_array($default_per_page,$data->paging_options)? $default_per_page : 25;
@@ -1685,7 +1687,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$this->_add_js_vars(array('dialog_forms' => $this->config->dialog_forms));
 
 			$data->list_view = $this->_theme_view('list.php',$data,true);
-			$this->_theme_view('list_template.php',$data);
+			$this->_theme_view('list_template.php', $data);
 		}
 		else
 		{
