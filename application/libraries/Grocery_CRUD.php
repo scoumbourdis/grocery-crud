@@ -620,9 +620,14 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
             } elseif ($state_info->search->field !== null) {
 				if (isset($temp_relation[$state_info->search->field])) {
 					if (is_array($temp_relation[$state_info->search->field])) {
-						foreach ($temp_relation[$state_info->search->field] as $search_field) {
-							$this->or_like($search_field , $state_info->search->text);
-                        }
+					      $temp_where_query_array = [];
+					      foreach ($temp_relation[$state_info->search->field] as $search_field) {
+						$escaped_text = $this->basic_model->escape_str($state_info->search->text);
+						$temp_where_query_array[] = $search_field . ' LIKE \'%' . $escaped_text . '%\'';
+					      }
+					      if (!empty($temp_where_query_array)) {
+						$this->where('(' . implode(' OR ', $temp_where_query_array) . ')', null);
+					      }
                     } else {
 						$this->like($temp_relation[$state_info->search->field] , $state_info->search->text);
                     }
