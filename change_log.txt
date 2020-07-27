@@ -1,3 +1,5 @@
+v1.6.4
+    - #491: Fixing issue when we use set_read_fields with a column that doesn't exist at the database
 v1.6.3
    - #465: Translation for Spanish Uruguay by @mlopezcoria
    - #470: Update Polish translation by @tikky
