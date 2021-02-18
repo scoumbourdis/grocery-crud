@@ -36,8 +36,7 @@
 	$lang['form_save'] 			= 'Simpan';
 	$lang['form_insert_loading'] 		= 'Mohon Tunggu';
 
-	$lang['form_
-	_a_file'] 		= 'Unggah berkas';
+	$lang['form_upload_a_file'] 		= 'Unggah berkas';
 	$lang['form_upload_delete'] 		= 'hapus';
 	$lang['form_button_clear'] 		= 'Bersihkan';
 
