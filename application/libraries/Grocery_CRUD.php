@@ -1636,6 +1636,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected $js_files					= array();
 	protected $js_lib_files				= array();
 	protected $js_config_files			= array();
+	protected $custom_views = null;
 
 	protected function set_basic_Layout()
 	{
@@ -1688,8 +1689,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_export			= $this->unset_export;
 		$data->unset_print			= $this->unset_print;
 
-		$data->jquery_js            = grocery_CRUD::JQUERY;
-
 		$default_per_page = $this->config->default_per_page;
 		$data->paging_options = $this->config->paging_options;
 		$data->default_per_page		= is_numeric($default_per_page) && $default_per_page >1 && in_array($default_per_page,$data->paging_options)? $default_per_page : 25;
@@ -1714,7 +1713,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$this->_add_js_vars(array('dialog_forms' => $this->config->dialog_forms));
 
 			$data->list_view = $this->_theme_view('list.php',$data,true);
-			$this->_theme_view('list_template.php', $data);
+			$this->_theme_view('list_template.php',$data);
 		}
 		else
 		{
@@ -2268,8 +2267,6 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			unset($js_files[sha1($this->default_theme_path.'/bootstrap/js/bootstrap/modal.min.js')]);
 			unset($css_files[sha1($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.css')]);
 			unset($css_files[sha1($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.min.css')]);
-            unset($css_files[sha1($this->default_theme_path.'/bootstrap-v4/css/bootstrap/bootstrap.css')]);
-            unset($css_files[sha1($this->default_theme_path.'/bootstrap-v4/css/bootstrap/bootstrap.min.css')]);
 		}
 
 		if($this->echo_and_die === false)
@@ -3045,6 +3042,14 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$vars = (is_object($vars)) ? get_object_vars($vars) : $vars;
 
 		$file_exists = FALSE;
+		
+		if ($this->custom_views !== null)
+		{
+			if (isset($this->custom_views[$view]))
+			{
+				$view = $this->custom_views[$view];
+			}
+		}
 
 		$ext = pathinfo($view, PATHINFO_EXTENSION);
 		$file = ($ext == '') ? $view.'.php' : $view;
@@ -3711,6 +3716,8 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $default_language_path	= 'assets/grocery_crud/languages';
 	protected $default_config_path		= 'assets/grocery_crud/config';
 	protected $default_assets_path		= 'assets/grocery_crud';
+
+	
 
 	/**
 	 *
@@ -4670,7 +4677,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 *
 	 * @access	public
 	 */
-	public function render()
+	public function render($view=null)
 	{
 		$this->pre_render();
 
@@ -5463,6 +5470,20 @@ class Grocery_CRUD extends grocery_CRUD_States
 				'upload_path' => $upload_dir,
 				'allowed_file_types' => $allowed_file_types,
 				'encrypted_field_name' => $this->_unique_field_name($field_name));
+		return $this;
+	}
+
+	/**
+	 *
+	 * Set custom views: allow to override default views as edit.php, add.php, ...
+	 * $views is an associative array like ('edit.php' => 'myedit.php', 'add.php'=>'myadd.php)
+	 *
+	 * @param mixed $view
+	 * @return Grocery_CRUD
+	 */
+	public function set_custom_views($views)
+	{
+		$this->custom_views = $views;
 		return $this;
 	}
 }
