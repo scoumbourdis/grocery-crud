@@ -1,6 +1,6 @@
 <?php 
 
-	$column_width = (int)(80/count($columns));
+	/*$column_width = (int)(250/count($columns));*/ $column_width = (int)(80/count($columns));
 	
 	if(!empty($list)){
 ?><div class="bDiv" >
@@ -68,7 +68,14 @@
 			</td>
 			<?php }?>
 		</tr>
-<?php } ?>        
+<?php } ?> 
+	<?php if($table_adjust) { ?>
+		<tr id="adjust_table_rows">
+			<td colspan="5">
+			<div class="text-left">-</div>
+			</td>
+		</tr>
+	<?php }?>       
 		</tbody>
 		</table>
 	</div>
