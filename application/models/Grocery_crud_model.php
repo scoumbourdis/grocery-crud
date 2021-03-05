@@ -162,12 +162,12 @@ class Grocery_crud_model  extends CI_Model  {
 
     function like($field, $match = '', $side = 'both')
     {
-    	$this->db->like($field, $match, $side);
+    	$this->db->like($this->table_name.'.'.$field, $match, $side);
     }
 
     function or_like($field, $match = '', $side = 'both')
     {
-    	$this->db->or_like($field, $match, $side);
+    	$this->db->or_like($this->table_name.'.'.$field, $match, $side);
     }
 
     function limit($value, $offset = '')
