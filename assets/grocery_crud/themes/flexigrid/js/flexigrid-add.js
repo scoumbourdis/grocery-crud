@@ -114,9 +114,11 @@ $(function(){
 	{
 		$('#crudForm').find(':input').each(function() {
 	        switch(this.type) {
-	            case 'password':
-	            case 'select-multiple':
+				case 'select-multiple':
 	            case 'select-one':
+					$(this).val('').trigger('chosen:updated');
+					break;
+	            case 'password':
 	            case 'text':
 	            case 'textarea':
 	                $(this).val('');
