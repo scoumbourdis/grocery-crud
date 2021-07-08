@@ -2380,6 +2380,11 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
             }
 
         }
+
+		if (is_array($field_info->extras) && array_key_exists('placeholder', $field_info->extras)) {
+			$extra_attributes .= " placeholder='" . $field_info->extras['placeholder'] . "'";
+		}
+
 		$input = "<input id='field-{$field_info->name}' class='form-control' name='{$field_info->name}' type='text' value=\"$value\" $extra_attributes />";
 		return $input;
 	}
