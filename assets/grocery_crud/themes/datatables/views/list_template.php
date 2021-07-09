@@ -54,7 +54,7 @@
 
 	var export_text = '<?php echo $this->l('list_export');?>';
 	var print_text = '<?php echo $this->l('list_print');?>';
-	var export_url = '<?php echo $export_url; ?>'
+	var export_url = '<?php echo $export_url; ?>';
 
 	<?php
 	//A work around for method order_by that doesn't work correctly on datatables theme
