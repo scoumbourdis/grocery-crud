@@ -522,7 +522,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->or_where))
 			foreach($this->or_where as $or_where)
 				$this->basic_model->or_where($or_where[0],$or_where[1],$or_where[2]);
-
+		
+		if(!empty($this->where_in))
+			foreach($this->where_in as $where)
+				$this->basic_model->where_in($where[0],$where[1],$where[2]);
+		
 		if(!empty($this->like))
 			foreach($this->like as $like)
 				$this->basic_model->like($like[0],$like[1],$like[2]);
@@ -1350,7 +1354,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->or_where))
 			foreach($this->or_where as $or_where)
 				$this->basic_model->or_where($or_where[0],$or_where[1],$or_where[2]);
-
+		
+		if(!empty($this->where_in))
+			foreach($this->where_in as $where)
+				$this->basic_model->where_in($where[0],$where[1],$where[2]);
+		
 		if(!empty($this->like))
 			foreach($this->like as $like)
 				$this->basic_model->like($like[0],$like[1],$like[2]);
