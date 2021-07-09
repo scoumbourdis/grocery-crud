@@ -584,4 +584,9 @@ class Grocery_crud_model  extends CI_Model  {
     	return $this->db->escape_str($value);
     }
 
+    function group_by($by, $escape = NULL)
+    {
+        $this->db->group_by($by, $escape);
+    }
+
 }
