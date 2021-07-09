@@ -1060,7 +1060,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			{
 					$callback_return = call_user_func($this->callback_insert, $post_data);
 
-					if($callback_return === false)
+					if($callback_return !== false)
+					{
+						$insert_primary_key = $callback_return;
+					}
+					else
 					{
 						return false;
 					}
