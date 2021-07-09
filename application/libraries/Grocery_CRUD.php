@@ -1343,6 +1343,9 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->order_by))
 			$this->basic_model->order_by($this->order_by[0],$this->order_by[1]);
 
+        if (!empty($this->group_by))
+            $this->basic_model->group_by($this->group_by[0], $this->group_by[1]);
+
 		if(!empty($this->where))
 			foreach($this->where as $where)
 				$this->basic_model->where($where[0],$where[1],$where[2]);
@@ -3643,13 +3646,14 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $subject_plural 		= null;
 	protected $display_as 			= array();
 	protected $order_by 			= null;
+    protected $group_by             = null;
 	protected $where 				= array();
 	protected $like 				= array();
 	protected $having 				= array();
 	protected $or_having 			= array();
 	protected $limit 				= null;
 	protected $required_fields		= array();
-	protected $_unique_fields 			= array();
+	protected $_unique_fields 		= array();
 	protected $validation_rules		= array();
 	protected $relation				= array();
 	protected $relation_n_n			= array();
@@ -4533,6 +4537,13 @@ class Grocery_CRUD extends grocery_CRUD_States
 
 		return $this;
 	}
+
+    public function group_by($by, $escape = NULL)
+    {
+        $this->group_by = array($by, $escape);
+
+        return $this;
+    }
 
 	public function where($key, $value = NULL, $escape = TRUE)
 	{
