@@ -3936,7 +3936,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	 * */
 	public function unset_view()
 	{
-		return unset_read();
+		return $this->unset_read();
 	}
 
 	/**
